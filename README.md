@@ -12,3 +12,5 @@ The output MIDI stream can be set to multi channel or MPE. Single channel output
 This retuner will also have a _reference tuner_ mode.
 Performers with continuous, possibly MPE enabled controllers (Roli's Seaboard) will be able to see how their specifically tempered (equal tempered) controller can be played to achieve their wanted tuning.
 The reference tuner mode will act as a teaching tool for one to learn how to play in different tunings using their continuous controller.
+
+Will use source code provided [here](https://www.mark-henning.de/am_downloads_eng.php#Tuning) for interpreting .tun, .scl, .kbm, and .msf files in c++.
