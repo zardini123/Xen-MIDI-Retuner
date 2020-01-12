@@ -8,7 +8,7 @@
     <key>CFBundleIconFile</key>
     <string></string>
     <key>CFBundleIdentifier</key>
-    <string>com.yourcompany.XenMIDIRetuner</string>
+    <string>com.TarasPalczynskiIII.XenMIDIRetuner</string>
     <key>CFBundleName</key>
     <string>Xen MIDI Retuner</string>
     <key>CFBundleDisplayName</key>

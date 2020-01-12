@@ -65,9 +65,6 @@ namespace TUN
 //////////////////////////////////////////////////////////////////////
 
 
-
-
-
 const long		MaxNumOfNotes = 128;	// 0 - 127
 const double	DefaultBaseFreqHz = 8.1757989156437073336; // refers to A=440Hz
 

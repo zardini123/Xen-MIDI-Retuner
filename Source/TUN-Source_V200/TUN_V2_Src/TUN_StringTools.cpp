@@ -10,11 +10,8 @@
 //////////////////////////////////////////////////////////////////////
 
 #include "TUN_StringTools.h"
-#include <iostream>
 #include <iomanip>
-#include <ctype.h>
-
-
+#include <sstream>
 
 namespace TUN
 {
@@ -86,12 +83,11 @@ std::string & RemoveSpaces(std::string & str)
 	return str;
 }
 
-template< typename T >
-std::string int_to_hex( T i )
+std::string long_to_hex(long i)
 {
   std::stringstream stream;
   stream << "0x"
-         << std::setfill ('0') << std::setw(sizeof(T)*2)
+         << std::setfill ('0') << std::setw(sizeof(long)*2)
          << std::hex << i;
   return stream.str();
 }
@@ -121,9 +117,8 @@ std::string & Escape(std::string & str)
 			if ( (static_cast<unsigned char>(str.at(l)) < 0x20) ||
 				 (static_cast<unsigned char>(str.at(l)) == 0xff) )
 			{
-				char	szHex[3] = "00";
 				strEsc += "\\x0";
-				strEsc += int_to_hex(static_cast<unsigned char>(str.at(l)));
+				strEsc += long_to_hex(static_cast<unsigned char>(str.at(l)));
 			}
 			else
 				strEsc += str.at(l);
