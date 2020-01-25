@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "AnaMark-Tuning-Library/SCL_Import.h"
 
 //==============================================================================
 /**
@@ -18,6 +19,13 @@
 class XenMidiRetunerAudioProcessor  : public AudioProcessor
 {
 public:
+    double note_freq_hz;
+
+    TUN::CSCL_Import temp_scl_import;
+    TUN::CSingleScale scale;
+
+    int out_pitch_bend_range;
+
     //==============================================================================
     XenMidiRetunerAudioProcessor();
     ~XenMidiRetunerAudioProcessor();

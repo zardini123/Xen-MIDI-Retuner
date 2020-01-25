@@ -129,33 +129,93 @@ bool XenMidiRetunerAudioProcessor::isBusesLayoutSupported (const BusesLayout& la
 }
 #endif
 
+void FreqHZToNoteAndPitchBend(double frequency, int &noteNum, int &pitchBend)
+{
+  // double whole, fractional;
+  // int pitchBend = 0;
+  double exactNoteNum = 12 * std::log2(frequency / 440) + 69;
+
+  // fractional = std::modf(exactNoteNum, &whole);
+
+  int closestNoteNum = std::round(exactNoteNum);
+  double pitchRange = (2 * (exactNoteNum - closestNoteNum)) + 0.5;
+
+  pitchBend = pitchRange * 16383;
+  noteNum = closestNoteNum;
+}
+
+int random(int min, int max) //range : [min, max)
+{
+   static bool first = true;
+   if (first)
+   {
+      std::srand( std::time(NULL) ); //seeding for the first time only!
+      first = false;
+   }
+   return min + std::rand() % (( max + 1 ) - min);
+}
+
 void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
-    ScopedNoDenormals noDenormals;
-    auto totalNumInputChannels  = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
+    // ScopedNoDenormals noDenormals;
+    // auto totalNumInputChannels  = getTotalNumInputChannels();
+    // auto totalNumOutputChannels = getTotalNumOutputChannels();
+    //
+    // // In case we have more outputs than inputs, this code clears any output
+    // // channels that didn't contain input data, (because these aren't
+    // // guaranteed to be empty - they may contain garbage).
+    // // This is here to avoid people getting screaming feedback
+    // // when they first compile a plugin, but obviously you don't need to keep
+    // // this code if your algorithm always overwrites all the output channels.
+    // for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+    //     buffer.clear (i, 0, buffer.getNumSamples());
+    //
+    // // This is the place where you'd normally do the guts of your plugin's
+    // // audio processing...
+    // // Make sure to reset the state if your inner loop is processing
+    // // the samples and the outer loop is handling the channels.
+    // // Alternatively, you can process the samples with the channels
+    // // interleaved by keeping the same state.
+    // for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    // {
+    //     auto* channelData = buffer.getWritePointer (channel);
+    //
+    //     // ..do something to the data...
+    // }
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+    buffer.clear();
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    MidiBuffer processedMidi;
+    int time;
+    MidiMessage m;
+
+    for (MidiBuffer::Iterator i (midiMessages); i.getNextEvent (m, time);)
     {
-        auto* channelData = buffer.getWritePointer (channel);
+        if (m.isNoteOn() || m.isNoteOff())
+        {
+            uint8 newVel = (uint8)m.getVelocity();
 
-        // ..do something to the data...
+            int note_num = 0, pitchBend = 0;
+            // double freq = scale.GetMIDINoteFreqHz(m.getNoteNumber());
+            double freq = scale.GetNoteFrequenciesHz().at(m.getNoteNumber());
+            note_freq_hz = freq;
+            FreqHZToNoteAndPitchBend(freq, note_num, pitchBend);
+
+            if (m.isNoteOn()) {
+              processedMidi.addEvent(MidiMessage::pitchWheel(m.getChannel(), pitchBend), time);
+              m = MidiMessage::noteOn(m.getChannel(), note_num, newVel);
+            } else if (m.isNoteOff())
+            {
+              m = MidiMessage::noteOff(m.getChannel(), note_num);
+            }
+        }
+
+        processedMidi.addEvent(m, time);
+        // processedMidi.addEvent(MidiMessage::pitchWheel(m.getChannel(), random(0,16383)), time);
+        // processedMidi.addEvent(MidiMessage::noteOn(m.getChannel(), random(0,100), (uint8)random(0,100)), time);
     }
+
+    midiMessages.swapWith(processedMidi);
 }
 
 //==============================================================================

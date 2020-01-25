@@ -5,9 +5,9 @@
 	};
 	objectVersion = 46;
 	objects = {
-		AF0EF8FF868A3B8EE3D02DD7 = {
+		7CBD3B9FD097CFBDA2A83468 = {
 			isa = PBXBuildFile;
-			fileRef = 73A34D381CBF6E50F8289B41;
+			fileRef = 07EEEC68B92336BE272CDC3E;
 		};
 		6EC2A427473720B59488B99E = {
 			isa = PBXBuildFile;
@@ -73,17 +73,25 @@
 			isa = PBXBuildFile;
 			fileRef = 03BD43C7CD6EC1894B687C6A;
 		};
-		214D10CF294972505733D863 = {
+		A441A3B6016421F65FCDAF57 = {
 			isa = PBXBuildFile;
-			fileRef = 9019361775724DC5C66788AF;
+			fileRef = 07C34AE95C2A50D661040F0B;
 		};
-		B9776F8AC63F8110551EA2F6 = {
+		17372AEC0D5E16E464930928 = {
 			isa = PBXBuildFile;
-			fileRef = FF1CBF3202655EFA117436FC;
+			fileRef = E787EE7F81724C096709BD87;
 		};
-		A200DC7100A0112D9DDF775C = {
+		03C6F67EAC5A9B746DD0CE67 = {
 			isa = PBXBuildFile;
-			fileRef = BEDF7B40CA5009DC0B626D01;
+			fileRef = 9A62B2E347E2F8714EE8717E;
+		};
+		C4EECD3F23C1D751C309C5D3 = {
+			isa = PBXBuildFile;
+			fileRef = C3936DB2289AAC287026C989;
+		};
+		14930B4A35406B7EB2360012 = {
+			isa = PBXBuildFile;
+			fileRef = 4C32F2DCF3CB4D88E4449E9C;
 		};
 		112B15BD09684996468CAD5D = {
 			isa = PBXBuildFile;
@@ -125,9 +133,9 @@
 			isa = PBXBuildFile;
 			fileRef = BAFD13A1E2992D36F71E436D;
 		};
-		CD194738380ED75B9BF622D2 = {
+		6C0842F239523869C9B5C9EE = {
 			isa = PBXBuildFile;
-			fileRef = BC483929D2079DAB347BE489;
+			fileRef = 0C5C6C1C21819EDAD2BFF87D;
 		};
 		66AAAB7F8987676B58C1756C = {
 			isa = PBXBuildFile;
@@ -176,12 +184,40 @@
 			path = RecentFilesMenuTemplate.nib;
 			sourceTree = "SOURCE_ROOT";
 		};
+		07C34AE95C2A50D661040F0B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "SCL_Import.cpp";
+			path = "../../Source/AnaMark-Tuning-Library/SCL_Import.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		07EEEC68B92336BE272CDC3E = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			path = "Xen MIDI Retuner.vst";
+			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
 		0AFFF63B115286C9AD68C7A0 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
 			name = "juce_gui_basics";
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_gui_basics";
 			sourceTree = "<absolute>";
+		};
+		0C5C6C1C21819EDAD2BFF87D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "include_juce_audio_plugin_client_VST2.cpp";
+			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_VST2.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		0D6ACB59B8D5392CBC2C26DC = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PluginGUI.h;
+			path = ../../Source/PluginGUI.h;
+			sourceTree = "SOURCE_ROOT";
 		};
 		1ABE56E717E19C2686F5376C = {
 			isa = PBXFileReference;
@@ -190,25 +226,11 @@
 			path = "../../JuceLibraryCode/include_juce_gui_extra.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
-		1B3F525C03FAF055A018061F = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = "TUN_EmbedHTML.h";
-			path = "../../Source/TUN-Source_V200/TUN_V2_Src/TUN_EmbedHTML.h";
-			sourceTree = "SOURCE_ROOT";
-		};
 		1D557A680A81685350571266 = {
 			isa = PBXFileReference;
 			lastKnownFileType = text.plist.xml;
 			name = "Info-AU.plist";
 			path = "Info-AU.plist";
-			sourceTree = "SOURCE_ROOT";
-		};
-		1E00CA22580911F0D5218CA0 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = "TUN_EmbedHTML.cpp";
-			path = "../../Source/TUN-Source_V200/TUN_V2_Src/TUN_EmbedHTML.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
 		218ED5AAD6E49B5C26EAD9CF = {
@@ -225,11 +247,11 @@
 			path = "../../JuceLibraryCode/include_juce_data_structures.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
-		25C62FEF4EB83E762F04C741 = {
+		2962A40E9880B362FD29954F = {
 			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = "TUN_MIDIChannelRange.h";
-			path = "../../Source/TUN-Source_V200/TUN_V2_Src/TUN_MIDIChannelRange.h";
+			lastKnownFileType = text.plist.xml;
+			name = "Info-VST.plist";
+			path = "Info-VST.plist";
 			sourceTree = "SOURCE_ROOT";
 		};
 		3201BBDF6CBDBB944C5CF3EF = {
@@ -288,11 +310,25 @@
 			path = "../../JuceLibraryCode/include_juce_audio_utils.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		4B5188404F75047B5AC64145 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "SCL_Import.h";
+			path = "../../Source/AnaMark-Tuning-Library/SCL_Import.h";
+			sourceTree = "SOURCE_ROOT";
+		};
 		4BDF9E43D68786BBE70B5997 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_gui_basics.mm";
 			path = "../../JuceLibraryCode/include_juce_gui_basics.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		4C32F2DCF3CB4D88E4449E9C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PluginGUI.cpp;
+			path = ../../Source/PluginGUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		52625518B02B19BDC3C916C0 = {
@@ -393,26 +429,12 @@
 			path = System/Library/Frameworks/IOKit.framework;
 			sourceTree = SDKROOT;
 		};
-		73A34D381CBF6E50F8289B41 = {
-			isa = PBXFileReference;
-			explicitFileType = wrapper.cfbundle;
-			includeInIndex = 0;
-			path = "Xen MIDI Retuner.vst3";
-			sourceTree = "BUILT_PRODUCTS_DIR";
-		};
 		78C7D8A07849FAA9C891E1CA = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = QuartzCore.framework;
 			path = System/Library/Frameworks/QuartzCore.framework;
 			sourceTree = SDKROOT;
-		};
-		7E2E4986D7473DBA78DA1659 = {
-			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
-			name = "Info-VST3.plist";
-			path = "Info-VST3.plist";
-			sourceTree = "SOURCE_ROOT";
 		};
 		80B72F45F406DB4FE61D7D05 = {
 			isa = PBXFileReference;
@@ -421,18 +443,18 @@
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_core";
 			sourceTree = "<absolute>";
 		};
-		830DAB4B89EF97A903D9D5D7 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = "TUN_Scale.h";
-			path = "../../Source/TUN-Source_V200/TUN_V2_Src/TUN_Scale.h";
-			sourceTree = "SOURCE_ROOT";
-		};
 		866AF600C62E9A9DE7E3619F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_graphics.mm";
 			path = "../../JuceLibraryCode/include_juce_graphics.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		88C06C1921B40064082564DB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "TUN_StringTools.h";
+			path = "../../Source/AnaMark-Tuning-Library/TUN_StringTools.h";
 			sourceTree = "SOURCE_ROOT";
 		};
 		88DD9BFB1874CF8D685CBDF9 = {
@@ -442,13 +464,6 @@
 			path = System/Library/Frameworks/Carbon.framework;
 			sourceTree = SDKROOT;
 		};
-		8ACB162FD6CEB682B0730D7E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = "SCL_Import.h";
-			path = "../../Source/TUN-Source_V200/TUN_V2_Src/SCL_Import.h";
-			sourceTree = "SOURCE_ROOT";
-		};
 		8EBDCFE0749D412D476AF9EB = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -456,18 +471,18 @@
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_processors";
 			sourceTree = "<absolute>";
 		};
-		9019361775724DC5C66788AF = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = "SCL_Import.cpp";
-			path = "../../Source/TUN-Source_V200/TUN_V2_Src/SCL_Import.cpp";
-			sourceTree = "SOURCE_ROOT";
-		};
 		963D586276D34C13E8286554 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_core.mm";
 			path = "../../JuceLibraryCode/include_juce_core.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		9A62B2E347E2F8714EE8717E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "TUN_Scale.cpp";
+			path = "../../Source/AnaMark-Tuning-Library/TUN_Scale.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
 		9ABA15DA496B729ADEA2F60F = {
@@ -477,6 +492,13 @@
 			path = "../../JuceLibraryCode/include_juce_audio_devices.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
+		9EE7BAE6313937A2979D7A64 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file.md;
+			name = README.md;
+			path = "../../Source/AnaMark-Tuning-Library/README.md";
+			sourceTree = "SOURCE_ROOT";
+		};
 		A227C7035EF0917A2BDADCFA = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -484,11 +506,11 @@
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_formats";
 			sourceTree = "<absolute>";
 		};
-		ACFA948BA0B88B4933DE2F56 = {
+		A690E54FEF512681190F1520 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = "TUN_Error.h";
-			path = "../../Source/TUN-Source_V200/TUN_V2_Src/TUN_Error.h";
+			path = "../../Source/AnaMark-Tuning-Library/TUN_Error.h";
 			sourceTree = "SOURCE_ROOT";
 		};
 		B80129772DCBB5BC8DABFC4F = {
@@ -519,20 +541,6 @@
 			path = ../../JuceLibraryCode/JuceHeader.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		BC483929D2079DAB347BE489 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = "include_juce_audio_plugin_client_VST3.cpp";
-			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_VST3.cpp";
-			sourceTree = "SOURCE_ROOT";
-		};
-		BEDF7B40CA5009DC0B626D01 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = "TUN_StringTools.cpp";
-			path = "../../Source/TUN-Source_V200/TUN_V2_Src/TUN_StringTools.cpp";
-			sourceTree = "SOURCE_ROOT";
-		};
 		C17AFF4DF847E91FC9C73908 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -546,6 +554,13 @@
 			name = "juce_events";
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_events";
 			sourceTree = "<absolute>";
+		};
+		C3936DB2289AAC287026C989 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "TUN_StringTools.cpp";
+			path = "../../Source/AnaMark-Tuning-Library/TUN_StringTools.cpp";
+			sourceTree = "SOURCE_ROOT";
 		};
 		C425E660754C4EC528E6F6B6 = {
 			isa = PBXFileReference;
@@ -561,11 +576,25 @@
 			path = "Xen MIDI Retuner.component";
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
-		C791F812B425374A5F42DD50 = {
+		C97BAB93C56D4D0A0AF78EA4 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
-			name = "TUN_Formula.h";
-			path = "../../Source/TUN-Source_V200/TUN_V2_Src/TUN_Formula.h";
+			name = "TUN_Scale.h";
+			path = "../../Source/AnaMark-Tuning-Library/TUN_Scale.h";
+			sourceTree = "SOURCE_ROOT";
+		};
+		CE5493224732EBFF08394358 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "TUN_MultiScaleFile.h";
+			path = "../../Source/AnaMark-Tuning-Library/TUN_MultiScaleFile.h";
+			sourceTree = "SOURCE_ROOT";
+		};
+		D0BD9A46E36FE0E015815901 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "TUN_EmbedHTML.h";
+			path = "../../Source/AnaMark-Tuning-Library/TUN_EmbedHTML.h";
 			sourceTree = "SOURCE_ROOT";
 		};
 		D8E377CCBB35408B9836A96F = {
@@ -573,13 +602,6 @@
 			lastKnownFileType = text.plist.xml;
 			name = "Xen MIDI Retuner.entitlements";
 			path = "Xen MIDI Retuner.entitlements";
-			sourceTree = "SOURCE_ROOT";
-		};
-		DAB582BA09C2E3202BC9C13A = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = "TUN_MultiScaleFile.h";
-			path = "../../Source/TUN-Source_V200/TUN_V2_Src/TUN_MultiScaleFile.h";
 			sourceTree = "SOURCE_ROOT";
 		};
 		DD8AD2B08738AAE2801EB190 = {
@@ -596,12 +618,26 @@
 			path = ../../Source/PluginProcessor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E1B17A4D121D6E3B53615914 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "TUN_MIDIChannelRange.h";
+			path = "../../Source/AnaMark-Tuning-Library/TUN_MIDIChannelRange.h";
+			sourceTree = "SOURCE_ROOT";
+		};
 		E2063E862E8C967CBC45A79C = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
 			name = "juce_audio_basics";
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_basics";
 			sourceTree = "<absolute>";
+		};
+		E5354432B2BDC61728E90E9E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = "TUN_Formula.h";
+			path = "../../Source/AnaMark-Tuning-Library/TUN_Formula.h";
+			sourceTree = "SOURCE_ROOT";
 		};
 		E6D8C38D29598A223A3920F5 = {
 			isa = PBXFileReference;
@@ -610,18 +646,18 @@
 			path = System/Library/Frameworks/CoreAudioKit.framework;
 			sourceTree = SDKROOT;
 		};
+		E787EE7F81724C096709BD87 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "TUN_EmbedHTML.cpp";
+			path = "../../Source/AnaMark-Tuning-Library/TUN_EmbedHTML.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
 		E7C35A309358319E09125FEE = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = AppConfig.h;
 			path = ../../JuceLibraryCode/AppConfig.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		EC2D8E14823C837E08AF5534 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = "TUN_StringTools.h";
-			path = "../../Source/TUN-Source_V200/TUN_V2_Src/TUN_StringTools.h";
 			sourceTree = "SOURCE_ROOT";
 		};
 		EC96BD346D32E52B528547D4 = {
@@ -659,36 +695,32 @@
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_AU.r";
 			sourceTree = "SOURCE_ROOT";
 		};
-		FF1CBF3202655EFA117436FC = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = "TUN_Scale.cpp";
-			path = "../../Source/TUN-Source_V200/TUN_V2_Src/TUN_Scale.cpp";
-			sourceTree = "SOURCE_ROOT";
-		};
-		91E64E76C1F9B03EF68A5348 = {
+		33F10721F484897888E2C53A = {
 			isa = PBXGroup;
 			children = (
-				9019361775724DC5C66788AF,
-				8ACB162FD6CEB682B0730D7E,
-				1E00CA22580911F0D5218CA0,
-				1B3F525C03FAF055A018061F,
-				ACFA948BA0B88B4933DE2F56,
-				C791F812B425374A5F42DD50,
-				25C62FEF4EB83E762F04C741,
-				DAB582BA09C2E3202BC9C13A,
-				FF1CBF3202655EFA117436FC,
-				830DAB4B89EF97A903D9D5D7,
-				BEDF7B40CA5009DC0B626D01,
-				EC2D8E14823C837E08AF5534,
+				9EE7BAE6313937A2979D7A64,
+				07C34AE95C2A50D661040F0B,
+				4B5188404F75047B5AC64145,
+				E787EE7F81724C096709BD87,
+				D0BD9A46E36FE0E015815901,
+				A690E54FEF512681190F1520,
+				E5354432B2BDC61728E90E9E,
+				E1B17A4D121D6E3B53615914,
+				CE5493224732EBFF08394358,
+				9A62B2E347E2F8714EE8717E,
+				C97BAB93C56D4D0A0AF78EA4,
+				C3936DB2289AAC287026C989,
+				88C06C1921B40064082564DB,
 			);
-			name = "TUN_V2_Src";
+			name = "AnaMark-Tuning-Library";
 			sourceTree = "<group>";
 		};
 		E5000EBDB1431B243DC50190 = {
 			isa = PBXGroup;
 			children = (
-				91E64E76C1F9B03EF68A5348,
+				33F10721F484897888E2C53A,
+				4C32F2DCF3CB4D88E4449E9C,
+				0D6ACB59B8D5392CBC2C26DC,
 				626DE35A07C14E9C7805A3F2,
 				E1598AFDBE6B15659CB17453,
 				52625518B02B19BDC3C916C0,
@@ -738,7 +770,7 @@
 				3D5956E1208F4BC0217BFB2D,
 				6FA76430197B5EA95165E903,
 				BAFD13A1E2992D36F71E436D,
-				BC483929D2079DAB347BE489,
+				0C5C6C1C21819EDAD2BFF87D,
 				5B4800077BFEE23000D4AF43,
 				49BA9F169C976F3108F295F1,
 				963D586276D34C13E8286554,
@@ -757,7 +789,7 @@
 		9277572F08038E2AC9AB1DE6 = {
 			isa = PBXGroup;
 			children = (
-				7E2E4986D7473DBA78DA1659,
+				2962A40E9880B362FD29954F,
 				1D557A680A81685350571266,
 				03BD43C7CD6EC1894B687C6A,
 			);
@@ -787,7 +819,7 @@
 		1AE341F3CAC3348EE34CDFAE = {
 			isa = PBXGroup;
 			children = (
-				73A34D381CBF6E50F8289B41,
+				07EEEC68B92336BE272CDC3E,
 				C475EE12587C15C9223CA3EB,
 				EF6D4CD03742CA13669D205C,
 			);
@@ -821,7 +853,7 @@
 			};
 			name = Release;
 		};
-		D1CF88A3DA1E3520A23013C8 = {
+		66C19B242F26B15FAF4B9567 = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
@@ -841,8 +873,8 @@
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=1.0.0",
 					"JUCE_APP_VERSION_HEX=0x10000",
-					"JucePlugin_Build_VST=0",
-					"JucePlugin_Build_VST3=1",
+					"JucePlugin_Build_VST=1",
+					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
 					"JucePlugin_Build_AUv3=0",
 					"JucePlugin_Build_RTAS=0",
@@ -854,25 +886,26 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
+					"/Users/tp3/Documents/Programming/IDEs/JUCE/VST3_SDK",
 					"../../JuceLibraryCode",
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules",
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_plugin_client",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Info-VST3.plist;
+				INFOPLIST_FILE = Info-VST.plist;
 				INFOPLIST_PREPROCESS = NO;
-				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST3/";
+				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST/";
 				LIBRARY_STYLE = Bundle;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				OTHER_LDFLAGS = "-bundle -lXen\\ MIDI\\ Retuner";
 				PRODUCT_BUNDLE_IDENTIFIER = com.TarasPalczynskiIII.XenMIDIRetuner;
 				PRODUCT_NAME = "Xen MIDI Retuner";
 				USE_HEADERMAP = NO;
-				WRAPPER_EXTENSION = vst3;
+				WRAPPER_EXTENSION = vst;
 			};
 			name = Debug;
 		};
-		1CCE39B978F952F1BE7CDE54 = {
+		D64375B321626A970D228E78 = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
@@ -892,8 +925,8 @@
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=1.0.0",
 					"JUCE_APP_VERSION_HEX=0x10000",
-					"JucePlugin_Build_VST=0",
-					"JucePlugin_Build_VST3=1",
+					"JucePlugin_Build_VST=1",
+					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
 					"JucePlugin_Build_AUv3=0",
 					"JucePlugin_Build_RTAS=0",
@@ -906,14 +939,15 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
+					"/Users/tp3/Documents/Programming/IDEs/JUCE/VST3_SDK",
 					"../../JuceLibraryCode",
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules",
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_plugin_client",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = Info-VST3.plist;
+				INFOPLIST_FILE = Info-VST.plist;
 				INFOPLIST_PREPROCESS = NO;
-				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST3/";
+				INSTALL_PATH = "$(HOME)/Library/Audio/Plug-Ins/VST/";
 				LIBRARY_STYLE = Bundle;
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
@@ -921,7 +955,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.TarasPalczynskiIII.XenMIDIRetuner;
 				PRODUCT_NAME = "Xen MIDI Retuner";
 				USE_HEADERMAP = NO;
-				WRAPPER_EXTENSION = vst3;
+				WRAPPER_EXTENSION = vst;
 			};
 			name = Release;
 		};
@@ -958,6 +992,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
+					"/Users/tp3/Documents/Programming/IDEs/JUCE/VST3_SDK",
 					"../../JuceLibraryCode",
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules",
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_plugin_client",
@@ -1011,6 +1046,7 @@
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
+					"/Users/tp3/Documents/Programming/IDEs/JUCE/VST3_SDK",
 					"../../JuceLibraryCode",
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules",
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_plugin_client",
@@ -1049,8 +1085,8 @@
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=1.0.0",
 					"JUCE_APP_VERSION_HEX=0x10000",
-					"JucePlugin_Build_VST=0",
-					"JucePlugin_Build_VST3=1",
+					"JucePlugin_Build_VST=1",
+					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=1",
 					"JucePlugin_Build_AUv3=0",
 					"JucePlugin_Build_RTAS=0",
@@ -1062,6 +1098,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
+					"/Users/tp3/Documents/Programming/IDEs/JUCE/VST3_SDK",
 					"../../JuceLibraryCode",
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules",
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_plugin_client",
@@ -1094,8 +1131,8 @@
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
 					"JUCE_APP_VERSION=1.0.0",
 					"JUCE_APP_VERSION_HEX=0x10000",
-					"JucePlugin_Build_VST=0",
-					"JucePlugin_Build_VST3=1",
+					"JucePlugin_Build_VST=1",
+					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=1",
 					"JucePlugin_Build_AUv3=0",
 					"JucePlugin_Build_RTAS=0",
@@ -1108,6 +1145,7 @@
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
+					"/Users/tp3/Documents/Programming/IDEs/JUCE/VST3_SDK",
 					"../../JuceLibraryCode",
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules",
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_plugin_client",
@@ -1215,9 +1253,9 @@
 			};
 			name = Release;
 		};
-		6730B69E03E4D9210FE892D7 = {
+		05F4D4507415828D14D61FDB = {
 			isa = PBXTargetDependency;
-			target = A26E21A5CA381DB983679DAC;
+			target = 0CC206610BBA38E133172D96;
 		};
 		4D81AED66045D554B4CE6720 = {
 			isa = PBXTargetDependency;
@@ -1251,23 +1289,23 @@
 			buildPhases = ( );
 			buildRules = ( );
 			dependencies = (
-				6730B69E03E4D9210FE892D7,
+				05F4D4507415828D14D61FDB,
 				4D81AED66045D554B4CE6720,
 				2F2B0140E6497297F7B0DC69,
 			);
 			name = "Xen MIDI Retuner - All";
 			productName = "Xen MIDI Retuner";
 		};
-		769B3324257A2AE34AB969C9 = {
+		755DE06FEC53577946E38CC9 = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D1CF88A3DA1E3520A23013C8,
-				1CCE39B978F952F1BE7CDE54,
+				66C19B242F26B15FAF4B9567,
+				D64375B321626A970D228E78,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		373BDAA72664E7E50888C1F5 = {
+		C1B5F8B5CEC2267C29030D7D = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1275,15 +1313,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F91C2147FAEA12E042E6A9BA = {
+		7C04C1F130CC2428345DEAD3 = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD194738380ED75B9BF622D2,
+				6C0842F239523869C9B5C9EE,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		96C7CFDD7B87A88BD2980E09 = {
+		49FEFC221BCC06A9663475DE = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1302,21 +1340,21 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A26E21A5CA381DB983679DAC = {
+		0CC206610BBA38E133172D96 = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 769B3324257A2AE34AB969C9;
+			buildConfigurationList = 755DE06FEC53577946E38CC9;
 			buildPhases = (
-				373BDAA72664E7E50888C1F5,
-				F91C2147FAEA12E042E6A9BA,
-				96C7CFDD7B87A88BD2980E09,
+				C1B5F8B5CEC2267C29030D7D,
+				7C04C1F130CC2428345DEAD3,
+				49FEFC221BCC06A9663475DE,
 			);
 			buildRules = ( );
 			dependencies = (
 				2F2B0140E6497297F7B0DC69,
 			);
-			name = "Xen MIDI Retuner - VST3";
+			name = "Xen MIDI Retuner - VST";
 			productName = "Xen MIDI Retuner";
-			productReference = 73A34D381CBF6E50F8289B41;
+			productReference = 07EEEC68B92336BE272CDC3E;
 			productType = "com.apple.product-type.bundle";
 		};
 		D76A3F9D1D226EF1749E8BE6 = {
@@ -1404,9 +1442,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				214D10CF294972505733D863,
-				B9776F8AC63F8110551EA2F6,
-				A200DC7100A0112D9DDF775C,
+				A441A3B6016421F65FCDAF57,
+				17372AEC0D5E16E464930928,
+				03C6F67EAC5A9B746DD0CE67,
+				C4EECD3F23C1D751C309C5D3,
+				14930B4A35406B7EB2360012,
 				112B15BD09684996468CAD5D,
 				A81646E03D98335A5BDD79AE,
 				45DCEE8AF90753A70C7D5C3D,
@@ -1443,13 +1483,13 @@
 		6C3C77C9C265F36A0D8AE654 = {
 			isa = PBXProject;
 			buildConfigurationList = A6A0D9431C64BFAA48C05070;
-			attributes = { LastUpgradeCheck = 1100; ORGANIZATIONNAME = "Taras Palczynski III"; TargetAttributes = { 66C9F2CDA1BFD8D22C204335 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };A26E21A5CA381DB983679DAC = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };E977DEFE54F7F9F775C60F0F = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };1B235E72138410DAF61B39A1 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
+			attributes = { LastUpgradeCheck = 1100; ORGANIZATIONNAME = "Taras Palczynski III"; TargetAttributes = { 66C9F2CDA1BFD8D22C204335 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };0CC206610BBA38E133172D96 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };E977DEFE54F7F9F775C60F0F = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; };1B235E72138410DAF61B39A1 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 0;
 			mainGroup = 4DA21E5653614B4EAF13BFCC;
 			projectDirPath = "";
 			projectRoot = "";
-			targets = (66C9F2CDA1BFD8D22C204335, A26E21A5CA381DB983679DAC, E977DEFE54F7F9F775C60F0F, 1B235E72138410DAF61B39A1);
+			targets = (66C9F2CDA1BFD8D22C204335, 0CC206610BBA38E133172D96, E977DEFE54F7F9F775C60F0F, 1B235E72138410DAF61B39A1);
 			knownRegions = (en, Base);
 		};
 	};

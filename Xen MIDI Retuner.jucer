@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="zNOFw1" name="Xen MIDI Retuner" projectType="audioplug" jucerVersion="5.4.5"
-              pluginFormats="buildAU,buildVST3" pluginCharacteristicsValue="pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
+              pluginFormats="buildAU,buildVST" pluginCharacteristicsValue="pluginEditorRequiresKeys,pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
               pluginVST3Category="Fx,Tools" bundleIdentifier="com.TarasPalczynskiIII.XenMIDIRetuner"
               companyName="Taras Palczynski III" pluginManufacturer="Taras Palczynski III"
               pluginName="Xen MIDI Retuner">
   <MAINGROUP id="dJj14n" name="Xen MIDI Retuner">
     <GROUP id="{A1692F2F-028C-9EA8-2739-2FC33C9F86F6}" name="Source">
-      <GROUP id="{002D52BE-C436-F285-4DC3-5ECB1FA11553}" name="TUN_V2_Src">
-        <FILE id="m7P6NF" name="SCL_Import.cpp" compile="1" resource="0" file="Source/TUN-Source_V200/TUN_V2_Src/SCL_Import.cpp"/>
-        <FILE id="oqnTqJ" name="SCL_Import.h" compile="0" resource="0" file="Source/TUN-Source_V200/TUN_V2_Src/SCL_Import.h"/>
-        <FILE id="nCvcAK" name="TUN_EmbedHTML.cpp" compile="0" resource="0"
-              file="Source/TUN-Source_V200/TUN_V2_Src/TUN_EmbedHTML.cpp"/>
-        <FILE id="V7rtVj" name="TUN_EmbedHTML.h" compile="0" resource="0" file="Source/TUN-Source_V200/TUN_V2_Src/TUN_EmbedHTML.h"/>
-        <FILE id="DaUdPM" name="TUN_Error.h" compile="0" resource="0" file="Source/TUN-Source_V200/TUN_V2_Src/TUN_Error.h"/>
-        <FILE id="gkOVrA" name="TUN_Formula.h" compile="0" resource="0" file="Source/TUN-Source_V200/TUN_V2_Src/TUN_Formula.h"/>
-        <FILE id="sQMyVs" name="TUN_MIDIChannelRange.h" compile="0" resource="0"
-              file="Source/TUN-Source_V200/TUN_V2_Src/TUN_MIDIChannelRange.h"/>
-        <FILE id="XrDRZZ" name="TUN_MultiScaleFile.h" compile="0" resource="0"
-              file="Source/TUN-Source_V200/TUN_V2_Src/TUN_MultiScaleFile.h"/>
-        <FILE id="G0KYTj" name="TUN_Scale.cpp" compile="1" resource="0" file="Source/TUN-Source_V200/TUN_V2_Src/TUN_Scale.cpp"/>
-        <FILE id="IPRTPK" name="TUN_Scale.h" compile="0" resource="0" file="Source/TUN-Source_V200/TUN_V2_Src/TUN_Scale.h"/>
-        <FILE id="FzRtCV" name="TUN_StringTools.cpp" compile="1" resource="0"
-              file="Source/TUN-Source_V200/TUN_V2_Src/TUN_StringTools.cpp"/>
-        <FILE id="oGfFVs" name="TUN_StringTools.h" compile="0" resource="0"
-              file="Source/TUN-Source_V200/TUN_V2_Src/TUN_StringTools.h"/>
+      <GROUP id="{5CFBB6E8-DB93-CA08-FB77-07FAC1572B4B}" name="AnaMark-Tuning-Library">
+        <FILE id="fsR6gu" name="README.md" compile="0" resource="0" file="Source/AnaMark-Tuning-Library/README.md"/>
+        <FILE id="ljzJOY" name="SCL_Import.cpp" compile="1" resource="0" file="Source/AnaMark-Tuning-Library/SCL_Import.cpp"/>
+        <FILE id="eE4Tbw" name="SCL_Import.h" compile="0" resource="0" file="Source/AnaMark-Tuning-Library/SCL_Import.h"/>
+        <FILE id="ua9k6n" name="TUN_EmbedHTML.cpp" compile="1" resource="0"
+              file="Source/AnaMark-Tuning-Library/TUN_EmbedHTML.cpp"/>
+        <FILE id="fjRMGq" name="TUN_EmbedHTML.h" compile="0" resource="0" file="Source/AnaMark-Tuning-Library/TUN_EmbedHTML.h"/>
+        <FILE id="bsq98D" name="TUN_Error.h" compile="0" resource="0" file="Source/AnaMark-Tuning-Library/TUN_Error.h"/>
+        <FILE id="ERILfP" name="TUN_Formula.h" compile="0" resource="0" file="Source/AnaMark-Tuning-Library/TUN_Formula.h"/>
+        <FILE id="WU7Rxd" name="TUN_MIDIChannelRange.h" compile="0" resource="0"
+              file="Source/AnaMark-Tuning-Library/TUN_MIDIChannelRange.h"/>
+        <FILE id="Nl2VTO" name="TUN_MultiScaleFile.h" compile="0" resource="0"
+              file="Source/AnaMark-Tuning-Library/TUN_MultiScaleFile.h"/>
+        <FILE id="OFjNYu" name="TUN_Scale.cpp" compile="1" resource="0" file="Source/AnaMark-Tuning-Library/TUN_Scale.cpp"/>
+        <FILE id="aswiyh" name="TUN_Scale.h" compile="0" resource="0" file="Source/AnaMark-Tuning-Library/TUN_Scale.h"/>
+        <FILE id="irVjsl" name="TUN_StringTools.cpp" compile="1" resource="0"
+              file="Source/AnaMark-Tuning-Library/TUN_StringTools.cpp"/>
+        <FILE id="jhR0Cu" name="TUN_StringTools.h" compile="0" resource="0"
+              file="Source/AnaMark-Tuning-Library/TUN_StringTools.h"/>
       </GROUP>
+      <FILE id="XvZ76Y" name="PluginGUI.cpp" compile="1" resource="0" file="Source/PluginGUI.cpp"/>
+      <FILE id="ASvFjf" name="PluginGUI.h" compile="0" resource="0" file="Source/PluginGUI.h"/>
       <FILE id="RC0yrV" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="mTzVRq" name="PluginProcessor.h" compile="0" resource="0"

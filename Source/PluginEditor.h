@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
+#include "PluginGUI.h"
 
 //==============================================================================
 /**
@@ -27,6 +28,7 @@ public:
     void resized() override;
 
 private:
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     XenMidiRetunerAudioProcessor& processor;
