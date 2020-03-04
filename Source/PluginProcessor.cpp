@@ -129,19 +129,28 @@ bool XenMidiRetunerAudioProcessor::isBusesLayoutSupported (const BusesLayout& la
 }
 #endif
 
+double NoteAndPitchBendtoFreqHZ(int noteNum, int pitchBend)
+{
+    int maxPitch = 0x3fff;
+    double pitchAdjust = ((pitchBend * 2.0) / maxPitch) - 1.0;
+    
+    double frequency = std::pow(2, ((noteNum + pitchAdjust) - 69) / 12.0) * 440;
+    
+    return frequency;
+}
+
 void FreqHZToNoteAndPitchBend(double frequency, int &noteNum, int &pitchBend)
 {
-  // double whole, fractional;
-  // int pitchBend = 0;
+  // Convert frequency to the midi note number with decimal result kept
   double exactNoteNum = 12 * std::log2(frequency / 440) + 69;
 
-  // fractional = std::modf(exactNoteNum, &whole);
-
+  // Get nearest integer midi note number
   int closestNoteNum = std::round(exactNoteNum);
-  double pitchRange = (2 * (exactNoteNum - closestNoteNum)) + 0.5;
 
-  pitchBend = pitchRange * 16383;
+  float semitonesToExactFrequency = exactNoteNum - closestNoteNum;
+
   noteNum = closestNoteNum;
+  pitchBend = MidiMessage::pitchbendToPitchwheelPos(semitonesToExactFrequency, 1);
 }
 
 int random(int min, int max) //range : [min, max)
@@ -154,6 +163,8 @@ int random(int min, int max) //range : [min, max)
    }
    return min + std::rand() % (( max + 1 ) - min);
 }
+
+int lastPitchWheel = 0;
 
 void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
@@ -191,14 +202,18 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
 
     for (MidiBuffer::Iterator i (midiMessages); i.getNextEvent (m, time);)
     {
+        if (m.isPitchWheel()) {
+            if (m.isForChannel(1))
+                note_freq_hz = NoteAndPitchBendtoFreqHZ(lastPitchWheel, m.getPitchWheelValue());
+        }
         if (m.isNoteOn() || m.isNoteOff())
         {
             uint8 newVel = (uint8)m.getVelocity();
 
             int note_num = 0, pitchBend = 0;
             // double freq = scale.GetMIDINoteFreqHz(m.getNoteNumber());
-            double freq = scale.GetNoteFrequenciesHz().at(m.getNoteNumber());
-            note_freq_hz = freq;
+            double freq = scale.GetMIDINoteFreqHz(m.getNoteNumber());
+            lastPitchWheel = m.getNoteNumber();
             FreqHZToNoteAndPitchBend(freq, note_num, pitchBend);
 
             if (m.isNoteOn()) {

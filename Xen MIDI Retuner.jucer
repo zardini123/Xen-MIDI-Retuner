@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="zNOFw1" name="Xen MIDI Retuner" projectType="audioplug" jucerVersion="5.4.5"
+<JUCERPROJECT id="zNOFw1" name="Xen MIDI Retuner" projectType="audioplug" jucerVersion="5.4.7"
               pluginFormats="buildAU,buildVST" pluginCharacteristicsValue="pluginEditorRequiresKeys,pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
               pluginVST3Category="Fx,Tools" bundleIdentifier="com.TarasPalczynskiIII.XenMIDIRetuner"
               companyName="Taras Palczynski III" pluginManufacturer="Taras Palczynski III"

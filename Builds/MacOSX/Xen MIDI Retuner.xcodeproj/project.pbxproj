@@ -17,6 +17,10 @@
 			isa = PBXBuildFile;
 			fileRef = EF6D4CD03742CA13669D205C;
 		};
+		F41446A744F3EE353782E35D = {
+			isa = PBXBuildFile;
+			fileRef = 67B1FD6799D74E2B3E236D5F;
+		};
 		D113FAB490B28B48491321BF = {
 			isa = PBXBuildFile;
 			fileRef = 633C9A242FB18F349739AF57;
@@ -24,10 +28,6 @@
 		8B7262FF22923D852F3E4D6F = {
 			isa = PBXBuildFile;
 			fileRef = F7173B84641FC12FE3E8ABA5;
-		};
-		F41446A744F3EE353782E35D = {
-			isa = PBXBuildFile;
-			fileRef = 67B1FD6799D74E2B3E236D5F;
 		};
 		5D8ADE06FB1AF4167C37B700 = {
 			isa = PBXBuildFile;
@@ -597,13 +597,6 @@
 			path = "../../Source/AnaMark-Tuning-Library/TUN_EmbedHTML.h";
 			sourceTree = "SOURCE_ROOT";
 		};
-		D8E377CCBB35408B9836A96F = {
-			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
-			name = "Xen MIDI Retuner.entitlements";
-			path = "Xen MIDI Retuner.entitlements";
-			sourceTree = "SOURCE_ROOT";
-		};
 		DD8AD2B08738AAE2801EB190 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -799,9 +792,9 @@
 		14B56A3E74F0F715D77EBF67 = {
 			isa = PBXGroup;
 			children = (
+				67B1FD6799D74E2B3E236D5F,
 				633C9A242FB18F349739AF57,
 				F7173B84641FC12FE3E8ABA5,
-				67B1FD6799D74E2B3E236D5F,
 				88DD9BFB1874CF8D685CBDF9,
 				7192D37C17A7B8FE607A8E52,
 				C17AFF4DF847E91FC9C73908,
@@ -843,6 +836,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -850,6 +844,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};
@@ -1203,6 +1198,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "Xen MIDI Retuner";
+				SDKROOT = macosx;
 				WARNING_CFLAGS = "-Wreorder";
 				ZERO_LINK = NO;
 			};
@@ -1248,6 +1244,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = "Xen MIDI Retuner";
+				SDKROOT = macosx;
 				WARNING_CFLAGS = "-Wreorder";
 				ZERO_LINK = NO;
 			};
@@ -1395,9 +1392,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F41446A744F3EE353782E35D,
 				D113FAB490B28B48491321BF,
 				8B7262FF22923D852F3E4D6F,
-				F41446A744F3EE353782E35D,
 				5D8ADE06FB1AF4167C37B700,
 				1EBED048C5DDA514952A41B4,
 				2A1FD8741FE7EE4FC9C50121,
