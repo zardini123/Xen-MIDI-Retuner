@@ -27,6 +27,10 @@
         <FILE id="jhR0Cu" name="TUN_StringTools.h" compile="0" resource="0"
               file="Source/AnaMark-Tuning-Library/TUN_StringTools.h"/>
       </GROUP>
+      <FILE id="Wbg5Qb" name="KeyboardVisual.cpp" compile="1" resource="0"
+            file="Source/KeyboardVisual.cpp"/>
+      <FILE id="MbdQu9" name="KeyboardVisual.h" compile="0" resource="0"
+            file="Source/KeyboardVisual.h"/>
       <FILE id="XvZ76Y" name="PluginGUI.cpp" compile="1" resource="0" file="Source/PluginGUI.cpp"/>
       <FILE id="ASvFjf" name="PluginGUI.h" compile="0" resource="0" file="Source/PluginGUI.h"/>
       <FILE id="RC0yrV" name="PluginProcessor.cpp" compile="1" resource="0"
@@ -80,7 +84,7 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <LIVE_SETTINGS>
-    <OSX buildEnabled="1"/>
+    <OSX buildEnabled="0"/>
   </LIVE_SETTINGS>
   <JUCEOPTIONS JUCE_VST3_CAN_REPLACE_VST2="0" JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
 </JUCERPROJECT>

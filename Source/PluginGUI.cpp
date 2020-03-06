@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.5
+  Created with Projucer version: 5.4.7
 
   ------------------------------------------------------------------------------
 
@@ -172,6 +172,9 @@ PluginGUI::PluginGUI ()
 
 
     //[Constructor] You can add your own custom stuff here..
+    keyboardVisual.reset(new KeyboardVisual());
+    addAndMakeVisible(keyboardVisual.get());
+    keyboardVisual->centreWithSize(600, 200);
     //[/Constructor]
 }
 
@@ -198,6 +201,7 @@ PluginGUI::~PluginGUI()
 
 
     //[Destructor]. You can add your own custom destruction code here..
+    keyboardVisual = nullptr;
     //[/Destructor]
 }
 
