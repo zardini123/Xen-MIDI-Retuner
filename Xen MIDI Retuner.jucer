@@ -27,6 +27,14 @@
         <FILE id="jhR0Cu" name="TUN_StringTools.h" compile="0" resource="0"
               file="Source/AnaMark-Tuning-Library/TUN_StringTools.h"/>
       </GROUP>
+      <GROUP id="{6E9FE505-8222-C370-9837-85B2A5A04EF8}" name="EditorModules">
+        <FILE id="QSLdoB" name="InputModule.cpp" compile="1" resource="0" file="Source/EditorModules/InputModule.cpp"/>
+        <FILE id="tGJlgF" name="InputModule.h" compile="0" resource="0" file="Source/EditorModules/InputModule.h"/>
+        <FILE id="R1LQdu" name="NotePrioritizationModule.cpp" compile="1" resource="0"
+              file="Source/EditorModules/NotePrioritizationModule.cpp"/>
+        <FILE id="Gdw57A" name="NotePrioritizationModule.h" compile="0" resource="0"
+              file="Source/EditorModules/NotePrioritizationModule.h"/>
+      </GROUP>
       <FILE id="Wbg5Qb" name="KeyboardVisual.cpp" compile="1" resource="0"
             file="Source/KeyboardVisual.cpp"/>
       <FILE id="MbdQu9" name="KeyboardVisual.h" compile="0" resource="0"
@@ -84,7 +92,7 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <LIVE_SETTINGS>
-    <OSX buildEnabled="0"/>
+    <OSX buildEnabled="1" continuousRebuildEnabled="1"/>
   </LIVE_SETTINGS>
   <JUCEOPTIONS JUCE_VST3_CAN_REPLACE_VST2="0" JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
 </JUCERPROJECT>

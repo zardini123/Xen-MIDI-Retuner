@@ -139,7 +139,7 @@ double NoteAndPitchBendtoFreqHZ(int noteNum, int pitchBend)
     return frequency;
 }
 
-void FreqHZToNoteAndPitchBend(double frequency, int &noteNum, int &pitchBend)
+void FreqHZToNoteAndSemitones(double frequency, int &noteNum, double &semitones)
 {
   // Convert frequency to the midi note number with decimal result kept
   double exactNoteNum = 12 * std::log2(frequency / 440) + 69;
@@ -147,10 +147,8 @@ void FreqHZToNoteAndPitchBend(double frequency, int &noteNum, int &pitchBend)
   // Get nearest integer midi note number
   int closestNoteNum = std::round(exactNoteNum);
 
-  float semitonesToExactFrequency = exactNoteNum - closestNoteNum;
-
   noteNum = closestNoteNum;
-  pitchBend = MidiMessage::pitchbendToPitchwheelPos(semitonesToExactFrequency, 1);
+  semitones = exactNoteNum - closestNoteNum;
 }
 
 int random(int min, int max) //range : [min, max)
@@ -202,19 +200,43 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
 
     for (MidiBuffer::Iterator i (midiMessages); i.getNextEvent (m, time);)
     {
-        if (m.isPitchWheel()) {
-            if (m.isForChannel(1))
-                note_freq_hz = NoteAndPitchBendtoFreqHZ(lastPitchWheel, m.getPitchWheelValue());
+        if (m.isNoteOn())
+        {
+            for (std::vector<Note>::iterator it = currentNotes.begin(); it != currentNotes.end(); ++it) {
+                if (it->midiNote == m.getNoteNumber()) {
+                    it = currentNotes.erase(it);
+                    break;
+                }
+            }
+            
+            currentNotes.push_back(Note {
+                m.getNoteNumber(),
+                m.getVelocity()
+            });
         }
+        if (m.isNoteOff())
+        {
+            for (std::vector<Note>::iterator it = currentNotes.begin(); it != currentNotes.end(); ++it) {
+                if (it->midiNote == m.getNoteNumber()) {
+                    it = currentNotes.erase(it);
+                    break;
+                }
+            }
+        }
+        
         if (m.isNoteOn() || m.isNoteOff())
         {
+            
             uint8 newVel = (uint8)m.getVelocity();
 
-            int note_num = 0, pitchBend = 0;
+            int note_num = 0;
+            uint16 pitchBend = 0;
             // double freq = scale.GetMIDINoteFreqHz(m.getNoteNumber());
             double freq = scale.GetMIDINoteFreqHz(m.getNoteNumber());
             lastPitchWheel = m.getNoteNumber();
-            FreqHZToNoteAndPitchBend(freq, note_num, pitchBend);
+            double semitones = 0.0;
+            FreqHZToNoteAndSemitones(freq, note_num, semitones);
+            pitchBend = MidiMessage::pitchbendToPitchwheelPos(semitones, 1);
 
             if (m.isNoteOn()) {
               processedMidi.addEvent(MidiMessage::pitchWheel(m.getChannel(), pitchBend), time);

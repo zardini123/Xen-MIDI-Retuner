@@ -16,10 +16,16 @@
 //==============================================================================
 /**
 */
+struct Note
+{
+    int midiNote;
+    int velocity;
+};
+
 class XenMidiRetunerAudioProcessor  : public AudioProcessor
 {
 public:
-    double note_freq_hz;
+    std::vector<Note> currentNotes;
 
     TUN::CSCL_Import temp_scl_import;
     TUN::CSingleScale scale;

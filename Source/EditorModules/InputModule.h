@@ -20,12 +20,9 @@
 #pragma once
 
 //[Headers]     -- You can add your own extra header files here --
-#include "../JuceLibraryCode/JuceHeader.h"
-#include "PluginProcessor.h"
-#include "KeyboardVisual.h"
+#include <JuceHeader.h>
 //[/Headers]
 
-#include "KeyboardVisual.h"
 
 
 //==============================================================================
@@ -36,27 +33,19 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class PluginGUI  : public Component,
-                   private Timer,
-                   public Slider::Listener,
-                   public ComboBox::Listener
+class InputModule  : public Component
 {
 public:
     //==============================================================================
-    PluginGUI ();
-    ~PluginGUI() override;
+    InputModule ();
+    ~InputModule() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    XenMidiRetunerAudioProcessor *processor;
-
-    void timerCallback() override;
     //[/UserMethods]
 
     void paint (Graphics& g) override;
     void resized() override;
-    void sliderValueChanged (Slider* sliderThatWasMoved) override;
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged) override;
 
 
 
@@ -65,17 +54,10 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<Slider> out_pitch_bend_range;
-    std::unique_ptr<Label> label;
-    std::unique_ptr<Slider> in_pitch_bend_range;
-    std::unique_ptr<Label> label3;
-    std::unique_ptr<ComboBox> comboBox;
-    std::unique_ptr<KeyboardVisual> keyboardVisual;
-    std::unique_ptr<TextEditor> textEditor;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginGUI)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (InputModule)
 };
 
 //[EndFile] You can add extra defines here...
