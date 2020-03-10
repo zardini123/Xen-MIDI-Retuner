@@ -42,6 +42,7 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    void setKeyboardSettings(int firstMidiNote, int lastMidiNote, int width, int height);
     //[/UserMethods]
 
     void paint (Graphics& g) override;
@@ -51,6 +52,23 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    void setEqualSpacingValues();
+    
+    double ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNote, int& keyDistanceIndex);
+    double ConvertContinuousMidiNoteToPercentWidth(double continousMidiNote);
+    
+    // Keyboard settings
+    int entireWidth;
+    int entireHeight;
+    int m_firstMidiNote;
+    int m_lastMidiNote;
+    
+    // Keyboard cached values
+    double keyDistances[13];
+    
+    int m_startOctave;
+    int m_repeatedFirstMidiNote;
+    double m_entireDistance;
     //[/UserVariables]
 
     //==============================================================================
