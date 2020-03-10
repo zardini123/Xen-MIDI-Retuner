@@ -41,6 +41,16 @@ void SetEqualSpacingValues()
         keyDistances[i] /= keyDistances[12];
     }
 }
+
+/**
+ * Converts a continous midi note value (integer part: midi note
+ * (usually 0 to 127), decimal part: percent to next midi note)
+ * @param  continousMidiNote [description]
+ * @return                   [description]
+ */
+int ConvertContinuousMidiNoteToKeyboardPixel(double continousMidiNote) {
+    return 0;
+}
 //[/MiscUserDefs]
 
 //==============================================================================
@@ -51,7 +61,7 @@ KeyboardVisual::KeyboardVisual ()
     //[/Constructor_pre]
 
     label.reset (new Label ("new label",
-                            TRANS("A")));
+                            TRANS("label text")));
     addAndMakeVisible (label.get());
     label->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
     label->setJustificationType (Justification::topLeft);
@@ -59,6 +69,8 @@ KeyboardVisual::KeyboardVisual ()
     label->setColour (Label::textColourId, Colours::red);
     label->setColour (TextEditor::textColourId, Colours::black);
     label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    label->setBounds (0, 0, 472, 56);
 
 
     //[UserPreSize]
@@ -95,8 +107,8 @@ void KeyboardVisual::paint (Graphics& g)
     int entireWidth = proportionOfWidth(1.0f);
     int entireHeight = proportionOfHeight(1.0f);
 
-    int firstMidiNote = 0;
-    int lastMidiNote = 128;
+    int firstMidiNote = -11;
+    int lastMidiNote = 11;
 
     double firstKeyDistFromEndOfOctave = 0.0;
     double lastKeyDistFromBeginningOfOctave = 0.0;
@@ -117,56 +129,113 @@ void KeyboardVisual::paint (Graphics& g)
 
     double entireDistance = firstKeyDistFromEndOfOctave + lastKeyDistFromBeginningOfOctave + remaningOctaves;
 
-    std::string s = std::to_string(firstKeyDistFromEndOfOctave) + " " + std::to_string(lastKeyDistFromBeginningOfOctave) + " " + std::to_string(remaningOctStart) + " " + std::to_string(remaningOctEnd) + " " + std::to_string(remaningOctaves) + " " + std::to_string(entireDistance) + "\n";
+//    std::string s = std::to_string(firstKeyDistFromEndOfOctave) + " " + std::to_string(lastKeyDistFromBeginningOfOctave) + " " + std::to_string(remaningOctStart) + " " + std::to_string(remaningOctEnd) + " " + std::to_string(remaningOctaves) + " " + std::to_string(entireDistance) + "\n";
 
     double scaledRemainingOctStart = firstKeyDistFromEndOfOctave / entireDistance;
     double scaledRemainingOctEnd = lastKeyDistFromBeginningOfOctave / entireDistance;
     double scaledRestOctaves = remaningOctaves / entireDistance;
 
-    s += std::to_string(scaledRemainingOctStart) + " " + std::to_string(scaledRemainingOctEnd) + " " + std::to_string(scaledRestOctaves);
-    label->setText(s, dontSendNotification);
-    
-    int drawnKeys = 0;
-    
+//    s += std::to_string(scaledRemainingOctStart) + " " + std::to_string(scaledRemainingOctEnd) + " " + std::to_string(scaledRestOctaves);
+//    label->setText(s, dontSendNotification);
+
+    int startOctave = (firstMidiNote < 0)? ((firstMidiNote - 12) / 12) : (firstMidiNote / 12);
+//    std::string s = std::to_string(startOctave);
+    for (int midiNote = firstMidiNote; midiNote <= lastMidiNote; midiNote++)
+    {
+        int keyDistanceIndex = (midiNote < 0)? (12 - (std::abs(midiNote) % 12)) : midiNote % 12;
+        // Shift midiNote down 12 when midiNote is less than 0 to remove issue where, for example, -3/12 and 3/12 both equal 0.  Therefore all divisons of 12 are independent.
+        int currentOctave = (midiNote < 0)? ((midiNote - 12) / 12) : (midiNote / 12);
+//        s += " " + std::to_string(currentOctave);
+        int octaveDistance = currentOctave - startOctave;
+
+        double percentWidth = (keyDistances[keyDistanceIndex] + octaveDistance - keyDistances[repeatedFirstMidiNote]) / entireDistance;
+        int x = percentWidth * entireWidth;
+
+        bool isBlack = MidiMessage::isMidiNoteBlack(keyDistanceIndex);
+
+        bool inRange = (midiNote < 128) && (midiNote >= 0);
+        Colour fillColour = inRange? Colour (isBlack? 0xff000000 : 0xffffffff) : Colour(isBlack? 0xff575757 : 0xffbfbfbf);
+        g.setColour (fillColour);
+
+        int y = isBlack? -20 : 0;
+        g.fillRect (x, y, 1, entireHeight);
+
+//        g.setColour (Colour (0xff808080));
+//        g.drawRect (x, y, 1, entireHeight, 1);
+    }
+//    label->setText(s, dontSendNotification);
+
     /*
+    int drawnKeys = 0;
+
+    int sections[3][2] = {{repeatedFirstMidiNote, 11}, {0, 12 * remaningOctaves}, {1, repeatedLastMidiNote}};
+
+    // Determine width of a white key using distance calculations used later
+    double whiteKeyWidth = 0.0;
+    if (repeatedFirstMidiNote != 0) {
+        whiteKeyWidth = ((keyDistances[2] - keyDistances[0]) / firstKeyDistFromEndOfOctave) * scaledRemainingOctStart * entireWidth;
+    } else if (repeatedLastMidiNote != 0) {
+        whiteKeyWidth = ((keyDistances[2] - keyDistances[0]) / remaningOctaves * scaledRestOctaves) * entireWidth;
+    } else {
+        whiteKeyWidth = (((keyDistances[2] - keyDistances[0]) / lastKeyDistFromBeginningOfOctave) * scaledRemainingOctEnd) * entireWidth;
+    }
+
+    // Black keys should be drawn on top of white keys
     for (int pass = 0; pass < 2; pass++)
     {
-        for (int midiNote = repeatedFirstMidiNote; midiNote < 12; midiNote++)
-        {
-            int i = std::abs(midiNote % 12);
-            bool isBlack = MidiMessage::isMidiNoteBlack(i);
+        int midiNote = firstMidiNote - 1;
+        for (int section = 0; section < 3; section++) {
+            for (int noteInScale = sections[section][0]; noteInScale <= sections[section][1]; noteInScale++) {
 
-            // White Pass
-            if (pass == 0 && isBlack)
-                continue;
-            // Black Pass
-            if (pass == 1 && !isBlack)
-                continue;
+                int i = std::abs(noteInScale % 12);
+                bool isBlack = MidiMessage::isMidiNoteBlack(i);
 
-            int x = 0;
-            if (repeatedFirstMidiNote != 0) {
-                x = ((keyDistances[i] - keyDistances[repeatedFirstMidiNote]) / firstKeyDistFromEndOfOctave) * scaledRemainingOctStart * entireWidth;
+                midiNote++;
+
+                // White Pass
+                if (pass == 0 && isBlack)
+                    continue;
+                // Black Pass
+                if (pass == 1 && !isBlack)
+                    continue;
+
+                double x = 0.0;
+                switch(section) {
+                    case 0:
+                        x = ((keyDistances[i] - keyDistances[repeatedFirstMidiNote]) / firstKeyDistFromEndOfOctave) * scaledRemainingOctStart * entireWidth;
+                        break;
+                    case 1: {
+                        int octave = noteInScale / 12;
+                        x = (((keyDistances[i] + octave) / remaningOctaves * scaledRestOctaves) + scaledRemainingOctStart) * entireWidth;
+                        break;
+                    }
+                    case 2:
+                        x = (((keyDistances[i] / lastKeyDistFromBeginningOfOctave) * scaledRemainingOctEnd) + scaledRemainingOctStart + scaledRestOctaves) * entireWidth;
+                        break;
+                }
+
+                bool inRange = (midiNote < 128) && (midiNote >= 0);
+                Colour fillColour = inRange? Colour (isBlack? 0xff000000 : 0xffffffff) : Colour(isBlack? 0xff575757 : 0xffbfbfbf);
+                g.setColour (fillColour);
+
+                double width = isBlack? (whiteKeyWidth / 2) : whiteKeyWidth;
+                x -= width / 2;
+
+                int y = isBlack? -20 : 0;
+                g.fillRect (std::round(x), y, std::round(width), entireHeight);
+
+                g.setColour (Colour (0xff808080));
+                g.drawRect (std::round(x), y, std::round(width), entireHeight, 1);
+
+                drawnKeys++;
             }
-            if (remaningOctaves != 0) {
-                int octave = midiNote / 12;
-                x = (((keyDistances[i] + octave) / remaningOctaves * scaledRestOctaves) + scaledRemainingOctStart) * entireWidth;
-            }
-            if (repeatedLastMidiNote != 0) {
-                x = (((keyDistances[i] / lastKeyDistFromBeginningOfOctave) * scaledRemainingOctEnd) + scaledRemainingOctStart + scaledRestOctaves) * entireWidth;
-            }
-            int y = isBlack? -20 : 0;
-
-            bool inRange = (midiNote < 128) && (midiNote >= 0);
-            Colour fillColour = inRange? Colour (isBlack? 0xff000000 : 0xffffffff) : Colour(isBlack? 0xff575757 : 0xffbfbfbf);
-            g.setColour (fillColour);
-
-            g.fillRect (x, y, 10, entireWidth);
-            
-            drawnKeys++;
         }
     }
+//    std::string b = std::to_string(drawnKeys) + " " + std::to_string(lastMidiNote - firstMidiNote);
+//    label->setText(b, dontSendNotification);
      */
-    
+
+    /*
     if (repeatedFirstMidiNote != 0) {
         for (int pass = 0; pass < 2; pass++)
         {
@@ -190,7 +259,7 @@ void KeyboardVisual::paint (Graphics& g)
                 g.setColour (fillColour);
 
                 g.fillRect (x, y, 10, entireWidth);
-                
+
                 drawnKeys++;
             }
         }
@@ -201,7 +270,7 @@ void KeyboardVisual::paint (Graphics& g)
         std::string a = "";
         for (int pass = 0; pass < 2; pass++)
         {
-            for (int midiNote = 0; midiNote < (12 * remaningOctaves); midiNote++)
+            for (int midiNote = 0; midiNote <= (12 * remaningOctaves); midiNote++)
             {
                 int i = std::abs(midiNote % 12);
                 bool isBlack = MidiMessage::isMidiNoteBlack(i);
@@ -223,18 +292,18 @@ void KeyboardVisual::paint (Graphics& g)
                 Colour fillColour = inRange? Colour (isBlack? 0xff000000 : 0xffffffff) : Colour(isBlack? 0xff575757 : 0xffbfbfbf);
                 g.setColour (fillColour);
 
-                g.fillRect (x, y, 10, entireWidth);
-                
+                g.fillRect (x, y, 1, entireWidth);
+
                 drawnKeys++;
             }
         }
     //    label->setText(a, dontSendNotification);
     }
-    
+
     if (repeatedLastMidiNote != 0) {
         for (int pass = 0; pass < 2; pass++)
         {
-            for (int midiNote = 0; midiNote < repeatedLastMidiNote; midiNote++)
+            for (int midiNote = 1; midiNote <= repeatedLastMidiNote; midiNote++)
             {
                 int i = std::abs(midiNote % 12);
                 bool isBlack = MidiMessage::isMidiNoteBlack(i);
@@ -254,14 +323,12 @@ void KeyboardVisual::paint (Graphics& g)
                 g.setColour (fillColour);
 
                 g.fillRect (x, y, 1, entireWidth);
-                
+
                 drawnKeys++;
             }
         }
     }
-    
-    std::string b = std::to_string(drawnKeys) + " " + std::to_string(lastMidiNote - firstMidiNote);
-    label->setText(b, dontSendNotification);
+     */
 
     /*
     int midiNoteMin = 0,
@@ -299,7 +366,7 @@ void KeyboardVisual::paint (Graphics& g)
         }
     }
     */
-     
+
     //[/UserPaint]
 }
 
@@ -308,7 +375,6 @@ void KeyboardVisual::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    label->setBounds (proportionOfWidth (0.0071f), 8, 872, 48);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -333,11 +399,11 @@ BEGIN_JUCER_METADATA
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="1000" initialHeight="50">
   <BACKGROUND backgroundColour="ff61a1ff"/>
-  <LABEL name="new label" id="fefd9f62685d5174" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="0.707% 8 872 48" textCol="ffff0000"
-         edTextCol="ff000000" edBkgCol="0" labelText="A" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="9"/>
+  <LABEL name="new label" id="a928f55955fd1a75" memberName="label" virtualName=""
+         explicitFocusOrder="0" pos="0 0 472 56" textCol="ffff0000" edTextCol="ff000000"
+         edBkgCol="0" labelText="label text" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
+         kerning="0.0" bold="0" italic="0" justification="9"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
