@@ -24,10 +24,11 @@
 
 // Forward declare class as cyclic dependency results in "undeclared identifier" errors
 // https://www.eventhelix.com/RealtimeMantra/HeaderFileIncludePatterns.htm
-class NoteAndFrequencyOverlay;
+class KeyboardVisual;
+
+#include "KeyboardVisual.h"
 //[/Headers]
 
-#include "NoteAndFrequencyOverlay.h"
 
 
 //==============================================================================
@@ -38,16 +39,16 @@ class NoteAndFrequencyOverlay;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class KeyboardVisual  : public Component
+class NoteAndFrequencyOverlay  : public Component
 {
 public:
     //==============================================================================
-    KeyboardVisual ();
-    ~KeyboardVisual() override;
+    NoteAndFrequencyOverlay (KeyboardVisual *keyboard);
+    ~NoteAndFrequencyOverlay() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    void setKeyboardSettings(int firstMidiNote, int lastMidiNote, int width, int height);
+//    void setKeyboard(KeyboardVisual *keyboard);
     //[/UserMethods]
 
     void paint (Graphics& g) override;
@@ -57,32 +58,14 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    void setEqualSpacingValues();
-
-    double ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNote, int& keyDistanceIndex);
-    double ConvertContinuousMidiNoteToPercentWidth(double continousMidiNote);
-
-    // Keyboard settings
-    int entireWidth;
-    int entireHeight;
-    int m_firstMidiNote;
-    int m_lastMidiNote;
-
-    // Keyboard cached values
-    double keyDistances[13];
-
-    int m_startOctave;
-    int m_repeatedFirstMidiNote;
-    double m_entireDistance;
+    KeyboardVisual *keyboardVis;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<Label> label;
-    std::unique_ptr<NoteAndFrequencyOverlay> keyboardOverlay;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyboardVisual)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteAndFrequencyOverlay)
 };
 
 //[EndFile] You can add extra defines here...

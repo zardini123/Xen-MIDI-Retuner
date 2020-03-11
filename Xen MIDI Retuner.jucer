@@ -35,6 +35,10 @@
         <FILE id="Gdw57A" name="NotePrioritizationModule.h" compile="0" resource="0"
               file="Source/EditorModules/NotePrioritizationModule.h"/>
       </GROUP>
+      <FILE id="bvrUTh" name="NoteAndFrequencyOverlay.cpp" compile="1" resource="0"
+            file="Source/NoteAndFrequencyOverlay.cpp"/>
+      <FILE id="FH4bBJ" name="NoteAndFrequencyOverlay.h" compile="0" resource="0"
+            file="Source/NoteAndFrequencyOverlay.h"/>
       <FILE id="Wbg5Qb" name="KeyboardVisual.cpp" compile="1" resource="0"
             file="Source/KeyboardVisual.cpp"/>
       <FILE id="MbdQu9" name="KeyboardVisual.h" compile="0" resource="0"

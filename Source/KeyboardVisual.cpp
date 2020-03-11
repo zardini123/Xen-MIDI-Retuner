@@ -45,6 +45,8 @@ KeyboardVisual::KeyboardVisual ()
 
     label->setBounds (0, 0, 472, 56);
 
+    keyboardOverlay.reset (new NoteAndFrequencyOverlay (this));
+    addAndMakeVisible (keyboardOverlay.get());
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -63,6 +65,7 @@ KeyboardVisual::~KeyboardVisual()
     //[/Destructor_pre]
 
     label = nullptr;
+    keyboardOverlay = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -81,7 +84,7 @@ void KeyboardVisual::paint (Graphics& g)
     for (int midiNote = m_firstMidiNote; midiNote <= m_lastMidiNote; midiNote++)
     {
         int keyDistanceIndex = 0;
-        
+
         double percentWidth = ConvertDiscreteMidiNoteToPercentWidth(midiNote, keyDistanceIndex);
         int x = percentWidth * entireWidth;
 
@@ -106,6 +109,7 @@ void KeyboardVisual::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
+    keyboardOverlay->setBounds (0, 0, proportionOfWidth (1.0000f), proportionOfHeight (1.0000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -163,10 +167,10 @@ void KeyboardVisual::setEqualSpacingValues()
 double KeyboardVisual::ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNote, int& keyDistanceIndex)
 {
     keyDistanceIndex = (discreteMidiNote < 0)? (12 - (std::abs(discreteMidiNote) % 12)) : discreteMidiNote % 12;
-    
+
     // Shift midiNote down 12 when midiNote is less than 0 to remove issue where, for example, -3/12 and 3/12 both equal 0.  Therefore all divisons of 12 are independent.
     int currentOctave = (discreteMidiNote < 0)? ((discreteMidiNote - 12) / 12) : (discreteMidiNote / 12);
-    
+
     int octaveDistance = currentOctave - m_startOctave;
 
     double percentWidth = (keyDistances[keyDistanceIndex] + octaveDistance - keyDistances[m_repeatedFirstMidiNote]) / m_entireDistance;
@@ -205,6 +209,9 @@ BEGIN_JUCER_METADATA
          edBkgCol="0" labelText="label text" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="9"/>
+  <JUCERCOMP name="" id="2ad7383270c298a1" memberName="keyboardOverlay" virtualName=""
+             explicitFocusOrder="0" pos="0 0 100% 100%" sourceFile="NoteAndFrequencyOverlay.cpp"
+             constructorParams="this"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
