@@ -20,15 +20,16 @@
 #pragma once
 
 //[Headers]     -- You can add your own extra header files here --
-#include "../JuceLibraryCode/JuceHeader.h"
-#include "PluginProcessor.h"
+#include <JuceHeader.h>
+
+//// Forward declare class as cyclic dependency results in "undeclared identifier" errors
+//// https://www.eventhelix.com/RealtimeMantra/HeaderFileIncludePatterns.htm
+//class KeyboardVisual;
+
+#include "KeyboardVisual.h"
+#include "../PluginProcessor.h"
 //[/Headers]
 
-#include "EditorModules/KeyboardVisual.h"
-#include "EditorModules/ScaleFrequenciesOverlay.h"
-#include "EditorModules/NoteAndFrequencyOverlay.h"
-#include "EditorModules/InputModule.h"
-#include "EditorModules/ScaleEditor.h"
 
 
 //==============================================================================
@@ -39,41 +40,40 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class PluginGUI  : public Component,
-                   public Slider::Listener
+class NoteAndFrequencyOverlay  : public Component,
+                                 private Timer
 {
 public:
     //==============================================================================
-    PluginGUI (XenMidiRetunerAudioProcessor *processorA);
-    ~PluginGUI() override;
+    NoteAndFrequencyOverlay (KeyboardVisual *keyboardVis, XenMidiRetunerAudioProcessor *midiProcessor);
+    ~NoteAndFrequencyOverlay() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    XenMidiRetunerAudioProcessor *processor;
     //[/UserMethods]
 
     void paint (Graphics& g) override;
     void resized() override;
-    void sliderValueChanged (Slider* sliderThatWasMoved) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    const int UPDATE_RATE = 60;
+
+    KeyboardVisual *keyboard;
+    XenMidiRetunerAudioProcessor *processor;
+
+    double time;
+
+    void timerCallback() override;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<KeyboardVisual> keyboardVisual;
-    std::unique_ptr<ScaleFrequenciesOverlay> scaleFrequenciesOverlay;
-    std::unique_ptr<Slider> out_pitch_bend_range;
-    std::unique_ptr<Label> label;
-    std::unique_ptr<NoteAndFrequencyOverlay> noteAndFreqOverlay;
-    std::unique_ptr<InputModule> component;
-    std::unique_ptr<ScaleEditor> component2;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginGUI)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NoteAndFrequencyOverlay)
 };
 
 //[EndFile] You can add extra defines here...

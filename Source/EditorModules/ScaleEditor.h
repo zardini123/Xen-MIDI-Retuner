@@ -20,15 +20,11 @@
 #pragma once
 
 //[Headers]     -- You can add your own extra header files here --
-#include "../JuceLibraryCode/JuceHeader.h"
-#include "PluginProcessor.h"
+#include <JuceHeader.h>
+
+#include "../PluginProcessor.h"
 //[/Headers]
 
-#include "EditorModules/KeyboardVisual.h"
-#include "EditorModules/ScaleFrequenciesOverlay.h"
-#include "EditorModules/NoteAndFrequencyOverlay.h"
-#include "EditorModules/InputModule.h"
-#include "EditorModules/ScaleEditor.h"
 
 
 //==============================================================================
@@ -39,41 +35,35 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class PluginGUI  : public Component,
-                   public Slider::Listener
+class ScaleEditor  : public Component,
+                     public Button::Listener
 {
 public:
     //==============================================================================
-    PluginGUI (XenMidiRetunerAudioProcessor *processorA);
-    ~PluginGUI() override;
+    ScaleEditor (XenMidiRetunerAudioProcessor *midiProcessor);
+    ~ScaleEditor() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    XenMidiRetunerAudioProcessor *processor;
     //[/UserMethods]
 
     void paint (Graphics& g) override;
     void resized() override;
-    void sliderValueChanged (Slider* sliderThatWasMoved) override;
+    void buttonClicked (Button* buttonThatWasClicked) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    XenMidiRetunerAudioProcessor *processor;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<KeyboardVisual> keyboardVisual;
-    std::unique_ptr<ScaleFrequenciesOverlay> scaleFrequenciesOverlay;
-    std::unique_ptr<Slider> out_pitch_bend_range;
-    std::unique_ptr<Label> label;
-    std::unique_ptr<NoteAndFrequencyOverlay> noteAndFreqOverlay;
-    std::unique_ptr<InputModule> component;
-    std::unique_ptr<ScaleEditor> component2;
+    std::unique_ptr<TextButton> textButton;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginGUI)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ScaleEditor)
 };
 
 //[EndFile] You can add extra defines here...

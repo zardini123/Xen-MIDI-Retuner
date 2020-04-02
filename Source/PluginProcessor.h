@@ -16,21 +16,65 @@
 //==============================================================================
 /**
 */
+const int MAX_MIDI_CHANNELS = 16;
+const int CENTER_PITCHWHEEL = 8192;
+
+enum SingleChannelNotePrioritzation
+{
+    NOTE = 0,
+    VELOCITY,
+    RANDOM
+};
+
+enum SingleChannelNotePrioritzationModifier
+{
+    MOST_RECENT = 0,
+    FIRST,
+    HIGHEST_NOTE,
+    LOWEST_NOTE
+};
+
+enum InterpolationDimension
+{
+    CENTS = 0,
+    FREQUENCY
+};
+
 struct Note
 {
     int midiNote;
     int velocity;
 };
 
+struct Channel
+{
+    uint16 pitchwheel = CENTER_PITCHWHEEL; // Default to pitchbend wheel at center
+    const Note *priorityNote;
+    std::vector<Note> notes;
+};
+
+struct OutputChannel
+{
+    Channel *inputChannel;
+    
+};
+
 class XenMidiRetunerAudioProcessor  : public AudioProcessor
 {
 public:
-    std::vector<Note> currentNotes;
+    // Processor data
+    Channel input[MAX_MIDI_CHANNELS];
+    OutputChannel output[MAX_MIDI_CHANNELS];
 
-    TUN::CSCL_Import temp_scl_import;
     TUN::CSingleScale scale;
 
+    int in_pitch_bend_range;
     int out_pitch_bend_range;
+    
+    SingleChannelNotePrioritzation singleChannelNotePriority = NOTE;
+    SingleChannelNotePrioritzationModifier singleChannelNotePriorityModifier = MOST_RECENT;
+    InterpolationDimension interploationDimension = CENTS;
+    // END Processor data
 
     //==============================================================================
     XenMidiRetunerAudioProcessor();

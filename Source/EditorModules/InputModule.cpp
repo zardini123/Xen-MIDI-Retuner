@@ -27,10 +27,112 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-InputModule::InputModule ()
+InputModule::InputModule (XenMidiRetunerAudioProcessor *midiProcessor)
 {
     //[Constructor_pre] You can add your own custom stuff here..
+    processor = midiProcessor;
     //[/Constructor_pre]
+
+    label4.reset (new Label ("new label",
+                             TRANS("Modifier")));
+    addAndMakeVisible (label4.get());
+    label4->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label4->setJustificationType (Justification::centredLeft);
+    label4->setEditable (false, false, false);
+    label4->setColour (TextEditor::textColourId, Colours::black);
+    label4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    label4->setBounds (8, 168, 144, 24);
+
+    in_pitch_bend_range.reset (new Slider ("new slider"));
+    addAndMakeVisible (in_pitch_bend_range.get());
+    in_pitch_bend_range->setRange (0, 48, 1);
+    in_pitch_bend_range->setSliderStyle (Slider::IncDecButtons);
+    in_pitch_bend_range->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    in_pitch_bend_range->addListener (this);
+
+    in_pitch_bend_range->setBounds (8, 64, 150, 24);
+
+    label3.reset (new Label ("new label",
+                             TRANS("Input Pitch Bend Range (semitones)\n")));
+    addAndMakeVisible (label3.get());
+    label3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label3->setJustificationType (Justification::centredLeft);
+    label3->setEditable (false, false, false);
+    label3->setColour (TextEditor::textColourId, Colours::black);
+    label3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    label3->setBounds (8, 32, 150, 24);
+
+    section_title.reset (new Label ("section_title",
+                                    TRANS("Input")));
+    addAndMakeVisible (section_title.get());
+    section_title->setFont (Font (22.00f, Font::plain).withTypefaceStyle ("Bold"));
+    section_title->setJustificationType (Justification::centredTop);
+    section_title->setEditable (false, false, false);
+    section_title->setColour (TextEditor::textColourId, Colours::black);
+    section_title->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    singleChannelPriorityMode.reset (new ComboBox ("new combo box"));
+    addAndMakeVisible (singleChannelPriorityMode.get());
+    singleChannelPriorityMode->setEditableText (false);
+    singleChannelPriorityMode->setJustificationType (Justification::centredLeft);
+    singleChannelPriorityMode->setTextWhenNothingSelected (TRANS("Note"));
+    singleChannelPriorityMode->setTextWhenNoChoicesAvailable (TRANS("Note"));
+    singleChannelPriorityMode->addItem (TRANS("Note"), 1);
+    singleChannelPriorityMode->addItem (TRANS("Velocity"), 2);
+    singleChannelPriorityMode->addItem (TRANS("Random"), 3);
+    singleChannelPriorityMode->addListener (this);
+
+    singleChannelPriorityMode->setBounds (8, 144, 144, 24);
+
+    label2.reset (new Label ("new label",
+                             TRANS("Single Channel Note Prioritization")));
+    addAndMakeVisible (label2.get());
+    label2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label2->setJustificationType (Justification::centredTop);
+    label2->setEditable (false, false, false);
+    label2->setColour (TextEditor::textColourId, Colours::black);
+    label2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    label2->setBounds (8, 104, 144, 32);
+
+    singleChannelPriorityModifier.reset (new ComboBox ("new combo box"));
+    addAndMakeVisible (singleChannelPriorityModifier.get());
+    singleChannelPriorityModifier->setEditableText (false);
+    singleChannelPriorityModifier->setJustificationType (Justification::centredLeft);
+    singleChannelPriorityModifier->setTextWhenNothingSelected (TRANS("Most Recent"));
+    singleChannelPriorityModifier->setTextWhenNoChoicesAvailable (TRANS("Most Recent"));
+    singleChannelPriorityModifier->addItem (TRANS("Most Recent"), 1);
+    singleChannelPriorityModifier->addItem (TRANS("Oldest"), 2);
+    singleChannelPriorityModifier->addItem (TRANS("Greatest"), 3);
+    singleChannelPriorityModifier->addItem (TRANS("Lowest"), 4);
+    singleChannelPriorityModifier->addListener (this);
+
+    singleChannelPriorityModifier->setBounds (8, 192, 144, 24);
+
+    label5.reset (new Label ("new label",
+                             TRANS("Interploation Dimension\n")));
+    addAndMakeVisible (label5.get());
+    label5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
+    label5->setJustificationType (Justification::centredTop);
+    label5->setEditable (false, false, false);
+    label5->setColour (TextEditor::textColourId, Colours::black);
+    label5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    label5->setBounds (8, 232, 144, 32);
+
+    interploationDimension.reset (new ComboBox ("new combo box"));
+    addAndMakeVisible (interploationDimension.get());
+    interploationDimension->setEditableText (false);
+    interploationDimension->setJustificationType (Justification::centredLeft);
+    interploationDimension->setTextWhenNothingSelected (TRANS("Continuous Midi Note (Cents)"));
+    interploationDimension->setTextWhenNoChoicesAvailable (TRANS("Continuous Midi Note (Cents)"));
+    interploationDimension->addItem (TRANS("Continuous Midi Note (Cents)"), 1);
+    interploationDimension->addItem (TRANS("Frequency"), 2);
+    interploationDimension->addListener (this);
+
+    interploationDimension->setBounds (8, 272, 144, 24);
 
 
     //[UserPreSize]
@@ -48,6 +150,15 @@ InputModule::~InputModule()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
+    label4 = nullptr;
+    in_pitch_bend_range = nullptr;
+    label3 = nullptr;
+    section_title = nullptr;
+    singleChannelPriorityMode = nullptr;
+    label2 = nullptr;
+    singleChannelPriorityModifier = nullptr;
+    label5 = nullptr;
+    interploationDimension = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -60,8 +171,6 @@ void InputModule::paint (Graphics& g)
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    g.fillAll (Colour (0xff323e44));
-
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
 }
@@ -71,8 +180,53 @@ void InputModule::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
+    section_title->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
+}
+
+void InputModule::sliderValueChanged (Slider* sliderThatWasMoved)
+{
+    //[UsersliderValueChanged_Pre]
+    //[/UsersliderValueChanged_Pre]
+
+    if (sliderThatWasMoved == in_pitch_bend_range.get())
+    {
+        //[UserSliderCode_in_pitch_bend_range] -- add your slider handling code here..
+        processor->in_pitch_bend_range = sliderThatWasMoved->getValue();
+        //[/UserSliderCode_in_pitch_bend_range]
+    }
+
+    //[UsersliderValueChanged_Post]
+    //[/UsersliderValueChanged_Post]
+}
+
+void InputModule::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+{
+    //[UsercomboBoxChanged_Pre]
+    //[/UsercomboBoxChanged_Pre]
+
+    if (comboBoxThatHasChanged == singleChannelPriorityMode.get())
+    {
+        //[UserComboBoxCode_singleChannelPriorityMode] -- add your combo box handling code here..
+        processor->singleChannelNotePriority = (SingleChannelNotePrioritzation)singleChannelPriorityMode->getSelectedItemIndex();
+        //[/UserComboBoxCode_singleChannelPriorityMode]
+    }
+    else if (comboBoxThatHasChanged == singleChannelPriorityModifier.get())
+    {
+        //[UserComboBoxCode_singleChannelPriorityModifier] -- add your combo box handling code here..
+        processor->singleChannelNotePriorityModifier = (SingleChannelNotePrioritzationModifier)singleChannelPriorityModifier->getSelectedItemIndex();
+        //[/UserComboBoxCode_singleChannelPriorityModifier]
+    }
+    else if (comboBoxThatHasChanged == interploationDimension.get())
+    {
+        //[UserComboBoxCode_interploationDimension] -- add your combo box handling code here..
+        processor->interploationDimension = (InterpolationDimension)interploationDimension->getSelectedItemIndex();
+        //[/UserComboBoxCode_interploationDimension]
+    }
+
+    //[UsercomboBoxChanged_Post]
+    //[/UsercomboBoxChanged_Post]
 }
 
 
@@ -91,10 +245,53 @@ void InputModule::resized()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="InputModule" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers=""
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="600" initialHeight="400">
-  <BACKGROUND backgroundColour="ff323e44"/>
+                 parentClasses="public Component" constructorParams="XenMidiRetunerAudioProcessor *midiProcessor"
+                 variableInitialisers="" snapPixels="8" snapActive="1" snapShown="1"
+                 overlayOpacity="0.330" fixedSize="0" initialWidth="600" initialHeight="400">
+  <BACKGROUND backgroundColour="323e44"/>
+  <LABEL name="new label" id="d861762387e1dd26" memberName="label4" virtualName=""
+         explicitFocusOrder="0" pos="8 168 144 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="Modifier" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
+         kerning="0.0" bold="0" italic="0" justification="33"/>
+  <SLIDER name="new slider" id="b64c5755e8e89a8b" memberName="in_pitch_bend_range"
+          virtualName="" explicitFocusOrder="0" pos="8 64 150 24" min="0.0"
+          max="48.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
+          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
+          needsCallback="1"/>
+  <LABEL name="new label" id="12ca6725baa12ffb" memberName="label3" virtualName=""
+         explicitFocusOrder="0" pos="8 32 150 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="Input Pitch Bend Range (semitones)&#10;"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15.0" kerning="0.0" bold="0"
+         italic="0" justification="33"/>
+  <LABEL name="section_title" id="a42bffd032a0d19b" memberName="section_title"
+         virtualName="" explicitFocusOrder="0" pos="0 0 100% 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="Input" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="22.0"
+         kerning="0.0" bold="1" italic="0" justification="12" typefaceStyle="Bold"/>
+  <COMBOBOX name="new combo box" id="34c558f948bf284a" memberName="singleChannelPriorityMode"
+            virtualName="" explicitFocusOrder="0" pos="8 144 144 24" editable="0"
+            layout="33" items="Note&#10;Velocity&#10;Random" textWhenNonSelected="Note"
+            textWhenNoItems="Note"/>
+  <LABEL name="new label" id="1112cb5e9cdc4f37" memberName="label2" virtualName=""
+         explicitFocusOrder="0" pos="8 104 144 32" edTextCol="ff000000"
+         edBkgCol="0" labelText="Single Channel Note Prioritization" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="12"/>
+  <COMBOBOX name="new combo box" id="2ebd7ab8a0c8a16" memberName="singleChannelPriorityModifier"
+            virtualName="" explicitFocusOrder="0" pos="8 192 144 24" editable="0"
+            layout="33" items="Most Recent&#10;Oldest&#10;Greatest&#10;Lowest"
+            textWhenNonSelected="Most Recent" textWhenNoItems="Most Recent"/>
+  <LABEL name="new label" id="28b8d285343a10c" memberName="label5" virtualName=""
+         explicitFocusOrder="0" pos="8 232 144 32" edTextCol="ff000000"
+         edBkgCol="0" labelText="Interploation Dimension&#10;" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="12"/>
+  <COMBOBOX name="new combo box" id="583d3e280c9789d5" memberName="interploationDimension"
+            virtualName="" explicitFocusOrder="0" pos="8 272 144 24" editable="0"
+            layout="33" items="Continuous Midi Note (Cents)&#10;Frequency"
+            textWhenNonSelected="Continuous Midi Note (Cents)" textWhenNoItems="Continuous Midi Note (Cents)"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

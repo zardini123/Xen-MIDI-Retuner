@@ -30,19 +30,23 @@
       <GROUP id="{6E9FE505-8222-C370-9837-85B2A5A04EF8}" name="EditorModules">
         <FILE id="QSLdoB" name="InputModule.cpp" compile="1" resource="0" file="Source/EditorModules/InputModule.cpp"/>
         <FILE id="tGJlgF" name="InputModule.h" compile="0" resource="0" file="Source/EditorModules/InputModule.h"/>
-        <FILE id="R1LQdu" name="NotePrioritizationModule.cpp" compile="1" resource="0"
-              file="Source/EditorModules/NotePrioritizationModule.cpp"/>
-        <FILE id="Gdw57A" name="NotePrioritizationModule.h" compile="0" resource="0"
-              file="Source/EditorModules/NotePrioritizationModule.h"/>
+        <FILE id="S5xF8B" name="KeyboardVisual.cpp" compile="1" resource="0"
+              file="Source/EditorModules/KeyboardVisual.cpp"/>
+        <FILE id="Fr3H9S" name="KeyboardVisual.h" compile="0" resource="0"
+              file="Source/EditorModules/KeyboardVisual.h"/>
+        <FILE id="LLLLQc" name="NoteAndFrequencyOverlay.cpp" compile="1" resource="0"
+              file="Source/EditorModules/NoteAndFrequencyOverlay.cpp"/>
+        <FILE id="XCUNvv" name="NoteAndFrequencyOverlay.h" compile="0" resource="0"
+              file="Source/EditorModules/NoteAndFrequencyOverlay.h"/>
+        <FILE id="ZRWdjt" name="ScaleEditor.cpp" compile="1" resource="0" file="Source/EditorModules/ScaleEditor.cpp"/>
+        <FILE id="QrHybd" name="ScaleEditor.h" compile="0" resource="0" file="Source/EditorModules/ScaleEditor.h"/>
+        <FILE id="dJcj7A" name="ScaleFrequenciesOverlay.cpp" compile="1" resource="0"
+              file="Source/EditorModules/ScaleFrequenciesOverlay.cpp"/>
+        <FILE id="XcQ9uZ" name="ScaleFrequenciesOverlay.h" compile="0" resource="0"
+              file="Source/EditorModules/ScaleFrequenciesOverlay.h"/>
       </GROUP>
-      <FILE id="bvrUTh" name="NoteAndFrequencyOverlay.cpp" compile="1" resource="0"
-            file="Source/NoteAndFrequencyOverlay.cpp"/>
-      <FILE id="FH4bBJ" name="NoteAndFrequencyOverlay.h" compile="0" resource="0"
-            file="Source/NoteAndFrequencyOverlay.h"/>
-      <FILE id="Wbg5Qb" name="KeyboardVisual.cpp" compile="1" resource="0"
-            file="Source/KeyboardVisual.cpp"/>
-      <FILE id="MbdQu9" name="KeyboardVisual.h" compile="0" resource="0"
-            file="Source/KeyboardVisual.h"/>
+      <FILE id="XuRQdB" name="Utilities.cpp" compile="1" resource="0" file="Source/Utilities.cpp"/>
+      <FILE id="KrMAGi" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
       <FILE id="XvZ76Y" name="PluginGUI.cpp" compile="1" resource="0" file="Source/PluginGUI.cpp"/>
       <FILE id="ASvFjf" name="PluginGUI.h" compile="0" resource="0" file="Source/PluginGUI.h"/>
       <FILE id="RC0yrV" name="PluginProcessor.cpp" compile="1" resource="0"

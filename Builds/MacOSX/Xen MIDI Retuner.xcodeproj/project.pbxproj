@@ -93,17 +93,25 @@
 			isa = PBXBuildFile;
 			fileRef = 3C976980A8AFFAC031E0ACB5;
 		};
-		DC55476E05D215D3CBFF5BE5 = {
+		B2BC02A9FE7155E80DAE91C0 = {
 			isa = PBXBuildFile;
-			fileRef = 7B75BC82FAB952600C4BB67E;
+			fileRef = A50287DE07ED2C64E7FCF827;
 		};
-		D02DEB5E9DF39B41BBCCD146 = {
+		A6CD8719005EAB700CB6828F = {
 			isa = PBXBuildFile;
-			fileRef = 2DAE8587B2D5BD1DC4EC5E19;
+			fileRef = F89DB5CD6998182A1A76DCE3;
 		};
-		07CB079AADC346E83BA2A07E = {
+		3F8470D5E514FEEAA2BF7C58 = {
 			isa = PBXBuildFile;
-			fileRef = F8EC1EDECC5F974307C83CCE;
+			fileRef = 36E2F4B4F8D89FC0BCACED54;
+		};
+		CD76D6935FC5502C5CE36DB3 = {
+			isa = PBXBuildFile;
+			fileRef = 02E3E350F5A9FE993AA8E19E;
+		};
+		CB10532CE9D9B4FF4DA2075B = {
+			isa = PBXBuildFile;
+			fileRef = 9E621242E2F5B48AFAFC3389;
 		};
 		14930B4A35406B7EB2360012 = {
 			isa = PBXBuildFile;
@@ -193,11 +201,25 @@
 			isa = PBXBuildFile;
 			fileRef = 3201BBDF6CBDBB944C5CF3EF;
 		};
+		02E3E350F5A9FE993AA8E19E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ScaleFrequenciesOverlay.cpp;
+			path = ../../Source/EditorModules/ScaleFrequenciesOverlay.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		03BD43C7CD6EC1894B687C6A = {
 			isa = PBXFileReference;
 			lastKnownFileType = file.nib;
 			name = RecentFilesMenuTemplate.nib;
 			path = RecentFilesMenuTemplate.nib;
+			sourceTree = "SOURCE_ROOT";
+		};
+		07A2F475CE7E860D8878C8B9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ScaleEditor.h;
+			path = ../../Source/EditorModules/ScaleEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		07C34AE95C2A50D661040F0B = {
@@ -270,13 +292,6 @@
 			path = "Info-VST.plist";
 			sourceTree = "SOURCE_ROOT";
 		};
-		2DAE8587B2D5BD1DC4EC5E19 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = NoteAndFrequencyOverlay.cpp;
-			path = ../../Source/NoteAndFrequencyOverlay.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		3201BBDF6CBDBB944C5CF3EF = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -291,12 +306,26 @@
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_utils";
 			sourceTree = "<absolute>";
 		};
+		36E2F4B4F8D89FC0BCACED54 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ScaleEditor.cpp;
+			path = ../../Source/EditorModules/ScaleEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3830F78E8AD4BBC303AD1052 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
 			name = DiscRecording.framework;
 			path = System/Library/Frameworks/DiscRecording.framework;
 			sourceTree = SDKROOT;
+		};
+		384C84C6462AB51FE5F0601C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ScaleFrequenciesOverlay.h;
+			path = ../../Source/EditorModules/ScaleFrequenciesOverlay.h;
+			sourceTree = "SOURCE_ROOT";
 		};
 		3C71415DAA392D1B8F41E79F = {
 			isa = PBXFileReference;
@@ -368,6 +397,13 @@
 			path = ../../Source/PluginEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		52D4292BCE8EC200681A3BBB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = KeyboardVisual.h;
+			path = ../../Source/EditorModules/KeyboardVisual.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		57ED0995A1491A98A5B877D9 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -416,13 +452,6 @@
 			name = "juce_cryptography";
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_cryptography";
 			sourceTree = "<absolute>";
-		};
-		667D355A2E6E77A64EFCBB61 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = KeyboardVisual.h;
-			path = ../../Source/KeyboardVisual.h;
-			sourceTree = "SOURCE_ROOT";
 		};
 		67B1FD6799D74E2B3E236D5F = {
 			isa = PBXFileReference;
@@ -480,13 +509,6 @@
 			path = System/Library/Frameworks/QuartzCore.framework;
 			sourceTree = SDKROOT;
 		};
-		7B75BC82FAB952600C4BB67E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = NotePrioritizationModule.cpp;
-			path = ../../Source/EditorModules/NotePrioritizationModule.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		80B72F45F406DB4FE61D7D05 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -522,13 +544,6 @@
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_processors";
 			sourceTree = "<absolute>";
 		};
-		93102AD7156E7C1D13996443 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = NotePrioritizationModule.h;
-			path = ../../Source/EditorModules/NotePrioritizationModule.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		963D586276D34C13E8286554 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -550,11 +565,11 @@
 			path = "../../JuceLibraryCode/include_juce_audio_devices.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
-		9DFB9D5D2AE581C33989B790 = {
+		9E621242E2F5B48AFAFC3389 = {
 			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = NoteAndFrequencyOverlay.h;
-			path = ../../Source/NoteAndFrequencyOverlay.h;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = Utilities.cpp;
+			path = ../../Source/Utilities.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		9EE7BAE6313937A2979D7A64 = {
@@ -571,11 +586,25 @@
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_formats";
 			sourceTree = "<absolute>";
 		};
+		A50287DE07ED2C64E7FCF827 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = KeyboardVisual.cpp;
+			path = ../../Source/EditorModules/KeyboardVisual.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		A690E54FEF512681190F1520 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = "TUN_Error.h";
 			path = "../../Source/AnaMark-Tuning-Library/TUN_Error.h";
+			sourceTree = "SOURCE_ROOT";
+		};
+		ABD65F9B57A3CF8B9DB26DB7 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = Utilities.h;
+			path = ../../Source/Utilities.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B80129772DCBB5BC8DABFC4F = {
@@ -640,6 +669,13 @@
 			includeInIndex = 0;
 			path = "Xen MIDI Retuner.component";
 			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
+		C78C6245FED843AE6F7E60B4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = NoteAndFrequencyOverlay.h;
+			path = ../../Source/EditorModules/NoteAndFrequencyOverlay.h;
+			sourceTree = "SOURCE_ROOT";
 		};
 		C97BAB93C56D4D0A0AF78EA4 = {
 			isa = PBXFileReference;
@@ -753,11 +789,11 @@
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_AU.r";
 			sourceTree = "SOURCE_ROOT";
 		};
-		F8EC1EDECC5F974307C83CCE = {
+		F89DB5CD6998182A1A76DCE3 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
-			name = KeyboardVisual.cpp;
-			path = ../../Source/KeyboardVisual.cpp;
+			name = NoteAndFrequencyOverlay.cpp;
+			path = ../../Source/EditorModules/NoteAndFrequencyOverlay.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		33F10721F484897888E2C53A = {
@@ -785,8 +821,14 @@
 			children = (
 				3C976980A8AFFAC031E0ACB5,
 				57ED0995A1491A98A5B877D9,
-				7B75BC82FAB952600C4BB67E,
-				93102AD7156E7C1D13996443,
+				A50287DE07ED2C64E7FCF827,
+				52D4292BCE8EC200681A3BBB,
+				F89DB5CD6998182A1A76DCE3,
+				C78C6245FED843AE6F7E60B4,
+				36E2F4B4F8D89FC0BCACED54,
+				07A2F475CE7E860D8878C8B9,
+				02E3E350F5A9FE993AA8E19E,
+				384C84C6462AB51FE5F0601C,
 			);
 			name = EditorModules;
 			sourceTree = "<group>";
@@ -796,10 +838,8 @@
 			children = (
 				33F10721F484897888E2C53A,
 				6792A254C5601E7BA485AE5F,
-				2DAE8587B2D5BD1DC4EC5E19,
-				9DFB9D5D2AE581C33989B790,
-				F8EC1EDECC5F974307C83CCE,
-				667D355A2E6E77A64EFCBB61,
+				9E621242E2F5B48AFAFC3389,
+				ABD65F9B57A3CF8B9DB26DB7,
 				4C32F2DCF3CB4D88E4449E9C,
 				0D6ACB59B8D5392CBC2C26DC,
 				626DE35A07C14E9C7805A3F2,
@@ -1532,9 +1572,11 @@
 				03C6F67EAC5A9B746DD0CE67,
 				C4EECD3F23C1D751C309C5D3,
 				7A4148BF5DD461DB551FF938,
-				DC55476E05D215D3CBFF5BE5,
-				D02DEB5E9DF39B41BBCCD146,
-				07CB079AADC346E83BA2A07E,
+				B2BC02A9FE7155E80DAE91C0,
+				A6CD8719005EAB700CB6828F,
+				3F8470D5E514FEEAA2BF7C58,
+				CD76D6935FC5502C5CE36DB3,
+				CB10532CE9D9B4FF4DA2075B,
 				14930B4A35406B7EB2360012,
 				112B15BD09684996468CAD5D,
 				A81646E03D98335A5BDD79AE,

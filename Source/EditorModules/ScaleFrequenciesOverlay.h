@@ -21,6 +21,9 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
+
+#include "KeyboardVisual.h"
+#include "../PluginProcessor.h"
 //[/Headers]
 
 
@@ -33,12 +36,12 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class NotePrioritizationModule  : public Component
+class ScaleFrequenciesOverlay  : public Component
 {
 public:
     //==============================================================================
-    NotePrioritizationModule ();
-    ~NotePrioritizationModule() override;
+    ScaleFrequenciesOverlay (KeyboardVisual *keyboardVis, XenMidiRetunerAudioProcessor *midiProcessor);
+    ~ScaleFrequenciesOverlay() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
@@ -51,13 +54,15 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    KeyboardVisual *keyboard;
+    XenMidiRetunerAudioProcessor *processor;
     //[/UserVariables]
 
     //==============================================================================
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (NotePrioritizationModule)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ScaleFrequenciesOverlay)
 };
 
 //[EndFile] You can add extra defines here...

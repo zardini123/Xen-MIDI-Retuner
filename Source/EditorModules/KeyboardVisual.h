@@ -20,15 +20,13 @@
 #pragma once
 
 //[Headers]     -- You can add your own extra header files here --
-#include "../JuceLibraryCode/JuceHeader.h"
-#include "PluginProcessor.h"
+#include <JuceHeader.h>
+
+//// Forward declare class as cyclic dependency results in "undeclared identifier" errors
+//// https://www.eventhelix.com/RealtimeMantra/HeaderFileIncludePatterns.htm
+//class NoteAndFrequencyOverlay;
 //[/Headers]
 
-#include "EditorModules/KeyboardVisual.h"
-#include "EditorModules/ScaleFrequenciesOverlay.h"
-#include "EditorModules/NoteAndFrequencyOverlay.h"
-#include "EditorModules/InputModule.h"
-#include "EditorModules/ScaleEditor.h"
 
 
 //==============================================================================
@@ -39,17 +37,25 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class PluginGUI  : public Component,
-                   public Slider::Listener
+class KeyboardVisual  : public Component,
+                        public Slider::Listener
 {
 public:
     //==============================================================================
-    PluginGUI (XenMidiRetunerAudioProcessor *processorA);
-    ~PluginGUI() override;
+    KeyboardVisual ();
+    ~KeyboardVisual() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    XenMidiRetunerAudioProcessor *processor;
+    void setKeyboardSettings(int firstMidiNote, int lastMidiNote, int width, int height);
+
+    int getFirstMidiNote();
+    int getLastMidiNote();
+
+    double ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNote);
+    double ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNote, int& keyDistanceIndex);
+
+    double ConvertContinuousMidiNoteToPercentWidth(double continousMidiNote);
     //[/UserMethods]
 
     void paint (Graphics& g) override;
@@ -60,20 +66,29 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    void setEqualSpacingValues();
+
+    // Keyboard settings
+    int entireWidth;
+    int entireHeight;
+    int m_firstMidiNote;
+    int m_lastMidiNote;
+
+    // Keyboard cached values
+    double keyDistances[13];
+
+    int m_startOctave;
+    int m_repeatedFirstMidiNote;
+    double m_entireDistance;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<KeyboardVisual> keyboardVisual;
-    std::unique_ptr<ScaleFrequenciesOverlay> scaleFrequenciesOverlay;
-    std::unique_ptr<Slider> out_pitch_bend_range;
-    std::unique_ptr<Label> label;
-    std::unique_ptr<NoteAndFrequencyOverlay> noteAndFreqOverlay;
-    std::unique_ptr<InputModule> component;
-    std::unique_ptr<ScaleEditor> component2;
+    std::unique_ptr<Slider> highest;
+    std::unique_ptr<Slider> lowest;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PluginGUI)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyboardVisual)
 };
 
 //[EndFile] You can add extra defines here...

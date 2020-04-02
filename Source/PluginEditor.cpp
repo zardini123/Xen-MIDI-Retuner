@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "PluginProcessor.h"
 #include "PluginEditor.h"
 
 //==============================================================================
@@ -17,8 +16,7 @@ XenMidiRetunerAudioProcessorEditor::XenMidiRetunerAudioProcessorEditor (XenMidiR
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    PluginGUI *comp = new PluginGUI();
-    comp->processor = &p;
+    PluginGUI *comp = new PluginGUI(&p);
     addAndMakeVisible(comp);
     setSize (comp->getWidth(), comp->getHeight());
 }
