@@ -33,12 +33,36 @@ ScaleEditor::ScaleEditor (XenMidiRetunerAudioProcessor *midiProcessor)
     processor = midiProcessor;
     //[/Constructor_pre]
 
-    textButton.reset (new TextButton ("new button"));
-    addAndMakeVisible (textButton.get());
-    textButton->setButtonText (TRANS("Load .tun File"));
-    textButton->addListener (this);
+    label.reset (new Label ("new label",
+                            TRANS("Scale\n")));
+    addAndMakeVisible (label.get());
+    label->setFont (Font (22.00f, Font::plain).withTypefaceStyle ("Bold"));
+    label->setJustificationType (Justification::centred);
+    label->setEditable (false, false, false);
+    label->setColour (TextEditor::textColourId, Colours::black);
+    label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    textButton->setBounds (8, 8, 150, 24);
+    importTunFile.reset (new TextButton ("new button"));
+    addAndMakeVisible (importTunFile.get());
+    importTunFile->setButtonText (TRANS("Load .tun File"));
+    importTunFile->addListener (this);
+
+    importTunFile->setBounds (8, 32, 150, 24);
+
+    resetScaleButton.reset (new TextButton ("new button"));
+    addAndMakeVisible (resetScaleButton.get());
+    resetScaleButton->setButtonText (TRANS("Reset"));
+    resetScaleButton->addListener (this);
+
+    resetScaleButton->setBounds (8, 64, 150, 24);
+
+    hyperlinkButton.reset (new HyperlinkButton (TRANS("Sevish Workshop"),
+                                                URL ("https://sevish.com/scaleworkshop/")));
+    addAndMakeVisible (hyperlinkButton.get());
+    hyperlinkButton->setTooltip (TRANS("https://sevish.com/scaleworkshop/"));
+    hyperlinkButton->setButtonText (TRANS("Sevish Workshop"));
+
+    hyperlinkButton->setBounds (8, 104, 150, 24);
 
 
     //[UserPreSize]
@@ -56,7 +80,10 @@ ScaleEditor::~ScaleEditor()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    textButton = nullptr;
+    label = nullptr;
+    importTunFile = nullptr;
+    resetScaleButton = nullptr;
+    hyperlinkButton = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -78,6 +105,7 @@ void ScaleEditor::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
+    label->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -87,9 +115,9 @@ void ScaleEditor::buttonClicked (Button* buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == textButton.get())
+    if (buttonThatWasClicked == importTunFile.get())
     {
-        //[UserButtonCode_textButton] -- add your button handler code here..
+        //[UserButtonCode_importTunFile] -- add your button handler code here..
         FileChooser myChooser ("Please select the AnaMark Tuning file you want to load...",
                            File::getSpecialLocation (File::userHomeDirectory),
                            "*.tun");
@@ -100,7 +128,13 @@ void ScaleEditor::buttonClicked (Button* buttonThatWasClicked)
 
             processor->scale.Read(theFile.getFullPathName().toStdString().c_str());
         }
-        //[/UserButtonCode_textButton]
+        //[/UserButtonCode_importTunFile]
+    }
+    else if (buttonThatWasClicked == resetScaleButton.get())
+    {
+        //[UserButtonCode_resetScaleButton] -- add your button handler code here..
+        processor->scale.Reset();
+        //[/UserButtonCode_resetScaleButton]
     }
 
     //[UserbuttonClicked_Post]
@@ -127,9 +161,21 @@ BEGIN_JUCER_METADATA
                  variableInitialisers="" snapPixels="8" snapActive="1" snapShown="1"
                  overlayOpacity="0.330" fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44"/>
-  <TEXTBUTTON name="new button" id="d2712430b72f9c65" memberName="textButton"
-              virtualName="" explicitFocusOrder="0" pos="8 8 150 24" buttonText="Load .tun File"
+  <LABEL name="new label" id="235c5745dedfe1ad" memberName="label" virtualName=""
+         explicitFocusOrder="0" pos="0 0 100% 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="Scale&#10;" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="22.0"
+         kerning="0.0" bold="1" italic="0" justification="36" typefaceStyle="Bold"/>
+  <TEXTBUTTON name="new button" id="d2712430b72f9c65" memberName="importTunFile"
+              virtualName="" explicitFocusOrder="0" pos="8 32 150 24" buttonText="Load .tun File"
               connectedEdges="0" needsCallback="1" radioGroupId="0"/>
+  <TEXTBUTTON name="new button" id="2e643fc79257c780" memberName="resetScaleButton"
+              virtualName="" explicitFocusOrder="0" pos="8 64 150 24" buttonText="Reset"
+              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
+  <HYPERLINKBUTTON name="new hyperlink" id="6e1339fc3a50cbf" memberName="hyperlinkButton"
+                   virtualName="" explicitFocusOrder="0" pos="8 104 150 24" tooltip="https://sevish.com/scaleworkshop/"
+                   buttonText="Sevish Workshop" connectedEdges="0" needsCallback="0"
+                   radioGroupId="0" url="https://sevish.com/scaleworkshop/"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

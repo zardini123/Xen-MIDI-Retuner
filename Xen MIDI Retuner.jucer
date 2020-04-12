@@ -4,7 +4,7 @@
               pluginFormats="buildAU,buildVST" pluginCharacteristicsValue="pluginEditorRequiresKeys,pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
               pluginVST3Category="Fx,Tools" bundleIdentifier="com.TarasPalczynskiIII.XenMIDIRetuner"
               companyName="Taras Palczynski III" pluginManufacturer="Taras Palczynski III"
-              pluginName="Xen MIDI Retuner">
+              pluginName="Xen MIDI Retuner" version="0.0.1">
   <MAINGROUP id="dJj14n" name="Xen MIDI Retuner">
     <GROUP id="{A1692F2F-028C-9EA8-2739-2FC33C9F86F6}" name="Source">
       <GROUP id="{5CFBB6E8-DB93-CA08-FB77-07FAC1572B4B}" name="AnaMark-Tuning-Library">
@@ -28,6 +28,16 @@
               file="Source/AnaMark-Tuning-Library/TUN_StringTools.h"/>
       </GROUP>
       <GROUP id="{6E9FE505-8222-C370-9837-85B2A5A04EF8}" name="EditorModules">
+        <GROUP id="{B7E7302D-0FC2-70B0-B744-AC0BE6319EE2}" name="Components">
+          <FILE id="Ic9glx" name="TransitionCurve.cpp" compile="1" resource="0"
+                file="Source/EditorModules/Components/TransitionCurve.cpp"/>
+          <FILE id="oLc1Lc" name="TransitionCurve.h" compile="0" resource="0"
+                file="Source/EditorModules/Components/TransitionCurve.h"/>
+        </GROUP>
+        <FILE id="OQtVW9" name="ConversionModule.cpp" compile="1" resource="0"
+              file="Source/EditorModules/ConversionModule.cpp"/>
+        <FILE id="UzvsFz" name="ConversionModule.h" compile="0" resource="0"
+              file="Source/EditorModules/ConversionModule.h"/>
         <FILE id="QSLdoB" name="InputModule.cpp" compile="1" resource="0" file="Source/EditorModules/InputModule.cpp"/>
         <FILE id="tGJlgF" name="InputModule.h" compile="0" resource="0" file="Source/EditorModules/InputModule.h"/>
         <FILE id="S5xF8B" name="KeyboardVisual.cpp" compile="1" resource="0"

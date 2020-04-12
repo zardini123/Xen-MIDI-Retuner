@@ -29,6 +29,7 @@
 #include "EditorModules/NoteAndFrequencyOverlay.h"
 #include "EditorModules/InputModule.h"
 #include "EditorModules/ScaleEditor.h"
+#include "EditorModules/ConversionModule.h"
 
 
 //==============================================================================
@@ -70,6 +71,7 @@ private:
     std::unique_ptr<NoteAndFrequencyOverlay> noteAndFreqOverlay;
     std::unique_ptr<InputModule> component;
     std::unique_ptr<ScaleEditor> component2;
+    std::unique_ptr<ConversionModule> conversionModule;
 
 
     //==============================================================================

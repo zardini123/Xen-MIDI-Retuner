@@ -19,6 +19,7 @@
 
 //[Headers] You can add your own extra header files here...
 #include "../Utilities.h"
+#include <sstream> //for std::stringstream
 //[/Headers]
 
 #include "NoteAndFrequencyOverlay.h"
@@ -88,54 +89,88 @@ void NoteAndFrequencyOverlay::paint (Graphics& g)
     int y = 0, width = 1, height = 100;
     int widthOfComponent = proportionOfWidth(1.0f);
     for (int i = 0; i < MAX_MIDI_CHANNELS; i++) {
-        for (std::vector<Note>::iterator it = processor->input[i].notes.begin(); it != processor->input[i].notes.end(); ++it) {
-            // FIXME:  Created "Segmentation Fault: 11" on multiple occasions, usually after using the plugin for a couple of minutes
-            float continuousMidiNote = it->midiNote + pitchwheelPosToSemitones(processor->input[i].pitchwheel, processor->in_pitch_bend_range);
-            
-            double x = keyboard->ConvertContinuousMidiNoteToPercentWidth(continuousMidiNote) * widthOfComponent;
-            double midiNoteX = keyboard->ConvertDiscreteMidiNoteToPercentWidth(it->midiNote) * widthOfComponent;
+        // Check to see if input vector is being used on the processor thread
+        const ScopedTryLock myScopedTryLock (processor->inputLock);
 
-            Note *currentNote = &(*it);
-            
-            if (currentNote == processor->input[i].priorityNote) {
-                // Out pitchbend visualzation under priority note
-                Colour fillColour = Colour (0x3f00ffb2);
-                int x1 = keyboard->ConvertContinuousMidiNoteToPercentWidth((float)it->midiNote - processor->in_pitch_bend_range) * widthOfComponent;
-                int x2 = keyboard->ConvertContinuousMidiNoteToPercentWidth((float)it->midiNote + processor->in_pitch_bend_range) * widthOfComponent;
-                
-                g.setColour (fillColour);
-                g.fillRect (x1, y, x2 - x1, height);
-                
-                /*
-                // Show the resolution of MIDI 1's 14 bit pitchwheel parameter
-                for (int p = 0; p <= 16383; p++)
-                {
-                    double offset = pitchwheelPosToSemitones(p, processor->out_pitch_bend_range);
+        if (myScopedTryLock.isLocked())
+        {
+            for (std::vector<Note>::iterator it = processor->input[i].notes.begin(); it != processor->input[i].notes.end(); ++it) {
+                float continuousMidiNote = it->midiNote + pitchwheelPosToSemitones(processor->input[i].pitchwheel, processor->in_pitch_bend_range->get());
+
+                double x = keyboard->ConvertContinuousMidiNoteToPercentWidth(continuousMidiNote) * widthOfComponent;
+                double midiNoteX = keyboard->ConvertDiscreteMidiNoteToPercentWidth(it->midiNote) * widthOfComponent;
+
+                Note *currentNote = &(*it);
+
+                if (currentNote == processor->input[i].priorityNote) {
+                    // In pitchbend visualzation under priority note
+                    Colour fillColour = Colour (0x3f00ffb2);
+                    int x1 = keyboard->ConvertContinuousMidiNoteToPercentWidth((float)it->midiNote - processor->in_pitch_bend_range->get()) * widthOfComponent;
+                    int x2 = keyboard->ConvertContinuousMidiNoteToPercentWidth((float)it->midiNote + processor->in_pitch_bend_range->get()) * widthOfComponent;
+
                     g.setColour (fillColour);
-                    g.fillRect (x1 + offset, y, 1, height);
+                    g.fillRect (x1, y, x2 - x1, height);
+
+                    /*
+                    // Show the resolution of MIDI 1's 14 bit pitchwheel parameter
+                    for (int p = 0; p <= 16383; p++)
+                    {
+                        double offset = pitchwheelPosToSemitones(p, processor->out_pitch_bend_range);
+                        g.setColour (fillColour);
+                        g.fillRect (x1 + offset, y, 1, height);
+                    }
+                     */
+
+                    // Draw Continous priority note
+                    fillColour = Colour (0xff00ffb2);
+                    g.setColour (fillColour);
+                    g.fillRect (x - 1, y, width + 3, height);
+
+                    // Draw prioirty note
+                    fillColour = Colour (0xff00ffb2);
+                    g.setColour (fillColour);
+                    g.fillRect (midiNoteX - 1, y, width + 3, height);
+
+                    // Converted Note
+                    double xConverted = keyboard->ConvertContinuousMidiNoteToPercentWidth(processor->input[i].scaleConvertedPriorityNote) * widthOfComponent;
+                    fillColour = Colour (0xfffb00ff);
+                    g.setColour (fillColour);
+                    g.fillRect (xConverted - 1, y, width + 3, height);
+                } else {
+                    Colour fillColour = Colour (0xffd1e40b);
+
+                    // Draw Continous Note
+                    g.setColour (fillColour);
+                    g.fillRect (x, y, width, height);
+
+                    // Draw Note
+                    fillColour = Colour (0x5dd1e40b);
+                    g.setColour (fillColour);
+                    g.fillRect (midiNoteX, y, width, height);
                 }
-                 */
-                
-                // Draw Continous priority note
-                fillColour = Colour (0xff00ffb2);
+            }
+
+            if (processor->input[i].notes.size() > 0)
+            {
+                // Converted Note Closest Note
+                double xConverted = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processor->output[i].initalMidiNote) * widthOfComponent;
+                Colour fillColour = Colour (0x4dfb00ff);
                 g.setColour (fillColour);
-                g.fillRect (x - 1, y, width + 3, height);
-                
-                // Draw prioirty note
-                fillColour = Colour (0xff00ffb2);
+                g.fillRect (xConverted - 1, y, width + 3, height);
+
+                // Out pitchbend
+                fillColour = Colour (0x3f00a2ff);
+                int x3 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processor->output[i].initalMidiNote - processor->out_pitch_bend_range->get()) * widthOfComponent;
+                int x4 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processor->output[i].initalMidiNote + processor->out_pitch_bend_range->get()) * widthOfComponent;
+
                 g.setColour (fillColour);
-                g.fillRect (midiNoteX - 1, y, width + 3, height);
-            } else {
-                Colour fillColour = Colour (0xffd1e40b);
-                
-                // Draw Continous Note
+                g.fillRect (x3, y, x4 - x3, height);
+
+                // Current Midi Note
+                xConverted = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processor->output[i].currentMidiNoteNumber) * widthOfComponent;
+                fillColour = Colour (0xffffae00);
                 g.setColour (fillColour);
-                g.fillRect (x, y, width, height);
-                
-                // Draw Note
-                fillColour = Colour (0xffd1e40b);
-                g.setColour (fillColour);
-                g.fillRect (midiNoteX, y, width, height);
+                g.fillRect (xConverted - 1, y, width + 3, height);
             }
         }
     }

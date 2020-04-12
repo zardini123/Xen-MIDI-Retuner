@@ -12,6 +12,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "AnaMark-Tuning-Library/SCL_Import.h"
+#include "EditorModules/Components/TransitionCurve.h"
 
 //==============================================================================
 /**
@@ -43,20 +44,27 @@ enum InterpolationDimension
 struct Note
 {
     int midiNote;
-    int velocity;
+    uint8 velocity;
+    
+    bool turnOffFlag = false;
 };
 
 struct Channel
 {
     uint16 pitchwheel = CENTER_PITCHWHEEL; // Default to pitchbend wheel at center
     const Note *priorityNote;
+    
+    float scaleConvertedPriorityNote;
     std::vector<Note> notes;
 };
 
 struct OutputChannel
 {
-    Channel *inputChannel;
+    int initalMidiNote;
+    int initalJump;
     
+    int noteOffset;
+    int currentMidiNoteNumber;
 };
 
 class XenMidiRetunerAudioProcessor  : public AudioProcessor
@@ -64,16 +72,22 @@ class XenMidiRetunerAudioProcessor  : public AudioProcessor
 public:
     // Processor data
     Channel input[MAX_MIDI_CHANNELS];
+    CriticalSection inputLock;
+    
     OutputChannel output[MAX_MIDI_CHANNELS];
+    std::vector<Note> outputNotes[MAX_MIDI_CHANNELS];
 
     TUN::CSingleScale scale;
 
-    int in_pitch_bend_range;
-    int out_pitch_bend_range;
+    AudioParameterInt *in_pitch_bend_range;
+    AudioParameterInt *out_pitch_bend_range;
     
-    SingleChannelNotePrioritzation singleChannelNotePriority = NOTE;
-    SingleChannelNotePrioritzationModifier singleChannelNotePriorityModifier = MOST_RECENT;
+    AudioParameterChoice *singleChannelNotePriority;
+    AudioParameterChoice *singleChannelNotePriorityModifier;
+    
     InterpolationDimension interploationDimension = CENTS;
+    
+    TransitionCurve *interpolationCurve = nullptr;
     // END Processor data
 
     //==============================================================================
@@ -114,6 +128,7 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 private:
+    
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (XenMidiRetunerAudioProcessor)
 };

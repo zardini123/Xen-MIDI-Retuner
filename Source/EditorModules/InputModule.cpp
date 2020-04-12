@@ -46,7 +46,7 @@ InputModule::InputModule (XenMidiRetunerAudioProcessor *midiProcessor)
 
     in_pitch_bend_range.reset (new Slider ("new slider"));
     addAndMakeVisible (in_pitch_bend_range.get());
-    in_pitch_bend_range->setRange (0, 48, 1);
+    in_pitch_bend_range->setRange (1, 96, 1);
     in_pitch_bend_range->setSliderStyle (Slider::IncDecButtons);
     in_pitch_bend_range->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
     in_pitch_bend_range->addListener (this);
@@ -77,11 +77,8 @@ InputModule::InputModule (XenMidiRetunerAudioProcessor *midiProcessor)
     addAndMakeVisible (singleChannelPriorityMode.get());
     singleChannelPriorityMode->setEditableText (false);
     singleChannelPriorityMode->setJustificationType (Justification::centredLeft);
-    singleChannelPriorityMode->setTextWhenNothingSelected (TRANS("Note"));
-    singleChannelPriorityMode->setTextWhenNoChoicesAvailable (TRANS("Note"));
-    singleChannelPriorityMode->addItem (TRANS("Note"), 1);
-    singleChannelPriorityMode->addItem (TRANS("Velocity"), 2);
-    singleChannelPriorityMode->addItem (TRANS("Random"), 3);
+    singleChannelPriorityMode->setTextWhenNothingSelected (String());
+    singleChannelPriorityMode->setTextWhenNoChoicesAvailable (String());
     singleChannelPriorityMode->addListener (this);
 
     singleChannelPriorityMode->setBounds (8, 144, 144, 24);
@@ -101,12 +98,8 @@ InputModule::InputModule (XenMidiRetunerAudioProcessor *midiProcessor)
     addAndMakeVisible (singleChannelPriorityModifier.get());
     singleChannelPriorityModifier->setEditableText (false);
     singleChannelPriorityModifier->setJustificationType (Justification::centredLeft);
-    singleChannelPriorityModifier->setTextWhenNothingSelected (TRANS("Most Recent"));
-    singleChannelPriorityModifier->setTextWhenNoChoicesAvailable (TRANS("Most Recent"));
-    singleChannelPriorityModifier->addItem (TRANS("Most Recent"), 1);
-    singleChannelPriorityModifier->addItem (TRANS("Oldest"), 2);
-    singleChannelPriorityModifier->addItem (TRANS("Greatest"), 3);
-    singleChannelPriorityModifier->addItem (TRANS("Lowest"), 4);
+    singleChannelPriorityModifier->setTextWhenNothingSelected (String());
+    singleChannelPriorityModifier->setTextWhenNoChoicesAvailable (String());
     singleChannelPriorityModifier->addListener (this);
 
     singleChannelPriorityModifier->setBounds (8, 192, 144, 24);
@@ -136,12 +129,18 @@ InputModule::InputModule (XenMidiRetunerAudioProcessor *midiProcessor)
 
 
     //[UserPreSize]
+    singleChannelPriorityMode->addItemList(processor->singleChannelNotePriority->choices, 1);
+    singleChannelPriorityMode->setSelectedItemIndex(processor->singleChannelNotePriority->getIndex());
+
+    singleChannelPriorityModifier->addItemList(processor->singleChannelNotePriorityModifier->choices, 1);
+    singleChannelPriorityModifier->setSelectedItemIndex(processor->singleChannelNotePriorityModifier->getIndex());
     //[/UserPreSize]
 
     setSize (600, 400);
 
 
     //[Constructor] You can add your own custom stuff here..
+    in_pitch_bend_range->setValue(processor->in_pitch_bend_range->get());
     //[/Constructor]
 }
 
@@ -193,7 +192,7 @@ void InputModule::sliderValueChanged (Slider* sliderThatWasMoved)
     if (sliderThatWasMoved == in_pitch_bend_range.get())
     {
         //[UserSliderCode_in_pitch_bend_range] -- add your slider handling code here..
-        processor->in_pitch_bend_range = sliderThatWasMoved->getValue();
+        *(processor->in_pitch_bend_range) = sliderThatWasMoved->getValue();
         //[/UserSliderCode_in_pitch_bend_range]
     }
 
@@ -209,13 +208,13 @@ void InputModule::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     if (comboBoxThatHasChanged == singleChannelPriorityMode.get())
     {
         //[UserComboBoxCode_singleChannelPriorityMode] -- add your combo box handling code here..
-        processor->singleChannelNotePriority = (SingleChannelNotePrioritzation)singleChannelPriorityMode->getSelectedItemIndex();
+        *(processor->singleChannelNotePriority) = singleChannelPriorityMode->getSelectedItemIndex();
         //[/UserComboBoxCode_singleChannelPriorityMode]
     }
     else if (comboBoxThatHasChanged == singleChannelPriorityModifier.get())
     {
         //[UserComboBoxCode_singleChannelPriorityModifier] -- add your combo box handling code here..
-        processor->singleChannelNotePriorityModifier = (SingleChannelNotePrioritzationModifier)singleChannelPriorityModifier->getSelectedItemIndex();
+        *(processor->singleChannelNotePriorityModifier) = singleChannelPriorityModifier->getSelectedItemIndex();
         //[/UserComboBoxCode_singleChannelPriorityModifier]
     }
     else if (comboBoxThatHasChanged == interploationDimension.get())
@@ -255,8 +254,8 @@ BEGIN_JUCER_METADATA
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <SLIDER name="new slider" id="b64c5755e8e89a8b" memberName="in_pitch_bend_range"
-          virtualName="" explicitFocusOrder="0" pos="8 64 150 24" min="0.0"
-          max="48.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
+          virtualName="" explicitFocusOrder="0" pos="8 64 150 24" min="1.0"
+          max="96.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="1"/>
   <LABEL name="new label" id="12ca6725baa12ffb" memberName="label3" virtualName=""
@@ -272,8 +271,7 @@ BEGIN_JUCER_METADATA
          kerning="0.0" bold="1" italic="0" justification="12" typefaceStyle="Bold"/>
   <COMBOBOX name="new combo box" id="34c558f948bf284a" memberName="singleChannelPriorityMode"
             virtualName="" explicitFocusOrder="0" pos="8 144 144 24" editable="0"
-            layout="33" items="Note&#10;Velocity&#10;Random" textWhenNonSelected="Note"
-            textWhenNoItems="Note"/>
+            layout="33" items="" textWhenNonSelected="" textWhenNoItems=""/>
   <LABEL name="new label" id="1112cb5e9cdc4f37" memberName="label2" virtualName=""
          explicitFocusOrder="0" pos="8 104 144 32" edTextCol="ff000000"
          edBkgCol="0" labelText="Single Channel Note Prioritization" editableSingleClick="0"
@@ -281,8 +279,7 @@ BEGIN_JUCER_METADATA
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="12"/>
   <COMBOBOX name="new combo box" id="2ebd7ab8a0c8a16" memberName="singleChannelPriorityModifier"
             virtualName="" explicitFocusOrder="0" pos="8 192 144 24" editable="0"
-            layout="33" items="Most Recent&#10;Oldest&#10;Greatest&#10;Lowest"
-            textWhenNonSelected="Most Recent" textWhenNoItems="Most Recent"/>
+            layout="33" items="" textWhenNonSelected="" textWhenNoItems=""/>
   <LABEL name="new label" id="28b8d285343a10c" memberName="label5" virtualName=""
          explicitFocusOrder="0" pos="8 232 144 32" edTextCol="ff000000"
          edBkgCol="0" labelText="Interploation Dimension&#10;" editableSingleClick="0"

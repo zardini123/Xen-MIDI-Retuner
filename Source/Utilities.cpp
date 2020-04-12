@@ -21,6 +21,11 @@ float noteAndSemitonesToFreqHz(int noteNum, float semitones)
     return std::pow(2, ((noteNum + semitones) - 69) / 12.0f) * 440;
 }
 
+float continuousNoteToFreqHz(float continuousNote)
+{
+    return std::pow(2, ((continuousNote) - 69) / 12.0f) * 440;
+}
+
 void freqHZToNoteAndSemitones(double frequency, int &noteNum, double &semitones)
 {
   // Convert frequency to the midi note number with decimal result kept

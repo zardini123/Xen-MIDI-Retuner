@@ -21,10 +21,9 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
-
-#include "../PluginProcessor.h"
 //[/Headers]
 
+#include "Components/TransitionCurve.h"
 
 
 //==============================================================================
@@ -35,38 +34,38 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class ScaleEditor  : public Component,
-                     public Button::Listener
+class ConversionModule  : public Component,
+                          public Slider::Listener
 {
 public:
     //==============================================================================
-    ScaleEditor (XenMidiRetunerAudioProcessor *midiProcessor);
-    ~ScaleEditor() override;
+    ConversionModule ();
+    ~ConversionModule() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    TransitionCurve *getTransitionCurve();
     //[/UserMethods]
 
     void paint (Graphics& g) override;
     void resized() override;
-    void buttonClicked (Button* buttonThatWasClicked) override;
+    void sliderValueChanged (Slider* sliderThatWasMoved) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    XenMidiRetunerAudioProcessor *processor;
     //[/UserVariables]
 
     //==============================================================================
+    std::unique_ptr<Label> section_title;
+    std::unique_ptr<TransitionCurve> transitionCurve;
+    std::unique_ptr<Slider> slider;
     std::unique_ptr<Label> label;
-    std::unique_ptr<TextButton> importTunFile;
-    std::unique_ptr<TextButton> resetScaleButton;
-    std::unique_ptr<HyperlinkButton> hyperlinkButton;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ScaleEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConversionModule)
 };
 
 //[EndFile] You can add extra defines here...
