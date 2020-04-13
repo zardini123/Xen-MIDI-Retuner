@@ -1,6 +1,6 @@
 # Xen MIDI Retuner
 
-Xen MIDI Retuner is a MIDI plugin that retunes midi input to microtonal and xenharmonic scales defined by AnaMark (.tun) files.
+Xen MIDI Retuner is a MIDI plugin that retunes midi input to microtonal and xenharmonic scales via clever midi note and pitchbitch output.  Currently, the scale to retune to is defined by AnaMark (.tun) files.
 
 This uses [Mark Henning's AnaMark tuning library](https://github.com/zardini123/AnaMark-Tuning-Library) for interpreting .tun files.
 
@@ -17,6 +17,8 @@ Currently, a single channel mode has only been created.  All inputed channels to
 If, for example, you're using a Roli Seaboard, set the Seaboard to output Multi Channel.  Each channel (which in the seaboard is each played voice/note) will be retuned to the scale.
 
 MPE input, and Multi channel and MPE output is planned to be supported (see section **Feature Todo...**).
+
+In most cases, the _Output Pitch Bend Range_ should be set to the pitchbend range of your instrument.
 
 ## License
 
