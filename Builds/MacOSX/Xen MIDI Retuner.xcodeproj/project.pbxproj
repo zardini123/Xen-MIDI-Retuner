@@ -89,9 +89,13 @@
 			isa = PBXBuildFile;
 			fileRef = C3936DB2289AAC287026C989;
 		};
-		1B5031CDCA9C3DD30C3E5154 = {
+		300229EF3A551EB840864D9F = {
 			isa = PBXBuildFile;
-			fileRef = 6FE4377EB7BB52380E101748;
+			fileRef = B6224E6CBED4648D6F9483CD;
+		};
+		FAF24D148BA4B6E05AAF4ADB = {
+			isa = PBXBuildFile;
+			fileRef = C74C80B48906DCAC43A39F57;
 		};
 		075D8B75755FF325E83D6762 = {
 			isa = PBXBuildFile;
@@ -454,13 +458,6 @@
 			path = "../../JuceLibraryCode/include_juce_events.mm";
 			sourceTree = "SOURCE_ROOT";
 		};
-		5F34A5DC34DED319D1E7DBB5 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TransitionCurve.h;
-			path = ../../Source/EditorModules/Components/TransitionCurve.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		626DE35A07C14E9C7805A3F2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -508,13 +505,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "include_juce_audio_plugin_client_utils.cpp";
 			path = "../../JuceLibraryCode/include_juce_audio_plugin_client_utils.cpp";
-			sourceTree = "SOURCE_ROOT";
-		};
-		6FE4377EB7BB52380E101748 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TransitionCurve.cpp;
-			path = ../../Source/EditorModules/Components/TransitionCurve.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7192D37C17A7B8FE607A8E52 = {
@@ -643,6 +633,13 @@
 			path = ../../Source/Utilities.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		B6224E6CBED4648D6F9483CD = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = TransitionCurve.cpp;
+			path = ../../Source/Components/TransitionCurve.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		B80129772DCBB5BC8DABFC4F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -656,6 +653,13 @@
 			name = OpenGL.framework;
 			path = System/Library/Frameworks/OpenGL.framework;
 			sourceTree = SDKROOT;
+		};
+		B9F65472332B956F5CE39C15 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = TransitionCurve.h;
+			path = ../../Source/Components/TransitionCurve.h;
+			sourceTree = "SOURCE_ROOT";
 		};
 		BAFD13A1E2992D36F71E436D = {
 			isa = PBXFileReference;
@@ -706,6 +710,13 @@
 			path = "Xen MIDI Retuner.component";
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
+		C74C80B48906DCAC43A39F57 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = TransitionCurveGUI.cpp;
+			path = ../../Source/Components/TransitionCurveGUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		C78C6245FED843AE6F7E60B4 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -732,6 +743,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = "TUN_EmbedHTML.h";
 			path = "../../Source/AnaMark-Tuning-Library/TUN_EmbedHTML.h";
+			sourceTree = "SOURCE_ROOT";
+		};
+		DCD7623E9989B75CCC6C9516 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = TransitionCurveGUI.h;
+			path = ../../Source/Components/TransitionCurveGUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		DD8AD2B08738AAE2801EB190 = {
@@ -852,11 +870,13 @@
 			name = "AnaMark-Tuning-Library";
 			sourceTree = "<group>";
 		};
-		474B3AFCA7470F35C6888DD9 = {
+		E86FCEB8ABEA525EA3B6A003 = {
 			isa = PBXGroup;
 			children = (
-				6FE4377EB7BB52380E101748,
-				5F34A5DC34DED319D1E7DBB5,
+				B6224E6CBED4648D6F9483CD,
+				B9F65472332B956F5CE39C15,
+				C74C80B48906DCAC43A39F57,
+				DCD7623E9989B75CCC6C9516,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -864,7 +884,6 @@
 		6792A254C5601E7BA485AE5F = {
 			isa = PBXGroup;
 			children = (
-				474B3AFCA7470F35C6888DD9,
 				00048E2734552BF26B00F194,
 				2A3E8FC3B07CEF4001D44ECD,
 				3C976980A8AFFAC031E0ACB5,
@@ -885,6 +904,7 @@
 			isa = PBXGroup;
 			children = (
 				33F10721F484897888E2C53A,
+				E86FCEB8ABEA525EA3B6A003,
 				6792A254C5601E7BA485AE5F,
 				9E621242E2F5B48AFAFC3389,
 				ABD65F9B57A3CF8B9DB26DB7,
@@ -1619,7 +1639,8 @@
 				17372AEC0D5E16E464930928,
 				03C6F67EAC5A9B746DD0CE67,
 				C4EECD3F23C1D751C309C5D3,
-				1B5031CDCA9C3DD30C3E5154,
+				300229EF3A551EB840864D9F,
+				FAF24D148BA4B6E05AAF4ADB,
 				075D8B75755FF325E83D6762,
 				7A4148BF5DD461DB551FF938,
 				B2BC02A9FE7155E80DAE91C0,

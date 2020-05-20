@@ -34,17 +34,15 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class TransitionCurve  : public Component
+class TransitionCurveGUI  : public Component
 {
 public:
     //==============================================================================
-    TransitionCurve ();
-    ~TransitionCurve() override;
+    TransitionCurveGUI ();
+    ~TransitionCurveGUI() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    void setTransition(float transition);
-    float evaluate(float xPosition);
     //[/UserMethods]
 
     void paint (Graphics& g) override;
@@ -65,7 +63,7 @@ private:
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TransitionCurve)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TransitionCurveGUI)
 };
 
 //[EndFile] You can add extra defines here...

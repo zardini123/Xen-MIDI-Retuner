@@ -4,7 +4,7 @@
               pluginFormats="buildAU,buildVST" pluginCharacteristicsValue="pluginEditorRequiresKeys,pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
               pluginVST3Category="Fx,Tools" bundleIdentifier="com.TarasPalczynskiIII.XenMIDIRetuner"
               companyName="Taras Palczynski III" pluginManufacturer="Taras Palczynski III"
-              pluginName="Xen MIDI Retuner" version="0.0.1">
+              pluginName="Xen MIDI Retuner" version="0.0.1" projectLineFeed="&#10;">
   <MAINGROUP id="dJj14n" name="Xen MIDI Retuner">
     <GROUP id="{A1692F2F-028C-9EA8-2739-2FC33C9F86F6}" name="Source">
       <GROUP id="{5CFBB6E8-DB93-CA08-FB77-07FAC1572B4B}" name="AnaMark-Tuning-Library">
@@ -27,13 +27,17 @@
         <FILE id="jhR0Cu" name="TUN_StringTools.h" compile="0" resource="0"
               file="Source/AnaMark-Tuning-Library/TUN_StringTools.h"/>
       </GROUP>
+      <GROUP id="{6024499F-0F1A-F5A5-38AB-6FE779F2394F}" name="Components">
+        <FILE id="DHm9gs" name="TransitionCurve.cpp" compile="1" resource="0"
+              file="Source/Components/TransitionCurve.cpp"/>
+        <FILE id="Gy4PYX" name="TransitionCurve.h" compile="0" resource="0"
+              file="Source/Components/TransitionCurve.h"/>
+        <FILE id="ea0V2H" name="TransitionCurveGUI.cpp" compile="1" resource="0"
+              file="Source/Components/TransitionCurveGUI.cpp"/>
+        <FILE id="yAbwkk" name="TransitionCurveGUI.h" compile="0" resource="0"
+              file="Source/Components/TransitionCurveGUI.h"/>
+      </GROUP>
       <GROUP id="{6E9FE505-8222-C370-9837-85B2A5A04EF8}" name="EditorModules">
-        <GROUP id="{B7E7302D-0FC2-70B0-B744-AC0BE6319EE2}" name="Components">
-          <FILE id="Ic9glx" name="TransitionCurve.cpp" compile="1" resource="0"
-                file="Source/EditorModules/Components/TransitionCurve.cpp"/>
-          <FILE id="oLc1Lc" name="TransitionCurve.h" compile="0" resource="0"
-                file="Source/EditorModules/Components/TransitionCurve.h"/>
-        </GROUP>
         <FILE id="OQtVW9" name="ConversionModule.cpp" compile="1" resource="0"
               file="Source/EditorModules/ConversionModule.cpp"/>
         <FILE id="UzvsFz" name="ConversionModule.h" compile="0" resource="0"
@@ -110,7 +114,7 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <LIVE_SETTINGS>
-    <OSX buildEnabled="1" continuousRebuildEnabled="1"/>
+    <OSX buildEnabled="0" continuousRebuildEnabled="1"/>
   </LIVE_SETTINGS>
   <JUCEOPTIONS JUCE_VST3_CAN_REPLACE_VST2="0" JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
 </JUCERPROJECT>

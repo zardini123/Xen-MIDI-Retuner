@@ -59,7 +59,7 @@ private:
 
     //==============================================================================
     std::unique_ptr<Label> section_title;
-    std::unique_ptr<TransitionCurve> transitionCurve;
+    std::unique_ptr<Component> transitionCurve;
     std::unique_ptr<Slider> slider;
     std::unique_ptr<Label> label;
 

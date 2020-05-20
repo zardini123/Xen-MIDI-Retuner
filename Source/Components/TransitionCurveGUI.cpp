@@ -20,14 +20,14 @@
 //[Headers] You can add your own extra header files here...
 //[/Headers]
 
-#include "TransitionCurve.h"
+#include "TransitionCurveGUI.h"
 
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 //[/MiscUserDefs]
 
 //==============================================================================
-TransitionCurve::TransitionCurve ()
+TransitionCurveGUI::TransitionCurveGUI ()
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
@@ -43,7 +43,7 @@ TransitionCurve::TransitionCurve ()
     //[/Constructor]
 }
 
-TransitionCurve::~TransitionCurve()
+TransitionCurveGUI::~TransitionCurveGUI()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
@@ -55,7 +55,7 @@ TransitionCurve::~TransitionCurve()
 }
 
 //==============================================================================
-void TransitionCurve::paint (Graphics& g)
+void TransitionCurveGUI::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     {
@@ -72,7 +72,7 @@ void TransitionCurve::paint (Graphics& g)
     //[/UserPaint]
 }
 
-void TransitionCurve::resized()
+void TransitionCurveGUI::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
     setTransition(0.0f);
@@ -85,55 +85,6 @@ void TransitionCurve::resized()
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-void TransitionCurve::setTransition(float transition)
-{
-    float cubicEnd = 0.75f;
-    float transitionCapped = jlimit(0.0f, cubicEnd, transition);
-    float transitionToStraight = jlimit(cubicEnd, 1.0f, transition);
-
-    internalPath1.clear();
-
-    // TODO: REVIEW: Does these Point<float>'s get properly deallocated once the function ends?
-    Point<float> *startPoint = new Point<float>(horizontalMargin, proportionOfHeight (1.0000f) - verticalMargin);
-    internalPath1.startNewSubPath(*startPoint);
-
-    Point<float> *cubicStartPoint = new Point<float>(jmap(transitionCapped, cubicEnd, 0.0f, (float)horizontalMargin, (float)proportionOfWidth(0.5f)), proportionOfHeight (1.0000f) - verticalMargin);
-    internalPath1.lineTo(*cubicStartPoint);
-
-    Point<float> *cubicWeightLeft = new Point<float>(jmap(transitionToStraight, cubicEnd, 1.0f, (float)proportionOfWidth (0.5000f), (float)horizontalMargin), proportionOfHeight (1.0000f) - verticalMargin);
-    Point<float> *cubicWeightRight = new Point<float>(jmap(transitionToStraight, cubicEnd, 1.0f, (float)proportionOfWidth (0.5000f), (float)proportionOfWidth(1.0f) - horizontalMargin), verticalMargin);
-    Point<float> *lineRightStart = new Point<float>(jmap(transitionCapped, cubicEnd, 0.0f, (float)proportionOfWidth(1.0f) - horizontalMargin, (float)proportionOfWidth(0.5f)), verticalMargin);
-    internalPath1.cubicTo(*cubicWeightLeft, *cubicWeightRight, *lineRightStart);
-
-    Point<float> *lineRightEnd = new Point<float>(getWidth() - horizontalMargin, verticalMargin);
-    internalPath1.lineTo (*lineRightEnd);
-
-    repaint();
-}
-
-float TransitionCurve::evaluate(float xPercent)
-{
-    float lineXPoint = jmap(xPercent, 0.0f, 1.0f, (float)horizontalMargin, (float)proportionOfWidth(1.0f) - horizontalMargin);
-    evaluationLine.setStart(lineXPoint, verticalMargin);
-    evaluationLine.setEnd(lineXPoint, proportionOfHeight(1.0f) - verticalMargin);
-
-    PathFlatteningIterator i (internalPath1);
-
-    Point<float> intersectionPoint;
-    while (i.next())
-    {
-        const Line<float> line (i.x1, i.y1, i.x2, i.y2);
-
-        bool intersected = line.intersects(evaluationLine, intersectionPoint);
-
-        if (intersected) break;
-    }
-
-    // Points origin is top left, but highest point should return 1.0f, not 0.0f.
-    float evaluation = jmap(intersectionPoint.y, (float)verticalMargin, (float)proportionOfHeight(1.0f) - verticalMargin, 1.0f, 0.0f);
-
-    return evaluation;
-}
 //[/MiscUserCode]
 
 
@@ -146,7 +97,7 @@ float TransitionCurve::evaluate(float xPercent)
 
 BEGIN_JUCER_METADATA
 
-<JUCER_COMPONENT documentType="Component" className="TransitionCurve" componentName=""
+<JUCER_COMPONENT documentType="Component" className="TransitionCurveGUI" componentName=""
                  parentClasses="public Component" constructorParams="" variableInitialisers=""
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">

@@ -305,6 +305,8 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                 
                 outputNotes[channel].clear();
             }
+        } else {
+            processedMidi.addEvent(m, time);
         }
         
         // Interpretate and convert played notes of the current channel into the tuned value
@@ -330,7 +332,7 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                 }
             }
             
-            // FIXME:  AAHHHHHHHHHH!!!! UPDATING WONT EVEN WORK UNTIL THE GUI IS FIRST OPENED NONONOONONNO!111!!!!1
+            // FIXME:  Rewrite TransitionCurve to not use any Component-dependent code (i.e. porportionOfWidth)
             if (interpolationCurve != nullptr)
             {
                 // TODO: Have different interpolation dimensions (i.e. frequency or midi note (cents)).  Interpolation dimension currently is cents.
@@ -413,8 +415,7 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                 processedMidi.addEvent(MidiMessage::pitchWheel(m.getChannel(), pitchWheel), time);
             }
         }
-
-        // processedMidi.addEvent(m, time);
+        
         // processedMidi.addEvent(MidiMessage::pitchWheel(m.getChannel(), random(0,16383)), time);
         // processedMidi.addEvent(MidiMessage::noteOn(m.getChannel(), random(0,100), (uint8)random(0,100)), time);
     }

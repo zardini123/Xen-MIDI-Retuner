@@ -41,7 +41,7 @@ ConversionModule::ConversionModule ()
     section_title->setColour (TextEditor::textColourId, Colours::black);
     section_title->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    transitionCurve.reset (new TransitionCurve());
+    transitionCurve.reset (new Component());
     addAndMakeVisible (transitionCurve.get());
     slider.reset (new Slider ("new slider"));
     addAndMakeVisible (slider.get());
