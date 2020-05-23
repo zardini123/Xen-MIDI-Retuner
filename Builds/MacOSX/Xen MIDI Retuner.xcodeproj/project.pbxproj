@@ -113,6 +113,10 @@
 			isa = PBXBuildFile;
 			fileRef = F89DB5CD6998182A1A76DCE3;
 		};
+		43CEB0E75EA857E81655D1CF = {
+			isa = PBXBuildFile;
+			fileRef = AC4FCDDAA4EC455B28B0B5EB;
+		};
 		3F8470D5E514FEEAA2BF7C58 = {
 			isa = PBXBuildFile;
 			fileRef = 36E2F4B4F8D89FC0BCACED54;
@@ -128,6 +132,10 @@
 		14930B4A35406B7EB2360012 = {
 			isa = PBXBuildFile;
 			fileRef = 4C32F2DCF3CB4D88E4449E9C;
+		};
+		C6941F1E0F518BAEFE4EBBB1 = {
+			isa = PBXBuildFile;
+			fileRef = C78D08A8BE8047330F4E82F0;
 		};
 		112B15BD09684996468CAD5D = {
 			isa = PBXBuildFile;
@@ -318,6 +326,13 @@
 			path = ../../Source/EditorModules/ConversionModule.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		2E3571F876EF3A8C50BBB84B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = OutputModule.h;
+			path = ../../Source/EditorModules/OutputModule.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3201BBDF6CBDBB944C5CF3EF = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -430,6 +445,13 @@
 			path = ../../Source/EditorModules/KeyboardVisual.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		55E99CB91D9225B843BBCB9D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ProcessorStructures.h;
+			path = ../../Source/ProcessorStructures.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		57ED0995A1491A98A5B877D9 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -456,6 +478,13 @@
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_events.mm";
 			path = "../../JuceLibraryCode/include_juce_events.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		5F195857E81210BC79240AD7 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ProcessorData.h;
+			path = ../../Source/ProcessorData.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		626DE35A07C14E9C7805A3F2 = {
@@ -633,6 +662,13 @@
 			path = ../../Source/Utilities.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		AC4FCDDAA4EC455B28B0B5EB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = OutputModule.cpp;
+			path = ../../Source/EditorModules/OutputModule.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		B6224E6CBED4648D6F9483CD = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -722,6 +758,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = NoteAndFrequencyOverlay.h;
 			path = ../../Source/EditorModules/NoteAndFrequencyOverlay.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		C78D08A8BE8047330F4E82F0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ProcessorData.cpp;
+			path = ../../Source/ProcessorData.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C97BAB93C56D4D0A0AF78EA4 = {
@@ -892,6 +935,8 @@
 				52D4292BCE8EC200681A3BBB,
 				F89DB5CD6998182A1A76DCE3,
 				C78C6245FED843AE6F7E60B4,
+				AC4FCDDAA4EC455B28B0B5EB,
+				2E3571F876EF3A8C50BBB84B,
 				36E2F4B4F8D89FC0BCACED54,
 				07A2F475CE7E860D8878C8B9,
 				02E3E350F5A9FE993AA8E19E,
@@ -910,6 +955,9 @@
 				ABD65F9B57A3CF8B9DB26DB7,
 				4C32F2DCF3CB4D88E4449E9C,
 				0D6ACB59B8D5392CBC2C26DC,
+				C78D08A8BE8047330F4E82F0,
+				5F195857E81210BC79240AD7,
+				55E99CB91D9225B843BBCB9D,
 				626DE35A07C14E9C7805A3F2,
 				E1598AFDBE6B15659CB17453,
 				52625518B02B19BDC3C916C0,
@@ -1645,10 +1693,12 @@
 				7A4148BF5DD461DB551FF938,
 				B2BC02A9FE7155E80DAE91C0,
 				A6CD8719005EAB700CB6828F,
+				43CEB0E75EA857E81655D1CF,
 				3F8470D5E514FEEAA2BF7C58,
 				CD76D6935FC5502C5CE36DB3,
 				CB10532CE9D9B4FF4DA2075B,
 				14930B4A35406B7EB2360012,
+				C6941F1E0F518BAEFE4EBBB1,
 				112B15BD09684996468CAD5D,
 				A81646E03D98335A5BDD79AE,
 				45DCEE8AF90753A70C7D5C3D,

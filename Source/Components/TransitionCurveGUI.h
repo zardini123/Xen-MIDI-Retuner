@@ -22,6 +22,8 @@
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
 #include <map>
+
+#include "TransitionCurve.h"
 //[/Headers]
 
 
@@ -38,7 +40,7 @@ class TransitionCurveGUI  : public Component
 {
 public:
     //==============================================================================
-    TransitionCurveGUI ();
+    TransitionCurveGUI (TransitionCurve *transitionCurve);
     ~TransitionCurveGUI() override;
 
     //==============================================================================
@@ -52,11 +54,13 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    int horizontalMargin = 40;
-    int verticalMargin = 40;
+    Point<float> convertPercentsToPixels(Point<float> percentsPoint);
+    TransitionCurve *curve;
 
-    Path internalPath1;
-    Line<float> evaluationLine;
+    int horizontalMargin = 10;
+    int verticalMargin = 10;
+
+    Path internalPath;
     //[/UserVariables]
 
     //==============================================================================

@@ -11,84 +11,13 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "AnaMark-Tuning-Library/SCL_Import.h"
-#include "EditorModules/Components/TransitionCurve.h"
 
 //==============================================================================
 /**
 */
-const int MAX_MIDI_CHANNELS = 16;
-const int CENTER_PITCHWHEEL = 8192;
-
-enum SingleChannelNotePrioritzation
-{
-    NOTE = 0,
-    VELOCITY,
-    RANDOM
-};
-
-enum SingleChannelNotePrioritzationModifier
-{
-    MOST_RECENT = 0,
-    FIRST,
-    HIGHEST_NOTE,
-    LOWEST_NOTE
-};
-
-enum InterpolationDimension
-{
-    CENTS = 0,
-    FREQUENCY
-};
-
-struct Note
-{
-    int midiNote;
-    uint8 velocity;
-    
-    bool turnOffFlag = false;
-};
-
-struct Channel
-{
-    uint16 pitchwheel = CENTER_PITCHWHEEL; // Default to pitchbend wheel at center
-    const Note *priorityNote;
-    
-    float scaleConvertedPriorityNote;
-    std::vector<Note> notes;
-};
-
-struct OutputChannel
-{
-    int initalMidiNote;
-    int initalJump;
-    
-    int noteOffset;
-    int currentMidiNoteNumber;
-};
-
 class XenMidiRetunerAudioProcessor  : public AudioProcessor
 {
 public:
-    // Processor data
-    Channel input[MAX_MIDI_CHANNELS];
-    CriticalSection inputLock;
-    
-    OutputChannel output[MAX_MIDI_CHANNELS];
-    std::vector<Note> outputNotes[MAX_MIDI_CHANNELS];
-
-    TUN::CSingleScale scale;
-
-    AudioParameterInt *in_pitch_bend_range;
-    AudioParameterInt *out_pitch_bend_range;
-    
-    AudioParameterChoice *singleChannelNotePriority;
-    AudioParameterChoice *singleChannelNotePriorityModifier;
-    
-    InterpolationDimension interploationDimension = CENTS;
-    
-    TransitionCurve *interpolationCurve = nullptr;
-    // END Processor data
 
     //==============================================================================
     XenMidiRetunerAudioProcessor();

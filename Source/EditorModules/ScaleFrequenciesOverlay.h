@@ -23,7 +23,7 @@
 #include <JuceHeader.h>
 
 #include "KeyboardVisual.h"
-#include "../PluginProcessor.h"
+#include "../ProcessorData.h"
 //[/Headers]
 
 
@@ -40,7 +40,7 @@ class ScaleFrequenciesOverlay  : public Component
 {
 public:
     //==============================================================================
-    ScaleFrequenciesOverlay (KeyboardVisual *keyboardVis, XenMidiRetunerAudioProcessor *midiProcessor);
+    ScaleFrequenciesOverlay (KeyboardVisual *keyboardVis);
     ~ScaleFrequenciesOverlay() override;
 
     //==============================================================================
@@ -55,7 +55,6 @@ public:
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     KeyboardVisual *keyboard;
-    XenMidiRetunerAudioProcessor *processor;
     //[/UserVariables]
 
     //==============================================================================

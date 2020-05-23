@@ -27,7 +27,7 @@
 //class KeyboardVisual;
 
 #include "KeyboardVisual.h"
-#include "../PluginProcessor.h"
+#include "../ProcessorData.h"
 //[/Headers]
 
 
@@ -45,7 +45,7 @@ class NoteAndFrequencyOverlay  : public Component,
 {
 public:
     //==============================================================================
-    NoteAndFrequencyOverlay (KeyboardVisual *keyboardVis, XenMidiRetunerAudioProcessor *midiProcessor);
+    NoteAndFrequencyOverlay (KeyboardVisual *keyboardVis);
     ~NoteAndFrequencyOverlay() override;
 
     //==============================================================================
@@ -62,7 +62,6 @@ private:
     const int UPDATE_RATE = 60;
 
     KeyboardVisual *keyboard;
-    XenMidiRetunerAudioProcessor *processor;
 
     double time;
 

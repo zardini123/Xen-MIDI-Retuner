@@ -21,9 +21,11 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
+
+#include "../ProcessorData.h"
 //[/Headers]
 
-#include "Components/TransitionCurve.h"
+#include "../Components/TransitionCurveGUI.h"
 
 
 //==============================================================================
@@ -35,7 +37,8 @@
                                                                     //[/Comments]
 */
 class ConversionModule  : public Component,
-                          public Slider::Listener
+                          public Slider::Listener,
+                          public ComboBox::Listener
 {
 public:
     //==============================================================================
@@ -44,12 +47,12 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    TransitionCurve *getTransitionCurve();
     //[/UserMethods]
 
     void paint (Graphics& g) override;
     void resized() override;
     void sliderValueChanged (Slider* sliderThatWasMoved) override;
+    void comboBoxChanged (ComboBox* comboBoxThatHasChanged) override;
 
 
 
@@ -58,10 +61,15 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<Label> section_title;
-    std::unique_ptr<Component> transitionCurve;
-    std::unique_ptr<Slider> slider;
     std::unique_ptr<Label> label;
+    std::unique_ptr<Label> section_title;
+    std::unique_ptr<TransitionCurveGUI> transitionCurveGUI;
+    std::unique_ptr<Slider> transitionSlider;
+    std::unique_ptr<Label> label2;
+    std::unique_ptr<Slider> midpointSlider;
+    std::unique_ptr<Label> label3;
+    std::unique_ptr<Label> label5;
+    std::unique_ptr<ComboBox> interploationDimension;
 
 
     //==============================================================================

@@ -27,10 +27,9 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-InputModule::InputModule (XenMidiRetunerAudioProcessor *midiProcessor)
+InputModule::InputModule ()
 {
     //[Constructor_pre] You can add your own custom stuff here..
-    processor = midiProcessor;
     //[/Constructor_pre]
 
     label4.reset (new Label ("new label",
@@ -104,43 +103,21 @@ InputModule::InputModule (XenMidiRetunerAudioProcessor *midiProcessor)
 
     singleChannelPriorityModifier->setBounds (8, 192, 144, 24);
 
-    label5.reset (new Label ("new label",
-                             TRANS("Interploation Dimension\n")));
-    addAndMakeVisible (label5.get());
-    label5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
-    label5->setJustificationType (Justification::centredTop);
-    label5->setEditable (false, false, false);
-    label5->setColour (TextEditor::textColourId, Colours::black);
-    label5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    label5->setBounds (8, 232, 144, 32);
-
-    interploationDimension.reset (new ComboBox ("new combo box"));
-    addAndMakeVisible (interploationDimension.get());
-    interploationDimension->setEditableText (false);
-    interploationDimension->setJustificationType (Justification::centredLeft);
-    interploationDimension->setTextWhenNothingSelected (TRANS("Continuous Midi Note (Cents)"));
-    interploationDimension->setTextWhenNoChoicesAvailable (TRANS("Continuous Midi Note (Cents)"));
-    interploationDimension->addItem (TRANS("Continuous Midi Note (Cents)"), 1);
-    interploationDimension->addItem (TRANS("Frequency"), 2);
-    interploationDimension->addListener (this);
-
-    interploationDimension->setBounds (8, 272, 144, 24);
-
 
     //[UserPreSize]
-    singleChannelPriorityMode->addItemList(processor->singleChannelNotePriority->choices, 1);
-    singleChannelPriorityMode->setSelectedItemIndex(processor->singleChannelNotePriority->getIndex());
+    // FIXME:  All AudioParameters are not initalized when called via the singleton alone due to the processor not creating them
+    singleChannelPriorityMode->addItemList(ProcessorData::getInstance()->singleChannelNotePriority->choices, 1);
+    singleChannelPriorityMode->setSelectedItemIndex(ProcessorData::getInstance()->singleChannelNotePriority->getIndex());
 
-    singleChannelPriorityModifier->addItemList(processor->singleChannelNotePriorityModifier->choices, 1);
-    singleChannelPriorityModifier->setSelectedItemIndex(processor->singleChannelNotePriorityModifier->getIndex());
+    singleChannelPriorityModifier->addItemList(ProcessorData::getInstance()->singleChannelNotePriorityModifier->choices, 1);
+    singleChannelPriorityModifier->setSelectedItemIndex(ProcessorData::getInstance()->singleChannelNotePriorityModifier->getIndex());
     //[/UserPreSize]
 
     setSize (600, 400);
 
 
     //[Constructor] You can add your own custom stuff here..
-    in_pitch_bend_range->setValue(processor->in_pitch_bend_range->get());
+    in_pitch_bend_range->setValue(ProcessorData::getInstance()->in_pitch_bend_range->get());
     //[/Constructor]
 }
 
@@ -156,8 +133,6 @@ InputModule::~InputModule()
     singleChannelPriorityMode = nullptr;
     label2 = nullptr;
     singleChannelPriorityModifier = nullptr;
-    label5 = nullptr;
-    interploationDimension = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -192,7 +167,7 @@ void InputModule::sliderValueChanged (Slider* sliderThatWasMoved)
     if (sliderThatWasMoved == in_pitch_bend_range.get())
     {
         //[UserSliderCode_in_pitch_bend_range] -- add your slider handling code here..
-        *(processor->in_pitch_bend_range) = sliderThatWasMoved->getValue();
+        *(ProcessorData::getInstance()->in_pitch_bend_range) = sliderThatWasMoved->getValue();
         //[/UserSliderCode_in_pitch_bend_range]
     }
 
@@ -208,20 +183,14 @@ void InputModule::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
     if (comboBoxThatHasChanged == singleChannelPriorityMode.get())
     {
         //[UserComboBoxCode_singleChannelPriorityMode] -- add your combo box handling code here..
-        *(processor->singleChannelNotePriority) = singleChannelPriorityMode->getSelectedItemIndex();
+        *(ProcessorData::getInstance()->singleChannelNotePriority) = singleChannelPriorityMode->getSelectedItemIndex();
         //[/UserComboBoxCode_singleChannelPriorityMode]
     }
     else if (comboBoxThatHasChanged == singleChannelPriorityModifier.get())
     {
         //[UserComboBoxCode_singleChannelPriorityModifier] -- add your combo box handling code here..
-        *(processor->singleChannelNotePriorityModifier) = singleChannelPriorityModifier->getSelectedItemIndex();
+        *(ProcessorData::getInstance()->singleChannelNotePriorityModifier) = singleChannelPriorityModifier->getSelectedItemIndex();
         //[/UserComboBoxCode_singleChannelPriorityModifier]
-    }
-    else if (comboBoxThatHasChanged == interploationDimension.get())
-    {
-        //[UserComboBoxCode_interploationDimension] -- add your combo box handling code here..
-        processor->interploationDimension = (InterpolationDimension)interploationDimension->getSelectedItemIndex();
-        //[/UserComboBoxCode_interploationDimension]
     }
 
     //[UsercomboBoxChanged_Post]
@@ -244,9 +213,9 @@ void InputModule::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="InputModule" componentName=""
-                 parentClasses="public Component" constructorParams="XenMidiRetunerAudioProcessor *midiProcessor"
-                 variableInitialisers="" snapPixels="8" snapActive="1" snapShown="1"
-                 overlayOpacity="0.330" fixedSize="0" initialWidth="600" initialHeight="400">
+                 parentClasses="public Component" constructorParams="" variableInitialisers=""
+                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
+                 fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44"/>
   <LABEL name="new label" id="d861762387e1dd26" memberName="label4" virtualName=""
          explicitFocusOrder="0" pos="8 168 144 24" edTextCol="ff000000"
@@ -280,15 +249,6 @@ BEGIN_JUCER_METADATA
   <COMBOBOX name="new combo box" id="2ebd7ab8a0c8a16" memberName="singleChannelPriorityModifier"
             virtualName="" explicitFocusOrder="0" pos="8 192 144 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems=""/>
-  <LABEL name="new label" id="28b8d285343a10c" memberName="label5" virtualName=""
-         explicitFocusOrder="0" pos="8 232 144 32" edTextCol="ff000000"
-         edBkgCol="0" labelText="Interploation Dimension&#10;" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="12"/>
-  <COMBOBOX name="new combo box" id="583d3e280c9789d5" memberName="interploationDimension"
-            virtualName="" explicitFocusOrder="0" pos="8 272 144 24" editable="0"
-            layout="33" items="Continuous Midi Note (Cents)&#10;Frequency"
-            textWhenNonSelected="Continuous Midi Note (Cents)" textWhenNoItems="Continuous Midi Note (Cents)"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

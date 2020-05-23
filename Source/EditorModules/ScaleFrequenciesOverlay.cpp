@@ -28,11 +28,10 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-ScaleFrequenciesOverlay::ScaleFrequenciesOverlay (KeyboardVisual *keyboardVis, XenMidiRetunerAudioProcessor *midiProcessor)
+ScaleFrequenciesOverlay::ScaleFrequenciesOverlay (KeyboardVisual *keyboardVis)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     keyboard = keyboardVis;
-    processor = midiProcessor;
     //[/Constructor_pre]
 
 
@@ -61,8 +60,10 @@ ScaleFrequenciesOverlay::~ScaleFrequenciesOverlay()
 void ScaleFrequenciesOverlay::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
+    ProcessorData* processorData = ProcessorData::getInstance();
+
     int y = 0, width = 1, height = 100;
-    for (auto it = processor->scale.GetNoteFrequenciesHz().begin(); it != processor->scale.GetNoteFrequenciesHz().end(); ++it) {
+    for (auto it = processorData->scale.GetNoteFrequenciesHz().begin(); it != processorData->scale.GetNoteFrequenciesHz().end(); ++it) {
         int note;
         double semitones;
         freqHZToNoteAndSemitones((*it), note, semitones);
@@ -104,7 +105,7 @@ void ScaleFrequenciesOverlay::resized()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ScaleFrequenciesOverlay"
-                 componentName="" parentClasses="public Component" constructorParams="KeyboardVisual *keyboardVis, XenMidiRetunerAudioProcessor *midiProcessor"
+                 componentName="" parentClasses="public Component" constructorParams="KeyboardVisual *keyboardVis"
                  variableInitialisers="" snapPixels="8" snapActive="1" snapShown="1"
                  overlayOpacity="0.330" fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="dc143c"/>

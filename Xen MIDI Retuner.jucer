@@ -52,6 +52,9 @@
               file="Source/EditorModules/NoteAndFrequencyOverlay.cpp"/>
         <FILE id="XCUNvv" name="NoteAndFrequencyOverlay.h" compile="0" resource="0"
               file="Source/EditorModules/NoteAndFrequencyOverlay.h"/>
+        <FILE id="fQyCnk" name="OutputModule.cpp" compile="1" resource="0"
+              file="Source/EditorModules/OutputModule.cpp"/>
+        <FILE id="FT0iQB" name="OutputModule.h" compile="0" resource="0" file="Source/EditorModules/OutputModule.h"/>
         <FILE id="ZRWdjt" name="ScaleEditor.cpp" compile="1" resource="0" file="Source/EditorModules/ScaleEditor.cpp"/>
         <FILE id="QrHybd" name="ScaleEditor.h" compile="0" resource="0" file="Source/EditorModules/ScaleEditor.h"/>
         <FILE id="dJcj7A" name="ScaleFrequenciesOverlay.cpp" compile="1" resource="0"
@@ -63,6 +66,11 @@
       <FILE id="KrMAGi" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
       <FILE id="XvZ76Y" name="PluginGUI.cpp" compile="1" resource="0" file="Source/PluginGUI.cpp"/>
       <FILE id="ASvFjf" name="PluginGUI.h" compile="0" resource="0" file="Source/PluginGUI.h"/>
+      <FILE id="EN95hY" name="ProcessorData.cpp" compile="1" resource="0"
+            file="Source/ProcessorData.cpp"/>
+      <FILE id="sfjZnv" name="ProcessorData.h" compile="0" resource="0" file="Source/ProcessorData.h"/>
+      <FILE id="hxouRV" name="ProcessorStructures.h" compile="0" resource="0"
+            file="Source/ProcessorStructures.h"/>
       <FILE id="RC0yrV" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="mTzVRq" name="PluginProcessor.h" compile="0" resource="0"
@@ -114,7 +122,7 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <LIVE_SETTINGS>
-    <OSX buildEnabled="0" continuousRebuildEnabled="1"/>
+    <OSX buildEnabled="1" continuousRebuildEnabled="1"/>
   </LIVE_SETTINGS>
   <JUCEOPTIONS JUCE_VST3_CAN_REPLACE_VST2="0" JUCE_STRICT_REFCOUNTEDPOINTER="1"/>
 </JUCERPROJECT>

@@ -30,6 +30,7 @@
 #include "EditorModules/InputModule.h"
 #include "EditorModules/ScaleEditor.h"
 #include "EditorModules/ConversionModule.h"
+#include "EditorModules/OutputModule.h"
 
 
 //==============================================================================
@@ -40,8 +41,7 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class PluginGUI  : public Component,
-                   public Slider::Listener
+class PluginGUI  : public Component
 {
 public:
     //==============================================================================
@@ -55,7 +55,6 @@ public:
 
     void paint (Graphics& g) override;
     void resized() override;
-    void sliderValueChanged (Slider* sliderThatWasMoved) override;
 
 
 
@@ -66,12 +65,11 @@ private:
     //==============================================================================
     std::unique_ptr<KeyboardVisual> keyboardVisual;
     std::unique_ptr<ScaleFrequenciesOverlay> scaleFrequenciesOverlay;
-    std::unique_ptr<Slider> out_pitch_bend_range;
-    std::unique_ptr<Label> label;
     std::unique_ptr<NoteAndFrequencyOverlay> noteAndFreqOverlay;
     std::unique_ptr<InputModule> component;
     std::unique_ptr<ScaleEditor> component2;
     std::unique_ptr<ConversionModule> conversionModule;
+    std::unique_ptr<OutputModule> component3;
 
 
     //==============================================================================

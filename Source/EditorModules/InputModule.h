@@ -22,7 +22,7 @@
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
 
-#include "../PluginProcessor.h"
+#include "../ProcessorData.h"
 //[/Headers]
 
 
@@ -41,7 +41,7 @@ class InputModule  : public Component,
 {
 public:
     //==============================================================================
-    InputModule (XenMidiRetunerAudioProcessor *midiProcessor);
+    InputModule ();
     ~InputModule() override;
 
     //==============================================================================
@@ -57,7 +57,6 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    XenMidiRetunerAudioProcessor *processor;
     //[/UserVariables]
 
     //==============================================================================
@@ -68,8 +67,6 @@ private:
     std::unique_ptr<ComboBox> singleChannelPriorityMode;
     std::unique_ptr<Label> label2;
     std::unique_ptr<ComboBox> singleChannelPriorityModifier;
-    std::unique_ptr<Label> label5;
-    std::unique_ptr<ComboBox> interploationDimension;
 
 
     //==============================================================================

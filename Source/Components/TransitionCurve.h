@@ -15,12 +15,25 @@
 class TransitionCurve
 {
 public:
-    void setTransition(float transition);
+    TransitionCurve();
+    
+    void setTransition(float newTransition);
+    void setMidpoint(float newPercentage);
     float evaluate(float xPosition);
     
+    Point<float> startPoint;
+    Point<float> cubicStartPoint;
+    Point<float> cubicWeightLeft;
+    Point<float> cubicWeightRight;
+    Point<float> cubicEndPoint;
+    Point<float> endPoint;
+    
 private:
-    int horizontalMargin = 40;
-    int verticalMargin = 40;
+    void updateCurve();
+    
+    float transition;
+    float midpoint;
     
     Path internalPath;
+    Line<float> evaluationLine;
 };

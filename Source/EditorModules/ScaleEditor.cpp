@@ -27,10 +27,9 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-ScaleEditor::ScaleEditor (XenMidiRetunerAudioProcessor *midiProcessor)
+ScaleEditor::ScaleEditor ()
 {
     //[Constructor_pre] You can add your own custom stuff here..
-    processor = midiProcessor;
     //[/Constructor_pre]
 
     label.reset (new Label ("new label",
@@ -126,14 +125,14 @@ void ScaleEditor::buttonClicked (Button* buttonThatWasClicked)
         {
             File theFile (myChooser.getResult());
 
-            processor->scale.Read(theFile.getFullPathName().toStdString().c_str());
+            ProcessorData::getInstance()->scale.Read(theFile.getFullPathName().toStdString().c_str());
         }
         //[/UserButtonCode_importTunFile]
     }
     else if (buttonThatWasClicked == resetScaleButton.get())
     {
         //[UserButtonCode_resetScaleButton] -- add your button handler code here..
-        processor->scale.Reset();
+        ProcessorData::getInstance()->scale.Reset();
         //[/UserButtonCode_resetScaleButton]
     }
 
@@ -157,9 +156,9 @@ void ScaleEditor::buttonClicked (Button* buttonThatWasClicked)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ScaleEditor" componentName=""
-                 parentClasses="public Component" constructorParams="XenMidiRetunerAudioProcessor *midiProcessor"
-                 variableInitialisers="" snapPixels="8" snapActive="1" snapShown="1"
-                 overlayOpacity="0.330" fixedSize="0" initialWidth="600" initialHeight="400">
+                 parentClasses="public Component" constructorParams="" variableInitialisers=""
+                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
+                 fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44"/>
   <LABEL name="new label" id="235c5745dedfe1ad" memberName="label" virtualName=""
          explicitFocusOrder="0" pos="0 0 100% 24" edTextCol="ff000000"

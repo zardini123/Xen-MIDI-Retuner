@@ -27,9 +27,10 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-TransitionCurveGUI::TransitionCurveGUI ()
+TransitionCurveGUI::TransitionCurveGUI (TransitionCurve *transitionCurve)
 {
     //[Constructor_pre] You can add your own custom stuff here..
+    curve = transitionCurve;
     //[/Constructor_pre]
 
 
@@ -58,13 +59,24 @@ TransitionCurveGUI::~TransitionCurveGUI()
 void TransitionCurveGUI::paint (Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
+    internalPath.clear();
+
+    // (0, 0) is top left
+    // (0, 1) is bottom left
+    internalPath.startNewSubPath(convertPercentsToPixels(curve->startPoint));
+    internalPath.lineTo(convertPercentsToPixels(curve->cubicStartPoint));
+
+    internalPath.cubicTo(convertPercentsToPixels(curve->cubicWeightLeft), convertPercentsToPixels(curve->cubicWeightRight), convertPercentsToPixels(curve->cubicEndPoint));
+
+    internalPath.lineTo (convertPercentsToPixels(curve->endPoint));
+
     {
         float x = 0, y = 0;
         Colour strokeColour = Colour (0xffa52a8d);
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
         g.setColour (strokeColour);
-        g.strokePath (internalPath1, PathStrokeType (5.000f, PathStrokeType::curved, PathStrokeType::rounded), AffineTransform::translation(x, y));
+        g.strokePath (internalPath, PathStrokeType (5.000f, PathStrokeType::curved, PathStrokeType::rounded), AffineTransform::translation(x, y));
     }
     //[/UserPrePaint]
 
@@ -75,7 +87,6 @@ void TransitionCurveGUI::paint (Graphics& g)
 void TransitionCurveGUI::resized()
 {
     //[UserPreResize] Add your own custom resize code here..
-    setTransition(0.0f);
     //[/UserPreResize]
 
     //[UserResized] Add your own custom resize handling here..
@@ -85,6 +96,11 @@ void TransitionCurveGUI::resized()
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+Point<float> TransitionCurveGUI::convertPercentsToPixels(Point<float> percentsPoint)
+{
+    return Point<float>(jmap(percentsPoint.x, 0.0f, 1.0f, (float)horizontalMargin, (float)(getWidth() - horizontalMargin)),
+                        jmap(percentsPoint.y, 0.0f, 1.0f, (float)verticalMargin, (float)(getHeight() - verticalMargin)));
+}
 //[/MiscUserCode]
 
 
@@ -98,9 +114,9 @@ void TransitionCurveGUI::resized()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="TransitionCurveGUI" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers=""
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="600" initialHeight="400">
+                 parentClasses="public Component" constructorParams="TransitionCurve *transitionCurve"
+                 variableInitialisers="" snapPixels="8" snapActive="1" snapShown="1"
+                 overlayOpacity="0.330" fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44"/>
 </JUCER_COMPONENT>
 
