@@ -22,10 +22,6 @@
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
 
-//// Forward declare class as cyclic dependency results in "undeclared identifier" errors
-//// https://www.eventhelix.com/RealtimeMantra/HeaderFileIncludePatterns.htm
-//class KeyboardVisual;
-
 #include "KeyboardVisual.h"
 #include "../ProcessorData.h"
 //[/Headers]

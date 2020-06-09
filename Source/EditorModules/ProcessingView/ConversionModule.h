@@ -22,9 +22,10 @@
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
 
-#include "../ProcessorData.h"
+#include "../../ProcessorData.h"
 //[/Headers]
 
+#include "../../Components/TransitionCurveGUI.h"
 
 
 //==============================================================================
@@ -35,14 +36,14 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class InputModule  : public Component,
-                     public Slider::Listener,
-                     public ComboBox::Listener
+class ConversionModule  : public Component,
+                          public Slider::Listener,
+                          public ComboBox::Listener
 {
 public:
     //==============================================================================
-    InputModule ();
-    ~InputModule() override;
+    ConversionModule ();
+    ~ConversionModule() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
@@ -60,17 +61,19 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<Label> label4;
-    std::unique_ptr<Slider> in_pitch_bend_range;
-    std::unique_ptr<Label> label3;
+    std::unique_ptr<Label> label;
     std::unique_ptr<Label> section_title;
-    std::unique_ptr<ComboBox> singleChannelPriorityMode;
+    std::unique_ptr<TransitionCurveGUI> transitionCurveGUI;
+    std::unique_ptr<Slider> transitionSlider;
     std::unique_ptr<Label> label2;
-    std::unique_ptr<ComboBox> singleChannelPriorityModifier;
+    std::unique_ptr<Slider> midpointSlider;
+    std::unique_ptr<Label> label3;
+    std::unique_ptr<Label> label5;
+    std::unique_ptr<ComboBox> interploationDimension;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (InputModule)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConversionModule)
 };
 
 //[EndFile] You can add extra defines here...

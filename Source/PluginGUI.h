@@ -27,10 +27,6 @@
 #include "EditorModules/KeyboardVisual.h"
 #include "EditorModules/ScaleFrequenciesOverlay.h"
 #include "EditorModules/NoteAndFrequencyOverlay.h"
-#include "EditorModules/InputModule.h"
-#include "EditorModules/ScaleEditor.h"
-#include "EditorModules/ConversionModule.h"
-#include "EditorModules/OutputModule.h"
 
 
 //==============================================================================
@@ -45,12 +41,11 @@ class PluginGUI  : public Component
 {
 public:
     //==============================================================================
-    PluginGUI (XenMidiRetunerAudioProcessor *processorA);
+    PluginGUI ();
     ~PluginGUI() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    XenMidiRetunerAudioProcessor *processor;
     //[/UserMethods]
 
     void paint (Graphics& g) override;
@@ -60,16 +55,14 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    TooltipWindow tooltipWindow;
     //[/UserVariables]
 
     //==============================================================================
     std::unique_ptr<KeyboardVisual> keyboardVisual;
     std::unique_ptr<ScaleFrequenciesOverlay> scaleFrequenciesOverlay;
     std::unique_ptr<NoteAndFrequencyOverlay> noteAndFreqOverlay;
-    std::unique_ptr<InputModule> component;
-    std::unique_ptr<ScaleEditor> component2;
-    std::unique_ptr<ConversionModule> conversionModule;
-    std::unique_ptr<OutputModule> component3;
+    std::unique_ptr<TabbedComponent> tabbedComponent;
 
 
     //==============================================================================

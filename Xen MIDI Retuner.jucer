@@ -38,12 +38,41 @@
               file="Source/Components/TransitionCurveGUI.h"/>
       </GROUP>
       <GROUP id="{6E9FE505-8222-C370-9837-85B2A5A04EF8}" name="EditorModules">
-        <FILE id="OQtVW9" name="ConversionModule.cpp" compile="1" resource="0"
-              file="Source/EditorModules/ConversionModule.cpp"/>
-        <FILE id="UzvsFz" name="ConversionModule.h" compile="0" resource="0"
-              file="Source/EditorModules/ConversionModule.h"/>
-        <FILE id="QSLdoB" name="InputModule.cpp" compile="1" resource="0" file="Source/EditorModules/InputModule.cpp"/>
-        <FILE id="tGJlgF" name="InputModule.h" compile="0" resource="0" file="Source/EditorModules/InputModule.h"/>
+        <GROUP id="{B08742E1-9497-3229-F517-8F1F59EDA2B5}" name="TestingView">
+          <FILE id="fefIx2" name="ActionButtonAndStatus.cpp" compile="1" resource="0"
+                file="Source/EditorModules/TestingView/ActionButtonAndStatus.cpp"/>
+          <FILE id="XW9zSt" name="ActionButtonAndStatus.h" compile="0" resource="0"
+                file="Source/EditorModules/TestingView/ActionButtonAndStatus.h"/>
+          <FILE id="Hp66RG" name="CapabilitiesTestGUI.cpp" compile="1" resource="0"
+                file="Source/EditorModules/TestingView/CapabilitiesTestGUI.cpp"/>
+          <FILE id="IantEU" name="CapabilitiesTestGUI.h" compile="0" resource="0"
+                file="Source/EditorModules/TestingView/CapabilitiesTestGUI.h"/>
+          <FILE id="UiDMAU" name="MIDIChannelToolbar.cpp" compile="1" resource="0"
+                file="Source/EditorModules/TestingView/MIDIChannelToolbar.cpp"/>
+          <FILE id="HFL8Kx" name="MIDIChannelToolbar.h" compile="0" resource="0"
+                file="Source/EditorModules/TestingView/MIDIChannelToolbar.h"/>
+          <FILE id="RBXnhr" name="TestList.cpp" compile="1" resource="0" file="Source/EditorModules/TestingView/TestList.cpp"/>
+          <FILE id="XPWyXH" name="TestList.h" compile="0" resource="0" file="Source/EditorModules/TestingView/TestList.h"/>
+        </GROUP>
+        <FILE id="Ii74Vf" name="TestingView.cpp" compile="1" resource="0" file="Source/EditorModules/TestingView.cpp"/>
+        <FILE id="gYdJqO" name="TestingView.h" compile="0" resource="0" file="Source/EditorModules/TestingView.h"/>
+        <GROUP id="{91D6FA0C-01C8-AB40-5BBC-7183FFF77A04}" name="ProcessingView">
+          <FILE id="d7FDBb" name="ConversionModule.cpp" compile="1" resource="0"
+                file="Source/EditorModules/ProcessingView/ConversionModule.cpp"/>
+          <FILE id="aRIraE" name="ConversionModule.h" compile="0" resource="0"
+                file="Source/EditorModules/ProcessingView/ConversionModule.h"/>
+          <FILE id="oxd94Y" name="InputModule.cpp" compile="1" resource="0" file="Source/EditorModules/ProcessingView/InputModule.cpp"/>
+          <FILE id="Za8Hui" name="InputModule.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/InputModule.h"/>
+          <FILE id="ZLMlVB" name="OutputModule.cpp" compile="1" resource="0"
+                file="Source/EditorModules/ProcessingView/OutputModule.cpp"/>
+          <FILE id="ONR1ek" name="OutputModule.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/OutputModule.h"/>
+          <FILE id="xuOZcY" name="ScaleEditor.cpp" compile="1" resource="0" file="Source/EditorModules/ProcessingView/ScaleEditor.cpp"/>
+          <FILE id="CZeD3Y" name="ScaleEditor.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/ScaleEditor.h"/>
+        </GROUP>
+        <FILE id="fqQaFG" name="ProcessingView.cpp" compile="1" resource="0"
+              file="Source/EditorModules/ProcessingView.cpp"/>
+        <FILE id="hXYbbE" name="ProcessingView.h" compile="0" resource="0"
+              file="Source/EditorModules/ProcessingView.h"/>
         <FILE id="S5xF8B" name="KeyboardVisual.cpp" compile="1" resource="0"
               file="Source/EditorModules/KeyboardVisual.cpp"/>
         <FILE id="Fr3H9S" name="KeyboardVisual.h" compile="0" resource="0"
@@ -52,20 +81,34 @@
               file="Source/EditorModules/NoteAndFrequencyOverlay.cpp"/>
         <FILE id="XCUNvv" name="NoteAndFrequencyOverlay.h" compile="0" resource="0"
               file="Source/EditorModules/NoteAndFrequencyOverlay.h"/>
-        <FILE id="fQyCnk" name="OutputModule.cpp" compile="1" resource="0"
-              file="Source/EditorModules/OutputModule.cpp"/>
-        <FILE id="FT0iQB" name="OutputModule.h" compile="0" resource="0" file="Source/EditorModules/OutputModule.h"/>
-        <FILE id="ZRWdjt" name="ScaleEditor.cpp" compile="1" resource="0" file="Source/EditorModules/ScaleEditor.cpp"/>
-        <FILE id="QrHybd" name="ScaleEditor.h" compile="0" resource="0" file="Source/EditorModules/ScaleEditor.h"/>
         <FILE id="dJcj7A" name="ScaleFrequenciesOverlay.cpp" compile="1" resource="0"
               file="Source/EditorModules/ScaleFrequenciesOverlay.cpp"/>
         <FILE id="XcQ9uZ" name="ScaleFrequenciesOverlay.h" compile="0" resource="0"
               file="Source/EditorModules/ScaleFrequenciesOverlay.h"/>
       </GROUP>
-      <FILE id="XuRQdB" name="Utilities.cpp" compile="1" resource="0" file="Source/Utilities.cpp"/>
-      <FILE id="KrMAGi" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
+      <GROUP id="{CBB1951D-3F94-A4BB-11EA-1C67963ACB4F}" name="Tests">
+        <GROUP id="{2E983108-9D3D-41C4-C7FB-D4F8C56587ED}" name="MIDIEnviromentTests">
+          <FILE id="SVhwbQ" name="MIDIEnviromentTest.cpp" compile="1" resource="0"
+                file="Source/Tests/MIDIEnviromentTests/MIDIEnviromentTest.cpp"/>
+          <FILE id="Y1sQDz" name="MIDIEnviromentTest.h" compile="0" resource="0"
+                file="Source/Tests/MIDIEnviromentTests/MIDIEnviromentTest.h"/>
+          <FILE id="HNTJG2" name="MIDIEnviromentTestManager.cpp" compile="1"
+                resource="0" file="Source/Tests/MIDIEnviromentTests/MIDIEnviromentTestManager.cpp"/>
+          <FILE id="QNFtJu" name="MIDIEnviromentTestManager.h" compile="0" resource="0"
+                file="Source/Tests/MIDIEnviromentTests/MIDIEnviromentTestManager.h"/>
+          <FILE id="NPuRbM" name="NoteAndVelocityTest.cpp" compile="1" resource="0"
+                file="Source/Tests/MIDIEnviromentTests/NoteAndVelocityTest.cpp"/>
+          <FILE id="U8RbwJ" name="NoteAndVelocityTest.h" compile="0" resource="0"
+                file="Source/Tests/MIDIEnviromentTests/NoteAndVelocityTest.h"/>
+        </GROUP>
+      </GROUP>
       <FILE id="XvZ76Y" name="PluginGUI.cpp" compile="1" resource="0" file="Source/PluginGUI.cpp"/>
       <FILE id="ASvFjf" name="PluginGUI.h" compile="0" resource="0" file="Source/PluginGUI.h"/>
+      <FILE id="XobHn0" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="gibBvm" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="XuRQdB" name="Utilities.cpp" compile="1" resource="0" file="Source/Utilities.cpp"/>
+      <FILE id="KrMAGi" name="Utilities.h" compile="0" resource="0" file="Source/Utilities.h"/>
       <FILE id="EN95hY" name="ProcessorData.cpp" compile="1" resource="0"
             file="Source/ProcessorData.cpp"/>
       <FILE id="sfjZnv" name="ProcessorData.h" compile="0" resource="0" file="Source/ProcessorData.h"/>
@@ -75,9 +118,6 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="mTzVRq" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
-      <FILE id="XobHn0" name="PluginEditor.cpp" compile="1" resource="0"
-            file="Source/PluginEditor.cpp"/>
-      <FILE id="gibBvm" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
