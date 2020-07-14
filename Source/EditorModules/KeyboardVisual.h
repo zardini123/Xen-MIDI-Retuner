@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -25,6 +25,8 @@
 //// Forward declare class as cyclic dependency results in "undeclared identifier" errors
 //// https://www.eventhelix.com/RealtimeMantra/HeaderFileIncludePatterns.htm
 //class NoteAndFrequencyOverlay;
+
+#include "../ComponentWithReferenceToData.h"
 //[/Headers]
 
 
@@ -37,12 +39,12 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class KeyboardVisual  : public Component,
-                        public Slider::Listener
+class KeyboardVisual  : public ComponentWithReferenceToData,
+                        public juce::Slider::Listener
 {
 public:
     //==============================================================================
-    KeyboardVisual ();
+    KeyboardVisual (ProcessorData *dataReference);
     ~KeyboardVisual() override;
 
     //==============================================================================
@@ -58,9 +60,9 @@ public:
     double ConvertContinuousMidiNoteToPercentWidth(double continousMidiNote);
     //[/UserMethods]
 
-    void paint (Graphics& g) override;
+    void paint (juce::Graphics& g) override;
     void resized() override;
-    void sliderValueChanged (Slider* sliderThatWasMoved) override;
+    void sliderValueChanged (juce::Slider* sliderThatWasMoved) override;
 
 
 
@@ -83,8 +85,8 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<Slider> highest;
-    std::unique_ptr<Slider> lowest;
+    std::unique_ptr<juce::Slider> highest;
+    std::unique_ptr<juce::Slider> lowest;
 
 
     //==============================================================================

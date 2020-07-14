@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -23,6 +23,7 @@
 #include <JuceHeader.h>
 #include "../../ProcessorStructures.h"
 #include "../../ProcessorData.h"
+#include "../../ComponentWithReferenceToData.h"
 
 //// Forward declare class as cyclic dependency results in "undeclared identifier" errors
 //// https://www.eventhelix.com/RealtimeMantra/HeaderFileIncludePatterns.htm
@@ -39,18 +40,18 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class ActionButtonAndStatus  : public Component,
+class ActionButtonAndStatus  : public ComponentWithReferenceToData,
                                public ChangeListener,
-                               public Button::Listener
+                               public juce::Button::Listener
 {
 public:
     //==============================================================================
-    ActionButtonAndStatus ();
+    ActionButtonAndStatus (ProcessorData *dataReference);
     ~ActionButtonAndStatus() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    ActionButtonAndStatus(MIDIEnviromentTestType testType, MIDIEnviromentTestOperationType operationType);
+    ActionButtonAndStatus(ProcessorData *dataReference, MIDIEnviromentTestType testType, MIDIEnviromentTestOperationType operationType);
 
     void changeListenerCallback(ChangeBroadcaster *source) override;
 
@@ -60,9 +61,9 @@ public:
     void setStatus(Status status, double percentage);
     //[/UserMethods]
 
-    void paint (Graphics& g) override;
+    void paint (juce::Graphics& g) override;
     void resized() override;
-    void buttonClicked (Button* buttonThatWasClicked) override;
+    void buttonClicked (juce::Button* buttonThatWasClicked) override;
 
 
 
@@ -73,7 +74,7 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<TextButton> actionButton;
+    std::unique_ptr<juce::TextButton> actionButton;
     std::unique_ptr<ProgressBar> statusBar;
 
 

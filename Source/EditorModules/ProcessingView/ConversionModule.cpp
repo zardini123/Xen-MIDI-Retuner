@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -27,88 +27,87 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-ConversionModule::ConversionModule ()
+ConversionModule::ConversionModule (ProcessorData *dataReference)
+    : ComponentWithReferenceToData (dataReference)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    label.reset (new Label ("new label",
-                            TRANS("Scale Note Snapping Curve")));
+    label.reset (new juce::Label ("new label",
+                                  TRANS("Scale Note Snapping Curve")));
     addAndMakeVisible (label.get());
-    label->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
-    label->setJustificationType (Justification::centred);
+    label->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    label->setJustificationType (juce::Justification::centred);
     label->setEditable (false, false, false);
-    label->setColour (TextEditor::textColourId, Colours::black);
-    label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
     label->setBounds (0, 16, 224, 40);
 
-    section_title.reset (new Label ("section_title",
-                                    TRANS("Conversion\n")));
+    section_title.reset (new juce::Label ("section_title",
+                                          TRANS("Conversion\n")));
     addAndMakeVisible (section_title.get());
-    section_title->setFont (Font (22.00f, Font::plain).withTypefaceStyle ("Bold"));
-    section_title->setJustificationType (Justification::centredTop);
+    section_title->setFont (juce::Font (22.00f, juce::Font::plain).withTypefaceStyle ("Bold"));
+    section_title->setJustificationType (juce::Justification::centredTop);
     section_title->setEditable (false, false, false);
-    section_title->setColour (TextEditor::textColourId, Colours::black);
-    section_title->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    section_title->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    section_title->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    transitionCurveGUI.reset (new TransitionCurveGUI (&(ProcessorData::getInstance()->transitionCurve)));
+    transitionCurveGUI.reset (new TransitionCurveGUI (&(data->transitionCurve)));
     addAndMakeVisible (transitionCurveGUI.get());
-    transitionSlider.reset (new Slider ("new slider"));
+    transitionSlider.reset (new juce::Slider ("new slider"));
     addAndMakeVisible (transitionSlider.get());
     transitionSlider->setRange (0, 1, 0);
-    transitionSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    transitionSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
-    transitionSlider->addListener (this);
+    transitionSlider->setSliderStyle (juce::Slider::RotaryHorizontalVerticalDrag);
+    transitionSlider->setTextBoxStyle (juce::Slider::TextBoxBelow, false, 80, 20);
 
     transitionSlider->setBounds (0, 80, 104, 96);
 
-    label2.reset (new Label ("new label",
-                             TRANS("Transition")));
+    label2.reset (new juce::Label ("new label",
+                                   TRANS("Transition")));
     addAndMakeVisible (label2.get());
-    label2->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
-    label2->setJustificationType (Justification::centred);
+    label2->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    label2->setJustificationType (juce::Justification::centred);
     label2->setEditable (false, false, false);
-    label2->setColour (TextEditor::textColourId, Colours::black);
-    label2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    label2->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    label2->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
     label2->setBounds (0, 48, 104, 40);
 
-    midpointSlider.reset (new Slider ("new slider"));
+    midpointSlider.reset (new juce::Slider ("new slider"));
     addAndMakeVisible (midpointSlider.get());
     midpointSlider->setRange (0, 1, 0);
-    midpointSlider->setSliderStyle (Slider::RotaryHorizontalVerticalDrag);
-    midpointSlider->setTextBoxStyle (Slider::TextBoxBelow, false, 80, 20);
-    midpointSlider->addListener (this);
+    midpointSlider->setSliderStyle (juce::Slider::RotaryHorizontalVerticalDrag);
+    midpointSlider->setTextBoxStyle (juce::Slider::TextBoxBelow, false, 80, 20);
 
     midpointSlider->setBounds (0, 200, 104, 96);
 
-    label3.reset (new Label ("new label",
-                             TRANS("Midpoint\n")));
+    label3.reset (new juce::Label ("new label",
+                                   TRANS("Midpoint\n")));
     addAndMakeVisible (label3.get());
-    label3->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
-    label3->setJustificationType (Justification::centred);
+    label3->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    label3->setJustificationType (juce::Justification::centred);
     label3->setEditable (false, false, false);
-    label3->setColour (TextEditor::textColourId, Colours::black);
-    label3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    label3->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    label3->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
     label3->setBounds (0, 176, 104, 40);
 
-    label5.reset (new Label ("new label",
-                             TRANS("Interploation Dimension\n")));
+    label5.reset (new juce::Label ("new label",
+                                   TRANS("Interploation Dimension\n")));
     addAndMakeVisible (label5.get());
-    label5->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
-    label5->setJustificationType (Justification::centredTop);
+    label5->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    label5->setJustificationType (juce::Justification::centredTop);
     label5->setEditable (false, false, false);
-    label5->setColour (TextEditor::textColourId, Colours::black);
-    label5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    label5->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    label5->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
     label5->setBounds (80, 64, 144, 32);
 
-    interploationDimension.reset (new ComboBox ("new combo box"));
+    interploationDimension.reset (new juce::ComboBox ("new combo box"));
     addAndMakeVisible (interploationDimension.get());
     interploationDimension->setEditableText (false);
-    interploationDimension->setJustificationType (Justification::centredLeft);
+    interploationDimension->setJustificationType (juce::Justification::centredLeft);
     interploationDimension->setTextWhenNothingSelected (TRANS("Continuous Midi Note (Cents)"));
     interploationDimension->setTextWhenNoChoicesAvailable (TRANS("Continuous Midi Note (Cents)"));
     interploationDimension->addItem (TRANS("Continuous Midi Note (Cents)"), 1);
@@ -125,6 +124,14 @@ ConversionModule::ConversionModule ()
 
 
     //[Constructor] You can add your own custom stuff here..
+    curveMidpointAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(data->apvts, "transition_curve_midpoint", *midpointSlider.get()));
+    curveTransitionAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(data->apvts, "transition_curve_transition", *transitionSlider.get()));
+
+    // Transition Curve GUI is updated via the slider changed callback
+
+    data->apvts.addParameterListener("transition_curve_midpoint", this);
+    data->apvts.addParameterListener("transition_curve_transition", this);
+
     //[/Constructor]
 }
 
@@ -145,11 +152,13 @@ ConversionModule::~ConversionModule()
 
 
     //[Destructor]. You can add your own custom destruction code here..
+    curveTransitionAttachment = nullptr;
+    curveMidpointAttachment = nullptr;
     //[/Destructor]
 }
 
 //==============================================================================
-void ConversionModule::paint (Graphics& g)
+void ConversionModule::paint (juce::Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
@@ -164,36 +173,12 @@ void ConversionModule::resized()
     //[/UserPreResize]
 
     section_title->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
-    transitionCurveGUI->setBounds (proportionOfWidth (0.2005f), 32, proportionOfWidth (0.7995f), proportionOfHeight (0.4985f));
+    transitionCurveGUI->setBounds (proportionOfWidth (0.2014f), 32, proportionOfWidth (0.7986f), proportionOfHeight (0.4983f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-void ConversionModule::sliderValueChanged (Slider* sliderThatWasMoved)
-{
-    //[UsersliderValueChanged_Pre]
-    //[/UsersliderValueChanged_Pre]
-
-    if (sliderThatWasMoved == transitionSlider.get())
-    {
-        //[UserSliderCode_transitionSlider] -- add your slider handling code here..
-        ProcessorData::getInstance()->transitionCurve.setTransition(transitionSlider->getValue());
-        transitionCurveGUI->repaint();
-        //[/UserSliderCode_transitionSlider]
-    }
-    else if (sliderThatWasMoved == midpointSlider.get())
-    {
-        //[UserSliderCode_midpointSlider] -- add your slider handling code here..
-        ProcessorData::getInstance()->transitionCurve.setMidpoint(midpointSlider->getValue());
-        transitionCurveGUI->repaint();
-        //[/UserSliderCode_midpointSlider]
-    }
-
-    //[UsersliderValueChanged_Post]
-    //[/UsersliderValueChanged_Post]
-}
-
-void ConversionModule::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+void ConversionModule::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
 {
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
@@ -211,6 +196,19 @@ void ConversionModule::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+void ConversionModule::parameterChanged(const String &parameterID, float newValue)
+{
+    if (parameterID == "transition_curve_midpoint")
+    {
+        data->transitionCurve.setMidpoint(newValue);
+        transitionCurveGUI->repaint();
+    }
+    else if (parameterID == "transition_curve_transition")
+    {
+        data->transitionCurve.setTransition(newValue);
+        transitionCurveGUI->repaint();
+    }
+}
 //[/MiscUserCode]
 
 
@@ -224,7 +222,8 @@ void ConversionModule::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ConversionModule" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers=""
+                 parentClasses="public ComponentWithReferenceToData, public juce::AudioProcessorValueTreeState::Listener"
+                 constructorParams="ProcessorData *dataReference" variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44"/>
@@ -240,13 +239,13 @@ BEGIN_JUCER_METADATA
          fontsize="22.0" kerning="0.0" bold="1" italic="0" justification="12"
          typefaceStyle="Bold"/>
   <JUCERCOMP name="" id="58460eddec1ae63f" memberName="transitionCurveGUI"
-             virtualName="" explicitFocusOrder="0" pos="20.133% 32 79.867% 49.828%"
-             sourceFile="../../Components/TransitionCurveGUI.cpp" constructorParams="&amp;(ProcessorData::getInstance()-&gt;transitionCurve)"/>
+             virtualName="" explicitFocusOrder="0" pos="20.137% 32 79.863% 49.828%"
+             sourceFile="../../Components/TransitionCurveGUI.cpp" constructorParams="&amp;(data-&gt;transitionCurve)"/>
   <SLIDER name="new slider" id="9f561ed4f957bf22" memberName="transitionSlider"
           virtualName="" explicitFocusOrder="0" pos="0 80 104 96" min="0.0"
           max="1.0" int="0.0" style="RotaryHorizontalVerticalDrag" textBoxPos="TextBoxBelow"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
-          needsCallback="1"/>
+          needsCallback="0"/>
   <LABEL name="new label" id="ce42b31741efd25e" memberName="label2" virtualName=""
          explicitFocusOrder="0" pos="0 48 104 40" edTextCol="ff000000"
          edBkgCol="0" labelText="Transition" editableSingleClick="0" editableDoubleClick="0"
@@ -256,7 +255,7 @@ BEGIN_JUCER_METADATA
           virtualName="" explicitFocusOrder="0" pos="0 200 104 96" min="0.0"
           max="1.0" int="0.0" style="RotaryHorizontalVerticalDrag" textBoxPos="TextBoxBelow"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
-          needsCallback="1"/>
+          needsCallback="0"/>
   <LABEL name="new label" id="4eb01ae82b3ff35c" memberName="label3" virtualName=""
          explicitFocusOrder="0" pos="0 176 104 40" edTextCol="ff000000"
          edBkgCol="0" labelText="Midpoint&#10;" editableSingleClick="0"

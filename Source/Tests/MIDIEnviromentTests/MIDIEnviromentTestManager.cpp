@@ -51,8 +51,11 @@ void MIDIEnviromentTestManager::updateLoop(MidiBuffer& midiMessages, int numberO
                     testEntryMap[id].changeBroadcaster.sendChangeMessage();
                 }
                 
-                for (MidiBuffer::Iterator i (midiMessages); i.getNextEvent (m, time);)
+                for (const MidiMessageMetadata metadata : midiMessages)
                 {
+                    m = metadata.getMessage();
+                    time = metadata.samplePosition;
+                    
                     // Run update block
                     // Check to see if this message is a message part of the test.
                     // The timeout is what determines if we should consider the absense of these messages a fail.

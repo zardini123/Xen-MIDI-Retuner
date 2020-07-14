@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -22,7 +22,7 @@
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
 
-#include "../../ProcessorData.h"
+#include "../../ComponentWithReferenceToData.h"
 //[/Headers]
 
 #include "../../Components/TransitionCurveGUI.h"
@@ -36,40 +36,42 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class ConversionModule  : public Component,
-                          public Slider::Listener,
-                          public ComboBox::Listener
+class ConversionModule  : public ComponentWithReferenceToData,
+                          public juce::AudioProcessorValueTreeState::Listener,
+                          public juce::ComboBox::Listener
 {
 public:
     //==============================================================================
-    ConversionModule ();
+    ConversionModule (ProcessorData *dataReference);
     ~ConversionModule() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    void parameterChanged (const String &parameterID, float newValue) override;
     //[/UserMethods]
 
-    void paint (Graphics& g) override;
+    void paint (juce::Graphics& g) override;
     void resized() override;
-    void sliderValueChanged (Slider* sliderThatWasMoved) override;
-    void comboBoxChanged (ComboBox* comboBoxThatHasChanged) override;
+    void comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> curveTransitionAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> curveMidpointAttachment;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<Label> label;
-    std::unique_ptr<Label> section_title;
+    std::unique_ptr<juce::Label> label;
+    std::unique_ptr<juce::Label> section_title;
     std::unique_ptr<TransitionCurveGUI> transitionCurveGUI;
-    std::unique_ptr<Slider> transitionSlider;
-    std::unique_ptr<Label> label2;
-    std::unique_ptr<Slider> midpointSlider;
-    std::unique_ptr<Label> label3;
-    std::unique_ptr<Label> label5;
-    std::unique_ptr<ComboBox> interploationDimension;
+    std::unique_ptr<juce::Slider> transitionSlider;
+    std::unique_ptr<juce::Label> label2;
+    std::unique_ptr<juce::Slider> midpointSlider;
+    std::unique_ptr<juce::Label> label3;
+    std::unique_ptr<juce::Label> label5;
+    std::unique_ptr<juce::ComboBox> interploationDimension;
 
 
     //==============================================================================

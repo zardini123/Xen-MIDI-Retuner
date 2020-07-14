@@ -19,17 +19,11 @@
 
 struct ProcessorData
 {
-    ProcessorData() {}    // Constructor? (the {} brackets) are needed here.
-
-    ~ProcessorData()
-    {
-        // this ensures that no dangling pointers are left when the
-        // singleton is deleted.
-        clearSingletonInstance();
-    }
-
-    JUCE_DECLARE_SINGLETON (ProcessorData, false)
-
+    ProcessorData(AudioProcessor &processorForApvts);
+    
+    AudioProcessorValueTreeState apvts;
+    UndoManager undoManager;
+    
     MIDIEnviromentTestManager midiEnviromentTestManager;
 
     Channel input[MAX_MIDI_CHANNELS];
@@ -39,12 +33,6 @@ struct ProcessorData
     std::vector<Note> outputNotes[MAX_MIDI_CHANNELS];
 
     TUN::CSingleScale scale;
-
-    AudioParameterInt *in_pitch_bend_range;
-    AudioParameterInt *out_pitch_bend_range;
-
-    AudioParameterChoice *singleChannelNotePriority;
-    AudioParameterChoice *singleChannelNotePriorityModifier;
 
     InterpolationDimension interploationDimension = CENTS;
 

@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -28,12 +28,13 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-TestingView::TestingView ()
+TestingView::TestingView (ProcessorData *dataReference)
+    : ComponentWithReferenceToData (dataReference)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    component.reset (new CapabilitiesTestGUI());
+    component.reset (new CapabilitiesTestGUI (data));
     addAndMakeVisible (component.get());
 
     //[UserPreSize]
@@ -59,7 +60,7 @@ TestingView::~TestingView()
 }
 
 //==============================================================================
-void TestingView::paint (Graphics& g)
+void TestingView::paint (juce::Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
@@ -94,13 +95,14 @@ void TestingView::resized()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="TestingView" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers=""
+                 parentClasses="public ComponentWithReferenceToData" constructorParams="ProcessorData *dataReference"
+                 variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44"/>
   <JUCERCOMP name="" id="c8b6b27b50683c23" memberName="component" virtualName=""
              explicitFocusOrder="0" pos="0 0 100% 100%" sourceFile="TestingView/CapabilitiesTestGUI.cpp"
-             constructorParams=""/>
+             constructorParams="data"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

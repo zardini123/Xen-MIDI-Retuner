@@ -113,10 +113,6 @@
 			isa = PBXBuildFile;
 			fileRef = 8CB5BA3E6A74DF77CD04DF9B;
 		};
-		ED7B7005E51B0941CDEABC95 = {
-			isa = PBXBuildFile;
-			fileRef = 8E51F9E9C46F2880F033DB3A;
-		};
 		0C7E391590E1765C9D97BC73 = {
 			isa = PBXBuildFile;
 			fileRef = 3A75F1CF95CA7DF97A31AF9B;
@@ -132,6 +128,10 @@
 		44EF72447402290F529A6CB5 = {
 			isa = PBXBuildFile;
 			fileRef = 575E66038580C960336DC430;
+		};
+		ED7B7005E51B0941CDEABC95 = {
+			isa = PBXBuildFile;
+			fileRef = 8E51F9E9C46F2880F033DB3A;
 		};
 		E4CDD16C4735A845DF171F79 = {
 			isa = PBXBuildFile;
@@ -160,6 +160,10 @@
 		02512BE919D3D71E153DFA42 = {
 			isa = PBXBuildFile;
 			fileRef = 9D5E38B5FA3F1FBAEF79E9CA;
+		};
+		8DD03730CAE1B56116E701CA = {
+			isa = PBXBuildFile;
+			fileRef = F2195735640EFC5FA908A727;
 		};
 		14930B4A35406B7EB2360012 = {
 			isa = PBXBuildFile;
@@ -318,6 +322,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = PluginGUI.h;
 			path = ../../Source/PluginGUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		169A17E07C2CB6FE9D1FC49A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ComponentWithReferenceToData.h;
+			path = ../../Source/ComponentWithReferenceToData.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		1ABE56E717E19C2686F5376C = {
@@ -640,6 +651,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = TestList.h;
 			path = ../../Source/EditorModules/TestingView/TestList.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		859B9B8AD99C31EAFC1155E5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = JucePluginDefines.h;
+			path = ../../JuceLibraryCode/JucePluginDefines.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		866AF600C62E9A9DE7E3619F = {
@@ -1020,6 +1038,13 @@
 			path = "libXen MIDI Retuner.a";
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
+		F2195735640EFC5FA908A727 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ComponentWithReferenceToData.cpp;
+			path = ../../Source/ComponentWithReferenceToData.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		F32476664C3E08AB9D34B4D6 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -1120,9 +1145,9 @@
 			isa = PBXGroup;
 			children = (
 				69F22A03B6ABC1FAC7DEA4F4,
+				0341C7E91CA2E795C2A034F5,
 				8E51F9E9C46F2880F033DB3A,
 				31A0263C1B8EDC46F35A492B,
-				0341C7E91CA2E795C2A034F5,
 				8A1F583464F3569DB990BBB2,
 				E0992E5538CC55339D0ECC7B,
 				A50287DE07ED2C64E7FCF827,
@@ -1163,6 +1188,8 @@
 				E86FCEB8ABEA525EA3B6A003,
 				6792A254C5601E7BA485AE5F,
 				D5F54D5F30572BA6779EA9D3,
+				F2195735640EFC5FA908A727,
+				169A17E07C2CB6FE9D1FC49A,
 				4C32F2DCF3CB4D88E4449E9C,
 				0D6ACB59B8D5392CBC2C26DC,
 				52625518B02B19BDC3C916C0,
@@ -1231,6 +1258,7 @@
 				1ABE56E717E19C2686F5376C,
 				3201BBDF6CBDBB944C5CF3EF,
 				BB237AF102EBF885FED1787F,
+				859B9B8AD99C31EAFC1155E5,
 			);
 			name = "JUCE Library Code";
 			sourceTree = "<group>";
@@ -1287,6 +1315,26 @@
 			);
 			name = Source;
 			sourceTree = "<group>";
+		};
+		301280EB76FCFF00953BA7F7 = {
+			isa = PBXTargetDependency;
+			target = 0CC206610BBA38E133172D96;
+		};
+		3FF0FCA4CBA65875F2EF9DFD = {
+			isa = PBXTargetDependency;
+			target = E977DEFE54F7F9F775C60F0F;
+		};
+		362B9DC55D3254827A1D0549 = {
+			isa = PBXTargetDependency;
+			target = 1B235E72138410DAF61B39A1;
+		};
+		742CBC0DCA4D539C27176B89 = {
+			isa = PBXTargetDependency;
+			target = 1B235E72138410DAF61B39A1;
+		};
+		D027CCD70B20FE4AB7D2B72A = {
+			isa = PBXTargetDependency;
+			target = 1B235E72138410DAF61B39A1;
 		};
 		96A40CFBC2A3332A5EAFD586 = {
 			isa = XCBuildConfiguration;
@@ -1385,7 +1433,6 @@
 					"JucePlugin_Build_Standalone=0",
 					"JucePlugin_Build_Unity=0",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1492,7 +1539,6 @@
 					"JucePlugin_Build_Standalone=0",
 					"JucePlugin_Build_Unity=0",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GENERATE_PKGINFO_FILE = YES;
 				HEADER_SEARCH_PATHS = (
@@ -1592,7 +1638,6 @@
 					"JucePlugin_Build_Unity=0",
 					"JUCE_SHARED_CODE=1",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
 					"/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_processors/format_types/VST3_SDK",
@@ -1637,11 +1682,12 @@
 				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTABILITY = NO;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
@@ -1685,10 +1731,12 @@
 				CODE_SIGN_IDENTITY = "";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = NO;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_CHECK_SWITCH_STATEMENTS = YES;
@@ -1705,18 +1753,6 @@
 				ZERO_LINK = NO;
 			};
 			name = Release;
-		};
-		05F4D4507415828D14D61FDB = {
-			isa = PBXTargetDependency;
-			target = 0CC206610BBA38E133172D96;
-		};
-		4D81AED66045D554B4CE6720 = {
-			isa = PBXTargetDependency;
-			target = E977DEFE54F7F9F775C60F0F;
-		};
-		2F2B0140E6497297F7B0DC69 = {
-			isa = PBXTargetDependency;
-			target = 1B235E72138410DAF61B39A1;
 		};
 		A6A0D9431C64BFAA48C05070 = {
 			isa = XCConfigurationList;
@@ -1742,9 +1778,9 @@
 			buildPhases = ( );
 			buildRules = ( );
 			dependencies = (
-				05F4D4507415828D14D61FDB,
-				4D81AED66045D554B4CE6720,
-				2F2B0140E6497297F7B0DC69,
+				301280EB76FCFF00953BA7F7,
+				3FF0FCA4CBA65875F2EF9DFD,
+				362B9DC55D3254827A1D0549,
 			);
 			name = "Xen MIDI Retuner - All";
 			productName = "Xen MIDI Retuner";
@@ -1803,7 +1839,7 @@
 			);
 			buildRules = ( );
 			dependencies = (
-				2F2B0140E6497297F7B0DC69,
+				742CBC0DCA4D539C27176B89,
 			);
 			name = "Xen MIDI Retuner - VST";
 			productName = "Xen MIDI Retuner";
@@ -1875,7 +1911,7 @@
 			);
 			buildRules = ( );
 			dependencies = (
-				2F2B0140E6497297F7B0DC69,
+				D027CCD70B20FE4AB7D2B72A,
 			);
 			name = "Xen MIDI Retuner - AU";
 			productName = "Xen MIDI Retuner";
@@ -1905,11 +1941,11 @@
 				2D154766D9D0869FD0913485,
 				0BCB7A4A4FABEAE48BBC20E5,
 				362D4A0508B4F56B46643792,
-				ED7B7005E51B0941CDEABC95,
 				0C7E391590E1765C9D97BC73,
 				C17CB322DE201EC4ACDBE33E,
 				2469C508381A66A5FCB7B0C8,
 				44EF72447402290F529A6CB5,
+				ED7B7005E51B0941CDEABC95,
 				E4CDD16C4735A845DF171F79,
 				B2BC02A9FE7155E80DAE91C0,
 				A6CD8719005EAB700CB6828F,
@@ -1917,6 +1953,7 @@
 				AEAEC6F992E83233E730B316,
 				0B0A95712C709FC3D872DFE1,
 				02512BE919D3D71E153DFA42,
+				8DD03730CAE1B56116E701CA,
 				14930B4A35406B7EB2360012,
 				A81646E03D98335A5BDD79AE,
 				CB10532CE9D9B4FF4DA2075B,

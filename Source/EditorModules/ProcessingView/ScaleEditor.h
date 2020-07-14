@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -22,7 +22,7 @@
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
 
-#include "../../ProcessorData.h"
+#include "../../ComponentWithReferenceToData.h"
 //[/Headers]
 
 
@@ -35,21 +35,21 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class ScaleEditor  : public Component,
-                     public Button::Listener
+class ScaleEditor  : public ComponentWithReferenceToData,
+                     public juce::Button::Listener
 {
 public:
     //==============================================================================
-    ScaleEditor ();
+    ScaleEditor (ProcessorData *dataReference);
     ~ScaleEditor() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     //[/UserMethods]
 
-    void paint (Graphics& g) override;
+    void paint (juce::Graphics& g) override;
     void resized() override;
-    void buttonClicked (Button* buttonThatWasClicked) override;
+    void buttonClicked (juce::Button* buttonThatWasClicked) override;
 
 
 
@@ -58,10 +58,10 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<Label> label;
-    std::unique_ptr<TextButton> importTunFile;
-    std::unique_ptr<TextButton> resetScaleButton;
-    std::unique_ptr<HyperlinkButton> hyperlinkButton;
+    std::unique_ptr<juce::Label> label;
+    std::unique_ptr<juce::TextButton> importTunFile;
+    std::unique_ptr<juce::TextButton> resetScaleButton;
+    std::unique_ptr<juce::HyperlinkButton> hyperlinkButton;
 
 
     //==============================================================================

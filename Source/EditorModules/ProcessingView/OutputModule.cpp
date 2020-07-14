@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -27,39 +27,39 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-OutputModule::OutputModule ()
+OutputModule::OutputModule (ProcessorData *dataReference)
+    : ComponentWithReferenceToData (dataReference)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    out_pitch_bend_range.reset (new Slider ("new slider"));
+    out_pitch_bend_range.reset (new juce::Slider ("new slider"));
     addAndMakeVisible (out_pitch_bend_range.get());
     out_pitch_bend_range->setRange (1, 96, 1);
-    out_pitch_bend_range->setSliderStyle (Slider::IncDecButtons);
-    out_pitch_bend_range->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
-    out_pitch_bend_range->addListener (this);
+    out_pitch_bend_range->setSliderStyle (juce::Slider::IncDecButtons);
+    out_pitch_bend_range->setTextBoxStyle (juce::Slider::TextBoxLeft, false, 80, 20);
 
     out_pitch_bend_range->setBounds (8, 64, 150, 24);
 
-    label.reset (new Label ("new label",
-                            TRANS("Output Pitch Bend Range (semitones)\n")));
+    label.reset (new juce::Label ("new label",
+                                  TRANS("Output Pitch Bend Range (semitones)\n")));
     addAndMakeVisible (label.get());
-    label->setFont (Font (15.00f, Font::plain).withTypefaceStyle ("Regular"));
-    label->setJustificationType (Justification::centredLeft);
+    label->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    label->setJustificationType (juce::Justification::centredLeft);
     label->setEditable (false, false, false);
-    label->setColour (TextEditor::textColourId, Colours::black);
-    label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
     label->setBounds (8, 32, 150, 24);
 
-    section_title.reset (new Label ("section_title",
-                                    TRANS("Input")));
+    section_title.reset (new juce::Label ("section_title",
+                                          TRANS("Output")));
     addAndMakeVisible (section_title.get());
-    section_title->setFont (Font (22.00f, Font::plain).withTypefaceStyle ("Bold"));
-    section_title->setJustificationType (Justification::centredTop);
+    section_title->setFont (juce::Font (22.00f, juce::Font::plain).withTypefaceStyle ("Bold"));
+    section_title->setJustificationType (juce::Justification::centredTop);
     section_title->setEditable (false, false, false);
-    section_title->setColour (TextEditor::textColourId, Colours::black);
-    section_title->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    section_title->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    section_title->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
 
     //[UserPreSize]
@@ -69,7 +69,7 @@ OutputModule::OutputModule ()
 
 
     //[Constructor] You can add your own custom stuff here..
-    out_pitch_bend_range->setValue(ProcessorData::getInstance()->out_pitch_bend_range->get());
+    outputPitchbendAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(data->apvts, "out_pitch_bend_range", *out_pitch_bend_range.get()));
     //[/Constructor]
 }
 
@@ -84,11 +84,12 @@ OutputModule::~OutputModule()
 
 
     //[Destructor]. You can add your own custom destruction code here..
+    outputPitchbendAttachment = nullptr;
     //[/Destructor]
 }
 
 //==============================================================================
-void OutputModule::paint (Graphics& g)
+void OutputModule::paint (juce::Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
@@ -107,22 +108,6 @@ void OutputModule::resized()
     //[/UserResized]
 }
 
-void OutputModule::sliderValueChanged (Slider* sliderThatWasMoved)
-{
-    //[UsersliderValueChanged_Pre]
-    //[/UsersliderValueChanged_Pre]
-
-    if (sliderThatWasMoved == out_pitch_bend_range.get())
-    {
-        //[UserSliderCode_out_pitch_bend_range] -- add your slider handling code here..
-        *(ProcessorData::getInstance()->out_pitch_bend_range) = sliderThatWasMoved->getValue();
-        //[/UserSliderCode_out_pitch_bend_range]
-    }
-
-    //[UsersliderValueChanged_Post]
-    //[/UsersliderValueChanged_Post]
-}
-
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
@@ -139,7 +124,8 @@ void OutputModule::sliderValueChanged (Slider* sliderThatWasMoved)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="OutputModule" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers=""
+                 parentClasses="public ComponentWithReferenceToData" constructorParams="ProcessorData *dataReference"
+                 variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44"/>
@@ -147,7 +133,7 @@ BEGIN_JUCER_METADATA
           virtualName="" explicitFocusOrder="0" pos="8 64 150 24" min="1.0"
           max="96.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
-          needsCallback="1"/>
+          needsCallback="0"/>
   <LABEL name="new label" id="1ac3af9fe857753" memberName="label" virtualName=""
          explicitFocusOrder="0" pos="8 32 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Output Pitch Bend Range (semitones)&#10;"
@@ -156,7 +142,7 @@ BEGIN_JUCER_METADATA
          italic="0" justification="33"/>
   <LABEL name="section_title" id="a42bffd032a0d19b" memberName="section_title"
          virtualName="" explicitFocusOrder="0" pos="0 0 100% 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="Input" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="Output" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="22.0"
          kerning="0.0" bold="1" italic="0" justification="12" typefaceStyle="Bold"/>
 </JUCER_COMPONENT>

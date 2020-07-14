@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -28,24 +28,25 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-KeyboardVisual::KeyboardVisual ()
+KeyboardVisual::KeyboardVisual (ProcessorData *dataReference)
+    : ComponentWithReferenceToData (dataReference)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     setEqualSpacingValues();
     //[/Constructor_pre]
 
-    highest.reset (new Slider ("new slider"));
+    highest.reset (new juce::Slider ("new slider"));
     addAndMakeVisible (highest.get());
     highest->setRange (-20, 140, 1);
-    highest->setSliderStyle (Slider::IncDecButtons);
-    highest->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    highest->setSliderStyle (juce::Slider::IncDecButtons);
+    highest->setTextBoxStyle (juce::Slider::TextBoxLeft, false, 80, 20);
     highest->addListener (this);
 
-    lowest.reset (new Slider ("new slider"));
+    lowest.reset (new juce::Slider ("new slider"));
     addAndMakeVisible (lowest.get());
     lowest->setRange (-20, 140, 1);
-    lowest->setSliderStyle (Slider::IncDecButtons);
-    lowest->setTextBoxStyle (Slider::TextBoxLeft, false, 80, 20);
+    lowest->setSliderStyle (juce::Slider::IncDecButtons);
+    lowest->setTextBoxStyle (juce::Slider::TextBoxLeft, false, 80, 20);
     lowest->addListener (this);
 
 
@@ -81,7 +82,7 @@ KeyboardVisual::~KeyboardVisual()
 }
 
 //==============================================================================
-void KeyboardVisual::paint (Graphics& g)
+void KeyboardVisual::paint (juce::Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
@@ -135,13 +136,13 @@ void KeyboardVisual::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    highest->setBounds (proportionOfWidth (0.9000f), proportionOfHeight (0.0000f), proportionOfWidth (0.1000f), 23);
-    lowest->setBounds (proportionOfWidth (0.8000f), proportionOfHeight (0.0000f), proportionOfWidth (0.1000f), 23);
+    highest->setBounds (proportionOfWidth (0.8997f), proportionOfHeight (0.0000f), proportionOfWidth (0.1003f), 23);
+    lowest->setBounds (proportionOfWidth (0.8003f), proportionOfHeight (0.0000f), proportionOfWidth (0.1003f), 23);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
 
-void KeyboardVisual::sliderValueChanged (Slider* sliderThatWasMoved)
+void KeyboardVisual::sliderValueChanged (juce::Slider* sliderThatWasMoved)
 {
     //[UsersliderValueChanged_Pre]
     //[/UsersliderValueChanged_Pre]
@@ -283,19 +284,21 @@ double KeyboardVisual::ConvertContinuousMidiNoteToPercentWidth(double continousM
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="KeyboardVisual" componentName=""
-                 parentClasses="public Component" constructorParams="" variableInitialisers=""
+                 parentClasses="public ComponentWithReferenceToData" constructorParams="ProcessorData *dataReference"
+                 variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="1000" initialHeight="50">
   <BACKGROUND backgroundColour="61a1ff"/>
   <SLIDER name="new slider" id="67d1cdb27238fff2" memberName="highest"
-          virtualName="" explicitFocusOrder="0" pos="90% 0% 10% 23" min="-20.0"
-          max="140.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
+          virtualName="" explicitFocusOrder="0" pos="89.974% 0% 10.026% 23"
+          min="-20.0" max="140.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="1"/>
   <SLIDER name="new slider" id="3ab8f24ac17b1ecb" memberName="lowest" virtualName=""
-          explicitFocusOrder="0" pos="80% 0% 10% 23" min="-20.0" max="140.0"
-          int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft" textBoxEditable="1"
-          textBoxWidth="80" textBoxHeight="20" skewFactor="1.0" needsCallback="1"/>
+          explicitFocusOrder="0" pos="80.034% 0% 10.026% 23" min="-20.0"
+          max="140.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
+          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
+          needsCallback="1"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

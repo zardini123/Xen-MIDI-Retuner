@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -22,7 +22,7 @@
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
 
-#include "../../ProcessorData.h"
+#include "../../ComponentWithReferenceToData.h"
 //[/Headers]
 
 
@@ -35,32 +35,31 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class OutputModule  : public Component,
-                      public Slider::Listener
+class OutputModule  : public ComponentWithReferenceToData
 {
 public:
     //==============================================================================
-    OutputModule ();
+    OutputModule (ProcessorData *dataReference);
     ~OutputModule() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     //[/UserMethods]
 
-    void paint (Graphics& g) override;
+    void paint (juce::Graphics& g) override;
     void resized() override;
-    void sliderValueChanged (Slider* sliderThatWasMoved) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> outputPitchbendAttachment;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<Slider> out_pitch_bend_range;
-    std::unique_ptr<Label> label;
-    std::unique_ptr<Label> section_title;
+    std::unique_ptr<juce::Slider> out_pitch_bend_range;
+    std::unique_ptr<juce::Label> label;
+    std::unique_ptr<juce::Label> section_title;
 
 
     //==============================================================================

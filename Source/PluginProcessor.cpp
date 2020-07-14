@@ -15,30 +15,21 @@
 #include <random>
 
 //==============================================================================
-XenMidiRetunerAudioProcessor::XenMidiRetunerAudioProcessor()
+XenMidiRetunerAudioProcessor::XenMidiRetunerAudioProcessor() :
 #ifndef JucePlugin_PreferredChannelConfigurations
-     : AudioProcessor (BusesProperties()
-                     #if ! JucePlugin_IsMidiEffect
-                      #if ! JucePlugin_IsSynth
-                       .withInput  ("Input",  AudioChannelSet::stereo(), true)
-                      #endif
-                       .withOutput ("Output", AudioChannelSet::stereo(), true)
-                     #endif
-                       )
+    AudioProcessor (BusesProperties()
+        #if ! JucePlugin_IsMidiEffect
+            #if ! JucePlugin_IsSynth
+            .withInput  ("Input",  AudioChannelSet::stereo(), true)
+            #endif
+            .withOutput ("Output", AudioChannelSet::stereo(), true)
+        #endif
+    ),
 #endif
+    processorData(*this)
 {
-    ProcessorData *data = ProcessorData::getInstance();
-    
-    addParameter(data->in_pitch_bend_range = new AudioParameterInt("in_pitch_bend_range", "Input Pitch Bend Range", 1, 96, 48));
-    addParameter(data->out_pitch_bend_range = new AudioParameterInt("out_pitch_bend_range", "Output Pitch Bend Range", 1, 96, 48));
-    
-    addParameter(data->singleChannelNotePriority = new AudioParameterChoice("singleChannelNotePriority", "Single Channel Note Priority", {
-        "Note", "Velocity", "Random"
-    }, 0));
-    addParameter(data->singleChannelNotePriorityModifier = new AudioParameterChoice("singleChannelNotePriorityModifier", "Single Channel Note Priority Modifier", {"Most Recent", "Oldest", "Greatest", "Lowest"}, 0));
-    
 //    scale = TUN::CSingleScale();
-    data->transitionCurve = TransitionCurve();
+    processorData.transitionCurve = TransitionCurve();
 }
 
 XenMidiRetunerAudioProcessor::~XenMidiRetunerAudioProcessor()
@@ -210,15 +201,18 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
     int time;
     MidiMessage m;
     
-    ProcessorData *data = ProcessorData::getInstance();
+    ProcessorData *data = &processorData;
     
     if (data->midiEnviromentTestManager.isThereTestsAvaliable())
     {
         data->midiEnviromentTestManager.updateLoop(midiMessages, buffer.getNumSamples(), 44100);
     } else { // Lmao
         // For loop runs only if there is MIDI events to parse
-        for (MidiBuffer::Iterator i (midiMessages); i.getNextEvent (m, time);)
+        for (const MidiMessageMetadata metadata : midiMessages)
         {
+            m = metadata.getMessage();
+            time = metadata.samplePosition;
+            
             bool update = false;
             bool updateInitalNotes = false;
             
@@ -266,7 +260,8 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                 }
                 
                 // This condition of note on updates prioritization
-                data->input[channel].priorityNote = getPriorityNote(data->input[channel].notes, (SingleChannelNotePrioritzation)data->singleChannelNotePriority->getIndex(), (SingleChannelNotePrioritzationModifier)data->singleChannelNotePriorityModifier->getIndex());
+                
+                data->input[channel].priorityNote = getPriorityNote(data->input[channel].notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("singleChannelNotePriority"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("singleChannelNotePriorityModifier"));
                 
                 // Update scale interpretation
                 update = true;
@@ -292,7 +287,7 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                 
                 // This condition of note off updates prioritization
                 // Prioirty Note should be set to nullptr if there are no notes to choose from
-                data->input[channel].priorityNote = getPriorityNote(data->input[channel].notes, (SingleChannelNotePrioritzation)data->singleChannelNotePriority->getIndex(), (SingleChannelNotePrioritzationModifier)data->singleChannelNotePriorityModifier->getIndex());
+                data->input[channel].priorityNote = getPriorityNote(data->input[channel].notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("singleChannelNotePriority"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("singleChannelNotePriorityModifier"));
                 
                 if (data->input[channel].priorityNote != nullptr)
                 {
@@ -322,7 +317,7 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             // Will not run if there are no more notes in the stack
             if (update)
             {
-                float prioritySemitones = pitchwheelPosToSemitones(data->input[channel].pitchwheel, data->in_pitch_bend_range->get());
+                float prioritySemitones = pitchwheelPosToSemitones(data->input[channel].pitchwheel, *data->apvts.getRawParameterValue("in_pitch_bend_range"));
                 // FIXME:  Created Segmentation Fault very low note is played
                 float priorityNoteFreq = noteAndSemitonesToFreqHz(data->input[channel].priorityNote->midiNote, prioritySemitones);
                 
@@ -363,7 +358,8 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                     data->output[channel].initalJump = data->output[channel].initalMidiNote - data->input[channel].priorityNote->midiNote;
                 }
                 
-                data->output[channel].noteOffset = std::round((data->input[channel].scaleConvertedPriorityNote - data->output[channel].initalMidiNote) / (data->out_pitch_bend_range->get() * 2)) * (data->out_pitch_bend_range->get() * 2);
+                float outPitchBendRange = *data->apvts.getRawParameterValue("out_pitch_bend_range");
+                data->output[channel].noteOffset = std::round((data->input[channel].scaleConvertedPriorityNote - data->output[channel].initalMidiNote) / (outPitchBendRange * 2)) * (outPitchBendRange * 2);
                 data->output[channel].currentMidiNoteNumber = data->output[channel].noteOffset + data->output[channel].initalMidiNote;
                 
                 // Set all notes for removal.  The next loop will re-set notes to stay on if input midi calls for it
@@ -412,7 +408,7 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                 
                 // Destination - source
                 float semitonesAdjust = data->input[channel].scaleConvertedPriorityNote - (data->input[channel].priorityNote->midiNote + data->output[channel].initalJump + data->output[channel].noteOffset);
-                uint16 pitchWheel = MidiMessage::pitchbendToPitchwheelPos(semitonesAdjust, data->out_pitch_bend_range->get());
+                uint16 pitchWheel = MidiMessage::pitchbendToPitchwheelPos(semitonesAdjust, *data->apvts.getRawParameterValue("out_pitch_bend_range"));
                 
                 processedMidi.addEvent(MidiMessage::pitchWheel(m.getChannel(), pitchWheel), time);
             }
@@ -443,19 +439,13 @@ void XenMidiRetunerAudioProcessor::getStateInformation (MemoryBlock& destData)
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
     
-    ProcessorData *data = ProcessorData::getInstance();
+    auto state = processorData.apvts.copyState();
+    std::unique_ptr<juce::XmlElement> xml (state.createXml());
     
-    // TODO: Make xml setAttributes "dynamic", where an array of AudioProcessorAttrubute pointers are iterated over and saved
-    std::unique_ptr<XmlElement> xml (new XmlElement ("XenMIDIRetuner"));
     xml->setAttribute("save_version", "0.0.1");
     
-    xml->setAttribute ("in_pitch_bend_range", *data->in_pitch_bend_range);
-    xml->setAttribute("out_pitch_bend_range", *data->out_pitch_bend_range);
-    xml->setAttribute("singleChannelNotePriority", data->singleChannelNotePriority->getIndex());
-    xml->setAttribute("singleChannelNotePriorityModifier", data->singleChannelNotePriorityModifier->getIndex());
-    
     std::ostringstream stream;
-    data->scale.Write(stream);
+    processorData.scale.Write(stream);
     std::string str = stream.str();
     xml->setAttribute("scale_file", str);
     
@@ -467,26 +457,22 @@ void XenMidiRetunerAudioProcessor::setStateInformation (const void* data, int si
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
     
-    ProcessorData *processorData = ProcessorData::getInstance();
-    
-    std::unique_ptr<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+    std::unique_ptr<juce::XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
  
     if (xmlState.get() != nullptr) {
-        if (xmlState->hasTagName ("XenMIDIRetuner")) {
-            *processorData->in_pitch_bend_range = xmlState->getIntAttribute("in_pitch_bend_range", 48);
-            *processorData->out_pitch_bend_range = xmlState->getIntAttribute("out_pitch_bend_range", 48);
-            *processorData->singleChannelNotePriority = xmlState->getIntAttribute("singleChannelNotePriority", 0);
-            *processorData->singleChannelNotePriorityModifier = xmlState->getIntAttribute("singleChannelNotePriorityModifier", 0);
+        if (xmlState->hasTagName (processorData.apvts.state.getType())) {
+            processorData.apvts.replaceState (juce::ValueTree::fromXml (*xmlState));
             
             std::string scaleString = xmlState->getStringAttribute("scale_file").toStdString();
             std::istringstream scaleStringStream(scaleString);
             
             // String which will receive the current line from the file
-            TUN::CStringParser    strparser;
+            TUN::CStringParser strparser;
             strparser.InitStreamReading();
 
             // Read the file
-            long lResult = processorData->scale.Read(scaleStringStream, strparser);
+            // TODO: Report error to user if scale could not be read for some reason
+            long lResult = processorData.scale.Read(scaleStringStream, strparser);
         }
     }
 }

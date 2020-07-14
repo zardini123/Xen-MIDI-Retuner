@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="zNOFw1" name="Xen MIDI Retuner" projectType="audioplug" jucerVersion="5.4.7"
-              pluginFormats="buildAU,buildVST" pluginCharacteristicsValue="pluginEditorRequiresKeys,pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
+<JUCERPROJECT id="zNOFw1" name="Xen MIDI Retuner" projectType="audioplug" pluginFormats="buildAU,buildVST"
+              pluginCharacteristicsValue="pluginEditorRequiresKeys,pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
               pluginVST3Category="Fx,Tools" bundleIdentifier="com.TarasPalczynskiIII.XenMIDIRetuner"
               companyName="Taras Palczynski III" pluginManufacturer="Taras Palczynski III"
-              pluginName="Xen MIDI Retuner" version="0.0.1" projectLineFeed="&#10;">
+              pluginName="Xen MIDI Retuner" version="0.0.1" projectLineFeed="&#10;"
+              displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="dJj14n" name="Xen MIDI Retuner">
     <GROUP id="{A1692F2F-028C-9EA8-2739-2FC33C9F86F6}" name="Source">
       <GROUP id="{5CFBB6E8-DB93-CA08-FB77-07FAC1572B4B}" name="AnaMark-Tuning-Library">
@@ -54,8 +55,6 @@
           <FILE id="RBXnhr" name="TestList.cpp" compile="1" resource="0" file="Source/EditorModules/TestingView/TestList.cpp"/>
           <FILE id="XPWyXH" name="TestList.h" compile="0" resource="0" file="Source/EditorModules/TestingView/TestList.h"/>
         </GROUP>
-        <FILE id="Ii74Vf" name="TestingView.cpp" compile="1" resource="0" file="Source/EditorModules/TestingView.cpp"/>
-        <FILE id="gYdJqO" name="TestingView.h" compile="0" resource="0" file="Source/EditorModules/TestingView.h"/>
         <GROUP id="{91D6FA0C-01C8-AB40-5BBC-7183FFF77A04}" name="ProcessingView">
           <FILE id="d7FDBb" name="ConversionModule.cpp" compile="1" resource="0"
                 file="Source/EditorModules/ProcessingView/ConversionModule.cpp"/>
@@ -69,6 +68,8 @@
           <FILE id="xuOZcY" name="ScaleEditor.cpp" compile="1" resource="0" file="Source/EditorModules/ProcessingView/ScaleEditor.cpp"/>
           <FILE id="CZeD3Y" name="ScaleEditor.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/ScaleEditor.h"/>
         </GROUP>
+        <FILE id="Ii74Vf" name="TestingView.cpp" compile="1" resource="0" file="Source/EditorModules/TestingView.cpp"/>
+        <FILE id="gYdJqO" name="TestingView.h" compile="0" resource="0" file="Source/EditorModules/TestingView.h"/>
         <FILE id="fqQaFG" name="ProcessingView.cpp" compile="1" resource="0"
               file="Source/EditorModules/ProcessingView.cpp"/>
         <FILE id="hXYbbE" name="ProcessingView.h" compile="0" resource="0"
@@ -102,6 +103,10 @@
                 file="Source/Tests/MIDIEnviromentTests/NoteAndVelocityTest.h"/>
         </GROUP>
       </GROUP>
+      <FILE id="mIZWSD" name="ComponentWithReferenceToData.cpp" compile="1"
+            resource="0" file="Source/ComponentWithReferenceToData.cpp"/>
+      <FILE id="xFDo5m" name="ComponentWithReferenceToData.h" compile="0"
+            resource="0" file="Source/ComponentWithReferenceToData.h"/>
       <FILE id="XvZ76Y" name="PluginGUI.cpp" compile="1" resource="0" file="Source/PluginGUI.cpp"/>
       <FILE id="ASvFjf" name="PluginGUI.h" compile="0" resource="0" file="Source/PluginGUI.h"/>
       <FILE id="XobHn0" name="PluginEditor.cpp" compile="1" resource="0"
