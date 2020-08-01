@@ -17,9 +17,9 @@ AudioProcessorValueTreeState::ParameterLayout createParameterLayout()
     layout.add(std::make_unique<AudioParameterInt>("in_pitch_bend_range", "Input Pitch Bend Range", 1, 96, 48));
     layout.add(std::make_unique<AudioParameterInt>("out_pitch_bend_range", "Output Pitch Bend Range", 1, 96, 48));
     layout.add(std::make_unique<AudioParameterChoice>("singleChannelNotePriority", "Single Channel Note Priority",
-                                                      StringArray("Note", "Velocity", "Random"), 0));
+                                                      StringArray("Most Recent Note", "Oldest Note", "Note Pitch", "Velocity", "Random"), 0));
     layout.add(std::make_unique<AudioParameterChoice>("singleChannelNotePriorityModifier", "Single Channel Note Priority Modifier",
-                                                      StringArray("Most Recent", "Oldest", "Greatest", "Lowest"), 0));
+                                                      StringArray("Greatest", "Lowest"), 0));
     
     layout.add(std::make_unique<AudioParameterFloat>("transition_curve_midpoint", "Transition Curve Midpoint", NormalisableRange<float>(0.0f, 1.0f), 0.5f));
     layout.add(std::make_unique<AudioParameterFloat>("transition_curve_transition", "Transition Curve Transition", NormalisableRange<float>(0.0f, 1.0f), 0.0f));
@@ -43,5 +43,5 @@ ProcessorData::ProcessorData(AudioProcessor &processorForApvts) :
     apvts (processorForApvts, &undoManager, "PARAMETERS", createParameterLayout()),
     undoManager ()
 {
-    
+    logger.reset(FileLogger::createDefaultAppLogger("", "xen_midi_retuner.log", "Xen MIDI Retuner Debug Log"));
 }

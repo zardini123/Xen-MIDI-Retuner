@@ -76,17 +76,17 @@ enum Status
 
 enum SingleChannelNotePrioritzation
 {
-    NOTE = 0,
+    MOST_RECENT_NOTE = 0,
+    OLDEST_NOTE,
+    NOTE_PITCH,
     VELOCITY,
     RANDOM
 };
 
 enum SingleChannelNotePrioritzationModifier
 {
-    MOST_RECENT = 0,
-    FIRST,
-    HIGHEST_NOTE,
-    LOWEST_NOTE
+    GREATEST = 0,
+    LOWEST
 };
 
 enum InterpolationDimension
@@ -114,9 +114,11 @@ struct Channel
 
 struct OutputChannel
 {
-    int initalMidiNote;
-    int initalJump;
+    int roundedInputScaleConvertedPriorityNote;
+    int deltaFromInputPriorityNoteToScaleRoundedMidiNote;
     
     int noteOffset;
     int currentMidiNoteNumber;
+    
+    std::vector<Note> notes;
 };

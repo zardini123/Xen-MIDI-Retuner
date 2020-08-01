@@ -136,8 +136,8 @@ void KeyboardVisual::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    highest->setBounds (proportionOfWidth (0.8997f), proportionOfHeight (0.0000f), proportionOfWidth (0.1003f), 23);
-    lowest->setBounds (proportionOfWidth (0.8003f), proportionOfHeight (0.0000f), proportionOfWidth (0.1003f), 23);
+    highest->setBounds (proportionOfWidth (0.9000f), proportionOfHeight (0.0000f), proportionOfWidth (0.1000f), 23);
+    lowest->setBounds (proportionOfWidth (0.8000f), proportionOfHeight (0.0000f), proportionOfWidth (0.1000f), 23);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -290,15 +290,14 @@ BEGIN_JUCER_METADATA
                  fixedSize="0" initialWidth="1000" initialHeight="50">
   <BACKGROUND backgroundColour="61a1ff"/>
   <SLIDER name="new slider" id="67d1cdb27238fff2" memberName="highest"
-          virtualName="" explicitFocusOrder="0" pos="89.974% 0% 10.026% 23"
-          min="-20.0" max="140.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
-          textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
-          needsCallback="1"/>
-  <SLIDER name="new slider" id="3ab8f24ac17b1ecb" memberName="lowest" virtualName=""
-          explicitFocusOrder="0" pos="80.034% 0% 10.026% 23" min="-20.0"
+          virtualName="" explicitFocusOrder="0" pos="90% 0% 10% 23" min="-20.0"
           max="140.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="1"/>
+  <SLIDER name="new slider" id="3ab8f24ac17b1ecb" memberName="lowest" virtualName=""
+          explicitFocusOrder="0" pos="80% 0% 10% 23" min="-20.0" max="140.0"
+          int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft" textBoxEditable="1"
+          textBoxWidth="80" textBoxHeight="20" skewFactor="1.0" needsCallback="1"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

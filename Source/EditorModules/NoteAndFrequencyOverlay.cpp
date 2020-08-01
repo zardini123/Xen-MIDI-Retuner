@@ -98,7 +98,7 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
         {
             int in_pitch_bend_range = *data->apvts.getRawParameterValue("in_pitch_bend_range");
             int out_pitch_bend_range = *data->apvts.getRawParameterValue("out_pitch_bend_range");
-            
+
             for (std::vector<Note>::iterator it = processorData->input[i].notes.begin(); it != processorData->input[i].notes.end(); ++it) {
                 float continuousMidiNote = it->midiNote + pitchwheelPosToSemitones(processorData->input[i].pitchwheel, in_pitch_bend_range);
 
@@ -158,15 +158,15 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
             if (processorData->input[i].notes.size() > 0)
             {
                 // Converted Note Closest Note
-                double xConverted = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].initalMidiNote) * widthOfComponent;
+                double xConverted = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].roundedInputScaleConvertedPriorityNote) * widthOfComponent;
                 Colour fillColour = Colour (0x4dfb00ff);
                 g.setColour (fillColour);
                 g.fillRect (xConverted - 1, y, width + 3, height);
 
                 // Out pitchbend
                 fillColour = Colour (0x3f00a2ff);
-                int x3 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].initalMidiNote - out_pitch_bend_range) * widthOfComponent;
-                int x4 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].initalMidiNote + out_pitch_bend_range) * widthOfComponent;
+                int x3 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].roundedInputScaleConvertedPriorityNote - out_pitch_bend_range) * widthOfComponent;
+                int x4 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].roundedInputScaleConvertedPriorityNote + out_pitch_bend_range) * widthOfComponent;
 
                 g.setColour (fillColour);
                 g.fillRect (x3, y, x4 - x3, height);

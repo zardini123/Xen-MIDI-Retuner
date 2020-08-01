@@ -30,11 +30,12 @@ struct ProcessorData
     CriticalSection inputLock;
 
     OutputChannel output[MAX_MIDI_CHANNELS];
-    std::vector<Note> outputNotes[MAX_MIDI_CHANNELS];
 
     TUN::CSingleScale scale;
 
     InterpolationDimension interploationDimension = CENTS;
 
     TransitionCurve transitionCurve;
+    
+    std::unique_ptr<FileLogger> logger;
 };

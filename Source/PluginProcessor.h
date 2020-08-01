@@ -12,12 +12,18 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "ProcessorData.h"
+#include <random>
 
 //==============================================================================
 /**
 */
 class XenMidiRetunerAudioProcessor  : public AudioProcessor
 {
+private:
+    std::random_device seed;
+    std::mt19937 engine = std::mt19937(seed());
+    
+    const Note* getPriorityNote(const std::vector<Note>& noteStack, SingleChannelNotePrioritzation priority, SingleChannelNotePrioritzationModifier priorityModifier);
 public:
     
     ProcessorData processorData;

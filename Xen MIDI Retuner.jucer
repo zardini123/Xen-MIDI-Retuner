@@ -37,6 +37,10 @@
               file="Source/Components/TransitionCurveGUI.cpp"/>
         <FILE id="yAbwkk" name="TransitionCurveGUI.h" compile="0" resource="0"
               file="Source/Components/TransitionCurveGUI.h"/>
+        <FILE id="LBD6K5" name="MIDIChannelStatusAndToggle.cpp" compile="1"
+              resource="0" file="Source/Components/MIDIChannelStatusAndToggle.cpp"/>
+        <FILE id="StrH3G" name="MIDIChannelStatusAndToggle.h" compile="0" resource="0"
+              file="Source/Components/MIDIChannelStatusAndToggle.h"/>
       </GROUP>
       <GROUP id="{6E9FE505-8222-C370-9837-85B2A5A04EF8}" name="EditorModules">
         <GROUP id="{B08742E1-9497-3229-F517-8F1F59EDA2B5}" name="TestingView">

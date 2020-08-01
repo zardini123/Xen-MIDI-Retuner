@@ -97,6 +97,10 @@
 			isa = PBXBuildFile;
 			fileRef = C74C80B48906DCAC43A39F57;
 		};
+		443F29F7942B622F23C64AB3 = {
+			isa = PBXBuildFile;
+			fileRef = 37CD66639B0A7E86DB59D922;
+		};
 		79E5A10C9619A68ABA495669 = {
 			isa = PBXBuildFile;
 			fileRef = 40B9CBBDFF733EB04F66A25C;
@@ -394,6 +398,13 @@
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_utils";
 			sourceTree = "<absolute>";
 		};
+		37CD66639B0A7E86DB59D922 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MIDIChannelStatusAndToggle.cpp;
+			path = ../../Source/Components/MIDIChannelStatusAndToggle.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		3830F78E8AD4BBC303AD1052 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -511,6 +522,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ScaleEditor.cpp;
 			path = ../../Source/EditorModules/ProcessingView/ScaleEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		5A1373BD7CB7B68E85FB7330 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MIDIChannelStatusAndToggle.h;
+			path = ../../Source/Components/MIDIChannelStatusAndToggle.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		5A23AD3CAE0E524D3457574D = {
@@ -1107,6 +1125,8 @@
 				B9F65472332B956F5CE39C15,
 				C74C80B48906DCAC43A39F57,
 				DCD7623E9989B75CCC6C9516,
+				37CD66639B0A7E86DB59D922,
+				5A1373BD7CB7B68E85FB7330,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -1937,6 +1957,7 @@
 				C4EECD3F23C1D751C309C5D3,
 				300229EF3A551EB840864D9F,
 				FAF24D148BA4B6E05AAF4ADB,
+				443F29F7942B622F23C64AB3,
 				79E5A10C9619A68ABA495669,
 				2D154766D9D0869FD0913485,
 				0BCB7A4A4FABEAE48BBC20E5,

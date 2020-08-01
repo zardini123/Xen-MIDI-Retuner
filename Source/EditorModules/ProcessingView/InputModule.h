@@ -25,6 +25,7 @@
 #include "../../ComponentWithReferenceToData.h"
 //[/Headers]
 
+#include "../../Components/MIDIChannelStatusAndToggle.h"
 
 
 //==============================================================================
@@ -36,6 +37,7 @@
                                                                     //[/Comments]
 */
 class InputModule  : public ComponentWithReferenceToData,
+                     public juce::AudioProcessorValueTreeState::Listener,
                      public juce::ComboBox::Listener
 {
 public:
@@ -45,6 +47,7 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    void parameterChanged (const String &parameterID, float newValue) override;
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -68,6 +71,7 @@ private:
     std::unique_ptr<juce::ComboBox> singleChannelPriorityMode;
     std::unique_ptr<juce::Label> label2;
     std::unique_ptr<juce::ComboBox> singleChannelPriorityModifier;
+    std::unique_ptr<MIDIChannelStatusAndToggle> juce__component;
 
 
     //==============================================================================

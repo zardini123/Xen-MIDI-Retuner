@@ -12,7 +12,6 @@
 #include "PluginEditor.h"
 
 #include "Utilities.h"
-#include <random>
 
 //==============================================================================
 XenMidiRetunerAudioProcessor::XenMidiRetunerAudioProcessor() :
@@ -135,26 +134,27 @@ bool XenMidiRetunerAudioProcessor::isBusesLayoutSupported (const BusesLayout& la
 }
 #endif
 
-std::default_random_engine generator;
-
-const Note* getPriorityNote(const std::vector<Note>& noteStack, SingleChannelNotePrioritzation priority, SingleChannelNotePrioritzationModifier priorityModifier)
+const Note* XenMidiRetunerAudioProcessor::getPriorityNote(const std::vector<Note>& noteStack, SingleChannelNotePrioritzation priority, SingleChannelNotePrioritzationModifier priorityModifier)
 {
     const Note *thePriorityNote = nullptr;
+    
+    // Don't bother deciding a prioirty note if there is no notes to choose from in the first place
+    if (noteStack.empty())
+        return nullptr;
+    
     switch (priority)
     {
-        case NOTE:
+        case SingleChannelNotePrioritzation::MOST_RECENT_NOTE:
+            thePriorityNote = &noteStack.back();
+            break;
+        case SingleChannelNotePrioritzation::OLDEST_NOTE:
+            thePriorityNote = &noteStack.front();
+            break;
+        case SingleChannelNotePrioritzation::NOTE_PITCH:
             switch (priorityModifier)
             {
-                case MOST_RECENT:
-                    if (!noteStack.empty())
-                        thePriorityNote = &noteStack.back();
-                    break;
-                case FIRST:
-                    if (!noteStack.empty())
-                        thePriorityNote = &noteStack.front();
-                    break;
-                case HIGHEST_NOTE: {
-                    uint8_t highestNoteVal = 0;
+                case SingleChannelNotePrioritzationModifier::GREATEST: {
+                    int highestNoteVal = std::numeric_limits<int>::min();
                     for (auto it = noteStack.begin(); it != noteStack.end(); ++it) {
                         if (it->midiNote > highestNoteVal)
                         {
@@ -164,8 +164,8 @@ const Note* getPriorityNote(const std::vector<Note>& noteStack, SingleChannelNot
                     }
                     break;
                 }
-                case LOWEST_NOTE:
-                    uint8_t lowestNoteVal = 255;
+                case SingleChannelNotePrioritzationModifier::LOWEST: {
+                    int lowestNoteVal = std::numeric_limits<int>::max();
                     for (auto it = noteStack.begin(); it != noteStack.end(); ++it) {
                         if (it->midiNote < lowestNoteVal)
                         {
@@ -174,14 +174,44 @@ const Note* getPriorityNote(const std::vector<Note>& noteStack, SingleChannelNot
                         }
                     }
                     break;
+                }
             }
             break;
-        case VELOCITY:
+        case SingleChannelNotePrioritzation::VELOCITY:
+            switch (priorityModifier)
+            {
+                case SingleChannelNotePrioritzationModifier::GREATEST: {
+                    uint8_t highestVelocityNote = std::numeric_limits<uint8_t>::min();
+                    for (auto it = noteStack.begin(); it != noteStack.end(); ++it) {
+                        if (it->velocity > highestVelocityNote)
+                        {
+                            highestVelocityNote = it->velocity;
+                            thePriorityNote = &(*it);
+                        }
+                    }
+                    break;
+                }
+                case SingleChannelNotePrioritzationModifier::LOWEST: {
+                    uint8_t lowestVelocityNote = std::numeric_limits<uint8_t>::max();
+                    for (auto it = noteStack.begin(); it != noteStack.end(); ++it) {
+                        if (it->velocity < lowestVelocityNote)
+                        {
+                            lowestVelocityNote = it->velocity;
+                            thePriorityNote = &(*it);
+                        }
+                    }
+                    break;
+                }
+            }
             break;
-        case RANDOM: {
-            std::uniform_int_distribution<int> distribution(0, (int)noteStack.size() - 1);
+        case SingleChannelNotePrioritzation::RANDOM: {
+            // https://rosettacode.org/wiki/Pick_random_element#C.2B.2B
+            std::uniform_int_distribution<int> choose(0, (int)(noteStack.size() - 1));
+            int randomIndex = choose(engine);
             
-            thePriorityNote = &noteStack[distribution(generator)];
+            thePriorityNote = &noteStack[randomIndex];
+            
+            processorData.logger->logMessage(std::to_string(randomIndex));
             break;
         }
         default:
@@ -190,6 +220,18 @@ const Note* getPriorityNote(const std::vector<Note>& noteStack, SingleChannelNot
     }
     
     return thePriorityNote;
+}
+
+bool removeFirstNoteAtNoteNumber(const int noteNumber, std::vector<Note> &notes)
+{
+    for (std::vector<Note>::iterator it = notes.begin(); it != notes.end(); ++it) {
+        if (it->midiNote == noteNumber) {
+            it = notes.erase(it);
+            return true;
+        }
+    }
+    
+    return false;
 }
 
 void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
@@ -215,6 +257,7 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             
             bool update = false;
             bool updateInitalNotes = false;
+            bool offMessage = m.isNoteOff();
             
             // STACK CREATION
             // Pack all information into a Channel array with Note vectors for ease of interpretation later
@@ -227,13 +270,6 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                 //      and therefore may TODO: require note updates if perceived frequency is greater than output pitch range
                 data->input[channel].pitchwheel = m.getPitchWheelValue();
                 
-                // DOES Not update note prioritzation
-                // It does change input frequencies, therefore has an effect on interpretation and scale interploation
-                // Though, if no notes are playing (priorityNote is null), it cannot update any information regarding converted notes
-                if (data->input[channel].priorityNote != nullptr)
-                {
-                    update = true;
-                }
             } else if (m.isNoteOn())
             {
                 {
@@ -242,31 +278,18 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                     
                     // Add the new, played midi note.
                     // First remove midi note if the note already exists (which is important for time-based prioritization)...
-                    std::vector<Note> currentNotes = data->input[channel].notes;
-                    for (std::vector<Note>::iterator it = currentNotes.begin(); it != currentNotes.end(); ++it) {
-                        if (it->midiNote == m.getNoteNumber()) {
-                            it = currentNotes.erase(it);
-                            break;
-                        }
-                    }
+                    removeFirstNoteAtNoteNumber(m.getNoteNumber(), data->input[channel].notes);
                     
                     // Then, Add the newest note to the end of the stack (append to vector)
                     Note newNote = Note {
                         m.getNoteNumber(),
                         m.getVelocity()
                     };
-                    currentNotes.push_back(newNote);
-                    data->input[channel].notes = currentNotes;
+                    data->input[channel].notes.push_back(newNote);
                 }
                 
                 // This condition of note on updates prioritization
-                
                 data->input[channel].priorityNote = getPriorityNote(data->input[channel].notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("singleChannelNotePriority"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("singleChannelNotePriorityModifier"));
-                
-                // Update scale interpretation
-                update = true;
-                // ... and updates what the inital notes are
-                updateInitalNotes = true;
                 
             } else if (m.isNoteOff())
             {
@@ -275,27 +298,12 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                     const ScopedLock myScopedLock (data->inputLock);
                     
                     // Remove the note that was called to be off from the stack
-                    std::vector<Note> currentNotes = data->input[channel].notes;
-                    for (std::vector<Note>::iterator it = currentNotes.begin(); it != currentNotes.end(); ++it) {
-                        if (it->midiNote == m.getNoteNumber()) {
-                            it = currentNotes.erase(it);
-                            break;
-                        }
-                    }
-                    data->input[channel].notes = currentNotes;
+                    removeFirstNoteAtNoteNumber(m.getNoteNumber(), data->input[channel].notes);
                 }
                 
                 // This condition of note off updates prioritization
-                // Prioirty Note should be set to nullptr if there are no notes to choose from
+                // Prioirty Note should be set to nullptr if there are no input notes
                 data->input[channel].priorityNote = getPriorityNote(data->input[channel].notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("singleChannelNotePriority"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("singleChannelNotePriorityModifier"));
-                
-                if (data->input[channel].priorityNote != nullptr)
-                {
-                    // Update scale interpretation
-                    update = true;
-                    // ... and updates what the inital notes are
-                    updateInitalNotes = true;
-                }
                 
                 // If all input is empty, therefore nothing should be playing.  Ensure all notes on output are set to off.
                 // Priority Note will be nullptr as well, either because there is no notes to choose from, due to a prioirty function not being implemented, or having edge cases.
@@ -303,14 +311,26 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                 if (data->input[channel].notes.empty())
                 {
                     // Iterate through all notes and find all the notes ready for turn off
-                    for (std::vector<Note>::iterator it = data->outputNotes[channel].begin(); it != data->outputNotes[channel].end(); ++it) {
+                    for (std::vector<Note>::iterator it = data->output[channel].notes.begin(); it != data->output[channel].notes.end(); ++it) {
                         processedMidi.addEvent(MidiMessage::noteOff(m.getChannel(), it->midiNote), time);
                     }
                     
-                    data->outputNotes[channel].clear();
+                    data->output[channel].notes.clear();
                 }
             } else {
                 processedMidi.addEvent(m, time);
+            }
+            
+            // Priority note required to determine how to adjust notes/pitchbend for the channel
+            if (data->input[channel].priorityNote != nullptr)
+            {
+                bool isNoteMessage = m.isNoteOn() || m.isNoteOff();
+                
+                // Note messages and pitchwheel changes input frequencies, therefore has an effect on interpretation and scale interploation
+                update = isNoteMessage || m.isPitchWheel();
+                
+                // The input priority note scale converted rounded to closest midi note is only updated on midi note messages
+                updateInitalNotes = isNoteMessage;
             }
             
             // Interpretate and convert played notes of the current channel into the tuned value
@@ -348,34 +368,50 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                 float interpolatedBetween = data->transitionCurve.evaluate(percentBetween);
                 float mappedBackToContinuousMidiNote = jmap(interpolatedBetween, 0.0f, 1.0f, lowerContMidiNote, higherContMidiNote);
                 
-                // For this channel, this is the target continuous midi note that the priority note needs to reach
+                // scaleConvertedPriorityNote is the continuous midi note that the selected priority note needs to reach
                 data->input[channel].scaleConvertedPriorityNote = mappedBackToContinuousMidiNote;
                 
-                
+                // Updated only when midi note on/off messages are inputted
                 if (updateInitalNotes)
                 {
-                    data->output[channel].initalMidiNote = std::round(data->input[channel].scaleConvertedPriorityNote);
-                    data->output[channel].initalJump = data->output[channel].initalMidiNote - data->input[channel].priorityNote->midiNote;
+                    // Displayed by NoteAndFrequencyOverlay as center of output pitchbend range (blue strip).
+                    data->output[channel].roundedInputScaleConvertedPriorityNote = std::round(data->input[channel].scaleConvertedPriorityNote);
+                    
+                    // ∆ = Destination - source
+                    data->output[channel].deltaFromInputPriorityNoteToScaleRoundedMidiNote = data->output[channel].roundedInputScaleConvertedPriorityNote - data->input[channel].priorityNote->midiNote;
                 }
                 
                 float outPitchBendRange = *data->apvts.getRawParameterValue("out_pitch_bend_range");
-                data->output[channel].noteOffset = std::round((data->input[channel].scaleConvertedPriorityNote - data->output[channel].initalMidiNote) / (outPitchBendRange * 2)) * (outPitchBendRange * 2);
-                data->output[channel].currentMidiNoteNumber = data->output[channel].noteOffset + data->output[channel].initalMidiNote;
                 
-                // Set all notes for removal.  The next loop will re-set notes to stay on if input midi calls for it
-                int amountMarkedForRemoval = static_cast<int>(data->outputNotes[channel].size());
-                for (std::vector<Note>::iterator it = data->outputNotes[channel].begin(); it != data->outputNotes[channel].end(); ++it) {
+                data->output[channel].noteOffset = std::round((data->input[channel].scaleConvertedPriorityNote - data->output[channel].roundedInputScaleConvertedPriorityNote) / (outPitchBendRange * 2)) * (outPitchBendRange * 2);
+                
+                // Following code is to manage the output of note on and off messages
+                // If, for example, holding a chord and pitchbending upwards results in a voice having same midi note as previously held midi note, do not send a off message (sustain the note longer).
+                
+                // The currently outputed midi note corresponding to the priority note on this channel
+                // Shown via NoteAndFrequencyOverlay as yellow strip.
+                data->output[channel].currentMidiNoteNumber = data->output[channel].noteOffset + data->output[channel].roundedInputScaleConvertedPriorityNote;
+                
+                // Set all notes for removal.  The next for-loop block will re-set notes to stay on if input midi calls for it
+                for (std::vector<Note>::iterator it = data->output[channel].notes.begin(); it != data->output[channel].notes.end(); ++it) {
                     it->turnOffFlag = true;
                 }
+                // Used for outputNotes element erasing workaround later
+                int amountMarkedForRemoval = static_cast<int>(data->output[channel].notes.size());
                 
+                // Translate all input notes by translation values for tiling midi notes.
+                // If the translated input notes does NOT equal any output note currently stored in output[channel].notes,
+                //      add the note to output[channel].notes and send out a NoteOn message.
+                // The output notes not paired with any translated input notes will have its turnOffFlag still set to true.
+                // The next loop will go through all output notes and if its turnOffFlag is true, the note will be removed and a NoteOff will be sent out.
                 for (std::vector<Note>::iterator it = data->input[channel].notes.begin(); it != data->input[channel].notes.end(); ++it) {
-                    int inputMidiNoteAdjusted = it->midiNote + data->output[channel].initalJump + data->output[channel].noteOffset;
+                    int inputMidiNoteAdjusted = it->midiNote + data->output[channel].deltaFromInputPriorityNoteToScaleRoundedMidiNote + data->output[channel].noteOffset;
                     
                     bool noteAlreadyExists = false;
-                    for (std::vector<Note>::iterator it = data->outputNotes[channel].begin(); it != data->outputNotes[channel].end(); ++it) {
-                        if (it->midiNote == inputMidiNoteAdjusted) {
-                            // Note already exists.  Make sure it stays for next update and is not removed.
-                            it->turnOffFlag = false;
+                    for (std::vector<Note>::iterator it2 = data->output[channel].notes.begin(); it2 != data->output[channel].notes.end(); ++it2) {
+                        if (it2->midiNote == inputMidiNoteAdjusted) {
+                            // A translated input note has been found to equal a output[channel].notes note.  Don't add any notes or send out any NoteOn messages and exit early.
+                            it2->turnOffFlag = false;
                             amountMarkedForRemoval--;
                             noteAlreadyExists = true;
                             break;
@@ -384,37 +420,38 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                     
                     if (!noteAlreadyExists)
                     {
+                        // Copy all note data (velocity) but change note number
                         Note currentConvertedNote = *it;
                         currentConvertedNote.midiNote = inputMidiNoteAdjusted;
                         
-                        // If this is the first time adding this note, turn it on.
-                        data->outputNotes[channel].push_back(currentConvertedNote);
+                        data->output[channel].notes.push_back(currentConvertedNote);
                         
                         processedMidi.addEvent(MidiMessage::noteOn(m.getChannel(), inputMidiNoteAdjusted, it->velocity), time);
                     }
                 }
                 
+                // FIXME: Re-assignment of iterator from the erase function and continuing loop results in crash for some reason
+                // Workaround is restarting loop when an erase occurs for as many elements there are to erase.
                 // Iterate through all notes and find all the notes ready for turn off
                 for (int i = 0; i < amountMarkedForRemoval; i++) {
-                    for (std::vector<Note>::iterator it = data->outputNotes[channel].begin(); it != data->outputNotes[channel].end(); ++it) {
+                    for (std::vector<Note>::iterator it = data->output[channel].notes.begin(); it != data->output[channel].notes.end(); ++it) {
                         if (it->turnOffFlag) {
                             processedMidi.addEvent(MidiMessage::noteOff(m.getChannel(), it->midiNote), time);
-                            it = data->outputNotes[channel].erase(it);
-                            // Cannot erase and then continue for loop.  Therefore, restart loop for as many times there are elements (notes) to remove
+                            // Troublesome line mentioned in fixme.
+                            it = data->output[channel].notes.erase(it);
+                            
                             break;
                         }
                     }
                 }
                 
-                // Destination - source
-                float semitonesAdjust = data->input[channel].scaleConvertedPriorityNote - (data->input[channel].priorityNote->midiNote + data->output[channel].initalJump + data->output[channel].noteOffset);
+                // Final pitchbend for this channel's priority note to reach the scale-snapped priority note.
+                // ∆ = Destination - source
+                float semitonesAdjust = data->input[channel].scaleConvertedPriorityNote - data->output[channel].currentMidiNoteNumber;
                 uint16 pitchWheel = MidiMessage::pitchbendToPitchwheelPos(semitonesAdjust, *data->apvts.getRawParameterValue("out_pitch_bend_range"));
                 
                 processedMidi.addEvent(MidiMessage::pitchWheel(m.getChannel(), pitchWheel), time);
             }
-            
-            // processedMidi.addEvent(MidiMessage::pitchWheel(m.getChannel(), random(0,16383)), time);
-            // processedMidi.addEvent(MidiMessage::noteOn(m.getChannel(), random(0,100), (uint8)random(0,100)), time);
         }
 
         midiMessages.swapWith(processedMidi);

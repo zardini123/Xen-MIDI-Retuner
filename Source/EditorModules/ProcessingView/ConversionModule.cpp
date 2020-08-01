@@ -131,7 +131,6 @@ ConversionModule::ConversionModule (ProcessorData *dataReference)
 
     data->apvts.addParameterListener("transition_curve_midpoint", this);
     data->apvts.addParameterListener("transition_curve_transition", this);
-
     //[/Constructor]
 }
 
@@ -173,7 +172,7 @@ void ConversionModule::resized()
     //[/UserPreResize]
 
     section_title->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
-    transitionCurveGUI->setBounds (proportionOfWidth (0.2014f), 32, proportionOfWidth (0.7986f), proportionOfHeight (0.4983f));
+    transitionCurveGUI->setBounds (proportionOfWidth (0.2000f), 32, proportionOfWidth (0.8000f), proportionOfHeight (0.4985f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -239,7 +238,7 @@ BEGIN_JUCER_METADATA
          fontsize="22.0" kerning="0.0" bold="1" italic="0" justification="12"
          typefaceStyle="Bold"/>
   <JUCERCOMP name="" id="58460eddec1ae63f" memberName="transitionCurveGUI"
-             virtualName="" explicitFocusOrder="0" pos="20.137% 32 79.863% 49.828%"
+             virtualName="" explicitFocusOrder="0" pos="20% 32 80% 49.85%"
              sourceFile="../../Components/TransitionCurveGUI.cpp" constructorParams="&amp;(data-&gt;transitionCurve)"/>
   <SLIDER name="new slider" id="9f561ed4f957bf22" memberName="transitionSlider"
           virtualName="" explicitFocusOrder="0" pos="0 80 104 96" min="0.0"

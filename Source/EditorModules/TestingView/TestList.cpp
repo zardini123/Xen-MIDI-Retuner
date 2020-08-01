@@ -100,16 +100,16 @@ void TestList::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    note_velocity_broadcaster_action->setBounds (proportionOfWidth (0.5004f), 1, proportionOfWidth (0.5004f), 24);
-    pitch_bend_broadcaster_action->setBounds (proportionOfWidth (0.5004f), 24, proportionOfWidth (0.5004f), 24);
-    channel_aftertouch_broadcaster_action->setBounds (proportionOfWidth (0.5004f), 48, proportionOfWidth (0.5004f), 24);
-    control_change_broadcaster_action->setBounds (proportionOfWidth (0.5004f), 72, proportionOfWidth (0.5004f), 24);
-    poly_aftertouch_broadcaster_action->setBounds (proportionOfWidth (0.5004f), 96, proportionOfWidth (0.5004f), 24);
-    note_velocity_listener_action->setBounds (proportionOfWidth (0.0000f), 0, proportionOfWidth (0.5004f), 24);
-    pitch_bend_listener_action->setBounds (proportionOfWidth (0.0000f), 24, proportionOfWidth (0.5004f), 24);
-    channel_aftertouch_listener_action->setBounds (proportionOfWidth (0.0000f), 48, proportionOfWidth (0.5004f), 24);
-    control_change_listener_action->setBounds (proportionOfWidth (0.0000f), 72, proportionOfWidth (0.5004f), 24);
-    poly_aftertouch_listener_action->setBounds (proportionOfWidth (0.0000f), 96, proportionOfWidth (0.5004f), 24);
+    note_velocity_broadcaster_action->setBounds (proportionOfWidth (0.5000f), 1, proportionOfWidth (0.5000f), 24);
+    pitch_bend_broadcaster_action->setBounds (proportionOfWidth (0.5000f), 24, proportionOfWidth (0.5000f), 24);
+    channel_aftertouch_broadcaster_action->setBounds (proportionOfWidth (0.5000f), 48, proportionOfWidth (0.5000f), 24);
+    control_change_broadcaster_action->setBounds (proportionOfWidth (0.5000f), 72, proportionOfWidth (0.5000f), 24);
+    poly_aftertouch_broadcaster_action->setBounds (proportionOfWidth (0.5000f), 96, proportionOfWidth (0.5000f), 24);
+    note_velocity_listener_action->setBounds (proportionOfWidth (0.0000f), 0, proportionOfWidth (0.5000f), 24);
+    pitch_bend_listener_action->setBounds (proportionOfWidth (0.0000f), 24, proportionOfWidth (0.5000f), 24);
+    channel_aftertouch_listener_action->setBounds (proportionOfWidth (0.0000f), 48, proportionOfWidth (0.5000f), 24);
+    control_change_listener_action->setBounds (proportionOfWidth (0.0000f), 72, proportionOfWidth (0.5000f), 24);
+    poly_aftertouch_listener_action->setBounds (proportionOfWidth (0.0000f), 96, proportionOfWidth (0.5000f), 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -136,35 +136,35 @@ BEGIN_JUCER_METADATA
                  fixedSize="0" initialWidth="200" initialHeight="400">
   <BACKGROUND backgroundColour="ff00c1"/>
   <JUCERCOMP name="" id="8ab3a91cf9f16b4c" memberName="note_velocity_broadcaster_action"
-             virtualName="" explicitFocusOrder="0" pos="50.043% 1 50.043% 24"
-             sourceFile="ActionButtonAndStatus.cpp" constructorParams="data, NOTE_AND_VELOCITY, BROADCASTER"/>
+             virtualName="" explicitFocusOrder="0" pos="50% 1 50% 24" sourceFile="ActionButtonAndStatus.cpp"
+             constructorParams="data, NOTE_AND_VELOCITY, BROADCASTER"/>
   <JUCERCOMP name="" id="cdd446f78c157c7" memberName="pitch_bend_broadcaster_action"
-             virtualName="" explicitFocusOrder="0" pos="50.043% 24 50.043% 24"
-             sourceFile="ActionButtonAndStatus.cpp" constructorParams="data"/>
+             virtualName="" explicitFocusOrder="0" pos="50% 24 50% 24" sourceFile="ActionButtonAndStatus.cpp"
+             constructorParams="data"/>
   <JUCERCOMP name="" id="64e7b5de6dc3428d" memberName="channel_aftertouch_broadcaster_action"
-             virtualName="" explicitFocusOrder="0" pos="50.043% 48 50.043% 24"
-             sourceFile="ActionButtonAndStatus.cpp" constructorParams="data"/>
+             virtualName="" explicitFocusOrder="0" pos="50% 48 50% 24" sourceFile="ActionButtonAndStatus.cpp"
+             constructorParams="data"/>
   <JUCERCOMP name="" id="ae6ef277b4290cd" memberName="control_change_broadcaster_action"
-             virtualName="" explicitFocusOrder="0" pos="50.043% 72 50.043% 24"
-             sourceFile="ActionButtonAndStatus.cpp" constructorParams="data"/>
+             virtualName="" explicitFocusOrder="0" pos="50% 72 50% 24" sourceFile="ActionButtonAndStatus.cpp"
+             constructorParams="data"/>
   <JUCERCOMP name="" id="daf629722121eaab" memberName="poly_aftertouch_broadcaster_action"
-             virtualName="" explicitFocusOrder="0" pos="50.043% 96 50.043% 24"
-             sourceFile="ActionButtonAndStatus.cpp" constructorParams="data"/>
+             virtualName="" explicitFocusOrder="0" pos="50% 96 50% 24" sourceFile="ActionButtonAndStatus.cpp"
+             constructorParams="data"/>
   <JUCERCOMP name="" id="3ecb3114d4853cf3" memberName="note_velocity_listener_action"
-             virtualName="" explicitFocusOrder="0" pos="0% 0 50.043% 24" sourceFile="ActionButtonAndStatus.cpp"
+             virtualName="" explicitFocusOrder="0" pos="0% 0 50% 24" sourceFile="ActionButtonAndStatus.cpp"
              constructorParams="data, NOTE_AND_VELOCITY, LISTENER"/>
   <JUCERCOMP name="" id="3baf8ad16a706496" memberName="pitch_bend_listener_action"
-             virtualName="" explicitFocusOrder="0" pos="0% 24 50.043% 24"
-             sourceFile="ActionButtonAndStatus.cpp" constructorParams="data"/>
+             virtualName="" explicitFocusOrder="0" pos="0% 24 50% 24" sourceFile="ActionButtonAndStatus.cpp"
+             constructorParams="data"/>
   <JUCERCOMP name="" id="7720dded8ca7f090" memberName="channel_aftertouch_listener_action"
-             virtualName="" explicitFocusOrder="0" pos="0% 48 50.043% 24"
-             sourceFile="ActionButtonAndStatus.cpp" constructorParams="data"/>
+             virtualName="" explicitFocusOrder="0" pos="0% 48 50% 24" sourceFile="ActionButtonAndStatus.cpp"
+             constructorParams="data"/>
   <JUCERCOMP name="" id="bcfe5cfc33f9aa79" memberName="control_change_listener_action"
-             virtualName="" explicitFocusOrder="0" pos="0% 72 50.043% 24"
-             sourceFile="ActionButtonAndStatus.cpp" constructorParams="data"/>
+             virtualName="" explicitFocusOrder="0" pos="0% 72 50% 24" sourceFile="ActionButtonAndStatus.cpp"
+             constructorParams="data"/>
   <JUCERCOMP name="" id="cfffcb61eaa046" memberName="poly_aftertouch_listener_action"
-             virtualName="" explicitFocusOrder="0" pos="0% 96 50.043% 24"
-             sourceFile="ActionButtonAndStatus.cpp" constructorParams="data"/>
+             virtualName="" explicitFocusOrder="0" pos="0% 96 50% 24" sourceFile="ActionButtonAndStatus.cpp"
+             constructorParams="data"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

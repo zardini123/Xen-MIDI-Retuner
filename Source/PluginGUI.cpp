@@ -48,14 +48,26 @@ PluginGUI::PluginGUI (ProcessorData *dataReference)
     tabbedComponent->addTab (TRANS("Testing"), juce::Colour (0x00d3d3d3), new TestingView (data), true);
     tabbedComponent->setCurrentTabIndex (0);
 
+    juce__label.reset (new juce::Label ("new label",
+                                        TRANS("label text")));
+    addAndMakeVisible (juce__label.get());
+    juce__label->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    juce__label->setJustificationType (juce::Justification::centredLeft);
+    juce__label->setEditable (false, false, false);
+    juce__label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    juce__label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+
+    juce__label->setBounds (8, 328, 150, 24);
+
 
     //[UserPreSize]
     //[/UserPreSize]
 
-    setSize (1000, 450);
+    setSize (1300, 450);
 
 
     //[Constructor] You can add your own custom stuff here..
+    juce__label->setText(data->logger->getLogFile().getFullPathName(), dontSendNotification);
     //[/Constructor]
 }
 
@@ -68,6 +80,7 @@ PluginGUI::~PluginGUI()
     scaleFrequenciesOverlay = nullptr;
     noteAndFreqOverlay = nullptr;
     tabbedComponent = nullptr;
+    juce__label = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -118,7 +131,7 @@ BEGIN_JUCER_METADATA
                  parentClasses="public ComponentWithReferenceToData" constructorParams="ProcessorData *dataReference"
                  variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="1" initialWidth="1000" initialHeight="450">
+                 fixedSize="1" initialWidth="1300" initialHeight="450">
   <BACKGROUND backgroundColour="ff323e44"/>
   <JUCERCOMP name="" id="9a893a36dc7e0c36" memberName="keyboardVisual" virtualName=""
              explicitFocusOrder="0" pos="0 0Rr 100% 20%" sourceFile="EditorModules/KeyboardVisual.cpp"
@@ -141,6 +154,11 @@ BEGIN_JUCER_METADATA
     <TAB name="Testing" colour="d3d3d3" useJucerComp="1" contentClassName=""
          constructorParams="data" jucerComponentFile="EditorModules/TestingView.cpp"/>
   </TABBEDCOMPONENT>
+  <LABEL name="new label" id="d976bdad45a791ae" memberName="juce__label"
+         virtualName="" explicitFocusOrder="0" pos="8 328 150 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="label text" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
+         kerning="0.0" bold="0" italic="0" justification="33"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

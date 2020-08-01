@@ -42,7 +42,7 @@ InputModule::InputModule (ProcessorData *dataReference)
     label4->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     label4->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    label4->setBounds (8, 168, 144, 24);
+    label4->setBounds (168, 168, 144, 24);
 
     in_pitch_bend_range.reset (new juce::Slider ("new slider"));
     addAndMakeVisible (in_pitch_bend_range.get());
@@ -50,7 +50,7 @@ InputModule::InputModule (ProcessorData *dataReference)
     in_pitch_bend_range->setSliderStyle (juce::Slider::IncDecButtons);
     in_pitch_bend_range->setTextBoxStyle (juce::Slider::TextBoxLeft, false, 80, 20);
 
-    in_pitch_bend_range->setBounds (8, 64, 150, 24);
+    in_pitch_bend_range->setBounds (168, 64, 150, 24);
 
     label3.reset (new juce::Label ("new label",
                                    TRANS("Input Pitch Bend Range (semitones)\n")));
@@ -61,7 +61,7 @@ InputModule::InputModule (ProcessorData *dataReference)
     label3->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     label3->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    label3->setBounds (8, 32, 150, 24);
+    label3->setBounds (168, 32, 150, 24);
 
     section_title.reset (new juce::Label ("section_title",
                                           TRANS("Input")));
@@ -80,7 +80,7 @@ InputModule::InputModule (ProcessorData *dataReference)
     singleChannelPriorityMode->setTextWhenNoChoicesAvailable (juce::String());
     singleChannelPriorityMode->addListener (this);
 
-    singleChannelPriorityMode->setBounds (8, 144, 144, 24);
+    singleChannelPriorityMode->setBounds (168, 144, 144, 24);
 
     label2.reset (new juce::Label ("new label",
                                    TRANS("Single Channel Note Prioritization")));
@@ -91,7 +91,7 @@ InputModule::InputModule (ProcessorData *dataReference)
     label2->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     label2->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    label2->setBounds (8, 104, 144, 32);
+    label2->setBounds (168, 104, 144, 32);
 
     singleChannelPriorityModifier.reset (new juce::ComboBox ("new combo box"));
     addAndMakeVisible (singleChannelPriorityModifier.get());
@@ -101,7 +101,11 @@ InputModule::InputModule (ProcessorData *dataReference)
     singleChannelPriorityModifier->setTextWhenNoChoicesAvailable (juce::String());
     singleChannelPriorityModifier->addListener (this);
 
-    singleChannelPriorityModifier->setBounds (8, 192, 144, 24);
+    singleChannelPriorityModifier->setBounds (168, 192, 144, 24);
+
+    juce__component.reset (new MIDIChannelStatusAndToggle());
+    addAndMakeVisible (juce__component.get());
+    juce__component->setBounds (0, 32, 96, 272);
 
 
     //[UserPreSize]
@@ -122,12 +126,15 @@ InputModule::InputModule (ProcessorData *dataReference)
 //    in_pitch_bend_range->setValue(ProcessorData::getInstance()->in_pitch_bend_range->get());
 
     inputPitchbendAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(data->apvts, "in_pitch_bend_range", *in_pitch_bend_range.get()));
-    
+
     singleChannelPriorityMode->addItemList(data->apvts.getParameter("singleChannelNotePriority")->getAllValueStrings(), 1);
     singleChannelPriorityModifier->addItemList(data->apvts.getParameter("singleChannelNotePriorityModifier")->getAllValueStrings(), 1);
-    
+
     singleChannelNotePriorityAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(data->apvts, "singleChannelNotePriority", *singleChannelPriorityMode.get()));
     singleChannelPriorityModifierAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(data->apvts, "singleChannelNotePriorityModifier", *singleChannelPriorityModifier.get()));
+    
+    
+    data->apvts.addParameterListener("singleChannelNotePriority", this);
     //[/Constructor]
 }
 
@@ -143,6 +150,7 @@ InputModule::~InputModule()
     singleChannelPriorityMode = nullptr;
     label2 = nullptr;
     singleChannelPriorityModifier = nullptr;
+    juce__component = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -194,6 +202,14 @@ void InputModule::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+void InputModule::parameterChanged(const String &parameterID, float newValue)
+{
+    if (parameterID == "singleChannelNotePriority")
+    {
+        SingleChannelNotePrioritzation prioritySwitch = (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue(parameterID);
+        singleChannelPriorityModifier->setEnabled(prioritySwitch == SingleChannelNotePrioritzation::NOTE_PITCH || prioritySwitch == SingleChannelNotePrioritzation::VELOCITY);
+    }
+}
 //[/MiscUserCode]
 
 
@@ -207,23 +223,23 @@ void InputModule::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="InputModule" componentName=""
-                 parentClasses="public ComponentWithReferenceToData" constructorParams="ProcessorData *dataReference"
-                 variableInitialisers="ComponentWithReferenceToData (dataReference)"
+                 parentClasses="public ComponentWithReferenceToData, public juce::AudioProcessorValueTreeState::Listener"
+                 constructorParams="ProcessorData *dataReference" variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44"/>
   <LABEL name="new label" id="d861762387e1dd26" memberName="label4" virtualName=""
-         explicitFocusOrder="0" pos="8 168 144 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="168 168 144 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Modifier" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <SLIDER name="new slider" id="b64c5755e8e89a8b" memberName="in_pitch_bend_range"
-          virtualName="" explicitFocusOrder="0" pos="8 64 150 24" min="1.0"
+          virtualName="" explicitFocusOrder="0" pos="168 64 150 24" min="1.0"
           max="96.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="0"/>
   <LABEL name="new label" id="12ca6725baa12ffb" memberName="label3" virtualName=""
-         explicitFocusOrder="0" pos="8 32 150 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="168 32 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Input Pitch Bend Range (semitones)&#10;"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15.0" kerning="0.0" bold="0"
@@ -234,16 +250,19 @@ BEGIN_JUCER_METADATA
          focusDiscardsChanges="0" fontname="Default font" fontsize="22.0"
          kerning="0.0" bold="1" italic="0" justification="12" typefaceStyle="Bold"/>
   <COMBOBOX name="new combo box" id="34c558f948bf284a" memberName="singleChannelPriorityMode"
-            virtualName="" explicitFocusOrder="0" pos="8 144 144 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="168 144 144 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems=""/>
   <LABEL name="new label" id="1112cb5e9cdc4f37" memberName="label2" virtualName=""
-         explicitFocusOrder="0" pos="8 104 144 32" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="168 104 144 32" edTextCol="ff000000"
          edBkgCol="0" labelText="Single Channel Note Prioritization" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="12"/>
   <COMBOBOX name="new combo box" id="2ebd7ab8a0c8a16" memberName="singleChannelPriorityModifier"
-            virtualName="" explicitFocusOrder="0" pos="8 192 144 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="168 192 144 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems=""/>
+  <JUCERCOMP name="" id="7291f8aeddd4124e" memberName="juce__component" virtualName=""
+             explicitFocusOrder="0" pos="0 32 96 272" sourceFile="../../Components/MIDIChannelStatusAndToggle.cpp"
+             constructorParams=""/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
