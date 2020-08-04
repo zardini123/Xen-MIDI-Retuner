@@ -17,5 +17,6 @@ float pitchwheelPosToSemitones(const uint16 pitchwheelPos, const float pitchbend
 float noteAndSemitonesToFreqHz(int noteNum, float semitones);
 float continuousNoteToFreqHz(float continuousNote);
 void freqHZToNoteAndSemitones(double frequency, int &noteNum, double &semitones);
+float freqHZToContinuousMidiNote(double frequency);
 
 int random(int min, int max);

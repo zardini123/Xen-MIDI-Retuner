@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -28,11 +28,11 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-ScaleFrequenciesOverlay::ScaleFrequenciesOverlay (KeyboardVisual *keyboardVis, XenMidiRetunerAudioProcessor *midiProcessor)
+ScaleFrequenciesOverlay::ScaleFrequenciesOverlay (ProcessorData *dataReference, KeyboardVisual *keyboardVis)
+    : ComponentWithReferenceToData (dataReference)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     keyboard = keyboardVis;
-    processor = midiProcessor;
     //[/Constructor_pre]
 
 
@@ -58,11 +58,13 @@ ScaleFrequenciesOverlay::~ScaleFrequenciesOverlay()
 }
 
 //==============================================================================
-void ScaleFrequenciesOverlay::paint (Graphics& g)
+void ScaleFrequenciesOverlay::paint (juce::Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
+    ProcessorData* processorData = data;
+
     int y = 0, width = 1, height = 100;
-    for (auto it = processor->scale.GetNoteFrequenciesHz().begin(); it != processor->scale.GetNoteFrequenciesHz().end(); ++it) {
+    for (auto it = processorData->scale.GetNoteFrequenciesHz().begin(); it != processorData->scale.GetNoteFrequenciesHz().end(); ++it) {
         int note;
         double semitones;
         freqHZToNoteAndSemitones((*it), note, semitones);
@@ -104,9 +106,11 @@ void ScaleFrequenciesOverlay::resized()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ScaleFrequenciesOverlay"
-                 componentName="" parentClasses="public Component" constructorParams="KeyboardVisual *keyboardVis, XenMidiRetunerAudioProcessor *midiProcessor"
-                 variableInitialisers="" snapPixels="8" snapActive="1" snapShown="1"
-                 overlayOpacity="0.330" fixedSize="0" initialWidth="600" initialHeight="400">
+                 componentName="" parentClasses="public ComponentWithReferenceToData"
+                 constructorParams="ProcessorData *dataReference, KeyboardVisual *keyboardVis"
+                 variableInitialisers="ComponentWithReferenceToData (dataReference)"
+                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
+                 fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="dc143c"/>
 </JUCER_COMPONENT>
 

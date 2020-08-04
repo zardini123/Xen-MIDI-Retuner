@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -22,12 +22,8 @@
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
 
-//// Forward declare class as cyclic dependency results in "undeclared identifier" errors
-//// https://www.eventhelix.com/RealtimeMantra/HeaderFileIncludePatterns.htm
-//class KeyboardVisual;
-
 #include "KeyboardVisual.h"
-#include "../PluginProcessor.h"
+#include "../ProcessorData.h"
 //[/Headers]
 
 
@@ -40,19 +36,19 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class NoteAndFrequencyOverlay  : public Component,
+class NoteAndFrequencyOverlay  : public ComponentWithReferenceToData,
                                  private Timer
 {
 public:
     //==============================================================================
-    NoteAndFrequencyOverlay (KeyboardVisual *keyboardVis, XenMidiRetunerAudioProcessor *midiProcessor);
+    NoteAndFrequencyOverlay (ProcessorData *dataReference, KeyboardVisual *keyboardVis);
     ~NoteAndFrequencyOverlay() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     //[/UserMethods]
 
-    void paint (Graphics& g) override;
+    void paint (juce::Graphics& g) override;
     void resized() override;
 
 
@@ -62,7 +58,6 @@ private:
     const int UPDATE_RATE = 60;
 
     KeyboardVisual *keyboard;
-    XenMidiRetunerAudioProcessor *processor;
 
     double time;
 

@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -21,15 +21,13 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "ComponentWithReferenceToData.h"
 #include "PluginProcessor.h"
 //[/Headers]
 
 #include "EditorModules/KeyboardVisual.h"
 #include "EditorModules/ScaleFrequenciesOverlay.h"
 #include "EditorModules/NoteAndFrequencyOverlay.h"
-#include "EditorModules/InputModule.h"
-#include "EditorModules/ScaleEditor.h"
-#include "EditorModules/ConversionModule.h"
 
 
 //==============================================================================
@@ -40,38 +38,32 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class PluginGUI  : public Component,
-                   public Slider::Listener
+class PluginGUI  : public ComponentWithReferenceToData
 {
 public:
     //==============================================================================
-    PluginGUI (XenMidiRetunerAudioProcessor *processorA);
+    PluginGUI (ProcessorData *dataReference);
     ~PluginGUI() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    XenMidiRetunerAudioProcessor *processor;
     //[/UserMethods]
 
-    void paint (Graphics& g) override;
+    void paint (juce::Graphics& g) override;
     void resized() override;
-    void sliderValueChanged (Slider* sliderThatWasMoved) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    TooltipWindow tooltipWindow;
     //[/UserVariables]
 
     //==============================================================================
     std::unique_ptr<KeyboardVisual> keyboardVisual;
     std::unique_ptr<ScaleFrequenciesOverlay> scaleFrequenciesOverlay;
-    std::unique_ptr<Slider> out_pitch_bend_range;
-    std::unique_ptr<Label> label;
     std::unique_ptr<NoteAndFrequencyOverlay> noteAndFreqOverlay;
-    std::unique_ptr<InputModule> component;
-    std::unique_ptr<ScaleEditor> component2;
-    std::unique_ptr<ConversionModule> conversionModule;
+    std::unique_ptr<juce::TabbedComponent> tabbedComponent;
 
 
     //==============================================================================

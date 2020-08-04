@@ -11,85 +11,29 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "AnaMark-Tuning-Library/SCL_Import.h"
-#include "EditorModules/Components/TransitionCurve.h"
+#include "ProcessorData.h"
+#include <random>
 
 //==============================================================================
 /**
 */
-const int MAX_MIDI_CHANNELS = 16;
-const int CENTER_PITCHWHEEL = 8192;
-
-enum SingleChannelNotePrioritzation
+class XenMidiRetunerAudioProcessor  : public AudioProcessor,
+                                      public juce::AudioProcessorValueTreeState::Listener
 {
-    NOTE = 0,
-    VELOCITY,
-    RANDOM
-};
-
-enum SingleChannelNotePrioritzationModifier
-{
-    MOST_RECENT = 0,
-    FIRST,
-    HIGHEST_NOTE,
-    LOWEST_NOTE
-};
-
-enum InterpolationDimension
-{
-    CENTS = 0,
-    FREQUENCY
-};
-
-struct Note
-{
-    int midiNote;
-    uint8 velocity;
+private:
+    std::random_device seed;
+    std::mt19937 engine = std::mt19937(seed());
     
-    bool turnOffFlag = false;
-};
-
-struct Channel
-{
-    uint16 pitchwheel = CENTER_PITCHWHEEL; // Default to pitchbend wheel at center
-    const Note *priorityNote;
-    
-    float scaleConvertedPriorityNote;
-    std::vector<Note> notes;
-};
-
-struct OutputChannel
-{
-    int initalMidiNote;
-    int initalJump;
-    
-    int noteOffset;
-    int currentMidiNoteNumber;
-};
-
-class XenMidiRetunerAudioProcessor  : public AudioProcessor
-{
+    const Note* getPriorityNote(const std::vector<Note>& noteStack, SingleChannelNotePrioritzation priority, SingleChannelNotePrioritzationModifier priorityModifier);
+    void updateBlock(MidiBuffer& processedMidi, int channelIndex, bool updateInitialNotes, int time);
 public:
-    // Processor data
-    Channel input[MAX_MIDI_CHANNELS];
-    CriticalSection inputLock;
     
-    OutputChannel output[MAX_MIDI_CHANNELS];
-    std::vector<Note> outputNotes[MAX_MIDI_CHANNELS];
-
-    TUN::CSingleScale scale;
-
-    AudioParameterInt *in_pitch_bend_range;
-    AudioParameterInt *out_pitch_bend_range;
+    void parameterChanged (const String &parameterID, float newValue) override;
+    bool updatePitch = false;
+    bool updatePriority = false;
     
-    AudioParameterChoice *singleChannelNotePriority;
-    AudioParameterChoice *singleChannelNotePriorityModifier;
+    ProcessorData processorData;
     
-    InterpolationDimension interploationDimension = CENTS;
-    
-    TransitionCurve *interpolationCurve = nullptr;
-    // END Processor data
-
     //==============================================================================
     XenMidiRetunerAudioProcessor();
     ~XenMidiRetunerAudioProcessor();
@@ -126,8 +70,6 @@ public:
     //==============================================================================
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-
-private:
     
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (XenMidiRetunerAudioProcessor)

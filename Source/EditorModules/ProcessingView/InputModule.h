@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -21,7 +21,8 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
-#include <map>
+
+#include "../../ComponentWithReferenceToData.h"
 //[/Headers]
 
 
@@ -34,38 +35,45 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class TransitionCurve  : public Component
+class InputModule  : public ComponentWithReferenceToData,
+                     public juce::AudioProcessorValueTreeState::Listener,
+                     public juce::ComboBox::Listener
 {
 public:
     //==============================================================================
-    TransitionCurve ();
-    ~TransitionCurve() override;
+    InputModule (ProcessorData *dataReference);
+    ~InputModule() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    void setTransition(float transition);
-    float evaluate(float xPosition);
+    void parameterChanged (const String &parameterID, float newValue) override;
     //[/UserMethods]
 
-    void paint (Graphics& g) override;
+    void paint (juce::Graphics& g) override;
     void resized() override;
+    void comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    int horizontalMargin = 40;
-    int verticalMargin = 40;
-
-    Path internalPath1;
-    Line<float> evaluationLine;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> inputPitchbendAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> singleChannelNotePriorityAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> singleChannelPriorityModifierAttachment;
     //[/UserVariables]
 
     //==============================================================================
+    std::unique_ptr<juce::Label> label4;
+    std::unique_ptr<juce::Slider> in_pitch_bend_range;
+    std::unique_ptr<juce::Label> label3;
+    std::unique_ptr<juce::Label> section_title;
+    std::unique_ptr<juce::ComboBox> singleChannelPriorityMode;
+    std::unique_ptr<juce::Label> label2;
+    std::unique_ptr<juce::ComboBox> singleChannelPriorityModifier;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TransitionCurve)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (InputModule)
 };
 
 //[EndFile] You can add extra defines here...

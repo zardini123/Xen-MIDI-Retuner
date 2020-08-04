@@ -7,12 +7,12 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 5.4.7
+  Created with Projucer version: 6.0.1
 
   ------------------------------------------------------------------------------
 
   The Projucer is part of the JUCE library.
-  Copyright (c) 2017 - ROLI Ltd.
+  Copyright (c) 2020 - Raw Material Software Limited.
 
   ==============================================================================
 */
@@ -21,9 +21,11 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
+#include <map>
+
+#include "TransitionCurve.h"
 //[/Headers]
 
-#include "Components/TransitionCurve.h"
 
 
 //==============================================================================
@@ -34,38 +36,38 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class ConversionModule  : public Component,
-                          public Slider::Listener
+class TransitionCurveGUI  : public Component
 {
 public:
     //==============================================================================
-    ConversionModule ();
-    ~ConversionModule() override;
+    TransitionCurveGUI (TransitionCurve *transitionCurve);
+    ~TransitionCurveGUI() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    TransitionCurve *getTransitionCurve();
     //[/UserMethods]
 
-    void paint (Graphics& g) override;
+    void paint (juce::Graphics& g) override;
     void resized() override;
-    void sliderValueChanged (Slider* sliderThatWasMoved) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    Point<float> convertPercentsToPixels(Point<float> percentsPoint);
+    TransitionCurve *curve;
+
+    int horizontalMargin = 10;
+    int verticalMargin = 10;
+
+    Path internalPath;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<Label> section_title;
-    std::unique_ptr<TransitionCurve> transitionCurve;
-    std::unique_ptr<Slider> slider;
-    std::unique_ptr<Label> label;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ConversionModule)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TransitionCurveGUI)
 };
 
 //[EndFile] You can add extra defines here...
