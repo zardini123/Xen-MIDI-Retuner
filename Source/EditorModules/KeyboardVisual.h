@@ -58,11 +58,15 @@ public:
     double ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNote, int& keyDistanceIndex);
 
     double ConvertContinuousMidiNoteToPercentWidth(double continousMidiNote);
+
+//    double ConvertPixelsToContinuousMidiNote(int xPosition);
+//    double ConvertPercentWidthToContinuousMidiNote(double percentWidth);
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
     void sliderValueChanged (juce::Slider* sliderThatWasMoved) override;
+    void mouseWheelMove (const juce::MouseEvent& e, const juce::MouseWheelDetails& wheel) override;
 
 
 

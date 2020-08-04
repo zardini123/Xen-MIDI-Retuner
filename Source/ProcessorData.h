@@ -24,7 +24,7 @@ struct ProcessorData
     AudioProcessorValueTreeState apvts;
     UndoManager undoManager;
     
-    MIDIEnviromentTestManager midiEnviromentTestManager;
+    TransitionCurve transitionCurve;
 
     Channel input[MAX_MIDI_CHANNELS];
     CriticalSection inputLock;
@@ -32,10 +32,9 @@ struct ProcessorData
     OutputChannel output[MAX_MIDI_CHANNELS];
 
     TUN::CSingleScale scale;
-
-    InterpolationDimension interploationDimension = CENTS;
-
-    TransitionCurve transitionCurve;
+    ChangeBroadcaster scaleChangedBroadcaster;
+    
+    MIDIEnviromentTestManager midiEnviromentTestManager;
     
     std::unique_ptr<FileLogger> logger;
 };

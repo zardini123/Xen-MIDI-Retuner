@@ -36,6 +36,7 @@
                                                                     //[/Comments]
 */
 class ScaleEditor  : public ComponentWithReferenceToData,
+                     public ChangeListener,
                      public juce::Button::Listener
 {
 public:
@@ -45,6 +46,8 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    void changeListenerCallback (ChangeBroadcaster *source) override;
+    void setScaleLabel();
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -62,6 +65,7 @@ private:
     std::unique_ptr<juce::TextButton> importTunFile;
     std::unique_ptr<juce::TextButton> resetScaleButton;
     std::unique_ptr<juce::HyperlinkButton> hyperlinkButton;
+    std::unique_ptr<juce::Label> scale_name_label;
 
 
     //==============================================================================

@@ -50,7 +50,7 @@ namespace ProjectInfo
 {
     const char* const  projectName    = "Xen MIDI Retuner";
     const char* const  companyName    = "Taras Palczynski III";
-    const char* const  versionString  = "0.0.1";
-    const int          versionNumber  = 0x1;
+    const char* const  versionString  = "0.0.2";
+    const int          versionNumber  = 0x2;
 }
 #endif

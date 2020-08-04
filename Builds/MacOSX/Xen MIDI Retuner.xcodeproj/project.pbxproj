@@ -101,6 +101,10 @@
 			isa = PBXBuildFile;
 			fileRef = 37CD66639B0A7E86DB59D922;
 		};
+		D138A3E46D352A82FC3B4CEE = {
+			isa = PBXBuildFile;
+			fileRef = E3747A4AC05976CA397DDA01;
+		};
 		79E5A10C9619A68ABA495669 = {
 			isa = PBXBuildFile;
 			fileRef = 40B9CBBDFF733EB04F66A25C;
@@ -133,13 +137,17 @@
 			isa = PBXBuildFile;
 			fileRef = 575E66038580C960336DC430;
 		};
+		E4CDD16C4735A845DF171F79 = {
+			isa = PBXBuildFile;
+			fileRef = 8A1F583464F3569DB990BBB2;
+		};
 		ED7B7005E51B0941CDEABC95 = {
 			isa = PBXBuildFile;
 			fileRef = 8E51F9E9C46F2880F033DB3A;
 		};
-		E4CDD16C4735A845DF171F79 = {
+		A8487DEA6049B4A7AF3A8CC6 = {
 			isa = PBXBuildFile;
-			fileRef = 8A1F583464F3569DB990BBB2;
+			fileRef = 7E9113C585EA832B29D82778;
 		};
 		B2BC02A9FE7155E80DAE91C0 = {
 			isa = PBXBuildFile;
@@ -650,6 +658,13 @@
 			path = System/Library/Frameworks/QuartzCore.framework;
 			sourceTree = SDKROOT;
 		};
+		7E9113C585EA832B29D82778 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = SettingsView.cpp;
+			path = ../../Source/EditorModules/SettingsView.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		80B72F45F406DB4FE61D7D05 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -790,6 +805,13 @@
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_formats";
 			sourceTree = "<absolute>";
 		};
+		A30D5C6C73D4878E5FEA26F7 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = MIDIChannelStatusAndToggleSingle.h;
+			path = ../../Source/Components/MIDIChannelStatusAndToggleSingle.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		A50287DE07ED2C64E7FCF827 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -858,6 +880,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = JuceHeader.h;
 			path = ../../JuceLibraryCode/JuceHeader.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		C13DA7958DFC9234F8949F79 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = SettingsView.h;
+			path = ../../Source/EditorModules/SettingsView.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C17AFF4DF847E91FC9C73908 = {
@@ -1007,6 +1036,13 @@
 			path = "/Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_basics";
 			sourceTree = "<absolute>";
 		};
+		E3747A4AC05976CA397DDA01 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = MIDIChannelStatusAndToggleSingle.cpp;
+			path = ../../Source/Components/MIDIChannelStatusAndToggleSingle.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E5354432B2BDC61728E90E9E = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1127,6 +1163,8 @@
 				DCD7623E9989B75CCC6C9516,
 				37CD66639B0A7E86DB59D922,
 				5A1373BD7CB7B68E85FB7330,
+				E3747A4AC05976CA397DDA01,
+				A30D5C6C73D4878E5FEA26F7,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -1166,10 +1204,12 @@
 			children = (
 				69F22A03B6ABC1FAC7DEA4F4,
 				0341C7E91CA2E795C2A034F5,
-				8E51F9E9C46F2880F033DB3A,
-				31A0263C1B8EDC46F35A492B,
 				8A1F583464F3569DB990BBB2,
 				E0992E5538CC55339D0ECC7B,
+				8E51F9E9C46F2880F033DB3A,
+				31A0263C1B8EDC46F35A492B,
+				7E9113C585EA832B29D82778,
+				C13DA7958DFC9234F8949F79,
 				A50287DE07ED2C64E7FCF827,
 				52D4292BCE8EC200681A3BBB,
 				F89DB5CD6998182A1A76DCE3,
@@ -1390,8 +1430,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=0.0.1",
-					"JUCE_APP_VERSION_HEX=0x1",
+					"JUCE_APP_VERSION=0.0.2",
+					"JUCE_APP_VERSION_HEX=0x2",
 					"JucePlugin_Build_VST=1",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -1442,8 +1482,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=0.0.1",
-					"JUCE_APP_VERSION_HEX=0x1",
+					"JUCE_APP_VERSION=0.0.2",
+					"JUCE_APP_VERSION_HEX=0x2",
 					"JucePlugin_Build_VST=1",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -1495,8 +1535,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=0.0.1",
-					"JUCE_APP_VERSION_HEX=0x1",
+					"JUCE_APP_VERSION=0.0.2",
+					"JUCE_APP_VERSION_HEX=0x2",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=1",
@@ -1548,8 +1588,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=0.0.1",
-					"JUCE_APP_VERSION_HEX=0x1",
+					"JUCE_APP_VERSION=0.0.2",
+					"JUCE_APP_VERSION_HEX=0x2",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=1",
@@ -1600,8 +1640,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=0.0.1",
-					"JUCE_APP_VERSION_HEX=0x1",
+					"JUCE_APP_VERSION=0.0.2",
+					"JUCE_APP_VERSION_HEX=0x2",
 					"JucePlugin_Build_VST=1",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=1",
@@ -1646,8 +1686,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=0.0.1",
-					"JUCE_APP_VERSION_HEX=0x1",
+					"JUCE_APP_VERSION=0.0.2",
+					"JUCE_APP_VERSION_HEX=0x2",
 					"JucePlugin_Build_VST=1",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=1",
@@ -1958,6 +1998,7 @@
 				300229EF3A551EB840864D9F,
 				FAF24D148BA4B6E05AAF4ADB,
 				443F29F7942B622F23C64AB3,
+				D138A3E46D352A82FC3B4CEE,
 				79E5A10C9619A68ABA495669,
 				2D154766D9D0869FD0913485,
 				0BCB7A4A4FABEAE48BBC20E5,
@@ -1966,8 +2007,9 @@
 				C17CB322DE201EC4ACDBE33E,
 				2469C508381A66A5FCB7B0C8,
 				44EF72447402290F529A6CB5,
-				ED7B7005E51B0941CDEABC95,
 				E4CDD16C4735A845DF171F79,
+				ED7B7005E51B0941CDEABC95,
+				A8487DEA6049B4A7AF3A8CC6,
 				B2BC02A9FE7155E80DAE91C0,
 				A6CD8719005EAB700CB6828F,
 				CD76D6935FC5502C5CE36DB3,

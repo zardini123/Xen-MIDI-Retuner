@@ -25,7 +25,6 @@
 #include "../../ComponentWithReferenceToData.h"
 //[/Headers]
 
-#include "../../Components/MIDIChannelStatusAndToggle.h"
 
 
 //==============================================================================
@@ -71,7 +70,6 @@ private:
     std::unique_ptr<juce::ComboBox> singleChannelPriorityMode;
     std::unique_ptr<juce::Label> label2;
     std::unique_ptr<juce::ComboBox> singleChannelPriorityModifier;
-    std::unique_ptr<MIDIChannelStatusAndToggle> juce__component;
 
 
     //==============================================================================

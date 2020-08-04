@@ -17,14 +17,20 @@
 //==============================================================================
 /**
 */
-class XenMidiRetunerAudioProcessor  : public AudioProcessor
+class XenMidiRetunerAudioProcessor  : public AudioProcessor,
+                                      public juce::AudioProcessorValueTreeState::Listener
 {
 private:
     std::random_device seed;
     std::mt19937 engine = std::mt19937(seed());
     
     const Note* getPriorityNote(const std::vector<Note>& noteStack, SingleChannelNotePrioritzation priority, SingleChannelNotePrioritzationModifier priorityModifier);
+    void updateBlock(MidiBuffer& processedMidi, int channelIndex, bool updateInitialNotes, int time);
 public:
+    
+    void parameterChanged (const String &parameterID, float newValue) override;
+    bool updatePitch = false;
+    bool updatePriority = false;
     
     ProcessorData processorData;
     

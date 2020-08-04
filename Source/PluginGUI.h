@@ -64,7 +64,6 @@ private:
     std::unique_ptr<ScaleFrequenciesOverlay> scaleFrequenciesOverlay;
     std::unique_ptr<NoteAndFrequencyOverlay> noteAndFreqOverlay;
     std::unique_ptr<juce::TabbedComponent> tabbedComponent;
-    std::unique_ptr<juce::Label> juce__label;
 
 
     //==============================================================================

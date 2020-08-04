@@ -4,7 +4,7 @@
               pluginCharacteristicsValue="pluginEditorRequiresKeys,pluginIsSynth,pluginProducesMidiOut,pluginWantsMidiIn"
               pluginVST3Category="Fx,Tools" bundleIdentifier="com.TarasPalczynskiIII.XenMIDIRetuner"
               companyName="Taras Palczynski III" pluginManufacturer="Taras Palczynski III"
-              pluginName="Xen MIDI Retuner" version="0.0.1" projectLineFeed="&#10;"
+              pluginName="Xen MIDI Retuner" version="0.0.2" projectLineFeed="&#10;"
               displaySplashScreen="1" jucerFormatVersion="1">
   <MAINGROUP id="dJj14n" name="Xen MIDI Retuner">
     <GROUP id="{A1692F2F-028C-9EA8-2739-2FC33C9F86F6}" name="Source">
@@ -41,6 +41,10 @@
               resource="0" file="Source/Components/MIDIChannelStatusAndToggle.cpp"/>
         <FILE id="StrH3G" name="MIDIChannelStatusAndToggle.h" compile="0" resource="0"
               file="Source/Components/MIDIChannelStatusAndToggle.h"/>
+        <FILE id="dBFJIW" name="MIDIChannelStatusAndToggleSingle.cpp" compile="1"
+              resource="0" file="Source/Components/MIDIChannelStatusAndToggleSingle.cpp"/>
+        <FILE id="ktlfaF" name="MIDIChannelStatusAndToggleSingle.h" compile="0"
+              resource="0" file="Source/Components/MIDIChannelStatusAndToggleSingle.h"/>
       </GROUP>
       <GROUP id="{6E9FE505-8222-C370-9837-85B2A5A04EF8}" name="EditorModules">
         <GROUP id="{B08742E1-9497-3229-F517-8F1F59EDA2B5}" name="TestingView">
@@ -72,12 +76,15 @@
           <FILE id="xuOZcY" name="ScaleEditor.cpp" compile="1" resource="0" file="Source/EditorModules/ProcessingView/ScaleEditor.cpp"/>
           <FILE id="CZeD3Y" name="ScaleEditor.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/ScaleEditor.h"/>
         </GROUP>
-        <FILE id="Ii74Vf" name="TestingView.cpp" compile="1" resource="0" file="Source/EditorModules/TestingView.cpp"/>
-        <FILE id="gYdJqO" name="TestingView.h" compile="0" resource="0" file="Source/EditorModules/TestingView.h"/>
         <FILE id="fqQaFG" name="ProcessingView.cpp" compile="1" resource="0"
               file="Source/EditorModules/ProcessingView.cpp"/>
         <FILE id="hXYbbE" name="ProcessingView.h" compile="0" resource="0"
               file="Source/EditorModules/ProcessingView.h"/>
+        <FILE id="Ii74Vf" name="TestingView.cpp" compile="1" resource="0" file="Source/EditorModules/TestingView.cpp"/>
+        <FILE id="gYdJqO" name="TestingView.h" compile="0" resource="0" file="Source/EditorModules/TestingView.h"/>
+        <FILE id="qjbUif" name="SettingsView.cpp" compile="1" resource="0"
+              file="Source/EditorModules/SettingsView.cpp"/>
+        <FILE id="TBDceV" name="SettingsView.h" compile="0" resource="0" file="Source/EditorModules/SettingsView.h"/>
         <FILE id="S5xF8B" name="KeyboardVisual.cpp" compile="1" resource="0"
               file="Source/EditorModules/KeyboardVisual.cpp"/>
         <FILE id="Fr3H9S" name="KeyboardVisual.h" compile="0" resource="0"

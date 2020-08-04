@@ -62,7 +62,16 @@ ScaleEditor::ScaleEditor (ProcessorData *dataReference)
     hyperlinkButton->setTooltip (TRANS("https://sevish.com/scaleworkshop/"));
     hyperlinkButton->setButtonText (TRANS("Sevish Workshop"));
 
-    hyperlinkButton->setBounds (8, 104, 150, 24);
+    hyperlinkButton->setBounds (8, 96, 150, 24);
+
+    scale_name_label.reset (new juce::Label ("new label",
+                                             TRANS("No Scale Loaded")));
+    addAndMakeVisible (scale_name_label.get());
+    scale_name_label->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    scale_name_label->setJustificationType (juce::Justification::centredLeft);
+    scale_name_label->setEditable (false, false, false);
+    scale_name_label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    scale_name_label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
 
     //[UserPreSize]
@@ -72,6 +81,8 @@ ScaleEditor::ScaleEditor (ProcessorData *dataReference)
 
 
     //[Constructor] You can add your own custom stuff here..
+    data->scaleChangedBroadcaster.addChangeListener(this);
+    setScaleLabel();
     //[/Constructor]
 }
 
@@ -84,6 +95,7 @@ ScaleEditor::~ScaleEditor()
     importTunFile = nullptr;
     resetScaleButton = nullptr;
     hyperlinkButton = nullptr;
+    scale_name_label = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -106,6 +118,7 @@ void ScaleEditor::resized()
     //[/UserPreResize]
 
     label->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
+    scale_name_label->setBounds (8, 128, getWidth() - 16, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -127,6 +140,7 @@ void ScaleEditor::buttonClicked (juce::Button* buttonThatWasClicked)
             File theFile (myChooser.getResult());
 
             data->scale.Read(theFile.getFullPathName().toStdString().c_str());
+            data->scaleChangedBroadcaster.sendChangeMessage();
         }
         //[/UserButtonCode_importTunFile]
     }
@@ -134,6 +148,7 @@ void ScaleEditor::buttonClicked (juce::Button* buttonThatWasClicked)
     {
         //[UserButtonCode_resetScaleButton] -- add your button handler code here..
         data->scale.Reset();
+        data->scaleChangedBroadcaster.sendChangeMessage();
         //[/UserButtonCode_resetScaleButton]
     }
 
@@ -144,6 +159,19 @@ void ScaleEditor::buttonClicked (juce::Button* buttonThatWasClicked)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+void ScaleEditor::changeListenerCallback (ChangeBroadcaster *source)
+{
+    setScaleLabel();
+}
+
+void ScaleEditor::setScaleLabel()
+{
+    std::string scaleName = data->scale.m_strName;
+    if (scaleName == "")
+        scaleName = "No Scale Loaded";
+
+    scale_name_label->setText(scaleName, dontSendNotification);
+}
 //[/MiscUserCode]
 
 
@@ -157,8 +185,8 @@ void ScaleEditor::buttonClicked (juce::Button* buttonThatWasClicked)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ScaleEditor" componentName=""
-                 parentClasses="public ComponentWithReferenceToData" constructorParams="ProcessorData *dataReference"
-                 variableInitialisers="ComponentWithReferenceToData (dataReference)"
+                 parentClasses="public ComponentWithReferenceToData, public ChangeListener"
+                 constructorParams="ProcessorData *dataReference" variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44"/>
@@ -174,9 +202,14 @@ BEGIN_JUCER_METADATA
               virtualName="" explicitFocusOrder="0" pos="8 64 150 24" buttonText="Reset"
               connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <HYPERLINKBUTTON name="new hyperlink" id="6e1339fc3a50cbf" memberName="hyperlinkButton"
-                   virtualName="" explicitFocusOrder="0" pos="8 104 150 24" tooltip="https://sevish.com/scaleworkshop/"
+                   virtualName="" explicitFocusOrder="0" pos="8 96 150 24" tooltip="https://sevish.com/scaleworkshop/"
                    buttonText="Sevish Workshop" connectedEdges="0" needsCallback="0"
                    radioGroupId="0" url="https://sevish.com/scaleworkshop/"/>
+  <LABEL name="new label" id="7989d8e0cabb16c8" memberName="scale_name_label"
+         virtualName="" explicitFocusOrder="0" pos="8 128 16M 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="No Scale Loaded" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

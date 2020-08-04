@@ -21,8 +21,6 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
-#include "../ProcessorStructures.h"
-#include "MIDIChannelStatusAndToggleSingle.h"
 //[/Headers]
 
 
@@ -35,13 +33,12 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class MIDIChannelStatusAndToggle  : public juce::Component,
-                                    public juce::Button::Listener
+class SettingsView  : public juce::Component
 {
 public:
     //==============================================================================
-    MIDIChannelStatusAndToggle ();
-    ~MIDIChannelStatusAndToggle() override;
+    SettingsView ();
+    ~SettingsView() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
@@ -49,22 +46,22 @@ public:
 
     void paint (juce::Graphics& g) override;
     void resized() override;
-    void buttonClicked (juce::Button* buttonThatWasClicked) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    std::unique_ptr<MIDIChannelStatusAndToggleSingle> channelToggles[MAX_MIDI_CHANNELS];
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::TextButton> allMidiChannels;
-    std::unique_ptr<juce::TextButton> noMidiChannels;
+    std::unique_ptr<juce::Label> juce__label;
+    std::unique_ptr<juce::Label> juce__label2;
+    std::unique_ptr<juce::Label> version_string;
+    std::unique_ptr<juce::HyperlinkButton> juce__hyperlinkButton;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MIDIChannelStatusAndToggle)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SettingsView)
 };
 
 //[EndFile] You can add extra defines here...

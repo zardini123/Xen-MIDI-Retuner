@@ -166,6 +166,13 @@ void KeyboardVisual::sliderValueChanged (juce::Slider* sliderThatWasMoved)
     //[/UsersliderValueChanged_Post]
 }
 
+void KeyboardVisual::mouseWheelMove (const juce::MouseEvent& e, const juce::MouseWheelDetails& wheel)
+{
+    //[UserCode_mouseWheelMove] -- Add your code here...
+//    juce__label->setText(std::to_string(ConvertPixelsToContinuousMidiNote(e.getPosition().x)), dontSendNotification);
+    //[/UserCode_mouseWheelMove]
+}
+
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
@@ -234,9 +241,38 @@ double KeyboardVisual::ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNot
 
 double KeyboardVisual::ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNote, int& keyIndex)
 {
+    // discreteMidINote mapping to keyIndex
+    //    -13 11
+    //    -12 12
+    //    -11 1
+    //    -10 2
+    //    -9 3
+    //    -8 4
+    //    -7 5
+    //    -6 6
+    //    -5 7
+    //    -4 8
+    //    -3 9
+    //    -2 10
+    //    -1 11
+    //    0 0
+    //    1 1
+    //    2 2
+    //    3 3
+    //    4 4
+    //    5 5
+    //    6 6
+    //    7 7
+    //    8 8
+    //    9 9
+    //    10 10
+    //    11 11
+    //    12 0
     keyIndex = (discreteMidiNote < 0)? (12 - (std::abs(discreteMidiNote) % 12)) : discreteMidiNote % 12;
 
-    // Shift midiNote down 12 when midiNote is less than 0 to remove issue where, for example, -3/12 and 3/12 both equal 0.  Therefore all divisons of 12 are independent.
+    // When integer x in range [0, 12), x / 12 = 0.     When x in range (-12, 0], x / 12 = 0 as well.
+    // To make ranges [0, 12) and (-12, 0] independent (i.e. map to different numbers), division must be conditional.
+    // x / 12 = 0 in range [0, 12).                     ((x - 12) / 12) = -1 in range (-12, 0].
     int currentOctave = (discreteMidiNote < 0)? ((discreteMidiNote - 12) / 12) : (discreteMidiNote / 12);
 
     int octaveDistance = currentOctave - m_startOctave;
@@ -271,6 +307,17 @@ double KeyboardVisual::ConvertContinuousMidiNoteToPercentWidth(double continousM
 
     return percentWidth;
 }
+
+//double KeyboardVisual::ConvertPixelsToContinuousMidiNote(int xPosition)
+//{
+//    return ConvertPercentWidthToContinuousMidiNote(xPosition / (double)getWidth());
+//}
+//
+//double KeyboardVisual::ConvertPercentWidthToContinuousMidiNote(double percentWidth)
+//{
+//    return percentWidth;
+//}
+
 //[/MiscUserCode]
 
 
@@ -288,6 +335,9 @@ BEGIN_JUCER_METADATA
                  variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="1000" initialHeight="50">
+  <METHODS>
+    <METHOD name="mouseWheelMove (const juce::MouseEvent&amp; e, const juce::MouseWheelDetails&amp; wheel)"/>
+  </METHODS>
   <BACKGROUND backgroundColour="61a1ff"/>
   <SLIDER name="new slider" id="67d1cdb27238fff2" memberName="highest"
           virtualName="" explicitFocusOrder="0" pos="90% 0% 10% 23" min="-20.0"

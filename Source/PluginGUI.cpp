@@ -23,6 +23,7 @@
 #include "PluginGUI.h"
 #include "EditorModules/ProcessingView.h"
 #include "EditorModules/TestingView.h"
+#include "EditorModules/SettingsView.h"
 
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
@@ -46,18 +47,8 @@ PluginGUI::PluginGUI (ProcessorData *dataReference)
     tabbedComponent->setTabBarDepth (26);
     tabbedComponent->addTab (TRANS("Processing"), juce::Colour (0x00d3d3d3), new ProcessingView (data), true);
     tabbedComponent->addTab (TRANS("Testing"), juce::Colour (0x00d3d3d3), new TestingView (data), true);
+    tabbedComponent->addTab (TRANS("Settings"), juce::Colour (0x00d3d3d3), new SettingsView(), true);
     tabbedComponent->setCurrentTabIndex (0);
-
-    juce__label.reset (new juce::Label ("new label",
-                                        TRANS("label text")));
-    addAndMakeVisible (juce__label.get());
-    juce__label->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
-    juce__label->setJustificationType (juce::Justification::centredLeft);
-    juce__label->setEditable (false, false, false);
-    juce__label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
-    juce__label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
-
-    juce__label->setBounds (8, 328, 150, 24);
 
 
     //[UserPreSize]
@@ -67,7 +58,7 @@ PluginGUI::PluginGUI (ProcessorData *dataReference)
 
 
     //[Constructor] You can add your own custom stuff here..
-    juce__label->setText(data->logger->getLogFile().getFullPathName(), dontSendNotification);
+//    juce__label->setText(data->logger->getLogFile().getFullPathName(), dontSendNotification);
     //[/Constructor]
 }
 
@@ -80,7 +71,6 @@ PluginGUI::~PluginGUI()
     scaleFrequenciesOverlay = nullptr;
     noteAndFreqOverlay = nullptr;
     tabbedComponent = nullptr;
-    juce__label = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -153,12 +143,9 @@ BEGIN_JUCER_METADATA
          constructorParams="data" jucerComponentFile="EditorModules/ProcessingView.cpp"/>
     <TAB name="Testing" colour="d3d3d3" useJucerComp="1" contentClassName=""
          constructorParams="data" jucerComponentFile="EditorModules/TestingView.cpp"/>
+    <TAB name="Settings" colour="d3d3d3" useJucerComp="1" contentClassName=""
+         constructorParams="" jucerComponentFile="EditorModules/SettingsView.cpp"/>
   </TABBEDCOMPONENT>
-  <LABEL name="new label" id="d976bdad45a791ae" memberName="juce__label"
-         virtualName="" explicitFocusOrder="0" pos="8 328 150 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="label text" editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
-         kerning="0.0" bold="0" italic="0" justification="33"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

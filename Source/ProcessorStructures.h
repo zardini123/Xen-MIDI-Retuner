@@ -106,7 +106,7 @@ struct Note
 struct Channel
 {
     uint16 pitchwheel = CENTER_PITCHWHEEL; // Default to pitchbend wheel at center
-    const Note *priorityNote;
+    const Note *priorityNote = nullptr;
     
     float scaleConvertedPriorityNote;
     std::vector<Note> notes;

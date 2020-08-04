@@ -92,8 +92,8 @@ void ActionButtonAndStatus::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    actionButton->setBounds (proportionOfWidth (0.0000f), proportionOfHeight (0.0000f), proportionOfWidth (0.5004f), proportionOfHeight (1.0000f));
-    statusBar->setBounds (proportionOfWidth (0.5004f), proportionOfHeight (0.0000f), proportionOfWidth (0.5004f), proportionOfHeight (1.0000f));
+    actionButton->setBounds (proportionOfWidth (0.0000f), proportionOfHeight (0.0000f), proportionOfWidth (0.5000f), proportionOfHeight (1.0000f));
+    statusBar->setBounds (proportionOfWidth (0.5000f), proportionOfHeight (0.0000f), proportionOfWidth (0.5000f), proportionOfHeight (1.0000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -208,12 +208,11 @@ BEGIN_JUCER_METADATA
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="ff323e44"/>
   <TEXTBUTTON name="new button" id="747d04c3852ec15e" memberName="actionButton"
-              virtualName="" explicitFocusOrder="0" pos="0% 0% 50.043% 100%"
-              buttonText="&lt;action name&gt;" connectedEdges="0" needsCallback="1"
-              radioGroupId="0"/>
+              virtualName="" explicitFocusOrder="0" pos="0% 0% 50% 100%" buttonText="&lt;action name&gt;"
+              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <GENERICCOMPONENT name="new component" id="ddfbc579fc8ae26b" memberName="statusBar"
-                    virtualName="" explicitFocusOrder="0" pos="50.043% 0% 50.043% 100%"
-                    class="ProgressBar" params="progress"/>
+                    virtualName="" explicitFocusOrder="0" pos="50% 0% 50% 100%" class="ProgressBar"
+                    params="progress"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

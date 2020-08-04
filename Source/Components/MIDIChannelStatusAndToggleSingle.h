@@ -21,8 +21,6 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
-#include "../ProcessorStructures.h"
-#include "MIDIChannelStatusAndToggleSingle.h"
 //[/Headers]
 
 
@@ -35,16 +33,17 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class MIDIChannelStatusAndToggle  : public juce::Component,
-                                    public juce::Button::Listener
+class MIDIChannelStatusAndToggleSingle  : public juce::Component,
+                                          public juce::Button::Listener
 {
 public:
     //==============================================================================
-    MIDIChannelStatusAndToggle ();
-    ~MIDIChannelStatusAndToggle() override;
+    MIDIChannelStatusAndToggleSingle ();
+    ~MIDIChannelStatusAndToggleSingle() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    void setCannel(int channel);
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -55,16 +54,15 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    std::unique_ptr<MIDIChannelStatusAndToggleSingle> channelToggles[MAX_MIDI_CHANNELS];
+    int midiChannel = -1;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::TextButton> allMidiChannels;
-    std::unique_ptr<juce::TextButton> noMidiChannels;
+    std::unique_ptr<juce::ToggleButton> juce__toggleButton;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MIDIChannelStatusAndToggle)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MIDIChannelStatusAndToggleSingle)
 };
 
 //[EndFile] You can add extra defines here...
