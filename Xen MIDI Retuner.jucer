@@ -5,7 +5,7 @@
               pluginVST3Category="Fx,Tools" bundleIdentifier="com.TarasPalczynskiIII.XenMIDIRetuner"
               companyName="Taras Palczynski III" pluginManufacturer="Taras Palczynski III"
               pluginName="Xen MIDI Retuner" version="0.0.2" projectLineFeed="&#10;"
-              displaySplashScreen="1" jucerFormatVersion="1">
+              displaySplashScreen="1" jucerFormatVersion="1" pluginAUMainType="'aumu'">
   <MAINGROUP id="dJj14n" name="Xen MIDI Retuner">
     <GROUP id="{A1692F2F-028C-9EA8-2739-2FC33C9F86F6}" name="Source">
       <GROUP id="{5CFBB6E8-DB93-CA08-FB77-07FAC1572B4B}" name="AnaMark-Tuning-Library">

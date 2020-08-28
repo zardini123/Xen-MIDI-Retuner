@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
 
 float pitchwheelPosToSemitones(const uint16 pitchwheelPos, const float pitchbendRange);
 

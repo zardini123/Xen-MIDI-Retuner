@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
 
 #include "ProcessorStructures.h"
 #include "AnaMark-Tuning-Library/SCL_Import.h"
@@ -20,10 +20,10 @@
 struct ProcessorData
 {
     ProcessorData(AudioProcessor &processorForApvts);
-    
+
     AudioProcessorValueTreeState apvts;
     UndoManager undoManager;
-    
+
     TransitionCurve transitionCurve;
 
     Channel input[MAX_MIDI_CHANNELS];
@@ -33,8 +33,8 @@ struct ProcessorData
 
     TUN::CSingleScale scale;
     ChangeBroadcaster scaleChangedBroadcaster;
-    
+
     MIDIEnviromentTestManager midiEnviromentTestManager;
-    
+
     std::unique_ptr<FileLogger> logger;
 };

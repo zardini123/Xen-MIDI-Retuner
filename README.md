@@ -28,20 +28,16 @@ MPE input, and Multi channel and MPE output is planned to be supported (see sect
 
 In most cases, the _Output Pitch Bend Range_ should be set to the pitchbend range of your instrument.
 
-## I/O Layout
+### Download (DAW Support Table)
 
-Xen MIDI Retuner has the following input/output channels:
+To download Xen MIDI Retuner, find your DAW in the list below, then click the hyperlink in the right-most column (in column "Recommended Download Version").
 
-- 16 MIDI channels of MIDI input.
-- 16 MIDI channels of MIDI output.
-- 2 channels (stereo) of unused/empty Audio output. Audio output channels are needed for Ableton to load the plugin (Ableton does not support MIDI effects).
+| DAW     | VST2 |    VST2 MIDI Effect     | AU  |         AU MIDI Effect          | Pipe MIDI input to Instrument<sup>\*</sup> plugin | Pipe MIDI output from Instrument plugin | Recommended Download Version |
+| ------- | :--: | :---------------------: | :-: | :-----------------------------: | :-----------------------------------------------: | :-------------------------------------: | :--------------------------: |
+| Ableton |  ✓   | ✓ (Loads as Instrument) |  ✓  | Plugin does not show in browser |                         ✓                         |                    ✓                    |       VST2 Instrument        |
+| Logic   |      |                         |  ✓  |                ✓                |                         ✓                         |                                         |        AU MIDI Effect        |
 
-### DAW Support Table
-
-| DAW     | VST2 Support | AU  | Pipe MIDI input to Instrument plugin | Pipe MIDI output from Instrument plugin | MIDI Effect Support |
-| ------- | :----------: | :-: | :----------------------------------: | :-------------------------------------: | :-----------------: |
-| Ableton |      ✓       |  ✓  |                  ✓                   |                    ✓                    |                     |
-| Logic   |              |  ✓  |                  ✓                   |                                         |       unknown       |
+<sup>\*</sup>Instrument (a.k.a. Synth) plugins are defined as a plugin with MIDI input and Audio output. Some DAWs support being able to extract (pipe) the MIDI output from Instrument plugins.
 
 ## License
 
