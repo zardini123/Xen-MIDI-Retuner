@@ -14,19 +14,19 @@ Xen MIDI Retuner aditionally functions as a novel way for musicians to begin eas
 
 ## How? (Usage)
 
-The input of the plugin assumes that each MIDI note _represents_ a note of scale 12 equal divisons of the octave where A4 (midi note 69)=440 Hz. The interpreted frequency of the inputed MIDI notes is shifted up and down by input pitchbend. The amount the notes are shifted is defined by _Input Pitch Bend Range_. When pitchbend is highest, notes are shifted note + _Input Pitch Bend Range_, and when lowest, note - _Input Pitch Bend Range_.
+To begin using Xen MIDI Retuner as intended, _Output Pitch Bend Range_ (in section _Output_) must be set properly.  Set the _Output Pitch Bend Range_ to the pitchbend range of the instrument that Xen MIDI Retuner is outputting MIDI to.  For example, if your instrument has pitchbend range set to +/- 5st, set _Output Pitch Bend Range_ to 5.
 
-The notes played are then "snapped" to the closest scale frequency. How "agressive" the snapping is defined by the _Scale Note Snapping Curve_ parameter. Setting this to 1 results in no snapping, therefore no retuning is applied.
+_Input Pitch Bend Range_ is the semitones the MIDI notes you play into Xen MIDI Retuner will he pitched up/down when pitch wheel MIDI messages are also inputted.  For example, if you play notes into Xen MIDI Retuner, have _Input Pitch Bend Range_ set to 2, and move your controller's pitch wheel all the way up, the notes will be pitched up by 2 semitones.  This is identical to how synthesizers deal with pitchbend.
 
-Though due to limitations of the original MIDI standard, pitchbend cannot be applied per note, only per channel. Therefore, a single note must be choosen to use for retuning for therefore to decide that channel's pitchbend. The chosen note (the priority note) is determined by the parameters _Single Channel Note Prioritization_ and its _Modifier_.
+Note that this shifting of MIDI notes due to input pitchbend is _pre-conversion_.
 
-Currently, a single channel mode has only been created. All inputed channels to this plugin will input and output with the same functionalities and parameters. In other words, this plugin currently works only in a per-channel basis, and does not move notes played to other MIDI channels.
+The notes played into Xen MIDI Retuner (after being shifted by inputted pitchbend) are then "snapped" to the closest scale frequency. How "agressive" the snapping is defined by the _Scale Note Snapping Curve_ parameter. Setting _Scale Note Snapping Curve_ to 1 results in no snapping, therefore no retuning is applied.
 
-If, for example, you're using a Roli Seaboard, set the Seaboard to output Multi Channel. Each channel (which in the seaboard is each played voice/note) will be retuned to the scale.
+Not every note is "snapped" to the closest scale frequency, though.  This is due to limitations of the original MIDI standard.  For Xen MIDI Retuner to create MIDI to send to your favorite synthesizer that results in the frequencies of your chosen scale, Xen MIDI Retuner sends out pitchbend (along with notes).  The original MIDI standard only allows pitchbend per MIDI channel, _not_ per note.  Therefore, Xen MIDI Retuner must choose a single note that is use for retuning, and output pitchbend for the channel so that note reaches the scale frequency.  The chosen note that Xen MIDI Retuner chooses (a.k.a the priority note) is determined by the parameters _Single Channel Note Prioritization_.  Some _Single Channel Note Prioritization_ options provide a _Single Channel Note Prioritization Modifier_ that effects which note is choosen.
 
-MPE input, and Multi channel and MPE output is planned to be supported (see section **Feature Todo...**).
+Currently, a "single channel mode" has only been created.  Each channel of MIDI inputted into Xen MIDI Retuner is dealt with independently.  In other words, each channel passes through independently, and no MIDI messages are moved between channels.
 
-In most cases, the _Output Pitch Bend Range_ should be set to the pitchbend range of your instrument.
+The input of the plugin assumes that each MIDI note _represents_ a note of scale 12 equal divisons of the octave where A4 (midi note 69)=440 Hz.
 
 ### Download (DAW Support Table)
 
