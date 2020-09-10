@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Changed _Input Pitch Bend Range_ and _Output Pitch Bend Range_ default values to 2 semitones (previously 48).
+- Changed _Single Channel Priority Note_ and its _Single Channel Priority Note Modifier_'s internal parameter name to utilize underscores instead of capitals to make parameter names more consistent.
 
 ## [0.0.2]
 

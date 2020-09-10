@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 14)
 if(JUCE_PATH)
   add_subdirectory("${JUCE_PATH}" juce_build)
 else()
-  message( FATAL_ERROR "JUCE Path not set via env variable JUCE_PATH.  Exiting..." )
+  message( FATAL_ERROR "JUCE_PATH not set.  This plugin is unable to compile without knowing where JUCE is.  Exiting..." )
 endif()
 
 # VST2 SDK path

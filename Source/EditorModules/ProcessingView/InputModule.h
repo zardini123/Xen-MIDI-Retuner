@@ -37,7 +37,8 @@
 */
 class InputModule  : public ComponentWithReferenceToData,
                      public juce::AudioProcessorValueTreeState::Listener,
-                     public juce::ComboBox::Listener
+                     public juce::ComboBox::Listener,
+                     public juce::Button::Listener
 {
 public:
     //==============================================================================
@@ -52,6 +53,7 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
     void comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged) override;
+    void buttonClicked (juce::Button* buttonThatWasClicked) override;
 
 
 
@@ -60,6 +62,7 @@ private:
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> inputPitchbendAttachment;
     std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> singleChannelNotePriorityAttachment;
     std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> singleChannelPriorityModifierAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> updateNotePriorityNoteOff;
     //[/UserVariables]
 
     //==============================================================================
@@ -70,6 +73,7 @@ private:
     std::unique_ptr<juce::ComboBox> singleChannelPriorityMode;
     std::unique_ptr<juce::Label> label2;
     std::unique_ptr<juce::ComboBox> singleChannelPriorityModifier;
+    std::unique_ptr<juce::ToggleButton> updatePriorityNoteOff;
 
 
     //==============================================================================

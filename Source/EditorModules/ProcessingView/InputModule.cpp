@@ -103,16 +103,16 @@ InputModule::InputModule (ProcessorData *dataReference)
 
     singleChannelPriorityModifier->setBounds (8, 192, 144, 24);
 
+    updatePriorityNoteOff.reset (new juce::ToggleButton ("new toggle button"));
+    addAndMakeVisible (updatePriorityNoteOff.get());
+    updatePriorityNoteOff->setButtonText (TRANS("Update Priority Note in event of Note Off"));
+    updatePriorityNoteOff->addListener (this);
+    updatePriorityNoteOff->setToggleState (true, dontSendNotification);
+
+    updatePriorityNoteOff->setBounds (160, 144, 150, 24);
+
 
     //[UserPreSize]
-//    dynamic_cast<AudioParameterChoice *>(data->apvts.getParameter("singleChannelNotePriority"))->choices
-//
-//    // FIXME:  All AudioParameters are not initalized when called via the singleton alone due to the processor not creating them
-//    singleChannelPriorityMode->addItemList(ProcessorData::getInstance()->singleChannelNotePriority->choices, 1);
-//    singleChannelPriorityMode->setSelectedItemIndex(ProcessorData::getInstance()->singleChannelNotePriority->getIndex());
-//
-//    singleChannelPriorityModifier->addItemList(ProcessorData::getInstance()->singleChannelNotePriorityModifier->choices, 1);
-//    singleChannelPriorityModifier->setSelectedItemIndex(ProcessorData::getInstance()->singleChannelNotePriorityModifier->getIndex());
     //[/UserPreSize]
 
     setSize (600, 400);
@@ -123,14 +123,16 @@ InputModule::InputModule (ProcessorData *dataReference)
 
     inputPitchbendAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(data->apvts, "in_pitch_bend_range", *in_pitch_bend_range.get()));
 
-    singleChannelPriorityMode->addItemList(data->apvts.getParameter("singleChannelNotePriority")->getAllValueStrings(), 1);
-    singleChannelPriorityModifier->addItemList(data->apvts.getParameter("singleChannelNotePriorityModifier")->getAllValueStrings(), 1);
+    singleChannelPriorityMode->addItemList(data->apvts.getParameter("single_channel_note_priority")->getAllValueStrings(), 1);
+    singleChannelPriorityModifier->addItemList(data->apvts.getParameter("single_channel_note_priority_modifier")->getAllValueStrings(), 1);
 
-    singleChannelNotePriorityAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(data->apvts, "singleChannelNotePriority", *singleChannelPriorityMode.get()));
-    singleChannelPriorityModifierAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(data->apvts, "singleChannelNotePriorityModifier", *singleChannelPriorityModifier.get()));
+    singleChannelNotePriorityAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(data->apvts, "single_channel_note_priority", *singleChannelPriorityMode.get()));
+    singleChannelPriorityModifierAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(data->apvts, "single_channel_note_priority_modifier", *singleChannelPriorityModifier.get()));
+
+    updateNotePriorityNoteOff.reset(new AudioProcessorValueTreeState::ButtonAttachment(data->apvts, "update_note_priority_note_off", *updatePriorityNoteOff.get()));
 
 
-    data->apvts.addParameterListener("singleChannelNotePriority", this);
+    data->apvts.addParameterListener("single_channel_note_priority", this);
     //[/Constructor]
 }
 
@@ -146,6 +148,7 @@ InputModule::~InputModule()
     singleChannelPriorityMode = nullptr;
     label2 = nullptr;
     singleChannelPriorityModifier = nullptr;
+    updatePriorityNoteOff = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -194,12 +197,27 @@ void InputModule::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
     //[/UsercomboBoxChanged_Post]
 }
 
+void InputModule::buttonClicked (juce::Button* buttonThatWasClicked)
+{
+    //[UserbuttonClicked_Pre]
+    //[/UserbuttonClicked_Pre]
+
+    if (buttonThatWasClicked == updatePriorityNoteOff.get())
+    {
+        //[UserButtonCode_updatePriorityNoteOff] -- add your button handler code here..
+        //[/UserButtonCode_updatePriorityNoteOff]
+    }
+
+    //[UserbuttonClicked_Post]
+    //[/UserbuttonClicked_Post]
+}
+
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 void InputModule::parameterChanged(const String &parameterID, float newValue)
 {
-    if (parameterID == "singleChannelNotePriority")
+    if (parameterID == "single_channel_note_priority")
     {
         SingleChannelNotePrioritzation prioritySwitch = (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue(parameterID);
         singleChannelPriorityModifier->setEnabled(prioritySwitch == SingleChannelNotePrioritzation::NOTE_PITCH || prioritySwitch == SingleChannelNotePrioritzation::VELOCITY);
@@ -255,6 +273,9 @@ BEGIN_JUCER_METADATA
   <COMBOBOX name="new combo box" id="2ebd7ab8a0c8a16" memberName="singleChannelPriorityModifier"
             virtualName="" explicitFocusOrder="0" pos="8 192 144 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems=""/>
+  <TOGGLEBUTTON name="new toggle button" id="f453fc3ab42c5c6" memberName="updatePriorityNoteOff"
+                virtualName="" explicitFocusOrder="0" pos="160 144 150 24" buttonText="Update Priority Note in event of Note Off"
+                connectedEdges="0" needsCallback="1" radioGroupId="0" state="1"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

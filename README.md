@@ -51,11 +51,27 @@ If you make any changes to the source that enhances this plugin, or can be benif
 
 ## Compiling
 
-For compiling to VST.2x plugin, the VST.2x SDK is needed. The global path for VST.2x sdk must be set your VST.2x sdk. VST.2x sdk that used to be embedded into JUCE can be found at [this commit](https://github.com/WeAreROLI/JUCE/tree/8317738112ccceb2c58deac3e4bb167c62682916/modules/juce_audio_processors/format_types/VST3_SDK/pluginterfaces).
+Compiling this plugin requires JUCE. Download JUCE [here](https://juce.com/get-juce/download).
 
-Mark Henning's AnaMark library is part of the repository as a submodule. Initalize the submodule using:
+For compiling to VST.2x plugin, the VST.2x SDK is needed. The global path for VST.2x sdk must be set your VST.2x sdk. VST.2x sdk that used to be embedded into JUCE can be found at [this JUCE commit](https://github.com/juce-framework/JUCE/tree/8317738112ccceb2c58deac3e4bb167c62682916/modules/juce_audio_processors/format_types/VST3_SDK). To prepare for compiling, download the entire commit ([here](https://github.com/juce-framework/JUCE/archive/8317738112ccceb2c58deac3e4bb167c62682916.zip)), extract folder VST3_SDK at `modules/juce_audio_processors/format_types/VST3_SDK` out of the archive, and move the VST3_SDK folder (preferably) to the directory of your JUCE installation.
+
+Mark Henning's AnaMark library is part of the repository as a submodule. Firsts initialize the submodule using:
 
 `git submodule update --init --recursive`
+
+First prepare the build by running this command in the root folder of this project:
+
+`cmake -B build -D JUCE_PATH=<path to JUCE> -D JUCE_GLOBAL_VST2_SDK_PATH=<path to VST3_SDK folder>`
+
+**Notice:** Make sure _JUCE_PATH_ is the path to your JUCE installation, and _JUCE_GLOBAL_VST2_SDK_PATH_ is the path to your VST3_SDK folder as mentioned earlier.
+
+In the same folder as before, run this command:
+
+`cmake --build build --config Release -j 8`
+
+**Notice:** Option `-j` sets number of threads to use for compiling. Usually set this number to the number of cores your computer has.
+
+This will now build the plugins for your operating system. The plugins will automatically installed to the default path for plugins for your system. If you want to install them to a custom location, the compiled plugins are under `build/midi_plugin_artefacts/` and `build/synth_plugin_artefacts/`.
 
 ## Feature Todo / Roadmap without a timeline
 
