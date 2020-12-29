@@ -4,6 +4,9 @@ project(XEN_MIDI_RETUNER VERSION 0.0.3)
 
 set(CMAKE_CXX_STANDARD 14)
 
+# For JSON Compilation Database Format Specification used by clang-tidy
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Set during first cmake command line using -D JUCE_PATH=/path/to/JUCE
 if(JUCE_PATH)
   add_subdirectory("${JUCE_PATH}" juce_build)

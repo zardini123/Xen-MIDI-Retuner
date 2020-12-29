@@ -77,15 +77,16 @@ private:
     // Keyboard settings
     int entireWidth;
     int entireHeight;
-    int m_firstMidiNote;
-    int m_lastMidiNote;
+
+    int firstMidiNote;
+    int lastMidiNote;
 
     // Keyboard cached values
     double keyDistances[13];
 
-    int m_startOctave;
-    int m_repeatedFirstMidiNote;
-    double m_entireDistance;
+    int firstMidiNoteAsKeyInTwelveKeyRange;
+    int startOctave;
+    double entireDistance;
     //[/UserVariables]
 
     //==============================================================================
@@ -99,4 +100,3 @@ private:
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-

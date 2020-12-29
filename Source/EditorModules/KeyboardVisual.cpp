@@ -1,4 +1,4 @@
-/*
+ /*
   ==============================================================================
 
   This is an automatically generated GUI class created by the Projucer!
@@ -25,6 +25,15 @@
 
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
+
+// From https://stackoverflow.com/a/11714601/6183001
+int euclidean_remainder(int a, int b)
+{
+  jassert(b != 0);
+  // C++11 requires integer division to be non-Euclidean: it requires an implementation that truncates towards zero.
+  int r = a % b;
+  return r >= 0 ? r : r + std::abs(b);
+}
 //[/MiscUserDefs]
 
 //==============================================================================
@@ -94,7 +103,7 @@ void KeyboardVisual::paint (juce::Graphics& g)
     // Pass 1: Black keys
     for (int pass = 0; pass < 2; pass++)
     {
-        for (int midiNote = m_firstMidiNote; midiNote <= m_lastMidiNote; midiNote++)
+        for (int midiNote = this->firstMidiNote; midiNote <= this->lastMidiNote; midiNote++)
         {
             int keyDistanceIndex = (midiNote < 0)? (12 - (std::abs(midiNote) % 12)) : midiNote % 12;
 
@@ -176,35 +185,35 @@ void KeyboardVisual::mouseWheelMove (const juce::MouseEvent& e, const juce::Mous
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-void KeyboardVisual::setKeyboardSettings(int firstMidiNote, int lastMidiNote, int width, int height)
+void KeyboardVisual::setKeyboardSettings(int firstMidiNoteIn, int lastMidiNoteIn, int widthIn, int heightIn)
 {
-    entireWidth = width;
-    entireHeight = height;
+    this->entireWidth = widthIn;
+    this->entireHeight = heightIn;
 
-    m_firstMidiNote = firstMidiNote;
-    m_lastMidiNote = lastMidiNote;
+    this->firstMidiNote = firstMidiNoteIn;
+    this->lastMidiNote = lastMidiNoteIn;
 
     double firstKeyDistFromEndOfOctave = 0.0;
     double lastKeyDistFromBeginningOfOctave = 0.0;
 
-    m_repeatedFirstMidiNote = (firstMidiNote < 0)? (12 - (std::abs(firstMidiNote) % 12)) : firstMidiNote % 12;
-    if (m_repeatedFirstMidiNote != 0) {
-        firstKeyDistFromEndOfOctave = 1.0 - keyDistances[m_repeatedFirstMidiNote];
+    this->firstMidiNoteAsKeyInTwelveKeyRange = euclidean_remainder(this->firstMidiNote, 12);
+    if (this->firstMidiNoteAsKeyInTwelveKeyRange != 0) {
+        firstKeyDistFromEndOfOctave = 1.0 - keyDistances[this->firstMidiNoteAsKeyInTwelveKeyRange];
     }
 
-    int repeatedLastMidiNote = (lastMidiNote < 0)? (12 - (std::abs(lastMidiNote) % 12)) : lastMidiNote % 12;
-    if (repeatedLastMidiNote != 0)
-        lastKeyDistFromBeginningOfOctave = keyDistances[repeatedLastMidiNote];
+    int lastMidiNoteAsKeyInTwelveKeyRange = euclidean_remainder(this->lastMidiNote, 12);
+    if (lastMidiNoteAsKeyInTwelveKeyRange != 0)
+        lastKeyDistFromBeginningOfOctave = keyDistances[lastMidiNoteAsKeyInTwelveKeyRange];
 
     int remaningOctStart = std::ceil(firstMidiNote / 12.0) * 12;
     int remaningOctEnd = std::floor(lastMidiNote / 12.0) * 12;
 
     int remaningOctaves = (remaningOctEnd - remaningOctStart) / 12;
 
-    m_entireDistance = firstKeyDistFromEndOfOctave + lastKeyDistFromBeginningOfOctave + remaningOctaves;
+    this->entireDistance = firstKeyDistFromEndOfOctave + lastKeyDistFromBeginningOfOctave + remaningOctaves;
 
     // Shift midiNote down 12 when midiNote is less than 0 to remove issue where, for example, -3/12 and 3/12 both equal 0.  Therefore all divisons of 12 are independent.
-    m_startOctave = (firstMidiNote < 0)? ((firstMidiNote - 12) / 12) : (firstMidiNote / 12);
+    this->startOctave = static_cast<int>(std::floor(firstMidiNote / 12.0));
 }
 
 void KeyboardVisual::setEqualSpacingValues()
@@ -225,12 +234,12 @@ void KeyboardVisual::setEqualSpacingValues()
 
 int KeyboardVisual::getFirstMidiNote()
 {
-    return m_firstMidiNote;
+    return this->firstMidiNote;
 }
 
 int KeyboardVisual::getLastMidiNote()
 {
-    return m_lastMidiNote;
+    return this->lastMidiNote;
 }
 
 double KeyboardVisual::ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNote)
@@ -241,43 +250,12 @@ double KeyboardVisual::ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNot
 
 double KeyboardVisual::ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNote, int& keyIndex)
 {
-    // discreteMidINote mapping to keyIndex
-    //    -13 11
-    //    -12 12
-    //    -11 1
-    //    -10 2
-    //    -9 3
-    //    -8 4
-    //    -7 5
-    //    -6 6
-    //    -5 7
-    //    -4 8
-    //    -3 9
-    //    -2 10
-    //    -1 11
-    //    0 0
-    //    1 1
-    //    2 2
-    //    3 3
-    //    4 4
-    //    5 5
-    //    6 6
-    //    7 7
-    //    8 8
-    //    9 9
-    //    10 10
-    //    11 11
-    //    12 0
-    keyIndex = (discreteMidiNote < 0)? (12 - (std::abs(discreteMidiNote) % 12)) : discreteMidiNote % 12;
+    keyIndex = euclidean_remainder(discreteMidiNote, 12);
+    int currentOctave = static_cast<int>(std::floor(discreteMidiNote / 12.0));
 
-    // When integer x in range [0, 12), x / 12 = 0.     When x in range (-12, 0], x / 12 = 0 as well.
-    // To make ranges [0, 12) and (-12, 0] independent (i.e. map to different numbers), division must be conditional.
-    // x / 12 = 0 in range [0, 12).                     ((x - 12) / 12) = -1 in range (-12, 0].
-    int currentOctave = (discreteMidiNote < 0)? ((discreteMidiNote - 12) / 12) : (discreteMidiNote / 12);
+    int octaveDistance = currentOctave - this->startOctave;
 
-    int octaveDistance = currentOctave - m_startOctave;
-
-    double percentWidth = (keyDistances[keyIndex] + octaveDistance - keyDistances[m_repeatedFirstMidiNote]) / m_entireDistance;
+    double percentWidth = (keyDistances[keyIndex] + octaveDistance - keyDistances[this->firstMidiNoteAsKeyInTwelveKeyRange]) / this->entireDistance;
     return percentWidth;
 }
 
@@ -357,4 +335,3 @@ END_JUCER_METADATA
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-

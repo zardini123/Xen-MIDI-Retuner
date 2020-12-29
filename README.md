@@ -2,7 +2,7 @@
 
 Xen MIDI Retuner is a MIDI plugin that retunes MIDI input to microtonal and xenharmonic scales via clever midi note and pitch-bend output. Currently, the scale to retune to is defined by AnaMark (.tun) files.
 
-This uses [Mark Henning's AnaMark tuning library](https://github.com/zardini123/AnaMark-Tuning-Library) for interpreting .tun files.
+_NOTE:_ This uses [Mark Henning's AnaMark Tuning Library](https://github.com/zardini123/AnaMark-Tuning-Library) for interpreting .tun files. Many scale-related planned features, including realtime scale modification, are projects for AnaMark Tuning Library and subsidiaries.
 
 ## Why?
 
@@ -71,7 +71,9 @@ In the same folder as before, run this command:
 
 **Notice:** Option `-j` sets number of threads to use for compiling. Usually set this number to the number of cores your computer has.
 
-This will now build the plugins for your operating system. The plugins will automatically installed to the default path for plugins for your system. If you want to install them to a custom location, the compiled plugins are under `build/midi_plugin_artefacts/` and `build/synth_plugin_artefacts/`.
+This will now build the plugins for your operating system. The plugins will automatically installed to the default path for plugins for your system. JUCE will print the path to the automatically installed plugins at the end of the plugin compilation.
+
+If you want to install the plugins to a custom location, the compiled plugins are under `build/midi_plugin_artefacts/` and `build/synth_plugin_artefacts/`.
 
 ## Feature Todo / Roadmap without a timeline
 
