@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.1
+  Created with Projucer version: 6.0.5
 
   ------------------------------------------------------------------------------
 
@@ -35,6 +35,9 @@ OutputModule::OutputModule (ProcessorData *dataReference)
 
     out_pitch_bend_range.reset (new juce::Slider ("new slider"));
     addAndMakeVisible (out_pitch_bend_range.get());
+    out_pitch_bend_range->setTooltip (TRANS("Output Pitch Bend should be set to the Input Pitch Bend Range of your instrument that you are sending the MIDI to.\n"
+    "\n"
+    "Output should be equal to or greater than this plugin\'s Input pitch bend if note retrigger is unwanted."));
     out_pitch_bend_range->setRange (1, 96, 1);
     out_pitch_bend_range->setSliderStyle (juce::Slider::IncDecButtons);
     out_pitch_bend_range->setTextBoxStyle (juce::Slider::TextBoxLeft, false, 80, 20);
@@ -94,6 +97,15 @@ void OutputModule::paint (juce::Graphics& g)
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
+    {
+        int x = (getWidth() / 2) - (108 / 2), y = 24, width = 108, height = 2;
+        juce::Colour fillColour = juce::Colour (0xffffae00);
+        //[UserPaintCustomArguments] Customize the painting arguments here..
+        //[/UserPaintCustomArguments]
+        g.setColour (fillColour);
+        g.fillRect (x, y, width, height);
+    }
+
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
 }
@@ -128,10 +140,12 @@ BEGIN_JUCER_METADATA
                  variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
-  <BACKGROUND backgroundColour="323e44"/>
+  <BACKGROUND backgroundColour="323e44">
+    <RECT pos="0Cc 24 108 2" fill="solid: ffffae00" hasStroke="0"/>
+  </BACKGROUND>
   <SLIDER name="new slider" id="e3a72a963cc8c6fa" memberName="out_pitch_bend_range"
-          virtualName="" explicitFocusOrder="0" pos="8 64 150 24" min="1.0"
-          max="96.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
+          virtualName="" explicitFocusOrder="0" pos="8 64 150 24" tooltip="Output Pitch Bend should be set to the Input Pitch Bend Range of your instrument that you are sending the MIDI to.&#10;&#10;Output should be equal to or greater than this plugin's Input pitch bend if note retrigger is unwanted."
+          min="1.0" max="96.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="0"/>
   <LABEL name="new label" id="1ac3af9fe857753" memberName="label" virtualName=""

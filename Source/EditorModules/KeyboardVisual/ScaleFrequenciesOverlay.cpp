@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.1
+  Created with Projucer version: 6.0.5
 
   ------------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@
 */
 
 //[Headers] You can add your own extra header files here...
-#include "../Utilities.h"
+#include "../../Utilities.h"
 //[/Headers]
 
 #include "ScaleFrequenciesOverlay.h"
@@ -63,17 +63,11 @@ void ScaleFrequenciesOverlay::paint (juce::Graphics& g)
     //[UserPrePaint] Add your own custom painting code here..
     ProcessorData* processorData = data;
 
-    int y = 0, width = 1, height = 100;
-    for (auto it = processorData->scale.GetNoteFrequenciesHz().begin(); it != processorData->scale.GetNoteFrequenciesHz().end(); ++it) {
-        int note;
-        double semitones;
-        freqHZToNoteAndSemitones((*it), note, semitones);
-        float midiNote = note + semitones;
-
-        double x = keyboard->ConvertContinuousMidiNoteToPercentWidth(midiNote) * proportionOfWidth(1.0f);
-        Colour fillColour = Colour (0xffdc143c);
-        g.setColour (fillColour);
-        g.fillRect (x, y, width, height);
+    Colour baseColour = Colour (0x4fe82950);
+    if (data->apvts.getParameterAsValue("keyboard_visuals-enable_scale").getValue()) {
+        for (auto it = processorData->scale.GetNoteFrequenciesHz().begin(); it != processorData->scale.GetNoteFrequenciesHz().end(); ++it) {
+            keyboard->drawMarkerAtFrequencyHz(*it, baseColour, g);
+        }
     }
     //[/UserPrePaint]
 

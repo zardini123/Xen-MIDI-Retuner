@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.1
+  Created with Projucer version: 6.0.5
 
   ------------------------------------------------------------------------------
 
@@ -259,29 +259,29 @@ void CapabilitiesTestGUI::resized()
     //[/UserPreResize]
 
     section_title->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
-    run_all_tests_for_all_channels->setBounds (proportionOfWidth (0.7519f) - (proportionOfWidth (0.4499f) / 2), 208, proportionOfWidth (0.4499f), 24);
-    listening_header->setBounds (0, 24, proportionOfWidth (0.5004f), 24);
-    broadcasting_header->setBounds (proportionOfWidth (0.5004f), 24, proportionOfWidth (0.5004f), 24);
-    label6->setBounds (0, 96, juce::roundToInt (proportionOfWidth (0.5004f) * 0.5000f), 24);
-    label8->setBounds (0 + juce::roundToInt (proportionOfWidth (0.5004f) * 0.4931f), 96, juce::roundToInt (proportionOfWidth (0.5004f) * 0.5000f), 24);
-    start_all_test_listeners->setBounds (0, 304, proportionOfWidth (0.2502f), 24);
-    stop_all_test_listeners->setBounds (proportionOfWidth (0.2502f), 304, proportionOfWidth (0.2502f), 24);
-    timeout_slider->setBounds (proportionOfWidth (0.3333f), 48, proportionOfWidth (0.1662f), 24);
-    timeout_slider_label->setBounds (proportionOfWidth (0.1662f), 48, proportionOfWidth (0.1662f), 24);
-    label2->setBounds (proportionOfWidth (0.5004f) + 2, 96, juce::roundToInt (proportionOfWidth (0.5004f) * 0.5000f), 24);
-    label4->setBounds (proportionOfWidth (0.5004f) + juce::roundToInt (proportionOfWidth (0.5004f) * 0.5000f), 96, juce::roundToInt (proportionOfWidth (0.5004f) * 0.5000f), 24);
+    run_all_tests_for_all_channels->setBounds (proportionOfWidth (0.7517f) - (proportionOfWidth (0.4500f) / 2), 208, proportionOfWidth (0.4500f), 24);
+    listening_header->setBounds (0, 24, proportionOfWidth (0.5000f), 24);
+    broadcasting_header->setBounds (proportionOfWidth (0.5000f), 24, proportionOfWidth (0.5000f), 24);
+    label6->setBounds (0, 96, juce::roundToInt (proportionOfWidth (0.5000f) * 0.5000f), 24);
+    label8->setBounds (0 + juce::roundToInt (proportionOfWidth (0.5000f) * 0.4933f), 96, juce::roundToInt (proportionOfWidth (0.5000f) * 0.5000f), 24);
+    start_all_test_listeners->setBounds (0, 304, proportionOfWidth (0.2500f), 24);
+    stop_all_test_listeners->setBounds (proportionOfWidth (0.2500f), 304, proportionOfWidth (0.2500f), 24);
+    timeout_slider->setBounds (proportionOfWidth (0.3333f), 48, proportionOfWidth (0.1667f), 24);
+    timeout_slider_label->setBounds (proportionOfWidth (0.1667f), 48, proportionOfWidth (0.1667f), 24);
+    label2->setBounds (proportionOfWidth (0.5000f) + 2, 96, juce::roundToInt (proportionOfWidth (0.5000f) * 0.5000f), 24);
+    label4->setBounds (proportionOfWidth (0.5000f) + juce::roundToInt (proportionOfWidth (0.5000f) * 0.5000f), 96, juce::roundToInt (proportionOfWidth (0.5000f) * 0.5000f), 24);
     viewport->setBounds (0, 120, proportionOfWidth (1.0000f), 88);
     label->setBounds (0, 232, proportionOfWidth (1.0000f), 24);
     component->setBounds (0, 72, proportionOfWidth (1.0000f), 24);
-    run_all_tests->setBounds (proportionOfWidth (0.5004f), 304, proportionOfWidth (0.5004f), 24);
-    component2->setBounds (proportionOfWidth (0.7502f) - (proportionOfWidth (0.4499f) / 2), 256, proportionOfWidth (0.4499f), 24);
-    component3->setBounds (proportionOfWidth (0.2498f) - (proportionOfWidth (0.4499f) / 2), 256, proportionOfWidth (0.4499f), 24);
-    textButton3->setBounds (proportionOfWidth (0.7519f) - (proportionOfWidth (0.4499f) / 2), 280, proportionOfWidth (0.4499f), 24);
-    textButton4->setBounds (proportionOfWidth (0.2502f) - proportionOfWidth (0.2245f), 280, proportionOfWidth (0.2245f), 24);
-    textButton5->setBounds (proportionOfWidth (0.2502f), 280, proportionOfWidth (0.2245f), 24);
-    start_test_listeners_for_all_channels->setBounds (proportionOfWidth (0.2502f) - proportionOfWidth (0.2245f), 208, proportionOfWidth (0.2245f), 24);
-    stop_test_listeners_for_all_channels->setBounds (proportionOfWidth (0.2485f), 208, proportionOfWidth (0.2245f), 24);
-    autostart_all_listeners->setBounds (proportionOfWidth (0.0000f), 48, proportionOfWidth (0.1662f), 24);
+    run_all_tests->setBounds (proportionOfWidth (0.5000f), 304, proportionOfWidth (0.5000f), 24);
+    component2->setBounds (proportionOfWidth (0.7500f) - (proportionOfWidth (0.4500f) / 2), 256, proportionOfWidth (0.4500f), 24);
+    component3->setBounds (proportionOfWidth (0.2500f) - (proportionOfWidth (0.4500f) / 2), 256, proportionOfWidth (0.4500f), 24);
+    textButton3->setBounds (proportionOfWidth (0.7517f) - (proportionOfWidth (0.4500f) / 2), 280, proportionOfWidth (0.4500f), 24);
+    textButton4->setBounds (proportionOfWidth (0.2500f) - proportionOfWidth (0.2250f), 280, proportionOfWidth (0.2250f), 24);
+    textButton5->setBounds (proportionOfWidth (0.2500f), 280, proportionOfWidth (0.2250f), 24);
+    start_test_listeners_for_all_channels->setBounds (proportionOfWidth (0.2500f) - proportionOfWidth (0.2250f), 208, proportionOfWidth (0.2250f), 24);
+    stop_test_listeners_for_all_channels->setBounds (proportionOfWidth (0.2483f), 208, proportionOfWidth (0.2250f), 24);
+    autostart_all_listeners->setBounds (proportionOfWidth (0.0000f), 48, proportionOfWidth (0.1667f), 24);
     //[UserResized] Add your own custom resize handling here..
     viewport->getViewedComponent()->setSize(viewport->getWidth(), viewport->getHeight());
 
@@ -427,12 +427,12 @@ BEGIN_JUCER_METADATA
               buttonText="Stop All Test Listeners" connectedEdges="0" needsCallback="1"
               radioGroupId="0"/>
   <SLIDER name="new slider" id="a96119be99b37cad" memberName="timeout_slider"
-          virtualName="" explicitFocusOrder="0" pos="33.333% 48 16.624% 24"
+          virtualName="" explicitFocusOrder="0" pos="33.333% 48 16.71% 24"
           min="0.0" max="10.0" int="0.01" style="IncDecButtons" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="1"/>
   <LABEL name="new label" id="ae317d23d937b427" memberName="timeout_slider_label"
-         virtualName="" explicitFocusOrder="0" pos="16.624% 48 16.624% 24"
+         virtualName="" explicitFocusOrder="0" pos="16.71% 48 16.71% 24"
          edTextCol="ff000000" edBkgCol="0" labelText="Timeout (seconds)"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15.0" kerning="0.0" bold="0"
@@ -477,25 +477,24 @@ BEGIN_JUCER_METADATA
               buttonText="Run All Tests for Channel Independent Messages" connectedEdges="0"
               needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="new button" id="c6a2dbb3329f79a9" memberName="textButton4"
-              virtualName="" explicitFocusOrder="0" pos="25.021%r 280 22.451% 24"
+              virtualName="" explicitFocusOrder="0" pos="25.021%r 280 22.536% 24"
               buttonText="Start Test Listeners for Channel Indepenent" connectedEdges="0"
               needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="new button" id="689f5e5be5af45b9" memberName="textButton5"
-              virtualName="" explicitFocusOrder="0" pos="25.021% 280 22.451% 24"
+              virtualName="" explicitFocusOrder="0" pos="25.021% 280 22.536% 24"
               buttonText="Stop Test Listeners for Channel Indepenent" connectedEdges="0"
               needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="new button" id="4ada209213d48413" memberName="start_test_listeners_for_all_channels"
-              virtualName="" explicitFocusOrder="0" pos="25.021%r 208 22.451% 24"
+              virtualName="" explicitFocusOrder="0" pos="25.021%r 208 22.536% 24"
               buttonText="Start Test Listeners for All Channels" connectedEdges="0"
               needsCallback="1" radioGroupId="0"/>
   <TEXTBUTTON name="new button" id="89d7c9f26a7005a" memberName="stop_test_listeners_for_all_channels"
-              virtualName="" explicitFocusOrder="0" pos="24.85% 208 22.451% 24"
+              virtualName="" explicitFocusOrder="0" pos="24.85% 208 22.536% 24"
               buttonText="Stop Test Listeners for All Channels" connectedEdges="0"
               needsCallback="1" radioGroupId="0"/>
   <TOGGLEBUTTON name="new toggle button" id="3f487a5b71834efb" memberName="autostart_all_listeners"
-                virtualName="" explicitFocusOrder="0" pos="0% 48 16.624% 24"
-                buttonText="Auto-start All Listeners" connectedEdges="0" needsCallback="1"
-                radioGroupId="0" state="1"/>
+                virtualName="" explicitFocusOrder="0" pos="0% 48 16.71% 24" buttonText="Auto-start All Listeners"
+                connectedEdges="0" needsCallback="1" radioGroupId="0" state="1"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

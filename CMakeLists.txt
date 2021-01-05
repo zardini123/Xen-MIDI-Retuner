@@ -69,20 +69,23 @@ function(my_add_custom_plugin_target target_name is_synth is_midi_effect)
     ./Source/Components/MIDIChannelStatusAndToggle.cpp
     ./Source/Components/TransitionCurve.cpp
     ./Source/Components/MIDIChannelStatusAndToggleSingle.cpp
+    ./Source/EditorModules/ProcessingView/ConversionModule/TransitionCurveEvaluationGraphic.cpp
     ./Source/EditorModules/ProcessingView/OutputModule.cpp
     ./Source/EditorModules/ProcessingView/ScaleEditor.cpp
     ./Source/EditorModules/ProcessingView/InputModule.cpp
     ./Source/EditorModules/ProcessingView/ConversionModule.cpp
+    ./Source/EditorModules/KeyboardVisual/KeyboardVisualControlsOverlay.cpp
+    ./Source/EditorModules/KeyboardVisual/KeyboardVisualOptions.cpp
+    ./Source/EditorModules/KeyboardVisual/KeyboardVisual.cpp
+    ./Source/EditorModules/KeyboardVisual/NoteAndFrequencyOverlay.cpp
+    ./Source/EditorModules/KeyboardVisual/ScaleFrequenciesOverlay.cpp
     ./Source/EditorModules/ProcessingView.cpp
     ./Source/EditorModules/TestingView.cpp
     ./Source/EditorModules/SettingsView.cpp
-    ./Source/EditorModules/KeyboardVisual.cpp
     ./Source/EditorModules/TestingView/CapabilitiesTestGUI.cpp
     ./Source/EditorModules/TestingView/ActionButtonAndStatus.cpp
     ./Source/EditorModules/TestingView/TestList.cpp
     ./Source/EditorModules/TestingView/MIDIChannelToolbar.cpp
-    ./Source/EditorModules/NoteAndFrequencyOverlay.cpp
-    ./Source/EditorModules/ScaleFrequenciesOverlay.cpp
     ./Source/PluginProcessor.cpp
     ./Source/PluginGUI.cpp
     ./Source/PluginEditor.cpp

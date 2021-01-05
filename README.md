@@ -4,6 +4,10 @@ Xen MIDI Retuner is a MIDI plugin that retunes MIDI input to microtonal and xenh
 
 _NOTE:_ This uses [Mark Henning's AnaMark Tuning Library](https://github.com/zardini123/AnaMark-Tuning-Library) for interpreting .tun files. Many scale-related planned features, including realtime scale modification, are projects for AnaMark Tuning Library and subsidiaries.
 
+## .tun files
+
+Currently Xen MIDI Retuner only takes in _.tun_ files. To quickly begin experimenting with this plugin, consider downloading Sevish's Tuning Packs ([page link](https://sevish.com/music-resources/), [direct download](https://sevish.com/musicmakingstuff/sevish-tunings-pack-v1.1.zip)). For every scale in the pack, Sevish provides a _.tun_ file.
+
 ## Why?
 
 Creating microtonal and xenharmonic music has typically been accomplished by loading tuning/scale files (.scl, .kbm, and/or .tun) or Midi Tuning Standard (MTS) SysEx messages into one's favorite synthesizer or DAW. Unfortunately, many synthesizers and DAWs (Ableton) do not support these retuning file formats.
@@ -28,9 +32,15 @@ Currently, a "single channel mode" has only been created. Each channel of MIDI i
 
 The input of the plugin assumes that each MIDI note _represents_ a note of scale 12 equal divisions of the octave where A4 (midi note 69)=440 Hz.
 
-### Download (DAW Support Table)
+### Download
 
-To download Xen MIDI Retuner, find your DAW in the list below, then click the hyperlink in the right-most column (in column "Recommended Download Version").
+One can find the most recent downloadable version of Xen MIDI Retuner [under Releases](https://github.com/zardini123/Xen-MIDI-Retuner/releases).
+
+### DAW Support Table
+
+Eventually, the following table will help users to download Xen MIDI Retuner. One would find their DAW in the list below, then click the hyperlink in the right-most column (in column "Recommended Download Version"). Currently as all releases are pre-releases, getting the links to the compiled assets is not possible.
+
+If your DAW is not listed, please create an issue titled "_<insert DAW name here>_ MIDI Support Table Entry". If you can, then find out if your DAW supports the properties that are listed in the table. Make sure to note any inconsistencies like I did for Ableton. I can then add what you found to the table.
 
 | DAW     | VST2 |    VST2 MIDI Effect     | AU  |         AU MIDI Effect          | Pipe MIDI input to Instrument<sup>\*</sup> plugin | Pipe MIDI output from Instrument plugin | Recommended Download Version |
 | ------- | :--: | :---------------------: | :-: | :-----------------------------: | :-----------------------------------------------: | :-------------------------------------: | :--------------------------: |
@@ -49,11 +59,22 @@ Xen MIDI Retuner's original code is licensed under GNU General Public License v3
 
 If you make any changes to the source that enhances this plugin, or can be benifical for others, please provide a pull request! If you want to work on a feature thats in **Feature Todo**, please let me know so we don't accidentally both work on the same thing at the same time, or we can work together to get the feature done faster! :)
 
+Many scale-related features planned for Xen MIDI Retuner are actually [AnaMark Tuning Library](https://github.com/zardini123/AnaMark-Tuning-Library) related features. If you are interested in the development of the following features, please consider looking at the AnaMark Tuning Library GitHub page.
+
+- .scl and .kbm scale file support
+- Scale Editor (modify AnaMark scale dynamically)
+- Exposing scale information as editable parameters
+- Export / import Sevish Workshop url
+- Tuning modified in realtime using the MTS protocol (see MTS (MIDI Tuning Standard) section [here](https://www.midi.org/articles-old/microtuning-and-alternative-intonation-systems), though sysex support is DAW dependent)
+- [Other tuning files](https://hpi.zentral.zone/filetypes)
+
+_Note to developers:_ Even though compiling for this JUCE plugin is done via CMake (to compile both Instrument and MIDI Effect variants), the Projucer file (_.jucer_) is still used extensively. I use the Projucer for quick and easy prototyping of the user interface, as the program contains a GUI editor. Please be sure to make changes that are in the dedicated areas of the Projucer-created files.
+
 ## Compiling
 
 Compiling this plugin requires JUCE. Download JUCE [here](https://juce.com/get-juce/download).
 
-For compiling to VST.2x plugin, the VST.2x SDK is needed. The global path for VST.2x sdk must be set your VST.2x sdk. VST.2x sdk that used to be embedded into JUCE can be found at [this JUCE commit](https://github.com/juce-framework/JUCE/tree/8317738112ccceb2c58deac3e4bb167c62682916/modules/juce_audio_processors/format_types/VST3_SDK). To prepare for compiling, download the entire commit ([here](https://github.com/juce-framework/JUCE/archive/8317738112ccceb2c58deac3e4bb167c62682916.zip)), extract folder VST3_SDK at `modules/juce_audio_processors/format_types/VST3_SDK` out of the archive, and move the VST3_SDK folder (preferably) to the directory of your JUCE installation.
+For compiling to VST.2x plugin, the VST.2x SDK is needed. The global path for VST.2x sdk must be set your VST.2x sdk. VST.2x sdk that used to be embedded into JUCE can be found at [this JUCE commit](https://github.com/juce-framework/JUCE/tree/8317738112ccceb2c58deac3e4bb167c62682916/modules/juce_audio_processors/format_types/VST3_SDK). To prepare for compiling, download the entire commit ([direct download](https://github.com/juce-framework/JUCE/archive/8317738112ccceb2c58deac3e4bb167c62682916.zip)), extract folder VST3_SDK at `modules/juce_audio_processors/format_types/VST3_SDK` out of the archive, and move the VST3_SDK folder preferably to the directory of your JUCE installation.
 
 Mark Henning's AnaMark library is part of the repository as a submodule. Firsts initialize the submodule using:
 
@@ -79,23 +100,14 @@ If you want to install the plugins to a custom location, the compiled plugins ar
 
 Feature todos may or may not be completed in order of listing.
 
-- .scl and .kbm scale file support
 - Mapping midi note to scale note (with interpolation)
 - _Reference tuner_ mode.
   - Performers with continuous, possibly MPE enabled controllers (Roli's Seaboard) will be able to see how their specifically tempered (equal tempered) controller can be played to achieve their wanted tuning.
   - The reference tuner mode will act as a teaching tool for one to learn how to play in different tunings using their continuous controller.
 - Global refining of scale (moving reference note)
-- Scale Editor (modify AnaMark scale dynamically)
-- Exposing scale information as editable parameters
 - Remapping single channel polyphony input to multichannel output
 - Remapping single channel polyphony input to MPE output
 - Multiple scales (programs / presets)
 - Scale transition (crossfade between scale)
-- Export / import Sevish Workshop url
-- [Other tuning files](https://hpi.zentral.zone/filetypes)
 
-Far Future:
-
-- Tuning modified in realtime using the MTS protocol (see MTS (MIDI Tuning Standard) section [here](https://www.midi.org/articles-old/microtuning-and-alternative-intonation-systems), though sysex support is DAW dependent)
-
-_NOTE:_ This project may not support VST.3x for a while, as the VST.3x specifications for MIDI CC and Pitch-bend output is much, _much_ different than VST.2x (see this: [Add support for sending Midi CCs out of VST3 plugins](https://forum.juce.com/t/add-support-for-sending-midi-ccs-out-of-vst3-plugins/35781)).
+_NOTE:_ This project does not support VST.3x currently. VST.3x specifications for MIDI CC and Pitch-bend output is much, _much_ different than VST.2x (see this: [Add support for sending Midi CCs out of VST3 plugins](https://forum.juce.com/t/add-support-for-sending-midi-ccs-out-of-vst3-plugins/35781)).

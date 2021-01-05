@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.1
+  Created with Projucer version: 6.0.5
 
   ------------------------------------------------------------------------------
 
@@ -22,8 +22,10 @@
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
 
+class KeyboardVisual;
+
 #include "KeyboardVisual.h"
-#include "../ProcessorData.h"
+#include "../../ProcessorData.h"
 //[/Headers]
 
 

@@ -21,13 +21,8 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
-#include "../../ProcessorStructures.h"
-#include "../../ProcessorData.h"
-#include "../../ComponentWithReferenceToData.h"
 
-//// Forward declare class as cyclic dependency results in "undeclared identifier" errors
-//// https://www.eventhelix.com/RealtimeMantra/HeaderFileIncludePatterns.htm
-//class ActionButtonAndStatusTracker;
+#include "../../ComponentWithReferenceToData.h"
 //[/Headers]
 
 
@@ -40,46 +35,53 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class ActionButtonAndStatus  : public ComponentWithReferenceToData,
-                               public ChangeListener,
-                               public juce::Button::Listener
+class KeyboardVisualOptions  : public ComponentWithReferenceToData,
+                               public juce::Button::Listener,
+                               public juce::ComboBox::Listener
 {
 public:
     //==============================================================================
-    ActionButtonAndStatus (ProcessorData *dataReference);
-    ~ActionButtonAndStatus() override;
+    KeyboardVisualOptions (ProcessorData *dataReference);
+    ~KeyboardVisualOptions() override;
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    ActionButtonAndStatus(ProcessorData *dataReference, MIDIEnviromentTestType testType, MIDIEnviromentTestOperationType operationType);
-
-    void changeListenerCallback(ChangeBroadcaster *source) override;
-
-    void attachListenerToActionButton(Button::Listener *theListener);
-
-    void setActionName(std::string action);
-    void setStatus(Status status, double percentage);
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
     void buttonClicked (juce::Button* buttonThatWasClicked) override;
+    void comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    double progress;
-    MIDIEnviromentTestID testID;
+    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> midiChannelAttachment;
+
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> enableInputMIDINotesAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> enableChannelPriorityNoteAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> enableScaleAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> enablePriorityNoteSnappedToScaleAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> enableOutputMIDIPriorityNoteAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> enableOutputPitchbendRangeAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> enableInputPitchbendRangeAttachment;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::TextButton> actionButton;
-    std::unique_ptr<ProgressBar> statusBar;
+    std::unique_ptr<juce::ToggleButton> enableInputMIDINotes;
+    std::unique_ptr<juce::Label> midiChannelLabel;
+    std::unique_ptr<juce::ComboBox> midiChannel;
+    std::unique_ptr<juce::ToggleButton> enableChannelPriorityNote;
+    std::unique_ptr<juce::ToggleButton> enableScale;
+    std::unique_ptr<juce::ToggleButton> enablePriorityNoteSnappedToScale;
+    std::unique_ptr<juce::ToggleButton> enableOutputMIDIPriorityNote;
+    std::unique_ptr<juce::ToggleButton> enableOutputPitchbendRange;
+    std::unique_ptr<juce::ToggleButton> enableInputPitchbendRange;
 
 
     //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ActionButtonAndStatus)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (KeyboardVisualOptions)
 };
 
 //[EndFile] You can add extra defines here...
