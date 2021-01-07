@@ -5,7 +5,7 @@
               pluginVST3Category="Fx,Tools" bundleIdentifier="com.TarasPalczynskiIII.XenMIDIRetuner"
               companyName="Taras Palczynski III" pluginManufacturer="Taras Palczynski III"
               pluginName="Xen MIDI Retuner" version="0.0.2" projectLineFeed="&#10;"
-              displaySplashScreen="1" jucerFormatVersion="1">
+              displaySplashScreen="1" jucerFormatVersion="1" pluginAUMainType="'aumu'">
   <MAINGROUP id="dJj14n" name="Xen MIDI Retuner">
     <GROUP id="{A1692F2F-028C-9EA8-2739-2FC33C9F86F6}" name="Source">
       <GROUP id="{5CFBB6E8-DB93-CA08-FB77-07FAC1572B4B}" name="AnaMark-Tuning-Library">
@@ -47,6 +47,28 @@
               resource="0" file="Source/Components/MIDIChannelStatusAndToggleSingle.h"/>
       </GROUP>
       <GROUP id="{6E9FE505-8222-C370-9837-85B2A5A04EF8}" name="EditorModules">
+        <GROUP id="{6883A78E-D49B-F566-8130-7901541BF11B}" name="KeyboardVisual">
+          <FILE id="KSfiON" name="KeyboardVisual.cpp" compile="1" resource="0"
+                file="Source/EditorModules/KeyboardVisual/KeyboardVisual.cpp"/>
+          <FILE id="TQemVU" name="KeyboardVisual.h" compile="0" resource="0"
+                file="Source/EditorModules/KeyboardVisual/KeyboardVisual.h"/>
+          <FILE id="QsEF2x" name="KeyboardVisualControlsOverlay.cpp" compile="1"
+                resource="0" file="Source/EditorModules/KeyboardVisual/KeyboardVisualControlsOverlay.cpp"/>
+          <FILE id="YWYwCi" name="KeyboardVisualControlsOverlay.h" compile="0"
+                resource="0" file="Source/EditorModules/KeyboardVisual/KeyboardVisualControlsOverlay.h"/>
+          <FILE id="y6O9sv" name="KeyboardVisualOptions.cpp" compile="1" resource="0"
+                file="Source/EditorModules/KeyboardVisual/KeyboardVisualOptions.cpp"/>
+          <FILE id="pu7F0v" name="KeyboardVisualOptions.h" compile="0" resource="0"
+                file="Source/EditorModules/KeyboardVisual/KeyboardVisualOptions.h"/>
+          <FILE id="gbhOOJ" name="NoteAndFrequencyOverlay.cpp" compile="1" resource="0"
+                file="Source/EditorModules/KeyboardVisual/NoteAndFrequencyOverlay.cpp"/>
+          <FILE id="DbajsJ" name="NoteAndFrequencyOverlay.h" compile="0" resource="0"
+                file="Source/EditorModules/KeyboardVisual/NoteAndFrequencyOverlay.h"/>
+          <FILE id="WVCz8E" name="ScaleFrequenciesOverlay.cpp" compile="1" resource="0"
+                file="Source/EditorModules/KeyboardVisual/ScaleFrequenciesOverlay.cpp"/>
+          <FILE id="ND8DV4" name="ScaleFrequenciesOverlay.h" compile="0" resource="0"
+                file="Source/EditorModules/KeyboardVisual/ScaleFrequenciesOverlay.h"/>
+        </GROUP>
         <GROUP id="{B08742E1-9497-3229-F517-8F1F59EDA2B5}" name="TestingView">
           <FILE id="fefIx2" name="ActionButtonAndStatus.cpp" compile="1" resource="0"
                 file="Source/EditorModules/TestingView/ActionButtonAndStatus.cpp"/>
@@ -64,17 +86,23 @@
           <FILE id="XPWyXH" name="TestList.h" compile="0" resource="0" file="Source/EditorModules/TestingView/TestList.h"/>
         </GROUP>
         <GROUP id="{91D6FA0C-01C8-AB40-5BBC-7183FFF77A04}" name="ProcessingView">
+          <FILE id="oxd94Y" name="InputModule.cpp" compile="1" resource="0" file="Source/EditorModules/ProcessingView/InputModule.cpp"/>
+          <FILE id="Za8Hui" name="InputModule.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/InputModule.h"/>
+          <FILE id="xuOZcY" name="ScaleEditor.cpp" compile="1" resource="0" file="Source/EditorModules/ProcessingView/ScaleEditor.cpp"/>
+          <FILE id="CZeD3Y" name="ScaleEditor.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/ScaleEditor.h"/>
+          <GROUP id="{E3C22461-97D5-A434-2BA5-54506CA223BE}" name="ConversionModule">
+            <FILE id="grRKIo" name="TransitionCurveEvaluationGraphic.cpp" compile="1"
+                  resource="0" file="Source/EditorModules/ProcessingView/ConversionModule/TransitionCurveEvaluationGraphic.cpp"/>
+            <FILE id="oPhq8d" name="TransitionCurveEvaluationGraphic.h" compile="0"
+                  resource="0" file="Source/EditorModules/ProcessingView/ConversionModule/TransitionCurveEvaluationGraphic.h"/>
+          </GROUP>
           <FILE id="d7FDBb" name="ConversionModule.cpp" compile="1" resource="0"
                 file="Source/EditorModules/ProcessingView/ConversionModule.cpp"/>
           <FILE id="aRIraE" name="ConversionModule.h" compile="0" resource="0"
                 file="Source/EditorModules/ProcessingView/ConversionModule.h"/>
-          <FILE id="oxd94Y" name="InputModule.cpp" compile="1" resource="0" file="Source/EditorModules/ProcessingView/InputModule.cpp"/>
-          <FILE id="Za8Hui" name="InputModule.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/InputModule.h"/>
           <FILE id="ZLMlVB" name="OutputModule.cpp" compile="1" resource="0"
                 file="Source/EditorModules/ProcessingView/OutputModule.cpp"/>
           <FILE id="ONR1ek" name="OutputModule.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/OutputModule.h"/>
-          <FILE id="xuOZcY" name="ScaleEditor.cpp" compile="1" resource="0" file="Source/EditorModules/ProcessingView/ScaleEditor.cpp"/>
-          <FILE id="CZeD3Y" name="ScaleEditor.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/ScaleEditor.h"/>
         </GROUP>
         <FILE id="fqQaFG" name="ProcessingView.cpp" compile="1" resource="0"
               file="Source/EditorModules/ProcessingView.cpp"/>
@@ -85,18 +113,6 @@
         <FILE id="qjbUif" name="SettingsView.cpp" compile="1" resource="0"
               file="Source/EditorModules/SettingsView.cpp"/>
         <FILE id="TBDceV" name="SettingsView.h" compile="0" resource="0" file="Source/EditorModules/SettingsView.h"/>
-        <FILE id="S5xF8B" name="KeyboardVisual.cpp" compile="1" resource="0"
-              file="Source/EditorModules/KeyboardVisual.cpp"/>
-        <FILE id="Fr3H9S" name="KeyboardVisual.h" compile="0" resource="0"
-              file="Source/EditorModules/KeyboardVisual.h"/>
-        <FILE id="LLLLQc" name="NoteAndFrequencyOverlay.cpp" compile="1" resource="0"
-              file="Source/EditorModules/NoteAndFrequencyOverlay.cpp"/>
-        <FILE id="XCUNvv" name="NoteAndFrequencyOverlay.h" compile="0" resource="0"
-              file="Source/EditorModules/NoteAndFrequencyOverlay.h"/>
-        <FILE id="dJcj7A" name="ScaleFrequenciesOverlay.cpp" compile="1" resource="0"
-              file="Source/EditorModules/ScaleFrequenciesOverlay.cpp"/>
-        <FILE id="XcQ9uZ" name="ScaleFrequenciesOverlay.h" compile="0" resource="0"
-              file="Source/EditorModules/ScaleFrequenciesOverlay.h"/>
       </GROUP>
       <GROUP id="{CBB1951D-3F94-A4BB-11EA-1C67963ACB4F}" name="Tests">
         <GROUP id="{2E983108-9D3D-41C4-C7FB-D4F8C56587ED}" name="MIDIEnviromentTests">

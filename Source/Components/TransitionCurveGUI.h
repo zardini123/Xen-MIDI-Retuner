@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.1
+  Created with Projucer version: 6.0.5
 
   ------------------------------------------------------------------------------
 
@@ -45,6 +45,8 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    int getHorizontalMargin();
+    int getVerticalMargin();
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -55,7 +57,7 @@ public:
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     Point<float> convertPercentsToPixels(Point<float> percentsPoint);
-    TransitionCurve *curve;
+    TransitionCurve *curve = nullptr;
 
     int horizontalMargin = 10;
     int verticalMargin = 10;

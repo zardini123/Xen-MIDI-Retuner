@@ -14,7 +14,7 @@
 #include <queue>
 #include <list>
 
-#include "../JuceLibraryCode/JuceHeader.h"
+#include <JuceHeader.h>
 #include "MIDIEnviromentTest.h"
 #include "../../ProcessorStructures.h"
 

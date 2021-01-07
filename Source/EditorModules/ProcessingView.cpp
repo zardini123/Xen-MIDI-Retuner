@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.1
+  Created with Projucer version: 6.0.5
 
   ------------------------------------------------------------------------------
 
@@ -109,10 +109,10 @@ void ProcessingView::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    component->setBounds (0, 0, proportionOfWidth (0.2502f), proportionOfHeight (1.0000f));
-    component2->setBounds (proportionOfWidth (0.2502f), 0, proportionOfWidth (0.2502f), proportionOfHeight (1.0000f));
-    conversionModule->setBounds (proportionOfWidth (0.5004f), 0, proportionOfWidth (0.2502f), proportionOfHeight (1.0000f));
-    component3->setBounds (proportionOfWidth (0.7498f), 0, proportionOfWidth (0.2502f), proportionOfHeight (1.0000f));
+    component->setBounds (0, 0, proportionOfWidth (0.2504f), proportionOfHeight (1.0000f));
+    component2->setBounds (proportionOfWidth (0.2504f), 0, proportionOfWidth (0.2504f), proportionOfHeight (1.0000f));
+    conversionModule->setBounds (proportionOfWidth (0.5008f), 0, proportionOfWidth (0.2504f), proportionOfHeight (1.0000f));
+    component3->setBounds (proportionOfWidth (0.7496f), 0, proportionOfWidth (0.2504f), proportionOfHeight (1.0000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -143,16 +143,16 @@ BEGIN_JUCER_METADATA
     <RECT pos="50% 0 1 100%" fill="solid: ffb6b6b6" hasStroke="0"/>
   </BACKGROUND>
   <JUCERCOMP name="" id="718dd2c51df8bc00" memberName="component" virtualName=""
-             explicitFocusOrder="0" pos="0 0 25.021% 100%" sourceFile="ProcessingView/InputModule.cpp"
+             explicitFocusOrder="0" pos="0 0 25.039% 100%" sourceFile="ProcessingView/InputModule.cpp"
              constructorParams="data"/>
   <JUCERCOMP name="" id="362421b4abac7430" memberName="component2" virtualName=""
-             explicitFocusOrder="0" pos="25.021% 0 25.021% 100%" sourceFile="ProcessingView/ScaleEditor.cpp"
+             explicitFocusOrder="0" pos="25.039% 0 25.039% 100%" sourceFile="ProcessingView/ScaleEditor.cpp"
              constructorParams="data"/>
   <JUCERCOMP name="" id="3e17f48e254318d" memberName="conversionModule" virtualName=""
-             explicitFocusOrder="0" pos="50.043% 0 25.021% 100%" sourceFile="ProcessingView/ConversionModule.cpp"
+             explicitFocusOrder="0" pos="50.077% 0 25.039% 100%" sourceFile="ProcessingView/ConversionModule.cpp"
              constructorParams="data"/>
   <JUCERCOMP name="" id="da4dccb613aa70d0" memberName="component3" virtualName=""
-             explicitFocusOrder="0" pos="74.979% 0 25.021% 100%" sourceFile="ProcessingView/OutputModule.cpp"
+             explicitFocusOrder="0" pos="74.961% 0 25.039% 100%" sourceFile="ProcessingView/OutputModule.cpp"
              constructorParams="data"/>
 </JUCER_COMPONENT>
 

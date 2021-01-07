@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.1
+  Created with Projucer version: 6.0.5
 
   ------------------------------------------------------------------------------
 
@@ -38,10 +38,6 @@ PluginGUI::PluginGUI (ProcessorData *dataReference)
 
     keyboardVisual.reset (new KeyboardVisual (data));
     addAndMakeVisible (keyboardVisual.get());
-    scaleFrequenciesOverlay.reset (new ScaleFrequenciesOverlay (data, keyboardVisual.get()));
-    addAndMakeVisible (scaleFrequenciesOverlay.get());
-    noteAndFreqOverlay.reset (new NoteAndFrequencyOverlay (data, keyboardVisual.get()));
-    addAndMakeVisible (noteAndFreqOverlay.get());
     tabbedComponent.reset (new juce::TabbedComponent (juce::TabbedButtonBar::TabsAtTop));
     addAndMakeVisible (tabbedComponent.get());
     tabbedComponent->setTabBarDepth (26);
@@ -68,8 +64,6 @@ PluginGUI::~PluginGUI()
     //[/Destructor_pre]
 
     keyboardVisual = nullptr;
-    scaleFrequenciesOverlay = nullptr;
-    noteAndFreqOverlay = nullptr;
     tabbedComponent = nullptr;
 
 
@@ -95,8 +89,6 @@ void PluginGUI::resized()
     //[/UserPreResize]
 
     keyboardVisual->setBounds (0, getHeight() - proportionOfHeight (0.2000f), proportionOfWidth (1.0000f), proportionOfHeight (0.2000f));
-    scaleFrequenciesOverlay->setBounds (0 + 0, (getHeight() - proportionOfHeight (0.2000f)) + proportionOfHeight (0.2000f) - (juce::roundToInt (proportionOfHeight (0.2000f) * 0.6000f)), juce::roundToInt (proportionOfWidth (1.0000f) * 1.0000f), juce::roundToInt (proportionOfHeight (0.2000f) * 0.6000f));
-    noteAndFreqOverlay->setBounds (0 + 0, (getHeight() - proportionOfHeight (0.2000f)) + proportionOfHeight (0.2000f) - (juce::roundToInt (proportionOfHeight (0.2000f) * 0.6000f)), juce::roundToInt (proportionOfWidth (1.0000f) * 1.0000f), juce::roundToInt (proportionOfHeight (0.2000f) * 0.6000f));
     tabbedComponent->setBounds (0, 0, proportionOfWidth (1.0000f), proportionOfHeight (0.8000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
@@ -124,18 +116,8 @@ BEGIN_JUCER_METADATA
                  fixedSize="1" initialWidth="1300" initialHeight="450">
   <BACKGROUND backgroundColour="ff323e44"/>
   <JUCERCOMP name="" id="9a893a36dc7e0c36" memberName="keyboardVisual" virtualName=""
-             explicitFocusOrder="0" pos="0 0Rr 100% 20%" sourceFile="EditorModules/KeyboardVisual.cpp"
+             explicitFocusOrder="0" pos="0 0Rr 100% 20%" sourceFile="EditorModules/KeyboardVisual/KeyboardVisual.cpp"
              constructorParams="data"/>
-  <JUCERCOMP name="" id="31178f5ce0e8830f" memberName="scaleFrequenciesOverlay"
-             virtualName="" explicitFocusOrder="0" pos="0 0Rr 100% 60%" posRelativeX="9a893a36dc7e0c36"
-             posRelativeY="9a893a36dc7e0c36" posRelativeW="9a893a36dc7e0c36"
-             posRelativeH="9a893a36dc7e0c36" sourceFile="EditorModules/ScaleFrequenciesOverlay.cpp"
-             constructorParams="data, keyboardVisual.get()"/>
-  <JUCERCOMP name="" id="d4b4c1a2077d41bb" memberName="noteAndFreqOverlay"
-             virtualName="" explicitFocusOrder="0" pos="0 0Rr 100% 60%" posRelativeX="9a893a36dc7e0c36"
-             posRelativeY="9a893a36dc7e0c36" posRelativeW="9a893a36dc7e0c36"
-             posRelativeH="9a893a36dc7e0c36" sourceFile="EditorModules/NoteAndFrequencyOverlay.cpp"
-             constructorParams="data, keyboardVisual.get()"/>
   <TABBEDCOMPONENT name="new tabbed component" id="c25fcd1f05344720" memberName="tabbedComponent"
                    virtualName="" explicitFocusOrder="0" pos="0 0 100% 80%" orientation="top"
                    tabBarDepth="26" initialTab="0">

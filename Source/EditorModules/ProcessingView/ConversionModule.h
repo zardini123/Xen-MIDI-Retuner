@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.1
+  Created with Projucer version: 6.0.5
 
   ------------------------------------------------------------------------------
 
@@ -37,8 +37,7 @@
                                                                     //[/Comments]
 */
 class ConversionModule  : public ComponentWithReferenceToData,
-                          public juce::AudioProcessorValueTreeState::Listener,
-                          public juce::ComboBox::Listener
+                          public juce::AudioProcessorValueTreeState::Listener
 {
 public:
     //==============================================================================
@@ -52,7 +51,6 @@ public:
 
     void paint (juce::Graphics& g) override;
     void resized() override;
-    void comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged) override;
 
 
 
@@ -63,15 +61,13 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::Label> label;
-    std::unique_ptr<juce::Label> section_title;
+    std::unique_ptr<juce::Label> sectionTitle;
     std::unique_ptr<TransitionCurveGUI> transitionCurveGUI;
     std::unique_ptr<juce::Slider> transitionSlider;
-    std::unique_ptr<juce::Label> label2;
+    std::unique_ptr<juce::Label> transitionLabel;
     std::unique_ptr<juce::Slider> midpointSlider;
-    std::unique_ptr<juce::Label> label3;
-    std::unique_ptr<juce::Label> label5;
-    std::unique_ptr<juce::ComboBox> interploationDimension;
+    std::unique_ptr<juce::Label> midpointLabel;
+    std::unique_ptr<juce::Label> snappingCurveLabel;
 
 
     //==============================================================================

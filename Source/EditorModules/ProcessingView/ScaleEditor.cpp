@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.1
+  Created with Projucer version: 6.0.5
 
   ------------------------------------------------------------------------------
 
@@ -73,6 +73,15 @@ ScaleEditor::ScaleEditor (ProcessorData *dataReference)
     scale_name_label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     scale_name_label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
+    juce__label.reset (new juce::Label ("new label",
+                                        TRANS("Blue lines represent 12-tone equal temperament")));
+    addAndMakeVisible (juce__label.get());
+    juce__label->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    juce__label->setJustificationType (juce::Justification::bottomLeft);
+    juce__label->setEditable (false, false, false);
+    juce__label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    juce__label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -96,6 +105,7 @@ ScaleEditor::~ScaleEditor()
     resetScaleButton = nullptr;
     hyperlinkButton = nullptr;
     scale_name_label = nullptr;
+    juce__label = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -108,6 +118,15 @@ void ScaleEditor::paint (juce::Graphics& g)
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
+    {
+        int x = (getWidth() / 2) - (108 / 2), y = 24, width = 108, height = 2;
+        juce::Colour fillColour = juce::Colour (0xffe82950);
+        //[UserPaintCustomArguments] Customize the painting arguments here..
+        //[/UserPaintCustomArguments]
+        g.setColour (fillColour);
+        g.fillRect (x, y, width, height);
+    }
+
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
 }
@@ -119,6 +138,7 @@ void ScaleEditor::resized()
 
     label->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
     scale_name_label->setBounds (8, 128, getWidth() - 16, 24);
+    juce__label->setBounds (0, getHeight() - 48, proportionOfWidth (1.0000f), 48);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -132,7 +152,7 @@ void ScaleEditor::buttonClicked (juce::Button* buttonThatWasClicked)
     {
         //[UserButtonCode_importTunFile] -- add your button handler code here..
         FileChooser myChooser ("Please select the AnaMark Tuning file you want to load...",
-                           File::getSpecialLocation (File::userHomeDirectory),
+                           File(),
                            "*.tun");
 
         if (myChooser.browseForFileToOpen())
@@ -189,7 +209,9 @@ BEGIN_JUCER_METADATA
                  constructorParams="ProcessorData *dataReference" variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
-  <BACKGROUND backgroundColour="323e44"/>
+  <BACKGROUND backgroundColour="323e44">
+    <RECT pos="0Cc 24 108 2" fill="solid: ffe82950" hasStroke="0"/>
+  </BACKGROUND>
   <LABEL name="new label" id="235c5745dedfe1ad" memberName="label" virtualName=""
          explicitFocusOrder="0" pos="0 0 100% 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Scale&#10;" editableSingleClick="0" editableDoubleClick="0"
@@ -210,6 +232,12 @@ BEGIN_JUCER_METADATA
          edBkgCol="0" labelText="No Scale Loaded" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
+  <LABEL name="new label" id="b9a76de94e82d728" memberName="juce__label"
+         virtualName="" explicitFocusOrder="0" pos="0 0Rr 100% 48" edTextCol="ff000000"
+         edBkgCol="0" labelText="Blue lines represent 12-tone equal temperament"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15.0" kerning="0.0" bold="0"
+         italic="0" justification="17"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

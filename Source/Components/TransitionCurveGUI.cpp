@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.1
+  Created with Projucer version: 6.0.5
 
   ------------------------------------------------------------------------------
 
@@ -96,6 +96,14 @@ void TransitionCurveGUI::resized()
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+int TransitionCurveGUI::getHorizontalMargin() {
+  return this->horizontalMargin;
+}
+
+int TransitionCurveGUI::getVerticalMargin() {
+  return this->verticalMargin;
+}
+
 Point<float> TransitionCurveGUI::convertPercentsToPixels(Point<float> percentsPoint)
 {
     return Point<float>(jmap(percentsPoint.x, 0.0f, 1.0f, (float)horizontalMargin, (float)(getWidth() - horizontalMargin)),

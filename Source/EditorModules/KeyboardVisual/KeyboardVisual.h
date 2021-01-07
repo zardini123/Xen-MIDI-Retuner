@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.1
+  Created with Projucer version: 6.0.5
 
   ------------------------------------------------------------------------------
 
@@ -24,11 +24,16 @@
 
 //// Forward declare class as cyclic dependency results in "undeclared identifier" errors
 //// https://www.eventhelix.com/RealtimeMantra/HeaderFileIncludePatterns.htm
-//class NoteAndFrequencyOverlay;
+class NoteAndFrequencyOverlay;
+class ScaleFrequenciesOverlay;
+class KeyboardVisualControlsOverlay;
 
-#include "../ComponentWithReferenceToData.h"
+#include "../../ComponentWithReferenceToData.h"
 //[/Headers]
 
+#include "ScaleFrequenciesOverlay.h"
+#include "NoteAndFrequencyOverlay.h"
+#include "KeyboardVisualControlsOverlay.h"
 
 
 //==============================================================================
@@ -39,8 +44,7 @@
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class KeyboardVisual  : public ComponentWithReferenceToData,
-                        public juce::Slider::Listener
+class KeyboardVisual  : public ComponentWithReferenceToData
 {
 public:
     //==============================================================================
@@ -49,7 +53,8 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    void setKeyboardSettings(int firstMidiNote, int lastMidiNote, int width, int height);
+    void setKeyboardSettings(int firstMidiNote, int lastMidiNote);
+    void setKeyboardDimensions(int width, int height);
 
     int getFirstMidiNote();
     int getLastMidiNote();
@@ -59,13 +64,24 @@ public:
 
     double ConvertContinuousMidiNoteToPercentWidth(double continousMidiNote);
 
-//    double ConvertPixelsToContinuousMidiNote(int xPosition);
-//    double ConvertPercentWidthToContinuousMidiNote(double percentWidth);
+    double ConvertPixelsToContinuousMidiNote(int xPositionInPixels);
+    double ConvertPercentWidthToContinuousMidiNote(double percentWidth);
+
+    // Painting methods for keyboard-related drawing
+    void drawMarkerAtDiscreteMidiNote(int midiNote, juce::Colour baseColor, juce::Graphics& graphics);
+    void drawMarkerAtContinuousMidiNote(double continousMidiNote, juce::Colour baseColor, juce::Graphics& graphics);
+    void drawMarkerAtFrequencyHz(double frequencyHz, juce::Colour baseColor, juce::Graphics& graphics);
+
+    void drawLargerMarkerAtDiscreteMidiNote(int midiNote, juce::Colour baseColor, juce::Graphics& graphics);
+    void drawLargerMarkerAtContinuousMidiNote(double continousMidiNote, juce::Colour baseColor, juce::Graphics& graphics);
+
+    static const Colour inRangeWhiteKeyColour;
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
-    void sliderValueChanged (juce::Slider* sliderThatWasMoved) override;
+    void mouseMove (const juce::MouseEvent& e) override;
+    void mouseDrag (const juce::MouseEvent& e) override;
     void mouseWheelMove (const juce::MouseEvent& e, const juce::MouseWheelDetails& wheel) override;
 
 
@@ -77,20 +93,22 @@ private:
     // Keyboard settings
     int entireWidth;
     int entireHeight;
-    int m_firstMidiNote;
-    int m_lastMidiNote;
+
+    int firstMidiNote;
+    int lastMidiNote;
 
     // Keyboard cached values
     double keyDistances[13];
 
-    int m_startOctave;
-    int m_repeatedFirstMidiNote;
-    double m_entireDistance;
+    int firstMidiNoteAsKeyInTwelveKeyRange;
+    int startOctave;
+    double entireDistance;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::Slider> highest;
-    std::unique_ptr<juce::Slider> lowest;
+    std::unique_ptr<ScaleFrequenciesOverlay> scaleFrequenciesOverlay;
+    std::unique_ptr<NoteAndFrequencyOverlay> noteAndFreqOverlay;
+    std::unique_ptr<KeyboardVisualControlsOverlay> controlsOverlay;
 
 
     //==============================================================================

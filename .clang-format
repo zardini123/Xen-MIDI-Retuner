@@ -1,0 +1,19 @@
+Language: Cpp
+Standard: Latest
+
+ColumnLimit: 90
+IndentWidth: 2
+
+TabWidth: 8
+UseTab: Never
+
+# Only merge empty functions onto a single line
+AllowShortFunctionsOnASingleLine: Empty
+
+# Used for having elements of a list each be on its own line
+# A comma is needed before the last bracket and the last element to get this effect fully
+# https://stackoverflow.com/questions/64298378/separate-each-entry-of-brace-enclosed-lists-with-new-line-via-clang-format/64358501#64358501
+BinPackArguments: false
+
+# Always make a newline after template declarations
+AlwaysBreakTemplateDeclarations: Yes
