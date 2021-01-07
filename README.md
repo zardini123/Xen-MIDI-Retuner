@@ -42,10 +42,10 @@ Eventually, the following table will help users to download Xen MIDI Retuner. On
 
 If your DAW is not listed, please create an issue titled "_<insert DAW name here>_ MIDI Support Table Entry". If you can, then find out if your DAW supports the properties that are listed in the table. Make sure to note any inconsistencies like I did for Ableton. I can then add what you found to the table.
 
-| DAW     | VST2 |    VST2 MIDI Effect     | AU  |         AU MIDI Effect          | Pipe MIDI input to Instrument<sup>\*</sup> plugin | Pipe MIDI output from Instrument plugin | Recommended Download Version |
-| ------- | :--: | :---------------------: | :-: | :-----------------------------: | :-----------------------------------------------: | :-------------------------------------: | :--------------------------: |
-| Ableton |  ✓   | ✓ (Loads as Instrument) |  ✓  | Plugin does not show in browser |                         ✓                         |                    ✓                    |       VST2 Instrument        |
-| Logic   |      |                         |  ✓  |                ✓                |                         ✓                         |                                         |        AU MIDI Effect        |
+| DAW     | VST2 |    VST2 MIDI Effect     | AU (macOS Only) |         AU MIDI Effect          | Pipe MIDI input to Instrument<sup>\*</sup> plugin | Pipe MIDI output from Instrument plugin | Recommended Download Version |
+| ------- | :--: | :---------------------: | :-------------: | :-----------------------------: | :-----------------------------------------------: | :-------------------------------------: | :--------------------------: |
+| Ableton |  ✓   | ✓ (Loads as Instrument) |        ✓        | Plugin does not show in browser |                         ✓                         |                    ✓                    |       VST2 Instrument        |
+| Logic   |      |                         |        ✓        |                ✓                |                         ✓                         |                                         |        AU MIDI Effect        |
 
 <sup>\*</sup>Instrument (a.k.a. Synth) plugins are defined as a plugin with MIDI input and Audio output. Some DAWs support being able to extract (pipe) the MIDI output from Instrument plugins.
 

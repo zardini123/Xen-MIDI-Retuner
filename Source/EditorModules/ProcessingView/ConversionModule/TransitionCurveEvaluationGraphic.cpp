@@ -216,12 +216,12 @@ void TransitionCurveEvaluationGraphic::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    juce__label->setBounds (proportionOfWidth (0.7508f) - 150, getHeight() - 24, 150, 24);
+    juce__label->setBounds (proportionOfWidth (0.7506f) - 150, getHeight() - 24, 150, 24);
     juce__label2->setBounds (proportionOfWidth (0.0000f), getHeight() - 24, 150, 24);
-    juce__label3->setBounds (proportionOfWidth (0.3815f) - (150 / 2), 0, 150, 24);
-    juce__label4->setBounds (proportionOfWidth (0.8000f), 0, proportionOfWidth (0.2000f), 24);
-    juce__label5->setBounds (proportionOfWidth (0.8000f), 26, proportionOfWidth (0.2000f), 16);
-    juce__label6->setBounds (proportionOfWidth (0.8000f), getHeight() - 24, proportionOfWidth (0.2000f), 24);
+    juce__label3->setBounds (proportionOfWidth (0.3813f) - (150 / 2), 0, 150, 24);
+    juce__label4->setBounds (proportionOfWidth (0.8003f), 0, proportionOfWidth (0.1997f), 24);
+    juce__label5->setBounds (proportionOfWidth (0.8003f), 26, proportionOfWidth (0.1997f), 16);
+    juce__label6->setBounds (proportionOfWidth (0.8003f), getHeight() - 24, proportionOfWidth (0.1997f), 24);
     internalPath1.clear();
     internalPath1.startNewSubPath (static_cast<float> (proportionOfWidth (0.8000f)), static_cast<float> (proportionOfHeight (0.5000f)));
     internalPath1.lineTo (static_cast<float> (proportionOfWidth (0.5000f)), static_cast<float> (proportionOfHeight (0.5000f)));

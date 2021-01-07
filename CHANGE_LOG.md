@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added colored underlines under each section to help users understand where each of the lines in keyboard view are coming from.
-- Output notes/pitchbend changes in realtime when changing "Transition" and "Midpoint" when input notes are held.
+- Output notes/pitchbend changes in realtime when changing "Transition", "Midpoint", and "Note Prioritization" when input notes are held.
 - Output Pitch Bend and Note Priority controls now have tooltips.
 - Keyboard Visual Additions
   - Added navigation buttons (shift left/right, zoom in/out). Currently temporary until full mouse navigation is implemented.

@@ -216,8 +216,8 @@ void KeyboardVisualOptions::resized()
     //[/UserPreResize]
 
     enableInputMIDINotes->setBounds (0, 32, getWidth() - 10, 24);
-    midiChannelLabel->setBounds (0, 0, proportionOfWidth (0.5004f), 24);
-    midiChannel->setBounds (proportionOfWidth (0.5004f), 0, proportionOfWidth (0.4799f), 24);
+    midiChannelLabel->setBounds (0, 0, proportionOfWidth (0.5000f), 24);
+    midiChannel->setBounds (proportionOfWidth (0.5000f), 0, proportionOfWidth (0.4800f), 24);
     enableChannelPriorityNote->setBounds (0, 56, getWidth() - 10, 24);
     enableScale->setBounds (0, 104, getWidth() - 10, 24);
     enablePriorityNoteSnappedToScale->setBounds (0, 128, getWidth() - 10, 24);
