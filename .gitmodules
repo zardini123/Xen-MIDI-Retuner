@@ -1,4 +1,7 @@
 [submodule "Source/AnaMark-Tuning-Library"]
-	path = Source/AnaMark-Tuning-Library
+	path = lib/AnaMark-Tuning-Library
 	url = https://github.com/zardini123/AnaMark-Tuning-Library.git
 	branch = api_redesign
+[submodule "lib/JUCE"]
+	path = lib/JUCE
+	url = https://github.com/juce-framework/JUCE.git

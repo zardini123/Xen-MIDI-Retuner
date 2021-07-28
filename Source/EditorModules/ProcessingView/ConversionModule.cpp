@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -149,10 +149,10 @@ void ConversionModule::resized()
 
     sectionTitle->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
     transitionCurveGUI->setBounds (proportionOfWidth (0.0000f), (0 + 24) + 16, proportionOfWidth (1.0000f), getHeight() - 160);
-    transitionSlider->setBounds (0, getHeight() - 96, proportionOfWidth (0.4987f), 96);
-    transitionLabel->setBounds (0 + 0, (getHeight() - 96) + 0 - 16, proportionOfWidth (0.4987f), 16);
-    midpointSlider->setBounds (proportionOfWidth (0.4987f), getHeight() - 96, proportionOfWidth (0.4987f), 96);
-    midpointLabel->setBounds (proportionOfWidth (0.4987f) + juce::roundToInt (proportionOfWidth (0.4987f) * 0.0000f), (getHeight() - 96) + 0 - 16, juce::roundToInt (proportionOfWidth (0.4987f) * 1.0000f), 16);
+    transitionSlider->setBounds (0, getHeight() - 96, proportionOfWidth (0.4985f), 96);
+    transitionLabel->setBounds (0 + 0, (getHeight() - 96) + 0 - 16, proportionOfWidth (0.4985f), 16);
+    midpointSlider->setBounds (proportionOfWidth (0.4985f), getHeight() - 96, proportionOfWidth (0.4985f), 96);
+    midpointLabel->setBounds (proportionOfWidth (0.4985f) + juce::roundToInt (proportionOfWidth (0.4985f) * 0.0000f), (getHeight() - 96) + 0 - 16, juce::roundToInt (proportionOfWidth (0.4985f) * 1.0000f), 16);
     snappingCurveLabel->setBounds ((getWidth() / 2) - (224 / 2), 0 + 24, 224, 16);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]

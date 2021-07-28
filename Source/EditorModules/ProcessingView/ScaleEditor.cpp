@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -33,45 +33,14 @@ ScaleEditor::ScaleEditor (ProcessorData *dataReference)
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    label.reset (new juce::Label ("new label",
-                                  TRANS("Scale\n")));
-    addAndMakeVisible (label.get());
-    label->setFont (juce::Font (22.00f, juce::Font::plain).withTypefaceStyle ("Bold"));
-    label->setJustificationType (juce::Justification::centred);
-    label->setEditable (false, false, false);
-    label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
-    label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
-
-    importTunFile.reset (new juce::TextButton ("new button"));
-    addAndMakeVisible (importTunFile.get());
-    importTunFile->setButtonText (TRANS("Load .tun File"));
-    importTunFile->addListener (this);
-
-    importTunFile->setBounds (8, 32, 150, 24);
-
-    resetScaleButton.reset (new juce::TextButton ("new button"));
-    addAndMakeVisible (resetScaleButton.get());
-    resetScaleButton->setButtonText (TRANS("Reset"));
-    resetScaleButton->addListener (this);
-
-    resetScaleButton->setBounds (8, 64, 150, 24);
-
-    hyperlinkButton.reset (new juce::HyperlinkButton (TRANS("Sevish Workshop"),
-                                                      URL ("https://sevish.com/scaleworkshop/")));
-    addAndMakeVisible (hyperlinkButton.get());
-    hyperlinkButton->setTooltip (TRANS("https://sevish.com/scaleworkshop/"));
-    hyperlinkButton->setButtonText (TRANS("Sevish Workshop"));
-
-    hyperlinkButton->setBounds (8, 96, 150, 24);
-
-    scale_name_label.reset (new juce::Label ("new label",
-                                             TRANS("No Scale Loaded")));
-    addAndMakeVisible (scale_name_label.get());
-    scale_name_label->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
-    scale_name_label->setJustificationType (juce::Justification::centredLeft);
-    scale_name_label->setEditable (false, false, false);
-    scale_name_label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
-    scale_name_label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+    heading.reset (new juce::Label ("new label",
+                                    TRANS("Scale\n")));
+    addAndMakeVisible (heading.get());
+    heading->setFont (juce::Font (22.00f, juce::Font::plain).withTypefaceStyle ("Bold"));
+    heading->setJustificationType (juce::Justification::centred);
+    heading->setEditable (false, false, false);
+    heading->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    heading->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
     juce__label.reset (new juce::Label ("new label",
                                         TRANS("Blue lines represent 12-tone equal temperament")));
@@ -82,6 +51,31 @@ ScaleEditor::ScaleEditor (ProcessorData *dataReference)
     juce__label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     juce__label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
+    mtsESPClientLabel.reset (new juce::Label ("new label",
+                                              TRANS("MTS-ESP Client")));
+    addAndMakeVisible (mtsESPClientLabel.get());
+    mtsESPClientLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    mtsESPClientLabel->setJustificationType (juce::Justification::centred);
+    mtsESPClientLabel->setEditable (false, false, false);
+    mtsESPClientLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    mtsESPClientLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+
+    mtsESPClientToggle.reset (new juce::ToggleButton ("new toggle button"));
+    addAndMakeVisible (mtsESPClientToggle.get());
+    mtsESPClientToggle->setButtonText (TRANS("Enable"));
+    mtsESPClientToggle->addListener (this);
+
+    mtsESPClientToggle->setBounds (0, 56, 150, 24);
+
+    mtsESPClientStatus.reset (new juce::Label ("new label",
+                                               TRANS("Off")));
+    addAndMakeVisible (mtsESPClientStatus.get());
+    mtsESPClientStatus->setFont (juce::Font (15.00f, juce::Font::italic));
+    mtsESPClientStatus->setJustificationType (juce::Justification::centred);
+    mtsESPClientStatus->setEditable (false, false, false);
+    mtsESPClientStatus->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    mtsESPClientStatus->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -91,7 +85,6 @@ ScaleEditor::ScaleEditor (ProcessorData *dataReference)
 
     //[Constructor] You can add your own custom stuff here..
     data->scaleChangedBroadcaster.addChangeListener(this);
-    setScaleLabel();
     //[/Constructor]
 }
 
@@ -100,12 +93,11 @@ ScaleEditor::~ScaleEditor()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    label = nullptr;
-    importTunFile = nullptr;
-    resetScaleButton = nullptr;
-    hyperlinkButton = nullptr;
-    scale_name_label = nullptr;
+    heading = nullptr;
     juce__label = nullptr;
+    mtsESPClientLabel = nullptr;
+    mtsESPClientToggle = nullptr;
+    mtsESPClientStatus = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -136,9 +128,10 @@ void ScaleEditor::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    label->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
-    scale_name_label->setBounds (8, 128, getWidth() - 16, 24);
+    heading->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
     juce__label->setBounds (0, getHeight() - 48, proportionOfWidth (1.0000f), 48);
+    mtsESPClientLabel->setBounds (proportionOfWidth (0.0000f), 32, 150, 24);
+    mtsESPClientStatus->setBounds (proportionOfWidth (0.0000f), 80, 150, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -148,28 +141,20 @@ void ScaleEditor::buttonClicked (juce::Button* buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == importTunFile.get())
+    if (buttonThatWasClicked == mtsESPClientToggle.get())
     {
-        //[UserButtonCode_importTunFile] -- add your button handler code here..
-        FileChooser myChooser ("Please select the AnaMark Tuning file you want to load...",
-                           File(),
-                           "*.tun");
-
-        if (myChooser.browseForFileToOpen())
-        {
-            File theFile (myChooser.getResult());
-
-            data->scale.Read(theFile.getFullPathName().toStdString().c_str());
-            data->scaleChangedBroadcaster.sendChangeMessage();
+        //[UserButtonCode_mtsESPClientToggle] -- add your button handler code here..
+        bool toggleState = mtsESPClientToggle->getToggleStateValue().getValue();
+        if (toggleState) {
+            // Connect MTS ESP Client
+            data->mtsESPClient = new AnaMark::MTSESPClient();
+            data->scale.AttachToStateProvider(&data->mtsESPClient->SingleChannel());
+        } else {
+            // Disconnect
+            data->scale.DetachFromStateProvider();
+            delete data->mtsESPClient;
         }
-        //[/UserButtonCode_importTunFile]
-    }
-    else if (buttonThatWasClicked == resetScaleButton.get())
-    {
-        //[UserButtonCode_resetScaleButton] -- add your button handler code here..
-        data->scale.Reset();
-        data->scaleChangedBroadcaster.sendChangeMessage();
-        //[/UserButtonCode_resetScaleButton]
+        //[/UserButtonCode_mtsESPClientToggle]
     }
 
     //[UserbuttonClicked_Post]
@@ -181,16 +166,6 @@ void ScaleEditor::buttonClicked (juce::Button* buttonThatWasClicked)
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 void ScaleEditor::changeListenerCallback (ChangeBroadcaster *source)
 {
-    setScaleLabel();
-}
-
-void ScaleEditor::setScaleLabel()
-{
-    std::string scaleName = data->scale.m_strName;
-    if (scaleName == "")
-        scaleName = "No Scale Loaded";
-
-    scale_name_label->setText(scaleName, dontSendNotification);
 }
 //[/MiscUserCode]
 
@@ -212,32 +187,30 @@ BEGIN_JUCER_METADATA
   <BACKGROUND backgroundColour="323e44">
     <RECT pos="0Cc 24 108 2" fill="solid: ffe82950" hasStroke="0"/>
   </BACKGROUND>
-  <LABEL name="new label" id="235c5745dedfe1ad" memberName="label" virtualName=""
+  <LABEL name="new label" id="235c5745dedfe1ad" memberName="heading" virtualName=""
          explicitFocusOrder="0" pos="0 0 100% 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Scale&#10;" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="22.0"
          kerning="0.0" bold="1" italic="0" justification="36" typefaceStyle="Bold"/>
-  <TEXTBUTTON name="new button" id="d2712430b72f9c65" memberName="importTunFile"
-              virtualName="" explicitFocusOrder="0" pos="8 32 150 24" buttonText="Load .tun File"
-              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <TEXTBUTTON name="new button" id="2e643fc79257c780" memberName="resetScaleButton"
-              virtualName="" explicitFocusOrder="0" pos="8 64 150 24" buttonText="Reset"
-              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
-  <HYPERLINKBUTTON name="new hyperlink" id="6e1339fc3a50cbf" memberName="hyperlinkButton"
-                   virtualName="" explicitFocusOrder="0" pos="8 96 150 24" tooltip="https://sevish.com/scaleworkshop/"
-                   buttonText="Sevish Workshop" connectedEdges="0" needsCallback="0"
-                   radioGroupId="0" url="https://sevish.com/scaleworkshop/"/>
-  <LABEL name="new label" id="7989d8e0cabb16c8" memberName="scale_name_label"
-         virtualName="" explicitFocusOrder="0" pos="8 128 16M 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="No Scale Loaded" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="b9a76de94e82d728" memberName="juce__label"
          virtualName="" explicitFocusOrder="0" pos="0 0Rr 100% 48" edTextCol="ff000000"
          edBkgCol="0" labelText="Blue lines represent 12-tone equal temperament"
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="15.0" kerning="0.0" bold="0"
          italic="0" justification="17"/>
+  <LABEL name="new label" id="2cc7f93d9d946829" memberName="mtsESPClientLabel"
+         virtualName="" explicitFocusOrder="0" pos="0% 32 150 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="MTS-ESP Client" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="36"/>
+  <TOGGLEBUTTON name="new toggle button" id="ab0ca0663d9c6545" memberName="mtsESPClientToggle"
+                virtualName="" explicitFocusOrder="0" pos="0 56 150 24" buttonText="Enable"
+                connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
+  <LABEL name="new label" id="28b3506bf05ebba8" memberName="mtsESPClientStatus"
+         virtualName="" explicitFocusOrder="0" pos="0% 80 150 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="Off" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
+         kerning="0.0" bold="0" italic="1" justification="36" typefaceStyle="Italic"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
@@ -247,4 +220,3 @@ END_JUCER_METADATA
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-

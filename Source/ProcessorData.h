@@ -12,13 +12,13 @@
 
 #include <JuceHeader.h>
 
-#include "ProcessorStructures.h"
-#include "AnaMark-Tuning-Library/SCL_Import.h"
+#include "../lib/AnaMark-Tuning-Library/src/DynamicScaleFormats/MTS-ESP-Client.hpp"
+#include "../lib/AnaMark-Tuning-Library/src/Scale.hpp"
 #include "Components/TransitionCurve.h"
+#include "ProcessorStructures.h"
 #include "Tests/MIDIEnviromentTests/MIDIEnviromentTestManager.h"
 
-struct ProcessorData
-{
+struct ProcessorData {
     ProcessorData(AudioProcessor &processorForApvts);
 
     AudioProcessorValueTreeState apvts;
@@ -31,7 +31,8 @@ struct ProcessorData
 
     OutputChannel output[MAX_MIDI_CHANNELS];
 
-    TUN::CSingleScale scale;
+    AnaMark::Scale scale;
+    AnaMark::MTSESPClient *mtsESPClient;
     ChangeBroadcaster scaleChangedBroadcaster;
 
     MIDIEnviromentTestManager midiEnviromentTestManager;

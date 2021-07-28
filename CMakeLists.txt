@@ -7,18 +7,13 @@ set(CMAKE_CXX_STANDARD 14)
 # For JSON Compilation Database Format Specification used by clang-tidy
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Set during first cmake command line using -D JUCE_PATH=/path/to/JUCE
-if(JUCE_PATH)
-  add_subdirectory("${JUCE_PATH}" juce_build)
-else()
-  message( FATAL_ERROR "JUCE_PATH not set.  This plugin is unable to compile without knowing where JUCE is.  Exiting..." )
-endif()
+add_subdirectory(lib/JUCE)
 
 # VST2 SDK path
 # Set during first cmake command line using -D JUCE_GLOBAL_VST2_SDK_PATH=/path/to/sdk
-if(JUCE_GLOBAL_VST2_SDK_PATH)
-    juce_set_vst2_sdk_path("${JUCE_GLOBAL_VST2_SDK_PATH}")
-endif()
+# if(JUCE_GLOBAL_VST2_SDK_PATH)
+#     juce_set_vst2_sdk_path("${JUCE_GLOBAL_VST2_SDK_PATH}")
+# endif()
 
 function(my_add_custom_plugin_target target_name is_synth is_midi_effect)
   if(is_synth)
@@ -56,14 +51,13 @@ function(my_add_custom_plugin_target target_name is_synth is_midi_effect)
   juce_generate_juce_header("${target_name}")
 
   # Sources found using bash command:  find ./Source -name \*.cpp -print
+  # Exclude AnaMark-Tuning-Library
   target_sources("${target_name}" PRIVATE
+    ./lib/AnaMark-Tuning-Library/lib/MTS-ESP/Master/libMTSMaster.cpp
+    ./lib/AnaMark-Tuning-Library/lib/MTS-ESP/Client/libMTSClient.cpp
     ./Source/Tests/MIDIEnviromentTests/MIDIEnviromentTest.cpp
     ./Source/Tests/MIDIEnviromentTests/NoteAndVelocityTest.cpp
     ./Source/Tests/MIDIEnviromentTests/MIDIEnviromentTestManager.cpp
-    ./Source/AnaMark-Tuning-Library/TUN_EmbedHTML.cpp
-    ./Source/AnaMark-Tuning-Library/TUN_Scale.cpp
-    ./Source/AnaMark-Tuning-Library/SCL_Import.cpp
-    ./Source/AnaMark-Tuning-Library/TUN_StringTools.cpp
     ./Source/Utilities.cpp
     ./Source/Components/TransitionCurveGUI.cpp
     ./Source/Components/MIDIChannelStatusAndToggle.cpp

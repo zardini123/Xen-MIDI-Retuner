@@ -61,12 +61,12 @@ ScaleFrequenciesOverlay::~ScaleFrequenciesOverlay()
 void ScaleFrequenciesOverlay::paint (juce::Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    ProcessorData* processorData = data;
-
     Colour baseColour = Colour (0x4fe82950);
     if (data->apvts.getParameterAsValue("keyboard_visuals-enable_scale").getValue()) {
-        for (auto it = processorData->scale.GetNoteFrequenciesHz().begin(); it != processorData->scale.GetNoteFrequenciesHz().end(); ++it) {
-            keyboard->drawMarkerAtFrequencyHz(*it, baseColour, g);
+        // @TODO: Create a iterator for scale to iterate over midi note, scale note (non-mapped), and frequency order
+        for (auto i = AnaMark::Scale::firstTunableScaleNote; i < AnaMark::Scale::afterLastTunableScaleNote; ++i) {
+            double frequency = data->scale.FrequencyForMIDINote(i);
+            keyboard->drawMarkerAtFrequencyHz(frequency, baseColour, g);
         }
     }
     //[/UserPrePaint]

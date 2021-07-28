@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -47,7 +47,6 @@ public:
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     void changeListenerCallback (ChangeBroadcaster *source) override;
-    void setScaleLabel();
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -61,12 +60,11 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::Label> label;
-    std::unique_ptr<juce::TextButton> importTunFile;
-    std::unique_ptr<juce::TextButton> resetScaleButton;
-    std::unique_ptr<juce::HyperlinkButton> hyperlinkButton;
-    std::unique_ptr<juce::Label> scale_name_label;
+    std::unique_ptr<juce::Label> heading;
     std::unique_ptr<juce::Label> juce__label;
+    std::unique_ptr<juce::Label> mtsESPClientLabel;
+    std::unique_ptr<juce::ToggleButton> mtsESPClientToggle;
+    std::unique_ptr<juce::Label> mtsESPClientStatus;
 
 
     //==============================================================================

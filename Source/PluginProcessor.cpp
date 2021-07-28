@@ -27,7 +27,6 @@ XenMidiRetunerAudioProcessor::XenMidiRetunerAudioProcessor() :
 #endif
     processorData(*this)
 {
-//    scale = TUN::CSingleScale();
     processorData.transitionCurve = TransitionCurve();
 
     processorData.apvts.addParameterListener("transition_curve_midpoint", this);
@@ -372,17 +371,23 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer& processedMidi, int ch
     // FIXME:  Created Segmentation Fault very low note is played
     float priorityNoteFreq = noteAndSemitonesToFreqHz(processorData.input[channelIndex].priorityNote->midiNote, prioritySemitones);
 
-    double lowerScaleNoteFreq;
-    double higherScaleNoteFreq;
+    double lowerScaleNoteFreq = 0.0;
+    double higherScaleNoteFreq = 0.0;
 
+    // Find closest two notes in the scale to that of priorityNoteFreq
     // FIXME: Finding the nearest two scale note frequencies assumes the scale increases in a sorted order.  Some scales may not follow this paradigm!
-    for (auto it = processorData.scale.GetNoteFrequenciesHz().begin(); it != processorData.scale.GetNoteFrequenciesHz().end(); ++it)
-    {
-        auto nextIt = std::next(it);
-        if (priorityNoteFreq >= *it && priorityNoteFreq < *nextIt)
+    // @TODO: Create iterator system for scale
+    for (auto i = AnaMark::Scale::firstTunableScaleNote; i < AnaMark::Scale::afterLastTunableScaleNote; ++i) {
+        auto nextNote = i + 1;
+
+        // @FIXME: Playing note below firstTunableScaleNote and above last tunable scale note results in odd stuff
+        double scaleNoteFreq = processorData.scale.FrequencyForMIDINote(i);
+        double nextScaleNoteFreq = processorData.scale.FrequencyForMIDINote(nextNote);
+
+        if (priorityNoteFreq >= scaleNoteFreq && priorityNoteFreq < nextScaleNoteFreq)
         {
-            lowerScaleNoteFreq = *it;
-            higherScaleNoteFreq = *nextIt;
+            lowerScaleNoteFreq = scaleNoteFreq;
+            higherScaleNoteFreq = nextScaleNoteFreq;
             break;
         }
     }
@@ -507,10 +512,10 @@ void XenMidiRetunerAudioProcessor::getStateInformation (MemoryBlock& destData)
 
     xml->setAttribute("save_version", "0.0.1");
 
-    std::ostringstream stream;
-    processorData.scale.Write(stream);
-    std::string str = stream.str();
-    xml->setAttribute("scale_file", str);
+//    std::ostringstream stream;
+//    processorData.scale.Write(stream);
+//    std::string str = stream.str();
+//    xml->setAttribute("scale_file", str);
 
     copyXmlToBinary (*xml, destData);
 }
@@ -532,13 +537,13 @@ void XenMidiRetunerAudioProcessor::setStateInformation (const void* data, int si
         std::istringstream scaleStringStream(scaleString);
 
         // String which will receive the current line from the file
-        TUN::CStringParser strparser;
-        strparser.InitStreamReading();
+//        TUN::CStringParser strparser;
+//        strparser.InitStreamReading();
 
         // Read the file
         // TODO: Report error to user if scale could not be read for some reason
-        long lResult = processorData.scale.Read(scaleStringStream, strparser);
-        processorData.scaleChangedBroadcaster.sendChangeMessage();
+//        long lResult = processorData.scale.Read(scaleStringStream, strparser);
+//        processorData.scaleChangedBroadcaster.sendChangeMessage();
     }
 }
 

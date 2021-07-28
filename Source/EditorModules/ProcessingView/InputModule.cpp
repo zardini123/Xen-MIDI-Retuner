@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -112,7 +112,7 @@ InputModule::InputModule (ProcessorData *dataReference)
     addAndMakeVisible (updatePriorityNoteOff.get());
     updatePriorityNoteOff->setButtonText (TRANS("Update Priority Note in event of Note Off"));
     updatePriorityNoteOff->addListener (this);
-    updatePriorityNoteOff->setToggleState (true, dontSendNotification);
+    updatePriorityNoteOff->setToggleState (true, juce::dontSendNotification);
 
     updatePriorityNoteOff->setBounds (160, 184, 150, 24);
 
