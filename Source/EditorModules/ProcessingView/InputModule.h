@@ -36,9 +36,7 @@
                                                                     //[/Comments]
 */
 class InputModule  : public ComponentWithReferenceToData,
-                     public juce::AudioProcessorValueTreeState::Listener,
-                     public juce::ComboBox::Listener,
-                     public juce::Button::Listener
+                     public juce::ComboBox::Listener
 {
 public:
     //==============================================================================
@@ -47,33 +45,27 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    void parameterChanged (const String &parameterID, float newValue) override;
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
     void comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged) override;
-    void buttonClicked (juce::Button* buttonThatWasClicked) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> inputPitchbendAttachment;
-    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> singleChannelNotePriorityAttachment;
-    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> singleChannelPriorityModifierAttachment;
-    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> updateNotePriorityNoteOff;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::Label> label4;
-    std::unique_ptr<juce::Slider> in_pitch_bend_range;
+    std::unique_ptr<juce::Slider> keyboard_pitch_bend_range;
     std::unique_ptr<juce::Label> label3;
     std::unique_ptr<juce::Label> section_title;
-    std::unique_ptr<juce::ComboBox> singleChannelPriorityMode;
-    std::unique_ptr<juce::Label> label2;
-    std::unique_ptr<juce::ComboBox> singleChannelPriorityModifier;
-    std::unique_ptr<juce::ToggleButton> updatePriorityNoteOff;
+    std::unique_ptr<juce::ComboBox> keyboard_channel;
+    std::unique_ptr<juce::Label> label5;
+    std::unique_ptr<juce::Label> label6;
+    std::unique_ptr<juce::ComboBox> keyboard_channel2;
 
 
     //==============================================================================

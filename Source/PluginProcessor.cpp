@@ -27,16 +27,18 @@ XenMidiRetunerAudioProcessor::XenMidiRetunerAudioProcessor() :
 #endif
     processorData(*this)
 {
-    processorData.transitionCurve = TransitionCurve();
-
     processorData.apvts.addParameterListener("transition_curve_midpoint", this);
     processorData.apvts.addParameterListener("transition_curve_transition", this);
-    processorData.apvts.addParameterListener("single_channel_note_priority", this);
-    processorData.apvts.addParameterListener("single_channel_note_priority_modifier", this);
+    processorData.apvts.addParameterListener("tuned_note_per_keyboard_channel", this);
+    processorData.apvts.addParameterListener("tuned_note_per_keyboard_channel_modifier", this);
 }
 
 XenMidiRetunerAudioProcessor::~XenMidiRetunerAudioProcessor()
 {
+    if (processorData.scale.IsAttachedToAChangeProvider()) {
+        processorData.scale.DetachFromStateProvider();
+    }
+    delete processorData.mtsESPClient;
 }
 
 //==============================================================================
@@ -138,7 +140,7 @@ bool XenMidiRetunerAudioProcessor::isBusesLayoutSupported (const BusesLayout& la
 }
 #endif
 
-const Note* XenMidiRetunerAudioProcessor::getPriorityNote(const std::vector<Note>& noteStack, SingleChannelNotePrioritzation priority, SingleChannelNotePrioritzationModifier priorityModifier)
+const Note* XenMidiRetunerAudioProcessor::determinePriorityNote(const std::vector<Note>& noteStack, SingleChannelNotePrioritzation priority, SingleChannelNotePrioritzationModifier priorityModifier)
 {
     const Note *thePriorityNote = nullptr;
 
@@ -220,6 +222,7 @@ const Note* XenMidiRetunerAudioProcessor::getPriorityNote(const std::vector<Note
         }
         default:
             // Should not get here
+            assert(false);
             break;
     }
 
@@ -259,19 +262,18 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             m = metadata.getMessage();
             time = metadata.samplePosition;
 
-            bool update = false;
-            bool updateInitalNotes = false;
-
             // STACK CREATION
-            // Pack all information into a Channel array with Note vectors for ease of interpretation later
+            // Pack all information into a InputChannel array with Note vectors for ease of interpretation later
             //      (especially for single channel note prioirtization)
             int channel = m.getChannel() - 1;
+            InputChannel &inputChannel = data->input[channel];
+            OutputChannel &outputChannel = data->output[channel];
             if (m.isPitchWheel())
             {
                 // Input of pitchwheel does not change any values of the Note stack, and therefore does NOT adjust note prioritzation.
                 // But, it does affect the notes percieved frequency,
                 //      and therefore may TODO: require note updates if perceived frequency is greater than output pitch range
-                data->input[channel].pitchwheel = m.getPitchWheelValue();
+                inputChannel.pitchwheel = m.getPitchWheelValue();
 
             } else if (m.isNoteOn())
             {
@@ -281,18 +283,18 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
 
                     // Add the new, played midi note.
                     // First remove midi note if the note already exists (which is important for time-based prioritization)...
-                    removeFirstNoteAtNoteNumber(m.getNoteNumber(), data->input[channel].notes);
+                    removeFirstNoteAtNoteNumber(m.getNoteNumber(), inputChannel.notes);
 
                     // Then, Add the newest note to the end of the stack (append to vector)
                     Note newNote = Note {
                         m.getNoteNumber(),
                         m.getVelocity()
                     };
-                    data->input[channel].notes.push_back(newNote);
+                    inputChannel.notes.push_back(newNote);
                 }
 
                 // This condition of note on updates prioritization
-                data->input[channel].priorityNote = getPriorityNote(data->input[channel].notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("single_channel_note_priority"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("single_channel_note_priority_modifier"));
+                inputChannel.priorityNote = determinePriorityNote(inputChannel.notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel_modifier"));
 
             } else if (m.isNoteOff())
             {
@@ -301,46 +303,43 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
                     const ScopedLock myScopedLock (data->inputLock);
 
                     // Remove the note that was called to be off from the stack
-                    removeFirstNoteAtNoteNumber(m.getNoteNumber(), data->input[channel].notes);
+                    removeFirstNoteAtNoteNumber(m.getNoteNumber(), inputChannel.notes);
                 }
 
                 // This condition of note off updates prioritization
                 // Prioirty Note should be set to nullptr if there are no input notes
-                data->input[channel].priorityNote = getPriorityNote(data->input[channel].notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("single_channel_note_priority"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("single_channel_note_priority_modifier"));
+                inputChannel.priorityNote = determinePriorityNote(inputChannel.notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel_modifier"));
 
                 // If all input is empty, therefore nothing should be playing.  Ensure all notes on output are set to off.
                 // Priority Note will be nullptr as well, either because there is no notes to choose from, due to a prioirty function not being implemented, or having edge cases.
                 // Its best to use empty() instead of if == nullptr because of those last two reasons.
-                if (data->input[channel].notes.empty())
+                if (inputChannel.notes.empty())
                 {
                     // Iterate through all notes and find all the notes ready for turn off
-                    for (std::vector<Note>::iterator it = data->output[channel].notes.begin(); it != data->output[channel].notes.end(); ++it) {
+                    for (std::vector<Note>::iterator it = outputChannel.notes.begin(); it != outputChannel.notes.end(); ++it) {
                         processedMidi.addEvent(MidiMessage::noteOff(m.getChannel(), it->midiNote), time);
                     }
 
-                    data->output[channel].notes.clear();
+                    outputChannel.notes.clear();
                 }
             } else {
+                // Passthrough of non-conversion related MIDI messages
                 processedMidi.addEvent(m, time);
             }
 
             // Priority note required to determine how to adjust notes/pitchbend for the channel
-            if (data->input[channel].priorityNote != nullptr)
+            if (inputChannel.priorityNote != nullptr)
             {
                 bool isNoteMessage = m.isNoteOn() || m.isNoteOff();
 
                 // Note messages and pitchwheel changes input frequencies, therefore has an effect on interpretation and scale interploation
-                update = isNoteMessage || m.isPitchWheel();
+                if (isNoteMessage || m.isPitchWheel()) {
+                  // Interpretate and convert played notes of the current channel into the tuned value
+                  // Will not run if there are no more notes in the stack
 
-                // The input priority note scale converted rounded to closest midi note is only updated on midi note messages
-                updateInitalNotes = isNoteMessage;
-            }
-
-            // Interpretate and convert played notes of the current channel into the tuned value
-            // Will not run if there are no more notes in the stack
-            if (update)
-            {
-                updateBlock(processedMidi, channel, updateInitalNotes, time);
+                  // The input priority note scale converted rounded to closest midi note is only updated on midi note messages
+                  updateBlock(processedMidi, channel, isNoteMessage, time);
+                }
             }
         }
 
@@ -350,7 +349,7 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
             {
                 if (updatePriority)
                 {
-                    data->input[i].priorityNote = getPriorityNote(data->input[i].notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("single_channel_note_priority"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("single_channel_note_priority_modifier"));
+                    data->input[i].priorityNote = determinePriorityNote(data->input[i].notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel_modifier"));
                 }
 
                 if (data->input[i].priorityNote != nullptr)
@@ -365,17 +364,28 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
     }
 }
 
-void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer& processedMidi, int channelIndex, bool updateInitialNotes, int time)
+// One channel to one channel
+//    Tune one note (user choice)
+// One channel to multi channel (and mpe)
+//    Allocate each note to a output channel and tune each individually.
+//    More than 16 notes:  prioritize based on user choice (note height, timing, velocity, etc)
+// Multi channel (and mpe) to one channel
+//    Condense all input channels into "one channel" and tune to one note (user choice)
+// Multi channel (and mpe) to multi channel (and mpe)
+//    Tune each of the channels seperately, where each channel has one note tuned (user choice)
+// One channel input will first convert MPE to multi-channel if MPE is being inputted
+
+void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer& processedMidi, int channelIndex, bool updateCenterOfPitchbendRange, int time)
 {
-    float prioritySemitones = pitchwheelPosToSemitones(processorData.input[channelIndex].pitchwheel, *processorData.apvts.getRawParameterValue("in_pitch_bend_range"));
-    // FIXME:  Created Segmentation Fault very low note is played
+    float prioritySemitones = pitchwheelPosToSemitones(processorData.input[channelIndex].pitchwheel, *processorData.apvts.getRawParameterValue("keyboard_pitch_bend_range"));
+    // @FIXME:  Created Segmentation Fault very low note is played
     float priorityNoteFreq = noteAndSemitonesToFreqHz(processorData.input[channelIndex].priorityNote->midiNote, prioritySemitones);
 
     double lowerScaleNoteFreq = 0.0;
     double higherScaleNoteFreq = 0.0;
 
     // Find closest two notes in the scale to that of priorityNoteFreq
-    // FIXME: Finding the nearest two scale note frequencies assumes the scale increases in a sorted order.  Some scales may not follow this paradigm!
+    // @FIXME: Finding the nearest two scale note frequencies assumes the scale increases in a sorted order.  Some scales may not follow this paradigm!
     // @TODO: Create iterator system for scale
     for (auto i = AnaMark::Scale::firstTunableScaleNote; i < AnaMark::Scale::afterLastTunableScaleNote; ++i) {
         auto nextNote = i + 1;
@@ -392,7 +402,7 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer& processedMidi, int ch
         }
     }
 
-    // TODO: Have different interpolation dimensions (i.e. frequency or midi note (cents)).  Interpolation dimension currently is cents.
+    // @TODO: Have different interpolation dimensions (i.e. frequency or midi note (cents)).  Interpolation dimension currently is cents.
     float priorityContMidiNote = processorData.input[channelIndex].priorityNote->midiNote + prioritySemitones;
     float lowerContMidiNote = 0.0f;
     float higherContMidiNote = 0.0f;
@@ -408,25 +418,25 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer& processedMidi, int ch
     processorData.input[channelIndex].scaleConvertedPriorityNote = mappedBackToContinuousMidiNote;
 
     // Updated only when midi note on/off messages are inputted
-    if (updateInitialNotes)
+    if (updateCenterOfPitchbendRange)
     {
         // Displayed by NoteAndFrequencyOverlay as center of output pitchbend range (blue strip).
-        processorData.output[channelIndex].roundedInputScaleConvertedPriorityNote = std::round(processorData.input[channelIndex].scaleConvertedPriorityNote);
+        processorData.output[channelIndex].centerOfPitchbendRange = std::round(processorData.input[channelIndex].scaleConvertedPriorityNote);
 
         // ∆ = Destination - source
-        processorData.output[channelIndex].deltaFromInputPriorityNoteToScaleRoundedMidiNote = processorData.output[channelIndex].roundedInputScaleConvertedPriorityNote - processorData.input[channelIndex].priorityNote->midiNote;
+        processorData.output[channelIndex].tunedNoteToCenterOfPitchbendRangeDifference = processorData.output[channelIndex].centerOfPitchbendRange - processorData.input[channelIndex].priorityNote->midiNote;
     }
 
-    float outPitchBendRange = *processorData.apvts.getRawParameterValue("out_pitch_bend_range");
+    float outPitchBendRange = *processorData.apvts.getRawParameterValue("synth_pitch_bend_range");
 
-    processorData.output[channelIndex].noteOffset = std::round((processorData.input[channelIndex].scaleConvertedPriorityNote - processorData.output[channelIndex].roundedInputScaleConvertedPriorityNote) / (outPitchBendRange * 2)) * (outPitchBendRange * 2);
+    processorData.output[channelIndex].noteOffset = std::round((processorData.input[channelIndex].scaleConvertedPriorityNote - processorData.output[channelIndex].centerOfPitchbendRange) / (outPitchBendRange * 2)) * (outPitchBendRange * 2);
 
     // Following code is to manage the output of note on and off messages
     // If, for example, holding a chord and pitchbending upwards results in a voice having same midi note as previously held midi note, do not send a off message (sustain the note longer).
 
     // The currently outputed midi note corresponding to the priority note on this channel
     // Shown via NoteAndFrequencyOverlay as yellow strip.
-    processorData.output[channelIndex].currentMidiNoteNumber = processorData.output[channelIndex].noteOffset + processorData.output[channelIndex].roundedInputScaleConvertedPriorityNote;
+    processorData.output[channelIndex].currentMidiNoteNumber = processorData.output[channelIndex].noteOffset + processorData.output[channelIndex].centerOfPitchbendRange;
 
     // Set all notes for removal.  The next for-loop block will re-set notes to stay on if input midi calls for it
     for (std::vector<Note>::iterator it = processorData.output[channelIndex].notes.begin(); it != processorData.output[channelIndex].notes.end(); ++it) {
@@ -441,7 +451,7 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer& processedMidi, int ch
     // The output notes not paired with any translated input notes will have its turnOffFlag still set to true.
     // The next loop will go through all output notes and if its turnOffFlag is true, the note will be removed and a NoteOff will be sent out.
     for (std::vector<Note>::iterator it = processorData.input[channelIndex].notes.begin(); it != processorData.input[channelIndex].notes.end(); ++it) {
-        int inputMidiNoteAdjusted = it->midiNote + processorData.output[channelIndex].deltaFromInputPriorityNoteToScaleRoundedMidiNote + processorData.output[channelIndex].noteOffset;
+        int inputMidiNoteAdjusted = it->midiNote + processorData.output[channelIndex].tunedNoteToCenterOfPitchbendRangeDifference + processorData.output[channelIndex].noteOffset;
 
         bool noteAlreadyExists = false;
         for (std::vector<Note>::iterator it2 = processorData.output[channelIndex].notes.begin(); it2 != processorData.output[channelIndex].notes.end(); ++it2) {
@@ -466,7 +476,7 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer& processedMidi, int ch
         }
     }
 
-    // FIXME: Re-assignment of iterator from the erase function and continuing loop results in crash for some reason
+    // @FIXME: Re-assignment of iterator from the erase function and continuing loop results in crash for some reason
     // Workaround is restarting loop when an erase occurs for as many elements there are to erase.
     // Iterate through all notes and find all the notes ready for turn off
     for (int i = 0; i < amountMarkedForRemoval; i++) {
@@ -484,7 +494,7 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer& processedMidi, int ch
     // Final pitchbend for this channel's priority note to reach the scale-snapped priority note.
     // ∆ = Destination - source
     float semitonesAdjust = processorData.input[channelIndex].scaleConvertedPriorityNote - processorData.output[channelIndex].currentMidiNoteNumber;
-    uint16 pitchWheel = MidiMessage::pitchbendToPitchwheelPos(semitonesAdjust, *processorData.apvts.getRawParameterValue("out_pitch_bend_range"));
+    uint16 pitchWheel = MidiMessage::pitchbendToPitchwheelPos(semitonesAdjust, *processorData.apvts.getRawParameterValue("synth_pitch_bend_range"));
 
     processedMidi.addEvent(MidiMessage::pitchWheel(channelIndex + 1, pitchWheel), time);
 }
@@ -561,7 +571,7 @@ void XenMidiRetunerAudioProcessor::parameterChanged (const String &parameterID, 
         updatePitch = true;
     }
 
-    if (parameterID == "single_channel_note_priority" || parameterID == "single_channel_note_priority_modifier")
+    if (parameterID == "tuned_note_per_keyboard_channel" || parameterID == "tuned_note_per_keyboard_channel_modifier")
     {
         updatePriority = true;
     }

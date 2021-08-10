@@ -96,8 +96,8 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
 
         if (myScopedTryLock.isLocked())
         {
-            int in_pitch_bend_range = *data->apvts.getRawParameterValue("in_pitch_bend_range");
-            int out_pitch_bend_range = *data->apvts.getRawParameterValue("out_pitch_bend_range");
+            int keyboard_pitch_bend_range = *data->apvts.getRawParameterValue("keyboard_pitch_bend_range");
+            int synth_pitch_bend_range = *data->apvts.getRawParameterValue("synth_pitch_bend_range");
             int midiChannelSelected = data->apvts.getParameterAsValue("keyboard_visuals-midi_channel").getValue();
 
             if (midiChannelSelected != 0) {
@@ -108,7 +108,7 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
 
             for (std::vector<Note>::iterator it = processorData->input[i].notes.begin(); it != processorData->input[i].notes.end(); ++it) {
 
-                float continuousMidiNote = it->midiNote + pitchwheelPosToSemitones(processorData->input[i].pitchwheel, in_pitch_bend_range);
+                float continuousMidiNote = it->midiNote + pitchwheelPosToSemitones(processorData->input[i].pitchwheel, keyboard_pitch_bend_range);
 
                 // double x = keyboard->ConvertContinuousMidiNoteToPercentWidth(continuousMidiNote) * widthOfComponent;
                 // double midiNoteX = keyboard->ConvertDiscreteMidiNoteToPercentWidth(it->midiNote) * widthOfComponent;
@@ -136,8 +136,8 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
                         // In pitchbend visualzation under priority note
                         // Blue-green (transparent)
                         Colour fillColour = Colour (0x3f00ffb2);
-                        int x1 = keyboard->ConvertContinuousMidiNoteToPercentWidth((float)it->midiNote - in_pitch_bend_range) * widthOfComponent;
-                        int x2 = keyboard->ConvertContinuousMidiNoteToPercentWidth((float)it->midiNote + in_pitch_bend_range) * widthOfComponent;
+                        int x1 = keyboard->ConvertContinuousMidiNoteToPercentWidth((float)it->midiNote - keyboard_pitch_bend_range) * widthOfComponent;
+                        int x2 = keyboard->ConvertContinuousMidiNoteToPercentWidth((float)it->midiNote + keyboard_pitch_bend_range) * widthOfComponent;
 
                         g.setColour (fillColour);
                         g.fillRect (x1, y, x2 - x1, height);
@@ -147,7 +147,7 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
                     // Show the resolution of MIDI 1's 14 bit pitchwheel parameter
                     for (int p = 0; p <= 16383; p++)
                     {
-                        double offset = pitchwheelPosToSemitones(p, processorData->out_pitch_bend_range);
+                        double offset = pitchwheelPosToSemitones(p, processorData->synth_pitch_bend_range);
                         g.setColour (fillColour);
                         g.fillRect (x1 + offset, y, 1, height);
                     }
@@ -185,8 +185,8 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
             {
                 // Converted Note Closest Note
                 // Pink
-                // keyboard->drawLargerMarkerAtDiscreteMidiNote(processorData->output[i].roundedInputScaleConvertedPriorityNote, Colour (0xfffb00ff), g);
-                // double xConverted = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].roundedInputScaleConvertedPriorityNote) * widthOfComponent;
+                // keyboard->drawLargerMarkerAtDiscreteMidiNote(processorData->output[i].centerOfPitchbendRange, Colour (0xfffb00ff), g);
+                // double xConverted = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].centerOfPitchbendRange) * widthOfComponent;
                 // Colour fillColour = Colour (0x4dfb00ff);
                 // g.setColour (fillColour);
                 // g.fillRect (xConverted - 1, y, width + 3, height);
@@ -196,10 +196,10 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
                     // Blue (transparent)
                     // Colour fillColour = Colour (0x3f00a2ff);
                     Colour fillColour = Colour (0x3fffae00);
-                    // int x3 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].roundedInputScaleConvertedPriorityNote - out_pitch_bend_range) * widthOfComponent;
-                    // int x4 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].roundedInputScaleConvertedPriorityNote + out_pitch_bend_range) * widthOfComponent;
-                    int x3 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].currentMidiNoteNumber - out_pitch_bend_range) * widthOfComponent;
-                    int x4 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].currentMidiNoteNumber + out_pitch_bend_range) * widthOfComponent;
+                    // int x3 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].centerOfPitchbendRange - synth_pitch_bend_range) * widthOfComponent;
+                    // int x4 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].centerOfPitchbendRange + synth_pitch_bend_range) * widthOfComponent;
+                    int x3 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].currentMidiNoteNumber - synth_pitch_bend_range) * widthOfComponent;
+                    int x4 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].currentMidiNoteNumber + synth_pitch_bend_range) * widthOfComponent;
 
                     g.setColour (fillColour);
                     g.fillRect (x3, y, x4 - x3, height);
@@ -268,4 +268,3 @@ END_JUCER_METADATA
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-

@@ -24,7 +24,6 @@
 
 /* Begin PBXBuildFile section */
 		02512BE919D3D71E153DFA42 /* NoteAndVelocityTest.cpp */ = {isa = PBXBuildFile; fileRef = 9D5E38B5FA3F1FBAEF79E9CA; };
-		03C6F67EAC5A9B746DD0CE67 /* TUN_Scale.cpp */ = {isa = PBXBuildFile; fileRef = 9A62B2E347E2F8714EE8717E; };
 		0AD234D645BADEA6562440C5 /* QuartzCore.framework */ = {isa = PBXBuildFile; fileRef = 78C7D8A07849FAA9C891E1CA; };
 		0B0A95712C709FC3D872DFE1 /* MIDIEnviromentTestManager.cpp */ = {isa = PBXBuildFile; fileRef = 6009EC3FD91CFE3A427B7DF3; };
 		0BCB7A4A4FABEAE48BBC20E5 /* MIDIChannelToolbar.cpp */ = {isa = PBXBuildFile; fileRef = B760AE749B2A132CAC3FF632; };
@@ -33,7 +32,6 @@
 		112B15BD09684996468CAD5D /* PluginProcessor.cpp */ = {isa = PBXBuildFile; fileRef = 626DE35A07C14E9C7805A3F2; };
 		133C31803932C8C6E2E16ED7 /* CoreMIDI.framework */ = {isa = PBXBuildFile; fileRef = 4891742742A6A5EAE13FD987; };
 		14930B4A35406B7EB2360012 /* PluginGUI.cpp */ = {isa = PBXBuildFile; fileRef = 4C32F2DCF3CB4D88E4449E9C; };
-		17372AEC0D5E16E464930928 /* TUN_EmbedHTML.cpp */ = {isa = PBXBuildFile; fileRef = E787EE7F81724C096709BD87; };
 		1BF8670898D37ECB174B0019 /* include_juce_core.mm */ = {isa = PBXBuildFile; fileRef = 963D586276D34C13E8286554; };
 		1EBED048C5DDA514952A41B4 /* Cocoa.framework */ = {isa = PBXBuildFile; fileRef = 7192D37C17A7B8FE607A8E52; };
 		2469C508381A66A5FCB7B0C8 /* OutputModule.cpp */ = {isa = PBXBuildFile; fileRef = F50825DC5E2AF578DD5D8991; };
@@ -54,6 +52,7 @@
 		44EF72447402290F529A6CB5 /* ScaleEditor.cpp */ = {isa = PBXBuildFile; fileRef = 575E66038580C960336DC430; };
 		45DCEE8AF90753A70C7D5C3D /* include_juce_audio_basics.mm */ = {isa = PBXBuildFile; fileRef = F32476664C3E08AB9D34B4D6; };
 		4A0318FDD543672E9CADA86D /* NoteAndFrequencyOverlay.cpp */ = {isa = PBXBuildFile; fileRef = C93EEC7C40A23975A1FD4DF0; };
+		4D1355DE65D9ACE051C3D83C /* libMTSMaster.cpp */ = {isa = PBXBuildFile; fileRef = 997C9FA1FEB95346FF33CDD6; };
 		5AF441C190AE0BFA4AC7A750 /* include_juce_cryptography.mm */ = {isa = PBXBuildFile; fileRef = 5A23AD3CAE0E524D3457574D; };
 		5D8ADE06FB1AF4167C37B700 /* Carbon.framework */ = {isa = PBXBuildFile; fileRef = 88DD9BFB1874CF8D685CBDF9; };
 		66AAAB7F8987676B58C1756C /* include_juce_audio_processors.mm */ = {isa = PBXBuildFile; fileRef = 5B4800077BFEE23000D4AF43; };
@@ -71,14 +70,14 @@
 		8B7262FF22923D852F3E4D6F /* AudioToolbox.framework */ = {isa = PBXBuildFile; fileRef = F7173B84641FC12FE3E8ABA5; };
 		8DD03730CAE1B56116E701CA /* ComponentWithReferenceToData.cpp */ = {isa = PBXBuildFile; fileRef = F2195735640EFC5FA908A727; };
 		9D360C62B25F7AD4C1F24F83 /* include_juce_gui_extra.mm */ = {isa = PBXBuildFile; fileRef = 1ABE56E717E19C2686F5376C; };
-		A441A3B6016421F65FCDAF57 /* SCL_Import.cpp */ = {isa = PBXBuildFile; fileRef = 07C34AE95C2A50D661040F0B; };
 		A81646E03D98335A5BDD79AE /* PluginEditor.cpp */ = {isa = PBXBuildFile; fileRef = 52625518B02B19BDC3C916C0; };
 		A8487DEA6049B4A7AF3A8CC6 /* SettingsView.cpp */ = {isa = PBXBuildFile; fileRef = 7E9113C585EA832B29D82778; };
 		AEAEC6F992E83233E730B316 /* MIDIEnviromentTest.cpp */ = {isa = PBXBuildFile; fileRef = 251912C9F1E3A25F9FA79276; };
+		B467EF955011F33AE68CFB77 /* libMTSClient.cpp */ = {isa = PBXBuildFile; fileRef = 35708754596BDF89E6116FA7; };
 		B4DA6591EE2925051A61B1AD /* WebKit.framework */ = {isa = PBXBuildFile; fileRef = 3C71415DAA392D1B8F41E79F; };
 		B775E6AA428B56B3C2FE8244 /* DiscRecording.framework */ = {isa = PBXBuildFile; fileRef = 3830F78E8AD4BBC303AD1052; };
+		BA927F268AA09045BB8CA47B /* BinaryData.cpp */ = {isa = PBXBuildFile; fileRef = 2DC2829691259202CE0B702D; };
 		C17CB322DE201EC4ACDBE33E /* InputModule.cpp */ = {isa = PBXBuildFile; fileRef = 820FC008D597CDADAA66311C; };
-		C4EECD3F23C1D751C309C5D3 /* TUN_StringTools.cpp */ = {isa = PBXBuildFile; fileRef = C3936DB2289AAC287026C989; };
 		C6941F1E0F518BAEFE4EBBB1 /* ProcessorData.cpp */ = {isa = PBXBuildFile; fileRef = C78D08A8BE8047330F4E82F0; };
 		CB10532CE9D9B4FF4DA2075B /* Utilities.cpp */ = {isa = PBXBuildFile; fileRef = 9E621242E2F5B48AFAFC3389; };
 		D113FAB490B28B48491321BF /* Accelerate.framework */ = {isa = PBXBuildFile; fileRef = 633C9A242FB18F349739AF57; };
@@ -99,12 +98,15 @@
 /* Begin PBXFileReference section */
 		02C149F0B1B208C68D12AF65 /* CapabilitiesTestGUI.cpp */ /* CapabilitiesTestGUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CapabilitiesTestGUI.cpp; path = ../../Source/EditorModules/TestingView/CapabilitiesTestGUI.cpp; sourceTree = SOURCE_ROOT; };
 		03BD43C7CD6EC1894B687C6A /* RecentFilesMenuTemplate.nib */ /* RecentFilesMenuTemplate.nib */ = {isa = PBXFileReference; lastKnownFileType = file.nib; name = RecentFilesMenuTemplate.nib; path = RecentFilesMenuTemplate.nib; sourceTree = SOURCE_ROOT; };
-		07C34AE95C2A50D661040F0B /* SCL_Import.cpp */ /* SCL_Import.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SCL_Import.cpp; path = "../../Source/AnaMark-Tuning-Library/SCL_Import.cpp"; sourceTree = SOURCE_ROOT; };
+		046ACB811F3EE61650A94889 /* README.md */ /* README.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = README.md; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/README.md"; sourceTree = SOURCE_ROOT; };
+		065D4E8DD664A63B92BD778D /* libMTSWin_v1.00.exe */ /* libMTSWin_v1.00.exe */ = {isa = PBXFileReference; lastKnownFileType = file.exe; name = libMTSWin_v1.00.exe; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Win/libMTSWin_v1.00.exe"; sourceTree = SOURCE_ROOT; };
 		07EEEC68B92336BE272CDC3E /* VST */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Xen MIDI Retuner.vst"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0940BBEFACC24401F0E8A90C /* InputModule.h */ /* InputModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = InputModule.h; path = ../../Source/EditorModules/ProcessingView/InputModule.h; sourceTree = SOURCE_ROOT; };
 		0987A3D5CB2C280AD957B5DD /* KeyboardVisualOptions.cpp */ /* KeyboardVisualOptions.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KeyboardVisualOptions.cpp; path = ../../Source/EditorModules/KeyboardVisual/KeyboardVisualOptions.cpp; sourceTree = SOURCE_ROOT; };
 		0AFFF63B115286C9AD68C7A0 /* juce_gui_basics */ /* juce_gui_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_gui_basics; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_gui_basics; sourceTree = "<absolute>"; };
+		0B61AFE35544B8CFA6457156 /* libMTSClient.h */ /* libMTSClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = libMTSClient.h; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/Client/libMTSClient.h"; sourceTree = SOURCE_ROOT; };
 		0C5C6C1C21819EDAD2BFF87D /* include_juce_audio_plugin_client_VST2.cpp */ /* include_juce_audio_plugin_client_VST2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_plugin_client_VST2.cpp; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_VST2.cpp; sourceTree = SOURCE_ROOT; };
+		0C64D14EABCC4EE919DD6E1D /* TUN.cpp */ /* TUN.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TUN.cpp; path = "../../lib/AnaMark-Tuning-Library/src/ScaleFormats/TUN.cpp"; sourceTree = SOURCE_ROOT; };
 		0D6ACB59B8D5392CBC2C26DC /* PluginGUI.h */ /* PluginGUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginGUI.h; path = ../../Source/PluginGUI.h; sourceTree = SOURCE_ROOT; };
 		169A17E07C2CB6FE9D1FC49A /* ComponentWithReferenceToData.h */ /* ComponentWithReferenceToData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ComponentWithReferenceToData.h; path = ../../Source/ComponentWithReferenceToData.h; sourceTree = SOURCE_ROOT; };
 		1ABE56E717E19C2686F5376C /* include_juce_gui_extra.mm */ /* include_juce_gui_extra.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_extra.mm; path = ../../JuceLibraryCode/include_juce_gui_extra.mm; sourceTree = SOURCE_ROOT; };
@@ -116,10 +118,15 @@
 		2962A40E9880B362FD29954F /* Info-VST.plist */ /* Info-VST.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-VST.plist"; path = "Info-VST.plist"; sourceTree = SOURCE_ROOT; };
 		2AACBC37AC40CE9D923D2997 /* Foundation.framework */ /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		2BF3EF664D3D6E4F161DA4B5 /* TransitionCurveEvaluationGraphic.cpp */ /* TransitionCurveEvaluationGraphic.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TransitionCurveEvaluationGraphic.cpp; path = ../../Source/EditorModules/ProcessingView/ConversionModule/TransitionCurveEvaluationGraphic.cpp; sourceTree = SOURCE_ROOT; };
+		2C5EB4389C652BD8BE167A73 /* libMTS.dylib */ /* libMTS.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libMTS.dylib; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Mac/x86_64_ARM/libMTS.dylib"; sourceTree = SOURCE_ROOT; };
+		2DC2829691259202CE0B702D /* BinaryData.cpp */ /* BinaryData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../JuceLibraryCode/BinaryData.cpp; sourceTree = SOURCE_ROOT; };
 		31A0263C1B8EDC46F35A492B /* TestingView.h */ /* TestingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TestingView.h; path = ../../Source/EditorModules/TestingView.h; sourceTree = SOURCE_ROOT; };
 		3201BBDF6CBDBB944C5CF3EF /* include_juce_opengl.mm */ /* include_juce_opengl.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_opengl.mm; path = ../../JuceLibraryCode/include_juce_opengl.mm; sourceTree = SOURCE_ROOT; };
 		347CC7564493CD2B6D17BB79 /* juce_audio_utils */ /* juce_audio_utils */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_utils; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_utils; sourceTree = "<absolute>"; };
+		35547911A58BACE43A0C5F4D /* LICENSE */ /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = file; name = LICENSE; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/LICENSE"; sourceTree = SOURCE_ROOT; };
+		35708754596BDF89E6116FA7 /* libMTSClient.cpp */ /* libMTSClient.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = libMTSClient.cpp; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/Client/libMTSClient.cpp"; sourceTree = SOURCE_ROOT; };
 		37CD66639B0A7E86DB59D922 /* MIDIChannelStatusAndToggle.cpp */ /* MIDIChannelStatusAndToggle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIChannelStatusAndToggle.cpp; path = ../../Source/Components/MIDIChannelStatusAndToggle.cpp; sourceTree = SOURCE_ROOT; };
+		3822A74456FC7900753B61DE /* AttacherProvider.hpp */ /* AttacherProvider.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AttacherProvider.hpp; path = "../../lib/AnaMark-Tuning-Library/src/AttacherProvider.hpp"; sourceTree = SOURCE_ROOT; };
 		3830F78E8AD4BBC303AD1052 /* DiscRecording.framework */ /* DiscRecording.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscRecording.framework; path = System/Library/Frameworks/DiscRecording.framework; sourceTree = SDKROOT; };
 		3A75F1CF95CA7DF97A31AF9B /* ConversionModule.cpp */ /* ConversionModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ConversionModule.cpp; path = ../../Source/EditorModules/ProcessingView/ConversionModule.cpp; sourceTree = SOURCE_ROOT; };
 		3C71415DAA392D1B8F41E79F /* WebKit.framework */ /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
@@ -127,11 +134,12 @@
 		40B9CBBDFF733EB04F66A25C /* ActionButtonAndStatus.cpp */ /* ActionButtonAndStatus.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ActionButtonAndStatus.cpp; path = ../../Source/EditorModules/TestingView/ActionButtonAndStatus.cpp; sourceTree = SOURCE_ROOT; };
 		443BE3F9173AE0D564C0FBE7 /* juce_audio_devices */ /* juce_audio_devices */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_devices; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_devices; sourceTree = "<absolute>"; };
 		44BBCDDBE4ACA79548422F8F /* ScaleEditor.h */ /* ScaleEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScaleEditor.h; path = ../../Source/EditorModules/ProcessingView/ScaleEditor.h; sourceTree = SOURCE_ROOT; };
+		45AA27513B3B5C5F8F32931B /* TUN.hpp */ /* TUN.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUN.hpp; path = "../../lib/AnaMark-Tuning-Library/src/ScaleFormats/TUN.hpp"; sourceTree = SOURCE_ROOT; };
 		4891742742A6A5EAE13FD987 /* CoreMIDI.framework */ /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		49BA9F169C976F3108F295F1 /* include_juce_audio_utils.mm */ /* include_juce_audio_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_utils.mm; path = ../../JuceLibraryCode/include_juce_audio_utils.mm; sourceTree = SOURCE_ROOT; };
-		4B5188404F75047B5AC64145 /* SCL_Import.h */ /* SCL_Import.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SCL_Import.h; path = "../../Source/AnaMark-Tuning-Library/SCL_Import.h"; sourceTree = SOURCE_ROOT; };
 		4BDF9E43D68786BBE70B5997 /* include_juce_gui_basics.mm */ /* include_juce_gui_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_basics.mm; path = ../../JuceLibraryCode/include_juce_gui_basics.mm; sourceTree = SOURCE_ROOT; };
 		4C32F2DCF3CB4D88E4449E9C /* PluginGUI.cpp */ /* PluginGUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginGUI.cpp; path = ../../Source/PluginGUI.cpp; sourceTree = SOURCE_ROOT; };
+		4E6BD249A64DFE297598A8B0 /* libMTS.so */ /* libMTS.so */ = {isa = PBXFileReference; lastKnownFileType = file.so; name = libMTS.so; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Linux/x86_64/libMTS.so"; sourceTree = SOURCE_ROOT; };
 		52625518B02B19BDC3C916C0 /* PluginEditor.cpp */ /* PluginEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginEditor.cpp; path = ../../Source/PluginEditor.cpp; sourceTree = SOURCE_ROOT; };
 		55E99CB91D9225B843BBCB9D /* ProcessorStructures.h */ /* ProcessorStructures.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProcessorStructures.h; path = ../../Source/ProcessorStructures.h; sourceTree = SOURCE_ROOT; };
 		575E66038580C960336DC430 /* ScaleEditor.cpp */ /* ScaleEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScaleEditor.cpp; path = ../../Source/EditorModules/ProcessingView/ScaleEditor.cpp; sourceTree = SOURCE_ROOT; };
@@ -139,6 +147,7 @@
 		5A23AD3CAE0E524D3457574D /* include_juce_cryptography.mm */ /* include_juce_cryptography.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_cryptography.mm; path = ../../JuceLibraryCode/include_juce_cryptography.mm; sourceTree = SOURCE_ROOT; };
 		5B4800077BFEE23000D4AF43 /* include_juce_audio_processors.mm */ /* include_juce_audio_processors.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_processors.mm; path = ../../JuceLibraryCode/include_juce_audio_processors.mm; sourceTree = SOURCE_ROOT; };
 		5D2DCEBC9DE341D92A569EC0 /* include_juce_events.mm */ /* include_juce_events.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_events.mm; path = ../../JuceLibraryCode/include_juce_events.mm; sourceTree = SOURCE_ROOT; };
+		5DE668ECC99FD2DE6BE43195 /* ScaleCollectionFormat.hpp */ /* ScaleCollectionFormat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScaleCollectionFormat.hpp; path = "../../lib/AnaMark-Tuning-Library/src/ScaleCollectionFormats/ScaleCollectionFormat.hpp"; sourceTree = SOURCE_ROOT; };
 		5F195857E81210BC79240AD7 /* ProcessorData.h */ /* ProcessorData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProcessorData.h; path = ../../Source/ProcessorData.h; sourceTree = SOURCE_ROOT; };
 		6009EC3FD91CFE3A427B7DF3 /* MIDIEnviromentTestManager.cpp */ /* MIDIEnviromentTestManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIEnviromentTestManager.cpp; path = ../../Source/Tests/MIDIEnviromentTests/MIDIEnviromentTestManager.cpp; sourceTree = SOURCE_ROOT; };
 		626DE35A07C14E9C7805A3F2 /* PluginProcessor.cpp */ /* PluginProcessor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PluginProcessor.cpp; path = ../../Source/PluginProcessor.cpp; sourceTree = SOURCE_ROOT; };
@@ -148,40 +157,49 @@
 		67B1FD6799D74E2B3E236D5F /* AudioUnit.framework */ /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		6857E7A8FFE0A1B8BEBA1BAA /* KeyboardVisual.h */ /* KeyboardVisual.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KeyboardVisual.h; path = ../../Source/EditorModules/KeyboardVisual/KeyboardVisual.h; sourceTree = SOURCE_ROOT; };
 		689AC28F103C5BA01F7D4956 /* include_juce_audio_plugin_client_AU_1.mm */ /* include_juce_audio_plugin_client_AU_1.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_plugin_client_AU_1.mm; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_AU_1.mm; sourceTree = SOURCE_ROOT; };
+		69B29BB44123415BBCB4E1F7 /* Utilities.hpp */ /* Utilities.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Utilities.hpp; path = "../../lib/AnaMark-Tuning-Library/src/Utilities.hpp"; sourceTree = SOURCE_ROOT; };
 		6EB15BD9319CF83C0C9A7CB4 /* juce_data_structures */ /* juce_data_structures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_data_structures; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_data_structures; sourceTree = "<absolute>"; };
 		6FA76430197B5EA95165E903 /* include_juce_audio_plugin_client_utils.cpp */ /* include_juce_audio_plugin_client_utils.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_plugin_client_utils.cpp; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_utils.cpp; sourceTree = SOURCE_ROOT; };
 		7192D37C17A7B8FE607A8E52 /* Cocoa.framework */ /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		719CFD387E10061911ED5AB2 /* juce_opengl */ /* juce_opengl */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_opengl; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_opengl; sourceTree = "<absolute>"; };
 		72D33907B5D0F9D03332F7D7 /* IOKit.framework */ /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		7320FF181CA0A834546829F7 /* LIBMTS.dll */ /* LIBMTS.dll */ = {isa = PBXFileReference; lastKnownFileType = file.dll; name = LIBMTS.dll; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Win/64bit/LIBMTS.dll"; sourceTree = SOURCE_ROOT; };
 		78C7D8A07849FAA9C891E1CA /* QuartzCore.framework */ /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		7B05B4E48F58B8826DF4F282 /* APIIdeas.cpp */ /* APIIdeas.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = APIIdeas.cpp; path = "../../lib/AnaMark-Tuning-Library/src/APIIdeas.cpp"; sourceTree = SOURCE_ROOT; };
 		7E9113C585EA832B29D82778 /* SettingsView.cpp */ /* SettingsView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SettingsView.cpp; path = ../../Source/EditorModules/SettingsView.cpp; sourceTree = SOURCE_ROOT; };
 		80B72F45F406DB4FE61D7D05 /* juce_core */ /* juce_core */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_core; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_core; sourceTree = "<absolute>"; };
+		80C39DDA8C6C64E0812EC8C8 /* TUN_Error.hpp */ /* TUN_Error.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUN_Error.hpp; path = "../../lib/AnaMark-Tuning-Library/src/TUN_Error.hpp"; sourceTree = SOURCE_ROOT; };
 		820FC008D597CDADAA66311C /* InputModule.cpp */ /* InputModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = InputModule.cpp; path = ../../Source/EditorModules/ProcessingView/InputModule.cpp; sourceTree = SOURCE_ROOT; };
 		8565D2AB31C1D56D69B78475 /* TestList.h */ /* TestList.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TestList.h; path = ../../Source/EditorModules/TestingView/TestList.h; sourceTree = SOURCE_ROOT; };
 		859B9B8AD99C31EAFC1155E5 /* JucePluginDefines.h */ /* JucePluginDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JucePluginDefines.h; path = ../../JuceLibraryCode/JucePluginDefines.h; sourceTree = SOURCE_ROOT; };
 		866AF600C62E9A9DE7E3619F /* include_juce_graphics.mm */ /* include_juce_graphics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_graphics.mm; path = ../../JuceLibraryCode/include_juce_graphics.mm; sourceTree = SOURCE_ROOT; };
 		888378A9D0EF2ECBE7754685 /* NoteAndFrequencyOverlay.h */ /* NoteAndFrequencyOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NoteAndFrequencyOverlay.h; path = ../../Source/EditorModules/KeyboardVisual/NoteAndFrequencyOverlay.h; sourceTree = SOURCE_ROOT; };
-		88C06C1921B40064082564DB /* TUN_StringTools.h */ /* TUN_StringTools.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUN_StringTools.h; path = "../../Source/AnaMark-Tuning-Library/TUN_StringTools.h"; sourceTree = SOURCE_ROOT; };
 		88DD9BFB1874CF8D685CBDF9 /* Carbon.framework */ /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		8A1F583464F3569DB990BBB2 /* ProcessingView.cpp */ /* ProcessingView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessingView.cpp; path = ../../Source/EditorModules/ProcessingView.cpp; sourceTree = SOURCE_ROOT; };
+		8B122DD3DAB04773D53847C6 /* MTS.hpp */ /* MTS.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MTS.hpp; path = "../../lib/AnaMark-Tuning-Library/src/DynamicScaleFormats/MTS.hpp"; sourceTree = SOURCE_ROOT; };
 		8CB5BA3E6A74DF77CD04DF9B /* TestList.cpp */ /* TestList.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TestList.cpp; path = ../../Source/EditorModules/TestingView/TestList.cpp; sourceTree = SOURCE_ROOT; };
+		8D581324D94F181B307DB21A /* Scale.hpp */ /* Scale.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Scale.hpp; path = "../../lib/AnaMark-Tuning-Library/src/Scale.hpp"; sourceTree = SOURCE_ROOT; };
 		8E3AC51D22FDB5DD27B7092F /* ScaleFrequenciesOverlay.cpp */ /* ScaleFrequenciesOverlay.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScaleFrequenciesOverlay.cpp; path = ../../Source/EditorModules/KeyboardVisual/ScaleFrequenciesOverlay.cpp; sourceTree = SOURCE_ROOT; };
 		8E51F9E9C46F2880F033DB3A /* TestingView.cpp */ /* TestingView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TestingView.cpp; path = ../../Source/EditorModules/TestingView.cpp; sourceTree = SOURCE_ROOT; };
 		8EBDCFE0749D412D476AF9EB /* juce_audio_processors */ /* juce_audio_processors */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_processors; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_processors; sourceTree = "<absolute>"; };
+		90302EC0D85433395EA32196 /* DynamicScaleFormat.hpp */ /* DynamicScaleFormat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DynamicScaleFormat.hpp; path = "../../lib/AnaMark-Tuning-Library/src/DynamicScaleFormats/DynamicScaleFormat.hpp"; sourceTree = SOURCE_ROOT; };
 		95116B5189A4744FD56BC688 /* ConversionModule.h */ /* ConversionModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ConversionModule.h; path = ../../Source/EditorModules/ProcessingView/ConversionModule.h; sourceTree = SOURCE_ROOT; };
 		963D586276D34C13E8286554 /* include_juce_core.mm */ /* include_juce_core.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_core.mm; path = ../../JuceLibraryCode/include_juce_core.mm; sourceTree = SOURCE_ROOT; };
 		96B158D84E06E6F4D12A1561 /* KeyboardVisual.cpp */ /* KeyboardVisual.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KeyboardVisual.cpp; path = ../../Source/EditorModules/KeyboardVisual/KeyboardVisual.cpp; sourceTree = SOURCE_ROOT; };
 		9744CF60CC5BCE4AB89010BC /* ActionButtonAndStatus.h */ /* ActionButtonAndStatus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ActionButtonAndStatus.h; path = ../../Source/EditorModules/TestingView/ActionButtonAndStatus.h; sourceTree = SOURCE_ROOT; };
-		9A62B2E347E2F8714EE8717E /* TUN_Scale.cpp */ /* TUN_Scale.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TUN_Scale.cpp; path = "../../Source/AnaMark-Tuning-Library/TUN_Scale.cpp"; sourceTree = SOURCE_ROOT; };
+		997C9FA1FEB95346FF33CDD6 /* libMTSMaster.cpp */ /* libMTSMaster.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = libMTSMaster.cpp; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/Master/libMTSMaster.cpp"; sourceTree = SOURCE_ROOT; };
 		9ABA15DA496B729ADEA2F60F /* include_juce_audio_devices.mm */ /* include_juce_audio_devices.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_devices.mm; path = ../../JuceLibraryCode/include_juce_audio_devices.mm; sourceTree = SOURCE_ROOT; };
 		9D5E38B5FA3F1FBAEF79E9CA /* NoteAndVelocityTest.cpp */ /* NoteAndVelocityTest.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NoteAndVelocityTest.cpp; path = ../../Source/Tests/MIDIEnviromentTests/NoteAndVelocityTest.cpp; sourceTree = SOURCE_ROOT; };
 		9E621242E2F5B48AFAFC3389 /* Utilities.cpp */ /* Utilities.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Utilities.cpp; path = ../../Source/Utilities.cpp; sourceTree = SOURCE_ROOT; };
-		9EE7BAE6313937A2979D7A64 /* README.md */ /* README.md */ = {isa = PBXFileReference; lastKnownFileType = file.md; name = README.md; path = "../../Source/AnaMark-Tuning-Library/README.md"; sourceTree = SOURCE_ROOT; };
+		9EF342400E6CA9D0C6C63C61 /* Format.hpp */ /* Format.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Format.hpp; path = "../../lib/AnaMark-Tuning-Library/src/Format.hpp"; sourceTree = SOURCE_ROOT; };
+		9FD82B30B38C9D79258D2F42 /* libMTSMacARM_v1.00.pkg */ /* libMTSMacARM_v1.00.pkg */ = {isa = PBXFileReference; lastKnownFileType = file.pkg; name = libMTSMacARM_v1.00.pkg; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Mac/x86_64_ARM/libMTSMacARM_v1.00.pkg"; sourceTree = SOURCE_ROOT; };
 		A227C7035EF0917A2BDADCFA /* juce_audio_formats */ /* juce_audio_formats */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_formats; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_formats; sourceTree = "<absolute>"; };
 		A30D5C6C73D4878E5FEA26F7 /* MIDIChannelStatusAndToggleSingle.h */ /* MIDIChannelStatusAndToggleSingle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIChannelStatusAndToggleSingle.h; path = ../../Source/Components/MIDIChannelStatusAndToggleSingle.h; sourceTree = SOURCE_ROOT; };
-		A690E54FEF512681190F1520 /* TUN_Error.h */ /* TUN_Error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUN_Error.h; path = "../../Source/AnaMark-Tuning-Library/TUN_Error.h"; sourceTree = SOURCE_ROOT; };
 		ABD65F9B57A3CF8B9DB26DB7 /* Utilities.h */ /* Utilities.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Utilities.h; path = ../../Source/Utilities.h; sourceTree = SOURCE_ROOT; };
+		AE6DCA64DD6725816CC2D6A2 /* LIBMTS.dll */ /* LIBMTS.dll */ = {isa = PBXFileReference; lastKnownFileType = file.dll; name = LIBMTS.dll; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Win/32bit/LIBMTS.dll"; sourceTree = SOURCE_ROOT; };
+		B0304E8F4CE69BF65B35437D /* BinaryData.h */ /* BinaryData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BinaryData.h; path = ../../JuceLibraryCode/BinaryData.h; sourceTree = SOURCE_ROOT; };
 		B6224E6CBED4648D6F9483CD /* TransitionCurve.cpp */ /* TransitionCurve.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TransitionCurve.cpp; path = ../../Source/Components/TransitionCurve.cpp; sourceTree = SOURCE_ROOT; };
+		B67FED666C5DE67B28115AEF /* ProvidesErrorMessage.hpp */ /* ProvidesErrorMessage.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProvidesErrorMessage.hpp; path = "../../lib/AnaMark-Tuning-Library/src/ProvidesErrorMessage.hpp"; sourceTree = SOURCE_ROOT; };
 		B760AE749B2A132CAC3FF632 /* MIDIChannelToolbar.cpp */ /* MIDIChannelToolbar.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIChannelToolbar.cpp; path = ../../Source/EditorModules/TestingView/MIDIChannelToolbar.cpp; sourceTree = SOURCE_ROOT; };
 		B80129772DCBB5BC8DABFC4F /* include_juce_audio_formats.mm */ /* include_juce_audio_formats.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_formats.mm; path = ../../JuceLibraryCode/include_juce_audio_formats.mm; sourceTree = SOURCE_ROOT; };
 		B9F09D58D89CAF94EFD66202 /* OpenGL.framework */ /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -189,44 +207,45 @@
 		BAFD13A1E2992D36F71E436D /* include_juce_audio_plugin_client_VST_utils.mm */ /* include_juce_audio_plugin_client_VST_utils.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_plugin_client_VST_utils.mm; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_VST_utils.mm; sourceTree = SOURCE_ROOT; };
 		BB237AF102EBF885FED1787F /* JuceHeader.h */ /* JuceHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceHeader.h; path = ../../JuceLibraryCode/JuceHeader.h; sourceTree = SOURCE_ROOT; };
 		BB5D113B51B76366733DE901 /* TransitionCurveEvaluationGraphic.h */ /* TransitionCurveEvaluationGraphic.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TransitionCurveEvaluationGraphic.h; path = ../../Source/EditorModules/ProcessingView/ConversionModule/TransitionCurveEvaluationGraphic.h; sourceTree = SOURCE_ROOT; };
+		BCF9DE0F2222E0DEA30F8722 /* APIIdeas */ /* APIIdeas */ = {isa = PBXFileReference; lastKnownFileType = file; name = APIIdeas; path = "../../lib/AnaMark-Tuning-Library/src/APIIdeas"; sourceTree = SOURCE_ROOT; };
 		C13DA7958DFC9234F8949F79 /* SettingsView.h */ /* SettingsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SettingsView.h; path = ../../Source/EditorModules/SettingsView.h; sourceTree = SOURCE_ROOT; };
 		C17AFF4DF847E91FC9C73908 /* CoreAudio.framework */ /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
 		C1D09C4D2DEA1BC49DE669E0 /* KeyboardVisualControlsOverlay.cpp */ /* KeyboardVisualControlsOverlay.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = KeyboardVisualControlsOverlay.cpp; path = ../../Source/EditorModules/KeyboardVisual/KeyboardVisualControlsOverlay.cpp; sourceTree = SOURCE_ROOT; };
 		C379E60A3E7010B7CD6E9784 /* juce_events */ /* juce_events */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_events; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_events; sourceTree = "<absolute>"; };
-		C3936DB2289AAC287026C989 /* TUN_StringTools.cpp */ /* TUN_StringTools.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TUN_StringTools.cpp; path = "../../Source/AnaMark-Tuning-Library/TUN_StringTools.cpp"; sourceTree = SOURCE_ROOT; };
 		C425E660754C4EC528E6F6B6 /* juce_graphics */ /* juce_graphics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_graphics; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_graphics; sourceTree = "<absolute>"; };
 		C475EE12587C15C9223CA3EB /* AU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Xen MIDI Retuner.component"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C74C80B48906DCAC43A39F57 /* TransitionCurveGUI.cpp */ /* TransitionCurveGUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TransitionCurveGUI.cpp; path = ../../Source/Components/TransitionCurveGUI.cpp; sourceTree = SOURCE_ROOT; };
 		C78D08A8BE8047330F4E82F0 /* ProcessorData.cpp */ /* ProcessorData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessorData.cpp; path = ../../Source/ProcessorData.cpp; sourceTree = SOURCE_ROOT; };
 		C93EEC7C40A23975A1FD4DF0 /* NoteAndFrequencyOverlay.cpp */ /* NoteAndFrequencyOverlay.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NoteAndFrequencyOverlay.cpp; path = ../../Source/EditorModules/KeyboardVisual/NoteAndFrequencyOverlay.cpp; sourceTree = SOURCE_ROOT; };
-		C97BAB93C56D4D0A0AF78EA4 /* TUN_Scale.h */ /* TUN_Scale.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUN_Scale.h; path = "../../Source/AnaMark-Tuning-Library/TUN_Scale.h"; sourceTree = SOURCE_ROOT; };
-		CE5493224732EBFF08394358 /* TUN_MultiScaleFile.h */ /* TUN_MultiScaleFile.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUN_MultiScaleFile.h; path = "../../Source/AnaMark-Tuning-Library/TUN_MultiScaleFile.h"; sourceTree = SOURCE_ROOT; };
+		CEC9C52D01DFDCBE2D08A941 /* ScaleFormat.hpp */ /* ScaleFormat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScaleFormat.hpp; path = "../../lib/AnaMark-Tuning-Library/src/ScaleFormats/ScaleFormat.hpp"; sourceTree = SOURCE_ROOT; };
 		D05261630D7344370F13BB33 /* MIDIChannelToolbar.h */ /* MIDIChannelToolbar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIChannelToolbar.h; path = ../../Source/EditorModules/TestingView/MIDIChannelToolbar.h; sourceTree = SOURCE_ROOT; };
-		D0BD9A46E36FE0E015815901 /* TUN_EmbedHTML.h */ /* TUN_EmbedHTML.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUN_EmbedHTML.h; path = "../../Source/AnaMark-Tuning-Library/TUN_EmbedHTML.h"; sourceTree = SOURCE_ROOT; };
 		D5E82A3B6BC195706234871C /* OutputModule.h */ /* OutputModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = OutputModule.h; path = ../../Source/EditorModules/ProcessingView/OutputModule.h; sourceTree = SOURCE_ROOT; };
 		D7DD8B3C303495C3A2A664FF /* NoteAndVelocityTest.h */ /* NoteAndVelocityTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NoteAndVelocityTest.h; path = ../../Source/Tests/MIDIEnviromentTests/NoteAndVelocityTest.h; sourceTree = SOURCE_ROOT; };
 		D8AF4A24CAB6D09996EEA667 /* MIDIEnviromentTestManager.h */ /* MIDIEnviromentTestManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MIDIEnviromentTestManager.h; path = ../../Source/Tests/MIDIEnviromentTests/MIDIEnviromentTestManager.h; sourceTree = SOURCE_ROOT; };
+		D966C64B65955769CDAEBD7C /* libMTS.dylib */ /* libMTS.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libMTS.dylib; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Mac/i386_x86_64/libMTS.dylib"; sourceTree = SOURCE_ROOT; };
 		DCD7623E9989B75CCC6C9516 /* TransitionCurveGUI.h */ /* TransitionCurveGUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TransitionCurveGUI.h; path = ../../Source/Components/TransitionCurveGUI.h; sourceTree = SOURCE_ROOT; };
+		DD6A0F7ECDE324CF36A22D1F /* libMTSMac_v1.00.pkg */ /* libMTSMac_v1.00.pkg */ = {isa = PBXFileReference; lastKnownFileType = file.pkg; name = libMTSMac_v1.00.pkg; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Mac/i386_x86_64/libMTSMac_v1.00.pkg"; sourceTree = SOURCE_ROOT; };
 		DD8AD2B08738AAE2801EB190 /* PluginEditor.h */ /* PluginEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginEditor.h; path = ../../Source/PluginEditor.h; sourceTree = SOURCE_ROOT; };
 		E0992E5538CC55339D0ECC7B /* ProcessingView.h */ /* ProcessingView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ProcessingView.h; path = ../../Source/EditorModules/ProcessingView.h; sourceTree = SOURCE_ROOT; };
 		E12F53AB6B6872026140175D /* KeyboardVisualOptions.h */ /* KeyboardVisualOptions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KeyboardVisualOptions.h; path = ../../Source/EditorModules/KeyboardVisual/KeyboardVisualOptions.h; sourceTree = SOURCE_ROOT; };
 		E1598AFDBE6B15659CB17453 /* PluginProcessor.h */ /* PluginProcessor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PluginProcessor.h; path = ../../Source/PluginProcessor.h; sourceTree = SOURCE_ROOT; };
-		E1B17A4D121D6E3B53615914 /* TUN_MIDIChannelRange.h */ /* TUN_MIDIChannelRange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUN_MIDIChannelRange.h; path = "../../Source/AnaMark-Tuning-Library/TUN_MIDIChannelRange.h"; sourceTree = SOURCE_ROOT; };
 		E2063E862E8C967CBC45A79C /* juce_audio_basics */ /* juce_audio_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_basics; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_basics; sourceTree = "<absolute>"; };
 		E3747A4AC05976CA397DDA01 /* MIDIChannelStatusAndToggleSingle.cpp */ /* MIDIChannelStatusAndToggleSingle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MIDIChannelStatusAndToggleSingle.cpp; path = ../../Source/Components/MIDIChannelStatusAndToggleSingle.cpp; sourceTree = SOURCE_ROOT; };
-		E5354432B2BDC61728E90E9E /* TUN_Formula.h */ /* TUN_Formula.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TUN_Formula.h; path = "../../Source/AnaMark-Tuning-Library/TUN_Formula.h"; sourceTree = SOURCE_ROOT; };
+		E577ABE40F4536E97220BF1B /* MTS-ESP.conf */ /* MTS-ESP.conf */ = {isa = PBXFileReference; lastKnownFileType = file.conf; name = "MTS-ESP.conf"; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/MTS-ESP.conf"; sourceTree = SOURCE_ROOT; };
 		E6D8C38D29598A223A3920F5 /* CoreAudioKit.framework */ /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
-		E787EE7F81724C096709BD87 /* TUN_EmbedHTML.cpp */ /* TUN_EmbedHTML.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TUN_EmbedHTML.cpp; path = "../../Source/AnaMark-Tuning-Library/TUN_EmbedHTML.cpp"; sourceTree = SOURCE_ROOT; };
 		E7C35A309358319E09125FEE /* AppConfig.h */ /* AppConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = ../../JuceLibraryCode/AppConfig.h; sourceTree = SOURCE_ROOT; };
 		EADC50526A98D98CD03205FD /* CapabilitiesTestGUI.h */ /* CapabilitiesTestGUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CapabilitiesTestGUI.h; path = ../../Source/EditorModules/TestingView/CapabilitiesTestGUI.h; sourceTree = SOURCE_ROOT; };
 		EC96BD346D32E52B528547D4 /* juce_audio_plugin_client */ /* juce_audio_plugin_client */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_plugin_client; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_audio_plugin_client; sourceTree = "<absolute>"; };
 		EF2CA9144BB65665046E004D /* KeyboardVisualControlsOverlay.h */ /* KeyboardVisualControlsOverlay.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = KeyboardVisualControlsOverlay.h; path = ../../Source/EditorModules/KeyboardVisual/KeyboardVisualControlsOverlay.h; sourceTree = SOURCE_ROOT; };
 		EF6D4CD03742CA13669D205C /* Shared Code */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libXen MIDI Retuner.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2195735640EFC5FA908A727 /* ComponentWithReferenceToData.cpp */ /* ComponentWithReferenceToData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ComponentWithReferenceToData.cpp; path = ../../Source/ComponentWithReferenceToData.cpp; sourceTree = SOURCE_ROOT; };
+		F2E1C12B8447F08638D87F91 /* MTS-ESP-Master.hpp */ /* MTS-ESP-Master.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MTS-ESP-Master.hpp"; path = "../../lib/AnaMark-Tuning-Library/src/DynamicScaleFormats/MTS-ESP-Master.hpp"; sourceTree = SOURCE_ROOT; };
 		F32476664C3E08AB9D34B4D6 /* include_juce_audio_basics.mm */ /* include_juce_audio_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_basics.mm; path = ../../JuceLibraryCode/include_juce_audio_basics.mm; sourceTree = SOURCE_ROOT; };
 		F50825DC5E2AF578DD5D8991 /* OutputModule.cpp */ /* OutputModule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OutputModule.cpp; path = ../../Source/EditorModules/ProcessingView/OutputModule.cpp; sourceTree = SOURCE_ROOT; };
 		F7173B84641FC12FE3E8ABA5 /* AudioToolbox.framework */ /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F7E4D00046A2DCA223B23BA6 /* include_juce_audio_plugin_client_AU.r */ /* include_juce_audio_plugin_client_AU.r */ = {isa = PBXFileReference; lastKnownFileType = file.r; name = include_juce_audio_plugin_client_AU.r; path = ../../JuceLibraryCode/include_juce_audio_plugin_client_AU.r; sourceTree = SOURCE_ROOT; };
+		F9A6F5655219A645118D036D /* libMTSMaster.h */ /* libMTSMaster.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = libMTSMaster.h; path = "../../lib/AnaMark-Tuning-Library/lib/MTS-ESP/Master/libMTSMaster.h"; sourceTree = SOURCE_ROOT; };
+		FA560238D802F1565E30B5E7 /* MTS-ESP-Client.hpp */ /* MTS-ESP-Client.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "MTS-ESP-Client.hpp"; path = "../../lib/AnaMark-Tuning-Library/src/DynamicScaleFormats/MTS-ESP-Client.hpp"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -290,6 +309,25 @@
 			name = ProcessingView;
 			sourceTree = "<group>";
 		};
+		068CD25C90673F04D8914527 /* DynamicScaleFormats */ = {
+			isa = PBXGroup;
+			children = (
+				90302EC0D85433395EA32196,
+				FA560238D802F1565E30B5E7,
+				F2E1C12B8447F08638D87F91,
+				8B122DD3DAB04773D53847C6,
+			);
+			name = DynamicScaleFormats;
+			sourceTree = "<group>";
+		};
+		07E04BD6F683D202A5FE0EAB /* x86_64 */ = {
+			isa = PBXGroup;
+			children = (
+				4E6BD249A64DFE297598A8B0,
+			);
+			name = x86_64;
+			sourceTree = "<group>";
+		};
 		14B56A3E74F0F715D77EBF67 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -319,26 +357,6 @@
 				EF6D4CD03742CA13669D205C,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		33F10721F484897888E2C53A /* AnaMark-Tuning-Library */ = {
-			isa = PBXGroup;
-			children = (
-				9EE7BAE6313937A2979D7A64,
-				07C34AE95C2A50D661040F0B,
-				4B5188404F75047B5AC64145,
-				E787EE7F81724C096709BD87,
-				D0BD9A46E36FE0E015815901,
-				A690E54FEF512681190F1520,
-				E5354432B2BDC61728E90E9E,
-				E1B17A4D121D6E3B53615914,
-				CE5493224732EBFF08394358,
-				9A62B2E347E2F8714EE8717E,
-				C97BAB93C56D4D0A0AF78EA4,
-				C3936DB2289AAC287026C989,
-				88C06C1921B40064082564DB,
-			);
-			name = "AnaMark-Tuning-Library";
 			sourceTree = "<group>";
 		};
 		355CB15E29BAAFF1170B65E0 /* KeyboardVisual */ = {
@@ -374,7 +392,9 @@
 		4E923D4B7B2592248236A1ED /* Xen MIDI Retuner */ = {
 			isa = PBXGroup;
 			children = (
+				B1F382FC36299CF6DB52238A,
 				E5000EBDB1431B243DC50190,
+				877099D0A98F665165D896E0,
 			);
 			name = "Xen MIDI Retuner";
 			sourceTree = "<group>";
@@ -386,6 +406,34 @@
 				BB5D113B51B76366733DE901,
 			);
 			name = ConversionModule;
+			sourceTree = "<group>";
+		};
+		54F3CBBD0E5D0602C5E5DBE6 /* Linux */ = {
+			isa = PBXGroup;
+			children = (
+				07E04BD6F683D202A5FE0EAB,
+			);
+			name = Linux;
+			sourceTree = "<group>";
+		};
+		6313C8839A4188CDC4AB2083 /* libMTS */ = {
+			isa = PBXGroup;
+			children = (
+				54F3CBBD0E5D0602C5E5DBE6,
+				C1DB0E6C3962A091862AFB15,
+				679714D7610F12136930D203,
+				E577ABE40F4536E97220BF1B,
+			);
+			name = libMTS;
+			sourceTree = "<group>";
+		};
+		643DF74FF5579C6102BC61FB /* Client */ = {
+			isa = PBXGroup;
+			children = (
+				35708754596BDF89E6116FA7,
+				0B61AFE35544B8CFA6457156,
+			);
+			name = Client;
 			sourceTree = "<group>";
 		};
 		6792A254C5601E7BA485AE5F /* EditorModules */ = {
@@ -404,6 +452,16 @@
 			name = EditorModules;
 			sourceTree = "<group>";
 		};
+		679714D7610F12136930D203 /* Win */ = {
+			isa = PBXGroup;
+			children = (
+				D00BF4C4E95270566FF8CD4C,
+				D211FE83AB2508311A3D570B,
+				065D4E8DD664A63B92BD778D,
+			);
+			name = Win;
+			sourceTree = "<group>";
+		};
 		69F22A03B6ABC1FAC7DEA4F4 /* TestingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -419,6 +477,24 @@
 			name = TestingView;
 			sourceTree = "<group>";
 		};
+		877099D0A98F665165D896E0 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				068CD25C90673F04D8914527,
+				D76F054FEE1796509183EA60,
+				E4FEE0969DF4B2D7E8CAE9CC,
+				BCF9DE0F2222E0DEA30F8722,
+				7B05B4E48F58B8826DF4F282,
+				3822A74456FC7900753B61DE,
+				9EF342400E6CA9D0C6C63C61,
+				B67FED666C5DE67B28115AEF,
+				8D581324D94F181B307DB21A,
+				80C39DDA8C6C64E0812EC8C8,
+				69B29BB44123415BBCB4E1F7,
+			);
+			name = src;
+			sourceTree = "<group>";
+		};
 		9277572F08038E2AC9AB1DE6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,6 +503,70 @@
 				03BD43C7CD6EC1894B687C6A,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		A085CEDF26FBECF713867B06 /* i386_x86_64 */ = {
+			isa = PBXGroup;
+			children = (
+				D966C64B65955769CDAEBD7C,
+				DD6A0F7ECDE324CF36A22D1F,
+			);
+			name = i386_x86_64;
+			sourceTree = "<group>";
+		};
+		A58F980BC59374858C067298 /* Master */ = {
+			isa = PBXGroup;
+			children = (
+				997C9FA1FEB95346FF33CDD6,
+				F9A6F5655219A645118D036D,
+			);
+			name = Master;
+			sourceTree = "<group>";
+		};
+		B1F382FC36299CF6DB52238A /* MTS-ESP */ = {
+			isa = PBXGroup;
+			children = (
+				643DF74FF5579C6102BC61FB,
+				6313C8839A4188CDC4AB2083,
+				A58F980BC59374858C067298,
+				35547911A58BACE43A0C5F4D,
+				046ACB811F3EE61650A94889,
+			);
+			name = "MTS-ESP";
+			sourceTree = "<group>";
+		};
+		B70D9A794428D8A5CFFAABAD /* x86_64_ARM */ = {
+			isa = PBXGroup;
+			children = (
+				2C5EB4389C652BD8BE167A73,
+				9FD82B30B38C9D79258D2F42,
+			);
+			name = x86_64_ARM;
+			sourceTree = "<group>";
+		};
+		C1DB0E6C3962A091862AFB15 /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				A085CEDF26FBECF713867B06,
+				B70D9A794428D8A5CFFAABAD,
+			);
+			name = Mac;
+			sourceTree = "<group>";
+		};
+		D00BF4C4E95270566FF8CD4C /* 32bit */ = {
+			isa = PBXGroup;
+			children = (
+				AE6DCA64DD6725816CC2D6A2,
+			);
+			name = 32bit;
+			sourceTree = "<group>";
+		};
+		D211FE83AB2508311A3D570B /* 64bit */ = {
+			isa = PBXGroup;
+			children = (
+				7320FF181CA0A834546829F7,
+			);
+			name = 64bit;
 			sourceTree = "<group>";
 		};
 		D28EFAA257A094E85C5C5BAE /* JUCE Modules */ = {
@@ -458,10 +598,27 @@
 			name = Tests;
 			sourceTree = "<group>";
 		};
+		D76F054FEE1796509183EA60 /* ScaleCollectionFormats */ = {
+			isa = PBXGroup;
+			children = (
+				5DE668ECC99FD2DE6BE43195,
+			);
+			name = ScaleCollectionFormats;
+			sourceTree = "<group>";
+		};
+		E4FEE0969DF4B2D7E8CAE9CC /* ScaleFormats */ = {
+			isa = PBXGroup;
+			children = (
+				CEC9C52D01DFDCBE2D08A941,
+				0C64D14EABCC4EE919DD6E1D,
+				45AA27513B3B5C5F8F32931B,
+			);
+			name = ScaleFormats;
+			sourceTree = "<group>";
+		};
 		E5000EBDB1431B243DC50190 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				33F10721F484897888E2C53A,
 				E86FCEB8ABEA525EA3B6A003,
 				6792A254C5601E7BA485AE5F,
 				D5F54D5F30572BA6779EA9D3,
@@ -501,6 +658,8 @@
 			isa = PBXGroup;
 			children = (
 				E7C35A309358319E09125FEE,
+				2DC2829691259202CE0B702D,
+				B0304E8F4CE69BF65B35437D,
 				F32476664C3E08AB9D34B4D6,
 				9ABA15DA496B729ADEA2F60F,
 				B80129772DCBB5BC8DABFC4F,
@@ -764,10 +923,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A441A3B6016421F65FCDAF57,
-				17372AEC0D5E16E464930928,
-				03C6F67EAC5A9B746DD0CE67,
-				C4EECD3F23C1D751C309C5D3,
+				B467EF955011F33AE68CFB77,
+				4D1355DE65D9ACE051C3D83C,
 				300229EF3A551EB840864D9F,
 				FAF24D148BA4B6E05AAF4ADB,
 				443F29F7942B622F23C64AB3,
@@ -798,6 +955,7 @@
 				CB10532CE9D9B4FF4DA2075B,
 				C6941F1E0F518BAEFE4EBBB1,
 				112B15BD09684996468CAD5D,
+				BA927F268AA09045BB8CA47B,
 				45DCEE8AF90753A70C7D5C3D,
 				2574247AB5C0706BA90A01E2,
 				7AE31471146EF121F4293BC9,

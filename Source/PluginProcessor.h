@@ -23,17 +23,17 @@ class XenMidiRetunerAudioProcessor  : public AudioProcessor,
 private:
     std::random_device seed;
     std::mt19937 engine = std::mt19937(seed());
-    
-    const Note* getPriorityNote(const std::vector<Note>& noteStack, SingleChannelNotePrioritzation priority, SingleChannelNotePrioritzationModifier priorityModifier);
+
+    const Note* determinePriorityNote(const std::vector<Note>& noteStack, SingleChannelNotePrioritzation priority, SingleChannelNotePrioritzationModifier priorityModifier);
     void updateBlock(MidiBuffer& processedMidi, int channelIndex, bool updateInitialNotes, int time);
 public:
-    
+
     void parameterChanged (const String &parameterID, float newValue) override;
     bool updatePitch = false;
     bool updatePriority = false;
-    
+
     ProcessorData processorData;
-    
+
     //==============================================================================
     XenMidiRetunerAudioProcessor();
     ~XenMidiRetunerAudioProcessor();
@@ -70,7 +70,7 @@ public:
     //==============================================================================
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
-    
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (XenMidiRetunerAudioProcessor)
 };

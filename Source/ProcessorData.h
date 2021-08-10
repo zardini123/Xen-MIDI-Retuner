@@ -26,7 +26,7 @@ struct ProcessorData {
 
     TransitionCurve transitionCurve;
 
-    Channel input[MAX_MIDI_CHANNELS];
+    InputChannel input[MAX_MIDI_CHANNELS];
     CriticalSection inputLock;
 
     OutputChannel output[MAX_MIDI_CHANNELS];

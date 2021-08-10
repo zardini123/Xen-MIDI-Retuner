@@ -7,27 +7,51 @@
               pluginName="Xen MIDI Retuner" version="0.0.2" projectLineFeed="&#10;"
               displaySplashScreen="1" jucerFormatVersion="1" pluginAUMainType="'aumu'">
   <MAINGROUP id="dJj14n" name="Xen MIDI Retuner">
-    <GROUP id="{A1692F2F-028C-9EA8-2739-2FC33C9F86F6}" name="Source">
-      <GROUP id="{5CFBB6E8-DB93-CA08-FB77-07FAC1572B4B}" name="AnaMark-Tuning-Library">
-        <FILE id="fsR6gu" name="README.md" compile="0" resource="0" file="Source/AnaMark-Tuning-Library/README.md"/>
-        <FILE id="ljzJOY" name="SCL_Import.cpp" compile="1" resource="0" file="Source/AnaMark-Tuning-Library/SCL_Import.cpp"/>
-        <FILE id="eE4Tbw" name="SCL_Import.h" compile="0" resource="0" file="Source/AnaMark-Tuning-Library/SCL_Import.h"/>
-        <FILE id="ua9k6n" name="TUN_EmbedHTML.cpp" compile="1" resource="0"
-              file="Source/AnaMark-Tuning-Library/TUN_EmbedHTML.cpp"/>
-        <FILE id="fjRMGq" name="TUN_EmbedHTML.h" compile="0" resource="0" file="Source/AnaMark-Tuning-Library/TUN_EmbedHTML.h"/>
-        <FILE id="bsq98D" name="TUN_Error.h" compile="0" resource="0" file="Source/AnaMark-Tuning-Library/TUN_Error.h"/>
-        <FILE id="ERILfP" name="TUN_Formula.h" compile="0" resource="0" file="Source/AnaMark-Tuning-Library/TUN_Formula.h"/>
-        <FILE id="WU7Rxd" name="TUN_MIDIChannelRange.h" compile="0" resource="0"
-              file="Source/AnaMark-Tuning-Library/TUN_MIDIChannelRange.h"/>
-        <FILE id="Nl2VTO" name="TUN_MultiScaleFile.h" compile="0" resource="0"
-              file="Source/AnaMark-Tuning-Library/TUN_MultiScaleFile.h"/>
-        <FILE id="OFjNYu" name="TUN_Scale.cpp" compile="1" resource="0" file="Source/AnaMark-Tuning-Library/TUN_Scale.cpp"/>
-        <FILE id="aswiyh" name="TUN_Scale.h" compile="0" resource="0" file="Source/AnaMark-Tuning-Library/TUN_Scale.h"/>
-        <FILE id="irVjsl" name="TUN_StringTools.cpp" compile="1" resource="0"
-              file="Source/AnaMark-Tuning-Library/TUN_StringTools.cpp"/>
-        <FILE id="jhR0Cu" name="TUN_StringTools.h" compile="0" resource="0"
-              file="Source/AnaMark-Tuning-Library/TUN_StringTools.h"/>
+    <GROUP id="{2D7E6000-EA86-4653-AE89-271749764435}" name="MTS-ESP">
+      <GROUP id="{990A217D-38D4-49E6-E211-45D94FE5E456}" name="Client">
+        <FILE id="AOV6dC" name="libMTSClient.cpp" compile="1" resource="0"
+              file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/Client/libMTSClient.cpp"/>
+        <FILE id="mFucKt" name="libMTSClient.h" compile="0" resource="0" file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/Client/libMTSClient.h"/>
       </GROUP>
+      <GROUP id="{2480D4BF-8B97-3C8C-714E-96440C398308}" name="libMTS">
+        <GROUP id="{1EDAB2AF-1783-F831-B19E-C801AACAD4D2}" name="Linux">
+          <GROUP id="{2AD5BE39-E982-0636-CB50-88B5F29E0DC3}" name="x86_64">
+            <FILE id="iiigQb" name="libMTS.so" compile="0" resource="1" file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Linux/x86_64/libMTS.so"/>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{2B39CE8A-D63A-5D52-6F55-2AF0C525C0D6}" name="Mac">
+          <GROUP id="{72B4FC5B-3B67-5D31-2BDA-B4C39CDB0DCE}" name="i386_x86_64">
+            <FILE id="oRBj1J" name="libMTS.dylib" compile="0" resource="1" file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Mac/i386_x86_64/libMTS.dylib"/>
+            <FILE id="qmWNKL" name="libMTSMac_v1.00.pkg" compile="0" resource="1"
+                  file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Mac/i386_x86_64/libMTSMac_v1.00.pkg"/>
+          </GROUP>
+          <GROUP id="{8284C8D0-534C-D6C6-E974-3B5EB0213BAF}" name="x86_64_ARM">
+            <FILE id="FIpF2m" name="libMTS.dylib" compile="0" resource="1" file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Mac/x86_64_ARM/libMTS.dylib"/>
+            <FILE id="Nm3tRT" name="libMTSMacARM_v1.00.pkg" compile="0" resource="1"
+                  file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Mac/x86_64_ARM/libMTSMacARM_v1.00.pkg"/>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{3EF2E136-032D-36B9-54C7-DF6E7A7A887B}" name="Win">
+          <GROUP id="{C9784EBB-A4F1-3C64-1472-ECE719F107EF}" name="32bit">
+            <FILE id="xJMwac" name="LIBMTS.dll" compile="0" resource="1" file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Win/32bit/LIBMTS.dll"/>
+          </GROUP>
+          <GROUP id="{2DE2FFED-2ABD-26EE-CD7D-F7C65FBF37E3}" name="64bit">
+            <FILE id="ATArai" name="LIBMTS.dll" compile="0" resource="1" file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Win/64bit/LIBMTS.dll"/>
+          </GROUP>
+          <FILE id="UZ2Zqj" name="libMTSWin_v1.00.exe" compile="0" resource="1"
+                file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/Win/libMTSWin_v1.00.exe"/>
+        </GROUP>
+        <FILE id="Iz8iyN" name="MTS-ESP.conf" compile="0" resource="1" file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/libMTS/MTS-ESP.conf"/>
+      </GROUP>
+      <GROUP id="{2A02A1D8-9A94-0604-EF92-9CFAA45484EE}" name="Master">
+        <FILE id="SFtrj5" name="libMTSMaster.cpp" compile="1" resource="0"
+              file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/Master/libMTSMaster.cpp"/>
+        <FILE id="CxhFZE" name="libMTSMaster.h" compile="0" resource="0" file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/Master/libMTSMaster.h"/>
+      </GROUP>
+      <FILE id="zxvXO9" name="LICENSE" compile="0" resource="1" file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/LICENSE"/>
+      <FILE id="z8Nbn2" name="README.md" compile="0" resource="1" file="lib/AnaMark-Tuning-Library/lib/MTS-ESP/README.md"/>
+    </GROUP>
+    <GROUP id="{A1692F2F-028C-9EA8-2739-2FC33C9F86F6}" name="Source">
       <GROUP id="{6024499F-0F1A-F5A5-38AB-6FE779F2394F}" name="Components">
         <FILE id="DHm9gs" name="TransitionCurve.cpp" compile="1" resource="0"
               file="Source/Components/TransitionCurve.cpp"/>
@@ -150,6 +174,36 @@
             file="Source/PluginProcessor.cpp"/>
       <FILE id="mTzVRq" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
+    </GROUP>
+    <GROUP id="{6EF26524-0BB5-ED64-3017-B73662381966}" name="src">
+      <GROUP id="{C376BFD0-7DDF-09CC-CDF8-F5565F0D7A53}" name="DynamicScaleFormats">
+        <FILE id="kOzzBj" name="DynamicScaleFormat.hpp" compile="0" resource="0"
+              file="lib/AnaMark-Tuning-Library/src/DynamicScaleFormats/DynamicScaleFormat.hpp"/>
+        <FILE id="kLV48h" name="MTS-ESP-Client.hpp" compile="0" resource="0"
+              file="lib/AnaMark-Tuning-Library/src/DynamicScaleFormats/MTS-ESP-Client.hpp"/>
+        <FILE id="hXSagR" name="MTS-ESP-Master.hpp" compile="0" resource="0"
+              file="lib/AnaMark-Tuning-Library/src/DynamicScaleFormats/MTS-ESP-Master.hpp"/>
+        <FILE id="ni3Xzn" name="MTS.hpp" compile="0" resource="0" file="lib/AnaMark-Tuning-Library/src/DynamicScaleFormats/MTS.hpp"/>
+      </GROUP>
+      <GROUP id="{8FF28DD6-B8DB-14CE-2A50-7B421C89F8CE}" name="ScaleCollectionFormats">
+        <FILE id="Cq1vij" name="ScaleCollectionFormat.hpp" compile="0" resource="0"
+              file="lib/AnaMark-Tuning-Library/src/ScaleCollectionFormats/ScaleCollectionFormat.hpp"/>
+      </GROUP>
+      <GROUP id="{BD6AF39E-CEDC-0F3C-2AAD-9653E011C14D}" name="ScaleFormats">
+        <FILE id="IR2qbU" name="ScaleFormat.hpp" compile="0" resource="0" file="lib/AnaMark-Tuning-Library/src/ScaleFormats/ScaleFormat.hpp"/>
+        <FILE id="Cj2Ig1" name="TUN.cpp" compile="0" resource="0" file="lib/AnaMark-Tuning-Library/src/ScaleFormats/TUN.cpp"/>
+        <FILE id="kGwCfL" name="TUN.hpp" compile="0" resource="0" file="lib/AnaMark-Tuning-Library/src/ScaleFormats/TUN.hpp"/>
+      </GROUP>
+      <FILE id="XnmDi4" name="APIIdeas" compile="0" resource="1" file="lib/AnaMark-Tuning-Library/src/APIIdeas"/>
+      <FILE id="JaL5Tt" name="APIIdeas.cpp" compile="0" resource="0" file="lib/AnaMark-Tuning-Library/src/APIIdeas.cpp"/>
+      <FILE id="CYQXaP" name="AttacherProvider.hpp" compile="0" resource="0"
+            file="lib/AnaMark-Tuning-Library/src/AttacherProvider.hpp"/>
+      <FILE id="cb4bF2" name="Format.hpp" compile="0" resource="0" file="lib/AnaMark-Tuning-Library/src/Format.hpp"/>
+      <FILE id="egzdlv" name="ProvidesErrorMessage.hpp" compile="0" resource="0"
+            file="lib/AnaMark-Tuning-Library/src/ProvidesErrorMessage.hpp"/>
+      <FILE id="bsE6z2" name="Scale.hpp" compile="0" resource="0" file="lib/AnaMark-Tuning-Library/src/Scale.hpp"/>
+      <FILE id="OyltYU" name="TUN_Error.hpp" compile="0" resource="0" file="lib/AnaMark-Tuning-Library/src/TUN_Error.hpp"/>
+      <FILE id="NfZmzv" name="Utilities.hpp" compile="0" resource="0" file="lib/AnaMark-Tuning-Library/src/Utilities.hpp"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
