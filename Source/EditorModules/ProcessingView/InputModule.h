@@ -36,6 +36,7 @@
                                                                     //[/Comments]
 */
 class InputModule  : public ComponentWithReferenceToData,
+                     public juce::AudioProcessorValueTreeState::Listener,
                      public juce::ComboBox::Listener
 {
 public:
@@ -45,6 +46,8 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    void parameterChanged(const String &parameterID, float newValue) override;
+    void setKeyboardChannelSelectEnabled();
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -56,16 +59,18 @@ public:
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> inputPitchbendAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> keyboardMidiTypeAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> keyboardChannelAttachment;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::Slider> keyboard_pitch_bend_range;
+    std::unique_ptr<juce::Slider> keyboardPitchBendRange;
     std::unique_ptr<juce::Label> label3;
     std::unique_ptr<juce::Label> section_title;
-    std::unique_ptr<juce::ComboBox> keyboard_channel;
-    std::unique_ptr<juce::Label> label5;
-    std::unique_ptr<juce::Label> label6;
-    std::unique_ptr<juce::ComboBox> keyboard_channel2;
+    std::unique_ptr<juce::ComboBox> keyboardChannel;
+    std::unique_ptr<juce::Label> keyboardChannelLabel;
+    std::unique_ptr<juce::Label> keyboardMidiTypeLabel;
+    std::unique_ptr<juce::ComboBox> keyboardMidiType;
 
 
     //==============================================================================

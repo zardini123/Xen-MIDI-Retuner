@@ -142,11 +142,11 @@ bool XenMidiRetunerAudioProcessor::isBusesLayoutSupported (const BusesLayout& la
 
 const Note* XenMidiRetunerAudioProcessor::determinePriorityNote(const std::vector<Note>& noteStack, SingleChannelNotePrioritzation priority, SingleChannelNotePrioritzationModifier priorityModifier)
 {
-    const Note *thePriorityNote = nullptr;
-
     // Don't bother deciding a prioirty note if there is no notes to choose from in the first place
     if (noteStack.empty())
         return nullptr;
+
+    const Note *thePriorityNote = nullptr;
 
     switch (priority)
     {

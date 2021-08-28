@@ -214,6 +214,7 @@
 		C379E60A3E7010B7CD6E9784 /* juce_events */ /* juce_events */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_events; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_events; sourceTree = "<absolute>"; };
 		C425E660754C4EC528E6F6B6 /* juce_graphics */ /* juce_graphics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_graphics; path = /Users/tp3/Documents/Programming/IDEs/JUCE/modules/juce_graphics; sourceTree = "<absolute>"; };
 		C475EE12587C15C9223CA3EB /* AU */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Xen MIDI Retuner.component"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C7456E144AC3E2FC92900F8C /* ScaleChangeBroadcaster.h */ /* ScaleChangeBroadcaster.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScaleChangeBroadcaster.h; path = ../../Source/ScaleChangeBroadcaster.h; sourceTree = SOURCE_ROOT; };
 		C74C80B48906DCAC43A39F57 /* TransitionCurveGUI.cpp */ /* TransitionCurveGUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TransitionCurveGUI.cpp; path = ../../Source/Components/TransitionCurveGUI.cpp; sourceTree = SOURCE_ROOT; };
 		C78D08A8BE8047330F4E82F0 /* ProcessorData.cpp */ /* ProcessorData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ProcessorData.cpp; path = ../../Source/ProcessorData.cpp; sourceTree = SOURCE_ROOT; };
 		C93EEC7C40A23975A1FD4DF0 /* NoteAndFrequencyOverlay.cpp */ /* NoteAndFrequencyOverlay.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NoteAndFrequencyOverlay.cpp; path = ../../Source/EditorModules/KeyboardVisual/NoteAndFrequencyOverlay.cpp; sourceTree = SOURCE_ROOT; };
@@ -632,6 +633,7 @@
 				ABD65F9B57A3CF8B9DB26DB7,
 				C78D08A8BE8047330F4E82F0,
 				5F195857E81210BC79240AD7,
+				C7456E144AC3E2FC92900F8C,
 				55E99CB91D9225B843BBCB9D,
 				626DE35A07C14E9C7805A3F2,
 				E1598AFDBE6B15659CB17453,

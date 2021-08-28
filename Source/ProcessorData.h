@@ -14,8 +14,11 @@
 
 #include "../lib/AnaMark-Tuning-Library/src/DynamicScaleFormats/MTS-ESP-Client.hpp"
 #include "../lib/AnaMark-Tuning-Library/src/Scale.hpp"
-#include "Components/TransitionCurve.h"
+
 #include "ProcessorStructures.h"
+#include "ScaleChangeBroadcaster.h"
+#include "Components/TransitionCurve.h"
+
 #include "Tests/MIDIEnviromentTests/MIDIEnviromentTestManager.h"
 
 struct ProcessorData {
@@ -32,7 +35,9 @@ struct ProcessorData {
     OutputChannel output[MAX_MIDI_CHANNELS];
 
     AnaMark::Scale scale;
-    AnaMark::MTSESPClient *mtsESPClient;
+    ScaleChangeBroadcaster scaleChangeBroadcaster;
+    
+    AnaMark::MTSESPClient *mtsESPClient = nullptr;
     ChangeBroadcaster scaleChangedBroadcaster;
 
     MIDIEnviromentTestManager midiEnviromentTestManager;

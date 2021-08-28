@@ -51,8 +51,8 @@ AudioProcessorValueTreeState::ParameterLayout createParameterLayout()
 
     auto grp = std::make_unique<AudioProcessorParameterGroup>("keyboard_visuals", "Keyboard Visuals", " - ");
 
-    grp->addChild(std::make_unique<AudioParameterInt>("keyboard_visuals-viewport_starting_note", "View Starting MIDI Note", -20.0f, 140.0f, 20.0f));
-    grp->addChild(std::make_unique<AudioParameterInt>("keyboard_visuals-viewport_ending_note", "View Ending MIDI Note", -20.0f, 140.0f, 100.0f));
+    grp->addChild(std::make_unique<AudioParameterFloat>("keyboard_visuals-viewport_starting_note", "View Starting MIDI Note", NormalisableRange<float>(-20.0f, 140.0f), 20.0f));
+    grp->addChild(std::make_unique<AudioParameterFloat>("keyboard_visuals-viewport_ending_note", "View Ending MIDI Note", NormalisableRange<float>(-20.0f, 140.0f), 100.0f));
 
     StringArray midiChannelsAndAll = midiChannels;
     midiChannelsAndAll.add("All");
@@ -89,4 +89,6 @@ ProcessorData::ProcessorData(AudioProcessor &processorForApvts) :
     undoManager ()
 {
     logger.reset(FileLogger::createDefaultAppLogger("", "xen_midi_retuner.log", "Xen MIDI Retuner Debug Log"));
-}
+
+    scaleChangeBroadcaster.AttachToChangeProvider(&this->scale);
+};

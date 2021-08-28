@@ -38,7 +38,8 @@ class KeyboardVisual;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class ScaleFrequenciesOverlay  : public ComponentWithReferenceToData
+class ScaleFrequenciesOverlay  : public ComponentWithReferenceToData,
+                                 public juce::ChangeListener
 {
 public:
     //==============================================================================
@@ -47,6 +48,7 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    virtual void changeListenerCallback (ChangeBroadcaster *source) override;
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;

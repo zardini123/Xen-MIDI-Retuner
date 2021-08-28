@@ -43,6 +43,7 @@ ScaleFrequenciesOverlay::ScaleFrequenciesOverlay (ProcessorData *dataReference, 
 
 
     //[Constructor] You can add your own custom stuff here..
+    this->data->scaleChangeBroadcaster.addChangeListener(this);
     //[/Constructor]
 }
 
@@ -87,6 +88,9 @@ void ScaleFrequenciesOverlay::resized()
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+void ScaleFrequenciesOverlay::changeListenerCallback (ChangeBroadcaster *source) {
+    this->repaint();
+}
 //[/MiscUserCode]
 
 
@@ -100,7 +104,7 @@ void ScaleFrequenciesOverlay::resized()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ScaleFrequenciesOverlay"
-                 componentName="" parentClasses="public ComponentWithReferenceToData"
+                 componentName="" parentClasses="public ComponentWithReferenceToData, public juce::ChangeListener"
                  constructorParams="ProcessorData *dataReference, KeyboardVisual *keyboardVis"
                  variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"

@@ -37,8 +37,6 @@ ProcessingView::ProcessingView (ProcessorData *dataReference)
     addAndMakeVisible (component.get());
     component2.reset (new ScaleEditor (data));
     addAndMakeVisible (component2.get());
-    conversionModule.reset (new ConversionModule (data));
-    addAndMakeVisible (conversionModule.get());
     component3.reset (new OutputModule (data));
     addAndMakeVisible (component3.get());
 
@@ -59,7 +57,6 @@ ProcessingView::~ProcessingView()
 
     component = nullptr;
     component2 = nullptr;
-    conversionModule = nullptr;
     component3 = nullptr;
 
 
@@ -83,16 +80,7 @@ void ProcessingView::paint (juce::Graphics& g)
     }
 
     {
-        int x = proportionOfWidth (0.7500f), y = 1, width = 1, height = proportionOfHeight (1.0000f);
-        juce::Colour fillColour = juce::Colour (0xffb6b6b6);
-        //[UserPaintCustomArguments] Customize the painting arguments here..
-        //[/UserPaintCustomArguments]
-        g.setColour (fillColour);
-        g.fillRect (x, y, width, height);
-    }
-
-    {
-        int x = proportionOfWidth (0.5000f), y = 0, width = 1, height = proportionOfHeight (1.0000f);
+        int x = proportionOfWidth (0.6500f), y = 1, width = 1, height = proportionOfHeight (1.0000f);
         juce::Colour fillColour = juce::Colour (0xffb6b6b6);
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
@@ -109,10 +97,9 @@ void ProcessingView::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    component->setBounds (0, 0, proportionOfWidth (0.2504f), proportionOfHeight (1.0000f));
-    component2->setBounds (proportionOfWidth (0.2504f), 0, proportionOfWidth (0.2504f), proportionOfHeight (1.0000f));
-    conversionModule->setBounds (proportionOfWidth (0.5008f), 0, proportionOfWidth (0.2504f), proportionOfHeight (1.0000f));
-    component3->setBounds (proportionOfWidth (0.7496f), 0, proportionOfWidth (0.2504f), proportionOfHeight (1.0000f));
+    component->setBounds (0, 0, proportionOfWidth (0.2508f), proportionOfHeight (1.0000f));
+    component2->setBounds (proportionOfWidth (0.2508f), 0, proportionOfWidth (0.4000f), proportionOfHeight (1.0000f));
+    component3->setBounds (proportionOfWidth (0.6508f), 0, proportionOfWidth (0.3492f), proportionOfHeight (1.0000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -139,20 +126,16 @@ BEGIN_JUCER_METADATA
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44">
     <RECT pos="25% 0 1 100%" fill="solid: ffb6b6b6" hasStroke="0"/>
-    <RECT pos="75% 1 1 100%" fill="solid: ffb6b6b6" hasStroke="0"/>
-    <RECT pos="50% 0 1 100%" fill="solid: ffb6b6b6" hasStroke="0"/>
+    <RECT pos="65% 1 1 100%" fill="solid: ffb6b6b6" hasStroke="0"/>
   </BACKGROUND>
   <JUCERCOMP name="" id="718dd2c51df8bc00" memberName="component" virtualName=""
-             explicitFocusOrder="0" pos="0 0 25.039% 100%" sourceFile="ProcessingView/InputModule.cpp"
+             explicitFocusOrder="0" pos="0 0 25.077% 100%" sourceFile="ProcessingView/InputModule.cpp"
              constructorParams="data"/>
   <JUCERCOMP name="" id="362421b4abac7430" memberName="component2" virtualName=""
-             explicitFocusOrder="0" pos="25.039% 0 25.039% 100%" sourceFile="ProcessingView/ScaleEditor.cpp"
-             constructorParams="data"/>
-  <JUCERCOMP name="" id="3e17f48e254318d" memberName="conversionModule" virtualName=""
-             explicitFocusOrder="0" pos="50.077% 0 25.039% 100%" sourceFile="ProcessingView/ConversionModule.cpp"
+             explicitFocusOrder="0" pos="25.077% 0 40% 100%" sourceFile="ProcessingView/ScaleEditor.cpp"
              constructorParams="data"/>
   <JUCERCOMP name="" id="da4dccb613aa70d0" memberName="component3" virtualName=""
-             explicitFocusOrder="0" pos="74.961% 0 25.039% 100%" sourceFile="ProcessingView/OutputModule.cpp"
+             explicitFocusOrder="0" pos="65.077% 0 34.923% 100%" sourceFile="ProcessingView/OutputModule.cpp"
              constructorParams="data"/>
 </JUCER_COMPONENT>
 

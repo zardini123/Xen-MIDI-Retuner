@@ -61,7 +61,6 @@ private:
 
     //==============================================================================
     std::unique_ptr<juce::Label> heading;
-    std::unique_ptr<juce::Label> juce__label;
     std::unique_ptr<juce::Label> mtsESPClientLabel;
     std::unique_ptr<juce::ToggleButton> mtsESPClientToggle;
     std::unique_ptr<juce::Label> mtsESPClientStatus;

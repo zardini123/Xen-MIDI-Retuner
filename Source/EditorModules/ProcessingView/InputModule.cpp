@@ -33,13 +33,13 @@ InputModule::InputModule (ProcessorData *dataReference)
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    keyboard_pitch_bend_range.reset (new juce::Slider ("new slider"));
-    addAndMakeVisible (keyboard_pitch_bend_range.get());
-    keyboard_pitch_bend_range->setRange (1, 96, 1);
-    keyboard_pitch_bend_range->setSliderStyle (juce::Slider::IncDecButtons);
-    keyboard_pitch_bend_range->setTextBoxStyle (juce::Slider::TextBoxLeft, false, 80, 20);
+    keyboardPitchBendRange.reset (new juce::Slider ("new slider"));
+    addAndMakeVisible (keyboardPitchBendRange.get());
+    keyboardPitchBendRange->setRange (1, 96, 1);
+    keyboardPitchBendRange->setSliderStyle (juce::Slider::IncDecButtons);
+    keyboardPitchBendRange->setTextBoxStyle (juce::Slider::TextBoxLeft, false, 80, 20);
 
-    keyboard_pitch_bend_range->setBounds (8, 56, 150, 24);
+    keyboardPitchBendRange->setBounds (8, 70, 150, 24);
 
     label3.reset (new juce::Label ("new label",
                                    TRANS("Pitch Bend Wheel (semitones)")));
@@ -50,7 +50,7 @@ InputModule::InputModule (ProcessorData *dataReference)
     label3->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     label3->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    label3->setBounds (8, 24, 128, 32);
+    label3->setBounds (8, 38, 128, 32);
 
     section_title.reset (new juce::Label ("section_title",
                                           TRANS("From Keyboard\n")));
@@ -62,55 +62,47 @@ InputModule::InputModule (ProcessorData *dataReference)
     section_title->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     section_title->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    keyboard_channel.reset (new juce::ComboBox ("new combo box"));
-    addAndMakeVisible (keyboard_channel.get());
-    keyboard_channel->setEditableText (false);
-    keyboard_channel->setJustificationType (juce::Justification::centredLeft);
-    keyboard_channel->setTextWhenNothingSelected (juce::String());
-    keyboard_channel->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    keyboard_channel->addItem (TRANS("1"), 1);
-    keyboard_channel->addItem (TRANS("2"), 2);
-    keyboard_channel->addItem (TRANS("3"), 3);
-    keyboard_channel->addItem (TRANS("4"), 4);
-    keyboard_channel->addListener (this);
+    keyboardChannel.reset (new juce::ComboBox ("new combo box"));
+    addAndMakeVisible (keyboardChannel.get());
+    keyboardChannel->setEditableText (false);
+    keyboardChannel->setJustificationType (juce::Justification::centredLeft);
+    keyboardChannel->setTextWhenNothingSelected (juce::String());
+    keyboardChannel->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
+    keyboardChannel->addListener (this);
 
-    keyboard_channel->setBounds (168, 112, 150, 24);
+    keyboardChannel->setBounds (168, 126, 150, 24);
 
-    label5.reset (new juce::Label ("new label",
-                                   TRANS("Keyboard Channel")));
-    addAndMakeVisible (label5.get());
-    label5->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
-    label5->setJustificationType (juce::Justification::centredLeft);
-    label5->setEditable (false, false, false);
-    label5->setColour (juce::TextEditor::textColourId, juce::Colours::black);
-    label5->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+    keyboardChannelLabel.reset (new juce::Label ("new label",
+                                                 TRANS("Keyboard Channel")));
+    addAndMakeVisible (keyboardChannelLabel.get());
+    keyboardChannelLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    keyboardChannelLabel->setJustificationType (juce::Justification::centredLeft);
+    keyboardChannelLabel->setEditable (false, false, false);
+    keyboardChannelLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    keyboardChannelLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    label5->setBounds (168, 88, 150, 24);
+    keyboardChannelLabel->setBounds (168, 102, 150, 24);
 
-    label6.reset (new juce::Label ("new label",
-                                   TRANS("Keyboard sends out:")));
-    addAndMakeVisible (label6.get());
-    label6->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
-    label6->setJustificationType (juce::Justification::centredLeft);
-    label6->setEditable (false, false, false);
-    label6->setColour (juce::TextEditor::textColourId, juce::Colours::black);
-    label6->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+    keyboardMidiTypeLabel.reset (new juce::Label ("new label",
+                                                  TRANS("Keyboard sends out:")));
+    addAndMakeVisible (keyboardMidiTypeLabel.get());
+    keyboardMidiTypeLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    keyboardMidiTypeLabel->setJustificationType (juce::Justification::centredLeft);
+    keyboardMidiTypeLabel->setEditable (false, false, false);
+    keyboardMidiTypeLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    keyboardMidiTypeLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    label6->setBounds (8, 88, 150, 24);
+    keyboardMidiTypeLabel->setBounds (8, 102, 150, 24);
 
-    keyboard_channel2.reset (new juce::ComboBox ("new combo box"));
-    addAndMakeVisible (keyboard_channel2.get());
-    keyboard_channel2->setEditableText (false);
-    keyboard_channel2->setJustificationType (juce::Justification::centredLeft);
-    keyboard_channel2->setTextWhenNothingSelected (juce::String());
-    keyboard_channel2->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
-    keyboard_channel2->addItem (TRANS("1"), 1);
-    keyboard_channel2->addItem (TRANS("2"), 2);
-    keyboard_channel2->addItem (TRANS("3"), 3);
-    keyboard_channel2->addItem (TRANS("4"), 4);
-    keyboard_channel2->addListener (this);
+    keyboardMidiType.reset (new juce::ComboBox ("new combo box"));
+    addAndMakeVisible (keyboardMidiType.get());
+    keyboardMidiType->setEditableText (false);
+    keyboardMidiType->setJustificationType (juce::Justification::centredLeft);
+    keyboardMidiType->setTextWhenNothingSelected (juce::String());
+    keyboardMidiType->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
+    keyboardMidiType->addListener (this);
 
-    keyboard_channel2->setBounds (8, 112, 150, 24);
+    keyboardMidiType->setBounds (8, 126, 150, 24);
 
 
     //[UserPreSize]
@@ -122,7 +114,17 @@ InputModule::InputModule (ProcessorData *dataReference)
     //[Constructor] You can add your own custom stuff here..
 //    keyboard_pitch_bend_range->setValue(ProcessorData::getInstance()->keyboard_pitch_bend_range->get());
 
-    inputPitchbendAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(data->apvts, "keyboard_pitch_bend_range", *keyboard_pitch_bend_range.get()));
+    inputPitchbendAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(data->apvts, "keyboard_pitch_bend_range", *keyboardPitchBendRange.get()));
+
+    keyboardMidiType->addItemList(data->apvts.getParameter("keyboard_midi_type")->getAllValueStrings(), 1);
+    keyboardChannel->addItemList(data->apvts.getParameter("keyboard_channel")->getAllValueStrings(), 1);
+
+    keyboardMidiTypeAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(data->apvts, "keyboard_midi_type", *keyboardMidiType.get()));
+    keyboardChannelAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(data->apvts, "keyboard_channel", *keyboardChannel.get()));
+
+    data->apvts.addParameterListener("keyboard_midi_type", this);
+
+    setKeyboardChannelSelectEnabled();
     //[/Constructor]
 }
 
@@ -131,13 +133,13 @@ InputModule::~InputModule()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    keyboard_pitch_bend_range = nullptr;
+    keyboardPitchBendRange = nullptr;
     label3 = nullptr;
     section_title = nullptr;
-    keyboard_channel = nullptr;
-    label5 = nullptr;
-    label6 = nullptr;
-    keyboard_channel2 = nullptr;
+    keyboardChannel = nullptr;
+    keyboardChannelLabel = nullptr;
+    keyboardMidiTypeLabel = nullptr;
+    keyboardMidiType = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -178,15 +180,15 @@ void InputModule::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
     //[UsercomboBoxChanged_Pre]
     //[/UsercomboBoxChanged_Pre]
 
-    if (comboBoxThatHasChanged == keyboard_channel.get())
+    if (comboBoxThatHasChanged == keyboardChannel.get())
     {
-        //[UserComboBoxCode_keyboard_channel] -- add your combo box handling code here..
-        //[/UserComboBoxCode_keyboard_channel]
+        //[UserComboBoxCode_keyboardChannel] -- add your combo box handling code here..
+        //[/UserComboBoxCode_keyboardChannel]
     }
-    else if (comboBoxThatHasChanged == keyboard_channel2.get())
+    else if (comboBoxThatHasChanged == keyboardMidiType.get())
     {
-        //[UserComboBoxCode_keyboard_channel2] -- add your combo box handling code here..
-        //[/UserComboBoxCode_keyboard_channel2]
+        //[UserComboBoxCode_keyboardMidiType] -- add your combo box handling code here..
+        //[/UserComboBoxCode_keyboardMidiType]
     }
 
     //[UsercomboBoxChanged_Post]
@@ -196,6 +198,21 @@ void InputModule::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+void InputModule::parameterChanged(const String &parameterID, float newValue)
+{
+    if (parameterID == "keyboard_midi_type")
+    {
+        setKeyboardChannelSelectEnabled();
+    }
+}
+
+void InputModule::setKeyboardChannelSelectEnabled() {
+  int midiTypeIndex = (int)*data->apvts.getRawParameterValue("keyboard_midi_type");
+  bool enableChannelSelect = midiTypeIndex == 0;
+
+  keyboardChannel->setEnabled(enableChannelSelect);
+  keyboardChannelLabel->setEnabled(enableChannelSelect);
+}
 //[/MiscUserCode]
 
 
@@ -209,20 +226,20 @@ void InputModule::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="InputModule" componentName=""
-                 parentClasses="public ComponentWithReferenceToData" constructorParams="ProcessorData *dataReference"
-                 variableInitialisers="ComponentWithReferenceToData (dataReference)"
+                 parentClasses="public ComponentWithReferenceToData, public juce::AudioProcessorValueTreeState::Listener"
+                 constructorParams="ProcessorData *dataReference" variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44">
     <RECT pos="3Cc 24 108 2" fill="solid: ffedfa00" hasStroke="0"/>
   </BACKGROUND>
-  <SLIDER name="new slider" id="b64c5755e8e89a8b" memberName="keyboard_pitch_bend_range"
-          virtualName="" explicitFocusOrder="0" pos="8 56 150 24" min="1.0"
+  <SLIDER name="new slider" id="b64c5755e8e89a8b" memberName="keyboardPitchBendRange"
+          virtualName="" explicitFocusOrder="0" pos="8 70 150 24" min="1.0"
           max="96.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="0"/>
   <LABEL name="new label" id="12ca6725baa12ffb" memberName="label3" virtualName=""
-         explicitFocusOrder="0" pos="8 24 128 32" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="8 38 128 32" edTextCol="ff000000"
          edBkgCol="0" labelText="Pitch Bend Wheel (semitones)" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
@@ -232,24 +249,22 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="22.0" kerning="0.0" bold="1"
          italic="0" justification="12" typefaceStyle="Bold"/>
-  <COMBOBOX name="new combo box" id="961218bc77cb0156" memberName="keyboard_channel"
-            virtualName="" explicitFocusOrder="0" pos="168 112 150 24" editable="0"
-            layout="33" items="1&#10;2&#10;3&#10;4" textWhenNonSelected=""
-            textWhenNoItems="(no choices)"/>
-  <LABEL name="new label" id="3d96623b8260204" memberName="label5" virtualName=""
-         explicitFocusOrder="0" pos="168 88 150 24" edTextCol="ff000000"
+  <COMBOBOX name="new combo box" id="961218bc77cb0156" memberName="keyboardChannel"
+            virtualName="" explicitFocusOrder="0" pos="168 126 150 24" editable="0"
+            layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
+  <LABEL name="new label" id="3d96623b8260204" memberName="keyboardChannelLabel"
+         virtualName="" explicitFocusOrder="0" pos="168 102 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Keyboard Channel" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
-  <LABEL name="new label" id="aed837dbad1d3c0" memberName="label6" virtualName=""
-         explicitFocusOrder="0" pos="8 88 150 24" edTextCol="ff000000"
+  <LABEL name="new label" id="aed837dbad1d3c0" memberName="keyboardMidiTypeLabel"
+         virtualName="" explicitFocusOrder="0" pos="8 102 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Keyboard sends out:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
-  <COMBOBOX name="new combo box" id="f2e57f2dcc3ce93e" memberName="keyboard_channel2"
-            virtualName="" explicitFocusOrder="0" pos="8 112 150 24" editable="0"
-            layout="33" items="1&#10;2&#10;3&#10;4" textWhenNonSelected=""
-            textWhenNoItems="(no choices)"/>
+  <COMBOBOX name="new combo box" id="f2e57f2dcc3ce93e" memberName="keyboardMidiType"
+            virtualName="" explicitFocusOrder="0" pos="8 126 150 24" editable="0"
+            layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

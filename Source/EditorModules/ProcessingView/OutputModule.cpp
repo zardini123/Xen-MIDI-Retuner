@@ -42,7 +42,7 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     synth_pitch_bend_range->setSliderStyle (juce::Slider::IncDecButtons);
     synth_pitch_bend_range->setTextBoxStyle (juce::Slider::TextBoxLeft, false, 80, 20);
 
-    synth_pitch_bend_range->setBounds (8, 64, 150, 24);
+    synth_pitch_bend_range->setBounds (8, 70, 150, 24);
 
     label.reset (new juce::Label ("new label",
                                   TRANS("Synth Pitch Bend (semitones)\n")));
@@ -53,7 +53,7 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    label->setBounds (8, 32, 150, 24);
+    label->setBounds (8, 38, 150, 24);
 
     section_title.reset (new juce::Label ("section_title",
                                           TRANS("To Synth\n")));
@@ -72,7 +72,7 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     synth_channel->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
     synth_channel->addListener (this);
 
-    synth_channel->setBounds (168, 112, 150, 24);
+    synth_channel->setBounds (168, 118, 150, 24);
 
     label2.reset (new juce::Label ("new label",
                                    TRANS("Synth Channel")));
@@ -83,14 +83,14 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     label2->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     label2->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    label2->setBounds (168, 88, 150, 24);
+    label2->setBounds (168, 94, 150, 24);
 
     juce__toggleButton3.reset (new juce::ToggleButton ("new toggle button"));
     addAndMakeVisible (juce__toggleButton3.get());
-    juce__toggleButton3->setButtonText (TRANS("Send un-tuned notes"));
+    juce__toggleButton3->setButtonText (TRANS("Send out un-tuned notes"));
     juce__toggleButton3->addListener (this);
 
-    juce__toggleButton3->setBounds (8, 256, 216, 24);
+    juce__toggleButton3->setBounds (168, 168, 216, 24);
 
     juce__label.reset (new juce::Label ("new label",
                                         TRANS("Synth uses:")));
@@ -101,7 +101,7 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     juce__label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     juce__label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    juce__label->setBounds (8, 88, 150, 24);
+    juce__label->setBounds (8, 94, 150, 24);
 
     label4.reset (new juce::Label ("new label",
                                    TRANS("Modifier")));
@@ -112,7 +112,7 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     label4->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     label4->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    label4->setBounds (8, 200, 144, 24);
+    label4->setBounds (8, 222, 144, 24);
 
     tunedNotePerKeyboardChannel.reset (new juce::ComboBox ("new combo box"));
     addAndMakeVisible (tunedNotePerKeyboardChannel.get());
@@ -123,7 +123,7 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     tunedNotePerKeyboardChannel->setTextWhenNoChoicesAvailable (juce::String());
     tunedNotePerKeyboardChannel->addListener (this);
 
-    tunedNotePerKeyboardChannel->setBounds (8, 176, 144, 24);
+    tunedNotePerKeyboardChannel->setBounds (8, 198, 144, 24);
 
     label3.reset (new juce::Label ("new label",
                                    TRANS("Note to Tune Per Keyboard Channel")));
@@ -134,7 +134,7 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     label3->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     label3->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    label3->setBounds (8, 144, 144, 32);
+    label3->setBounds (8, 166, 144, 32);
 
     tunedNotePerKeyboardChannelModifier.reset (new juce::ComboBox ("new combo box"));
     addAndMakeVisible (tunedNotePerKeyboardChannelModifier.get());
@@ -145,7 +145,7 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     tunedNotePerKeyboardChannelModifier->setTextWhenNoChoicesAvailable (juce::String());
     tunedNotePerKeyboardChannelModifier->addListener (this);
 
-    tunedNotePerKeyboardChannelModifier->setBounds (8, 224, 144, 24);
+    tunedNotePerKeyboardChannelModifier->setBounds (8, 246, 144, 24);
 
     synth_midi_type.reset (new juce::ComboBox ("new combo box"));
     addAndMakeVisible (synth_midi_type.get());
@@ -155,7 +155,7 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     synth_midi_type->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
     synth_midi_type->addListener (this);
 
-    synth_midi_type->setBounds (8, 112, 150, 24);
+    synth_midi_type->setBounds (8, 118, 150, 24);
 
 
     //[UserPreSize]
@@ -308,12 +308,12 @@ BEGIN_JUCER_METADATA
     <RECT pos="0Cc 24 108 2" fill="solid: ffffae00" hasStroke="0"/>
   </BACKGROUND>
   <SLIDER name="new slider" id="e3a72a963cc8c6fa" memberName="synth_pitch_bend_range"
-          virtualName="" explicitFocusOrder="0" pos="8 64 150 24" tooltip="Output Pitch Bend should be set to the Input Pitch Bend Range of your instrument that you are sending the MIDI to.&#10;&#10;Output should be equal to or greater than this plugin's Input pitch bend if note retrigger is unwanted."
+          virtualName="" explicitFocusOrder="0" pos="8 70 150 24" tooltip="Output Pitch Bend should be set to the Input Pitch Bend Range of your instrument that you are sending the MIDI to.&#10;&#10;Output should be equal to or greater than this plugin's Input pitch bend if note retrigger is unwanted."
           min="1.0" max="96.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="0"/>
   <LABEL name="new label" id="1ac3af9fe857753" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="8 32 150 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="8 38 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Synth Pitch Bend (semitones)&#10;" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
@@ -324,39 +324,39 @@ BEGIN_JUCER_METADATA
          fontsize="22.0" kerning="0.0" bold="1" italic="0" justification="12"
          typefaceStyle="Bold"/>
   <COMBOBOX name="new combo box" id="52e6b258fa592461" memberName="synth_channel"
-            virtualName="" explicitFocusOrder="0" pos="168 112 150 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="168 118 150 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
   <LABEL name="new label" id="16ac18ff7fa6ed12" memberName="label2" virtualName=""
-         explicitFocusOrder="0" pos="168 88 150 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="168 94 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Synth Channel" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <TOGGLEBUTTON name="new toggle button" id="313f41e3b63cb912" memberName="juce__toggleButton3"
-                virtualName="" explicitFocusOrder="0" pos="8 256 216 24" buttonText="Send un-tuned notes"
+                virtualName="" explicitFocusOrder="0" pos="168 168 216 24" buttonText="Send out un-tuned notes"
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
   <LABEL name="new label" id="ad39ec0fd97d0a34" memberName="juce__label"
-         virtualName="" explicitFocusOrder="0" pos="8 88 150 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="8 94 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Synth uses:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="d861762387e1dd26" memberName="label4" virtualName=""
-         explicitFocusOrder="0" pos="8 200 144 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="8 222 144 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Modifier" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <COMBOBOX name="new combo box" id="34c558f948bf284a" memberName="tunedNotePerKeyboardChannel"
-            virtualName="" explicitFocusOrder="0" pos="8 176 144 24" tooltip="Choose the note to tune for each keyboard MIDI channel."
+            virtualName="" explicitFocusOrder="0" pos="8 198 144 24" tooltip="Choose the note to tune for each keyboard MIDI channel."
             editable="0" layout="33" items="" textWhenNonSelected="" textWhenNoItems=""/>
   <LABEL name="new label" id="1112cb5e9cdc4f37" memberName="label3" virtualName=""
-         explicitFocusOrder="0" pos="8 144 144 32" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="8 166 144 32" edTextCol="ff000000"
          edBkgCol="0" labelText="Note to Tune Per Keyboard Channel" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="12"/>
   <COMBOBOX name="new combo box" id="2ebd7ab8a0c8a16" memberName="tunedNotePerKeyboardChannelModifier"
-            virtualName="" explicitFocusOrder="0" pos="8 224 144 24" tooltip="Some Multi-note Prioritization options have a sub-option.  This sub-option modifies how the priority note is chosen."
+            virtualName="" explicitFocusOrder="0" pos="8 246 144 24" tooltip="Some Multi-note Prioritization options have a sub-option.  This sub-option modifies how the priority note is chosen."
             editable="0" layout="33" items="" textWhenNonSelected="" textWhenNoItems=""/>
   <COMBOBOX name="new combo box" id="fcf5fe1ca5cfefa" memberName="synth_midi_type"
-            virtualName="" explicitFocusOrder="0" pos="8 112 150 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="8 118 150 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
 </JUCER_COMPONENT>
 

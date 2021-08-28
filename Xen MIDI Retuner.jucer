@@ -168,6 +168,8 @@
       <FILE id="EN95hY" name="ProcessorData.cpp" compile="1" resource="0"
             file="Source/ProcessorData.cpp"/>
       <FILE id="sfjZnv" name="ProcessorData.h" compile="0" resource="0" file="Source/ProcessorData.h"/>
+      <FILE id="ziulvV" name="ScaleChangeBroadcaster.h" compile="0" resource="0"
+            file="Source/ScaleChangeBroadcaster.h"/>
       <FILE id="hxouRV" name="ProcessorStructures.h" compile="0" resource="0"
             file="Source/ProcessorStructures.h"/>
       <FILE id="RC0yrV" name="PluginProcessor.cpp" compile="1" resource="0"

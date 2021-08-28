@@ -27,8 +27,6 @@
 
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 
-const Colour KeyboardVisual::inRangeWhiteKeyColour(0xaaffffff);
-
 // From https://stackoverflow.com/a/11714601/6183001
 int euclidean_remainder(int a, int b)
 {
@@ -37,6 +35,18 @@ int euclidean_remainder(int a, int b)
   int r = a % b;
   return r >= 0 ? r : r + std::abs(b);
 }
+
+double euclidean_remainder(double a, double b)
+{
+  jassert(b != 0.0);
+  // C++11 requires integer division to be non-Euclidean: it requires an implementation that truncates towards zero.
+  double r = fmod(a, b);
+  return r >= 0.0 ? r : r + std::abs(b);
+}
+
+double lerp(double a, double b, double t) {
+  return (a * (1.0 - t)) + (b * t);
+}
 //[/MiscUserDefs]
 
 //==============================================================================
@@ -44,26 +54,18 @@ KeyboardVisual::KeyboardVisual (ProcessorData *dataReference)
     : ComponentWithReferenceToData (dataReference)
 {
     //[Constructor_pre] You can add your own custom stuff here..
-    setEqualSpacingValues();
+    setToClassicKeyboardSpacing();
     //[/Constructor_pre]
 
-    scaleFrequenciesOverlay.reset (new ScaleFrequenciesOverlay (this->data, this));
-    addAndMakeVisible (scaleFrequenciesOverlay.get());
     noteAndFreqOverlay.reset (new NoteAndFrequencyOverlay (this->data, this));
     addAndMakeVisible (noteAndFreqOverlay.get());
-    controlsOverlay.reset (new KeyboardVisualControlsOverlay (this->data, this));
-    addAndMakeVisible (controlsOverlay.get());
 
     //[UserPreSize]
     // Can't set KeyboardVisual to opaque at the moment, as the keys are somewhat transparent.
     // setOpaque(true);
 
     // Force the overlays and their children to not accept mouse events, and therefore let KeyboardVisual deal with the events
-    scaleFrequenciesOverlay->setInterceptsMouseClicks(false, false);
     noteAndFreqOverlay->setInterceptsMouseClicks(false, false);
-
-    // Dont allow clicks on the control overlay, but allow it in the child components of the overlay
-    controlsOverlay->setInterceptsMouseClicks(false, true);
 
     //[/UserPreSize]
 
@@ -79,9 +81,7 @@ KeyboardVisual::~KeyboardVisual()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    scaleFrequenciesOverlay = nullptr;
     noteAndFreqOverlay = nullptr;
-    controlsOverlay = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -101,50 +101,70 @@ void KeyboardVisual::paint (juce::Graphics& g)
     // Pass 1: Black keys
     for (int pass = 0; pass < 2; pass++)
     {
-        for (int midiNote = this->firstMidiNote; midiNote <= this->lastMidiNote; midiNote++)
+        for (int midiNote = std::floor(this->startingMidiNote); midiNote <= std::ceil(this->endingMidiNote); midiNote++)
         {
             int keyDistanceIndex = euclidean_remainder(midiNote, 12);
 
-            bool isBlack = MidiMessage::isMidiNoteBlack(keyDistanceIndex);
+            bool isBlackKey = MidiMessage::isMidiNoteBlack(keyDistanceIndex);
 
-            if (pass == 0 && isBlack)
+            if (pass == 0 && isBlackKey)
                 continue;
-            if (pass == 1 && !isBlack)
+            if (pass == 1 && !isBlackKey)
                 continue;
 
             double percentWidth = ConvertDiscreteMidiNoteToPercentWidth(midiNote);
             double centerXPos = percentWidth * entireWidth;
 
             bool inRange = (midiNote < 128) && (midiNote >= 0);
-            Colour fillColour = inRange? (isBlack? Colour (0xaa000000) : KeyboardVisual::inRangeWhiteKeyColour) : Colour(isBlack? 0xaa575757 : 0xaabfbfbf);
-            g.setColour (fillColour);
+            // bool inRange = true;
 
-            int y = isBlack? -30 : 0;
+            int y = isBlackKey? -30 : 0;
 
-            double width = isBlack? (whiteKeyWidth / 2) : whiteKeyWidth;
+            double width = isBlackKey? (whiteKeyWidth / 2) : whiteKeyWidth;
             double x = centerXPos - (width / 2);
             int intX = std::round(x);
             int intWidth = std::round(width);
 
             // Fill
+
+            if (inRange) {
+              if (isBlackKey) {
+                g.setColour (Colour (0xff2d2d2d));
+              } else {
+                g.setColour (Colour (0xfff8f8f8));
+              }
+            } else {
+              if (isBlackKey) {
+                if (isBlackKey) {
+                  g.setColour (Colour(0xff575757));
+                } else {
+                  g.setColour (Colour(0xffbfbfbf));
+                }
+              }
+            }
             g.fillRect (intX, y, intWidth, entireHeight);
 
-            // Outline
-            g.setColour (Colour (0xaa808080));
+            // Draw Outline on top
+
+            if (inRange) {
+              g.setColour (Colour (0xff808080));
+            } else {
+              g.setColour (Colour (0xff5b5b5b));
+            }
             g.drawRect (intX, y, intWidth, entireHeight, 1);
 
             // Equal tempermeant lines
-            int height = 40;
-            width = 1;
-            Colour baseColor = Colour(0x4f457ea9);
-            Colour contrastingBaseColor = baseColor.darker(0.2f);
-            g.setColour (contrastingBaseColor);
-            //          x, y, width, height
-            g.fillRect (centerXPos - 1, 0, width + (2 * 1), height);
+            // int height = 40;
+            // width = 1;
+            // Colour baseColor = Colour(0x4f457ea9);
+            // Colour contrastingBaseColor = baseColor.darker(0.2f);
+            // g.setColour (contrastingBaseColor);
+            // //          x, y, width, height
+            // g.fillRect (centerXPos - 1, 0, width + (2 * 1), height);
 
             // Second pass: base color center line
-            g.setColour (baseColor);
-            g.fillRect (centerXPos, 0, width, height - 1);
+            // g.setColour (baseColor);
+            // g.fillRect (centerXPos, 0, width, height - 1);
         }
     }
 
@@ -157,9 +177,7 @@ void KeyboardVisual::resized()
     setKeyboardDimensions(proportionOfWidth(1.0f), proportionOfHeight(1.0f));
     //[/UserPreResize]
 
-    scaleFrequenciesOverlay->setBounds (0, getHeight() - proportionOfHeight (0.6000f), proportionOfWidth (1.0000f), proportionOfHeight (0.6000f));
-    noteAndFreqOverlay->setBounds (0, getHeight() - proportionOfHeight (0.6000f), proportionOfWidth (1.0000f), proportionOfHeight (0.6000f));
-    controlsOverlay->setBounds (0, 0, proportionOfWidth (1.0000f), proportionOfHeight (1.0000f));
+    noteAndFreqOverlay->setBounds (0, getHeight() - proportionOfHeight (0.6003f), proportionOfWidth (1.0000f), proportionOfHeight (0.6003f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -172,50 +190,119 @@ void KeyboardVisual::mouseMove (const juce::MouseEvent& e)
     //[/UserCode_mouseMove]
 }
 
+void KeyboardVisual::mouseDown (const juce::MouseEvent& e)
+{
+    //[UserCode_mouseDown] -- Add your code here...
+    if (e.mods.isRightButtonDown()) {
+      this->dragingView = true;
+      this->lastDragPosition = e.getPosition().x;
+    }
+    //[/UserCode_mouseDown]
+}
+
 void KeyboardVisual::mouseDrag (const juce::MouseEvent& e)
 {
     //[UserCode_mouseDrag] -- Add your code here...
-//    mousePosition->setText(std::to_string(e.getOffsetFromDragStart().x) + " " + std::to_string(e.getPosition().x) + " " + std::to_string(ConvertPixelsToContinuousMidiNote(e.getMouseDownPosition().x)), dontSendNotification);
+    if (this->dragingView) {
+        int currentX = e.getPosition().x;
+        int delta = currentX - this->lastDragPosition;
+
+        RangedAudioParameter *startingNoteParameter = this->data->apvts.getParameter("keyboard_visuals-viewport_starting_note");
+        RangedAudioParameter *endingNoteParameter = this->data->apvts.getParameter("keyboard_visuals-viewport_ending_note");
+
+        // @FIXME: Due to KeyboardVisualControlsOverlay having a listener to both parameters resulting in keyboard update,
+        //    draging results in two calls and two repaints of the keyboard per mouseDrag call.
+        startingNoteParameter->setValueNotifyingHost(startingNoteParameter->convertTo0to1(ConvertPixelsToContinuousMidiNote(-delta)));
+        endingNoteParameter->setValueNotifyingHost(endingNoteParameter->convertTo0to1(ConvertPixelsToContinuousMidiNote(getWidth() - delta)));
+
+        this->lastDragPosition = currentX;
+    }
     //[/UserCode_mouseDrag]
+}
+
+void KeyboardVisual::mouseUp (const juce::MouseEvent& e)
+{
+    //[UserCode_mouseUp] -- Add your code here...
+    if (e.mods.isRightButtonDown()) {
+      this->dragingView = false;
+    }
+    //[/UserCode_mouseUp]
 }
 
 void KeyboardVisual::mouseWheelMove (const juce::MouseEvent& e, const juce::MouseWheelDetails& wheel)
 {
     //[UserCode_mouseWheelMove] -- Add your code here...
-//    juce__label->setText(std::to_string(ConvertPixelsToContinuousMidiNote(e.getPosition().x)), dontSendNotification);
+    RangedAudioParameter *startingNoteParameter = this->data->apvts.getParameter("keyboard_visuals-viewport_starting_note");
+    RangedAudioParameter *endingNoteParameter = this->data->apvts.getParameter("keyboard_visuals-viewport_ending_note");
+
+    double finalDeltaX = wheel.deltaX * 100.0f;
+    double finalDeltaY = wheel.deltaY * 250.0f;
+
+    // @FIXME: Due to KeyboardVisualControlsOverlay having a listener to both parameters resulting in keyboard update,
+    //    draging results in two calls and two repaints of the keyboard per mouseDrag call.
+    startingNoteParameter->setValueNotifyingHost(startingNoteParameter->convertTo0to1(ConvertPixelsToContinuousMidiNote(-finalDeltaX + finalDeltaY)));
+    endingNoteParameter->setValueNotifyingHost(endingNoteParameter->convertTo0to1(ConvertPixelsToContinuousMidiNote(getWidth() - (finalDeltaX + finalDeltaY))));
     //[/UserCode_mouseWheelMove]
 }
 
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-void KeyboardVisual::setKeyboardSettings(int firstMidiNoteIn, int lastMidiNoteIn)
+void KeyboardVisual::setKeyboardSettings(double startingMidiNoteIn, double endingMidiNoteIn)
 {
-    this->firstMidiNote = firstMidiNoteIn;
-    this->lastMidiNote = lastMidiNoteIn;
+    this->startingMidiNote = startingMidiNoteIn;
+    this->endingMidiNote = endingMidiNoteIn;
 
-    double firstKeyDistFromEndOfOctave = 0.0;
-    double lastKeyDistFromBeginningOfOctave = 0.0;
+    double startingNoteToEndOfOctaveDistance = 0.0;
+    double startOfOctaveToEndingNoteDistance = 0.0;
 
-    this->firstMidiNoteAsKeyInTwelveKeyRange = euclidean_remainder(this->firstMidiNote, 12);
-    if (this->firstMidiNoteAsKeyInTwelveKeyRange != 0) {
-        firstKeyDistFromEndOfOctave = 1.0 - keyDistances[this->firstMidiNoteAsKeyInTwelveKeyRange];
+    {
+        // this->startingNoteNumber = euclidean_remainder(startingMidiNoteInteger, 12);
+        double startingNoteNumFloat = euclidean_remainder(this->startingMidiNote, 12.0);
+
+        // fractional and integer will always be positive due to euclidean_remainder
+        double fractional;
+        double integerDouble;
+        fractional = modf(startingNoteNumFloat, &integerDouble);
+        int integer = static_cast<int>(integerDouble);
+
+        if (integer == 0 && fractional == 0.0) {
+          // Set startingNoteToEndOfOctaveDistance to 0.0 when we are EXACTLY at the start of a octave,
+          //    as this is now considered a complete octave (dealt with by firstCompleteOctave)
+          // startingNoteToEndOfOctaveDistance will be 0.0 as initalized
+          this->leftOffscreenKeyDistance = 0;
+        } else {
+          double interKeyDistance = lerp(keyDistances[integer], keyDistances[integer + 1], fractional);
+          this->leftOffscreenKeyDistance = interKeyDistance;
+          startingNoteToEndOfOctaveDistance = 1.0 - this->leftOffscreenKeyDistance;
+        }
     }
 
-    int lastMidiNoteAsKeyInTwelveKeyRange = euclidean_remainder(this->lastMidiNote, 12);
-    if (lastMidiNoteAsKeyInTwelveKeyRange != 0)
-        lastKeyDistFromBeginningOfOctave = keyDistances[lastMidiNoteAsKeyInTwelveKeyRange];
+    {
+        double endingNoteNumFloat = euclidean_remainder(this->endingMidiNote, 12.0);
 
-    int remaningOctStart = std::ceil(firstMidiNote / 12.0) * 12;
-    int remaningOctEnd = std::floor(lastMidiNote / 12.0) * 12;
+        double fractional;
+        double integerDouble;
+        fractional = modf(endingNoteNumFloat, &integerDouble);
+        int integer = static_cast<int>(integerDouble);
 
-    int remaningOctaves = (remaningOctEnd - remaningOctStart) / 12;
+        double interKeyDistance = lerp(keyDistances[integer], keyDistances[integer + 1], fractional);
+        startOfOctaveToEndingNoteDistance = interKeyDistance;
+    }
 
-    this->entireDistance = firstKeyDistFromEndOfOctave + lastKeyDistFromBeginningOfOctave + remaningOctaves;
+    int firstCompleteOctave = static_cast<int>(std::ceil(this->startingMidiNote / 12.0));
+    int lastCompleteOctave = static_cast<int>(std::floor(this->endingMidiNote / 12.0));
 
-    this->startOctave = static_cast<int>(std::floor(firstMidiNote / 12.0));
+    int numberOfCompleteOctaves = lastCompleteOctave - firstCompleteOctave;
+    this->totalOctavesShown = startingNoteToEndOfOctaveDistance + startOfOctaveToEndingNoteDistance + numberOfCompleteOctaves;
+
+    this->startingNoteOctave = static_cast<int>(std::floor(this->startingMidiNote / 12.0));
 
     // testText->setText(std::to_string(ConvertPixelsToContinuousMidiNote(0)) + " " + std::to_string(ConvertPixelsToContinuousMidiNote(this->entireWidth)) + " " + std::to_string(ConvertPixelsToContinuousMidiNote(this->entireWidth) - ConvertPixelsToContinuousMidiNote(0)), dontSendNotification);
+
+    // Notify subscribers that keyboard visual has changed and they should update
+    this->sendChangeMessage();
+    this->repaint();
 }
 
 void KeyboardVisual::setKeyboardDimensions(int widthIn, int heightIn)
@@ -224,7 +311,7 @@ void KeyboardVisual::setKeyboardDimensions(int widthIn, int heightIn)
   this->entireHeight = heightIn;
 }
 
-void KeyboardVisual::setEqualSpacingValues()
+void KeyboardVisual::setToClassicKeyboardSpacing()
 {
     for (int i = 0; i < 13; i++)
     {
@@ -241,14 +328,14 @@ void KeyboardVisual::setEqualSpacingValues()
     }
 }
 
-int KeyboardVisual::getFirstMidiNote()
+double KeyboardVisual::getStartingMidiNote()
 {
-    return this->firstMidiNote;
+    return this->startingMidiNote;
 }
 
-int KeyboardVisual::getLastMidiNote()
+double KeyboardVisual::getEndingMidiNote()
 {
-    return this->lastMidiNote;
+    return this->endingMidiNote;
 }
 
 // @FIXME:  All the below functions do not respect the keyboard's width/height!!
@@ -260,12 +347,18 @@ double KeyboardVisual::ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNot
 
 double KeyboardVisual::ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNote, int& keyIndex)
 {
-    keyIndex = euclidean_remainder(discreteMidiNote, 12);
-    int currentOctave = static_cast<int>(std::floor(discreteMidiNote / 12.0));
+    int inNoteOctave = static_cast<int>(std::floor(discreteMidiNote / 12.0));
+    int octaveDistance = inNoteOctave - this->startingNoteOctave;
 
-    int octaveDistance = currentOctave - this->startOctave;
+    int inNoteNoteNumber = euclidean_remainder(discreteMidiNote, 12);
 
-    double percentWidth = (keyDistances[keyIndex] + octaveDistance - keyDistances[this->firstMidiNoteAsKeyInTwelveKeyRange]) / this->entireDistance;
+    // Neumerical units of octaves.  Key distances array is 0-1, where 1 is a full octave.
+    // startingNoteOctave contains this->leftOffscreenKeyDistance worth of octave that is off-screen to the left.
+    double octavesToNoteFromLeftBorder = keyDistances[inNoteNoteNumber] + octaveDistance - this->leftOffscreenKeyDistance;
+
+    // Total number of octaves from starting note to discrete note is scaled down to 0-1 by total octaves shown in viewport
+    double percentWidth = octavesToNoteFromLeftBorder / this->totalOctavesShown;
+
     return percentWidth;
 }
 
@@ -277,7 +370,9 @@ double KeyboardVisual::ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNot
  */
 double KeyboardVisual::ConvertContinuousMidiNoteToPercentWidth(double continousMidiNote)
 {
-    double fractional, integer;
+    double fractional;
+    double integer;
+
     fractional = modf(continousMidiNote, &integer);
     double base = ConvertDiscreteMidiNoteToPercentWidth((int)continousMidiNote);
 
@@ -288,9 +383,7 @@ double KeyboardVisual::ConvertContinuousMidiNoteToPercentWidth(double continousM
         double nextNote = ConvertDiscreteMidiNoteToPercentWidth(nextNoteIndex);
 
         // std::lerp not implemented until C++20
-//        percentWidth = std::lerp(base, nextNote, std::abs(fractional));
-        double t = std::abs(fractional);
-        percentWidth = (base * (1.0 - t)) + (nextNote * t);
+        percentWidth = lerp(base, nextNote, std::abs(fractional));
     }
 
     return percentWidth;
@@ -306,8 +399,8 @@ double KeyboardVisual::ConvertPercentWidthToContinuousMidiNote(double percentWid
    int keyIndex = 0;
 
    // Inverse of equation used in ConvertDiscreteMidiNoteToPercentWidth
-   double octaveDistance = (percentWidth * this->entireDistance) - keyDistances[keyIndex] + keyDistances[this->firstMidiNoteAsKeyInTwelveKeyRange];
-   double currentOctave = octaveDistance + this->startOctave;
+   double octaveDistance = (percentWidth * this->totalOctavesShown) - keyDistances[keyIndex] + this->leftOffscreenKeyDistance;
+   double currentOctave = octaveDistance + this->startingNoteOctave;
 
    int currentOctaveFloored = static_cast<int>(std::floor(currentOctave));
    // Creates sawtooth function where slope does not flip when in negatives
@@ -354,7 +447,6 @@ void drawMarker(double centerPixelPosition, int width, int borderWidth, juce::Co
     int height = 100;
 
     // First pass: darker outline
-    // Colour contrastingBaseColor = Colour::contrasting(baseColor, KeyboardVisual::inRangeWhiteKeyColour);
     Colour contrastingBaseColor = baseColor.darker(0.4f);
     graphics.setColour (contrastingBaseColor);
     //          x, y, width, height
@@ -406,29 +498,23 @@ void KeyboardVisual::drawLargerMarkerAtContinuousMidiNote(double continousMidiNo
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="KeyboardVisual" componentName=""
-                 parentClasses="public ComponentWithReferenceToData" constructorParams="ProcessorData *dataReference"
-                 variableInitialisers="ComponentWithReferenceToData (dataReference)"
+                 parentClasses="public ComponentWithReferenceToData, public juce::ChangeBroadcaster"
+                 constructorParams="ProcessorData *dataReference" variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="1000" initialHeight="50">
   <METHODS>
     <METHOD name="mouseWheelMove (const juce::MouseEvent&amp; e, const juce::MouseWheelDetails&amp; wheel)"/>
     <METHOD name="mouseMove (const juce::MouseEvent&amp; e)"/>
     <METHOD name="mouseDrag (const juce::MouseEvent&amp; e)"/>
+    <METHOD name="mouseDown (const juce::MouseEvent&amp; e)"/>
+    <METHOD name="mouseUp (const juce::MouseEvent&amp; e)"/>
   </METHODS>
   <BACKGROUND backgroundColour="494848"/>
-  <JUCERCOMP name="" id="31178f5ce0e8830f" memberName="scaleFrequenciesOverlay"
-             virtualName="" explicitFocusOrder="0" pos="0 0Rr 100% 60%" posRelativeX="9a893a36dc7e0c36"
-             posRelativeY="9a893a36dc7e0c36" posRelativeW="9a893a36dc7e0c36"
-             posRelativeH="9a893a36dc7e0c36" sourceFile="ScaleFrequenciesOverlay.cpp"
-             constructorParams="this-&gt;data, this"/>
   <JUCERCOMP name="" id="d4b4c1a2077d41bb" memberName="noteAndFreqOverlay"
-             virtualName="" explicitFocusOrder="0" pos="0 0Rr 100% 60%" posRelativeX="9a893a36dc7e0c36"
-             posRelativeY="9a893a36dc7e0c36" posRelativeW="9a893a36dc7e0c36"
-             posRelativeH="9a893a36dc7e0c36" sourceFile="NoteAndFrequencyOverlay.cpp"
-             constructorParams="this-&gt;data, this"/>
-  <JUCERCOMP name="" id="21258a0fb7996dd" memberName="controlsOverlay" virtualName=""
-             explicitFocusOrder="0" pos="0 0 100% 100%" sourceFile="KeyboardVisualControlsOverlay.cpp"
-             constructorParams="this-&gt;data, this"/>
+             virtualName="" explicitFocusOrder="0" pos="0 0Rr 100% 60.035%"
+             posRelativeX="9a893a36dc7e0c36" posRelativeY="9a893a36dc7e0c36"
+             posRelativeW="9a893a36dc7e0c36" posRelativeH="9a893a36dc7e0c36"
+             sourceFile="NoteAndFrequencyOverlay.cpp" constructorParams="this-&gt;data, this"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

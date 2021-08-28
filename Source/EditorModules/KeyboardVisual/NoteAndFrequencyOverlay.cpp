@@ -69,8 +69,8 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     /*
-    int firstNote = keyboard->getFirstMidiNote();
-    int lastNote = keyboard->getLastMidiNote();
+    int firstNote = keyboard->getStartingMidiNote();
+    int lastNote = keyboard->getEndingMidiNote();
     double continuousMidiNote = (2 * (lastNote - firstNote) / PI) * std::abs(std::asin(std::sin(2 * (PI / 200) * time))) + firstNote;
     int discreteMidiNote = std::round(continuousMidiNote);
 
@@ -268,3 +268,4 @@ END_JUCER_METADATA
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
+

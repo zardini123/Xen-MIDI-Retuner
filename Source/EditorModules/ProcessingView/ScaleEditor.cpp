@@ -42,15 +42,6 @@ ScaleEditor::ScaleEditor (ProcessorData *dataReference)
     heading->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     heading->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    juce__label.reset (new juce::Label ("new label",
-                                        TRANS("Blue lines represent 12-tone equal temperament")));
-    addAndMakeVisible (juce__label.get());
-    juce__label->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
-    juce__label->setJustificationType (juce::Justification::bottomLeft);
-    juce__label->setEditable (false, false, false);
-    juce__label->setColour (juce::TextEditor::textColourId, juce::Colours::black);
-    juce__label->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
-
     mtsESPClientLabel.reset (new juce::Label ("new label",
                                               TRANS("MTS-ESP Client")));
     addAndMakeVisible (mtsESPClientLabel.get());
@@ -94,7 +85,6 @@ ScaleEditor::~ScaleEditor()
     //[/Destructor_pre]
 
     heading = nullptr;
-    juce__label = nullptr;
     mtsESPClientLabel = nullptr;
     mtsESPClientToggle = nullptr;
     mtsESPClientStatus = nullptr;
@@ -129,7 +119,6 @@ void ScaleEditor::resized()
     //[/UserPreResize]
 
     heading->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
-    juce__label->setBounds (0, getHeight() - 48, proportionOfWidth (1.0000f), 48);
     mtsESPClientLabel->setBounds (proportionOfWidth (0.0000f), 32, 150, 24);
     mtsESPClientStatus->setBounds (proportionOfWidth (0.0000f), 80, 150, 24);
     //[UserResized] Add your own custom resize handling here..
@@ -192,12 +181,6 @@ BEGIN_JUCER_METADATA
          edBkgCol="0" labelText="Scale&#10;" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="22.0"
          kerning="0.0" bold="1" italic="0" justification="36" typefaceStyle="Bold"/>
-  <LABEL name="new label" id="b9a76de94e82d728" memberName="juce__label"
-         virtualName="" explicitFocusOrder="0" pos="0 0Rr 100% 48" edTextCol="ff000000"
-         edBkgCol="0" labelText="Blue lines represent 12-tone equal temperament"
-         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
-         fontname="Default font" fontsize="15.0" kerning="0.0" bold="0"
-         italic="0" justification="17"/>
   <LABEL name="new label" id="2cc7f93d9d946829" memberName="mtsESPClientLabel"
          virtualName="" explicitFocusOrder="0" pos="0% 32 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="MTS-ESP Client" editableSingleClick="0"
