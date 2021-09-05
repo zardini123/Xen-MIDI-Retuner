@@ -269,29 +269,29 @@ BEGIN_JUCER_METADATA
                hasStroke="0"/>
   </BACKGROUND>
   <SLIDER name="new slider" id="3ab8f24ac17b1ecb" memberName="viewStartingMidiNote"
-          virtualName="" explicitFocusOrder="0" pos="91.431%r 0 7.198% 23"
+          virtualName="" explicitFocusOrder="0" pos="91.462%r 0 7.231% 23"
           min="-20.0" max="140.0" int="0.0" style="LinearBar" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="0"/>
   <SLIDER name="new slider" id="67d1cdb27238fff2" memberName="viewEndingMidiNote"
-          virtualName="" explicitFocusOrder="0" pos="99.314%r 0 7.198% 23"
+          virtualName="" explicitFocusOrder="0" pos="99.308%r 0 7.231% 23"
           min="-20.0" max="140.0" int="0.0" style="LinearBar" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="0"/>
   <TEXTBUTTON name="new button" id="18e3d9dff2ff4a22" memberName="viewZoomIn"
-              virtualName="" explicitFocusOrder="0" pos="81.577%r 0 2.142% 24"
+              virtualName="" explicitFocusOrder="0" pos="81.615%r 0 2.154% 24"
               bgColOff="c71b1b1b" buttonText="+" connectedEdges="3" needsCallback="1"
               radioGroupId="0"/>
   <TEXTBUTTON name="new button" id="19880e01f407e55" memberName="viewZoomOut"
-              virtualName="" explicitFocusOrder="0" pos="83.548%r 0 2.142% 24"
+              virtualName="" explicitFocusOrder="0" pos="83.538%r 0 2.154% 24"
               bgColOff="c71b1b1b" buttonText="-" connectedEdges="1" needsCallback="1"
               radioGroupId="0"/>
   <TEXTBUTTON name="new button" id="434951d4a86802b4" memberName="viewShiftRight"
-              virtualName="" explicitFocusOrder="0" pos="79.606%r 0 2.142% 24"
+              virtualName="" explicitFocusOrder="0" pos="79.615%r 0 2.154% 24"
               bgColOff="c71b1b1b" buttonText="&gt;" connectedEdges="3" needsCallback="1"
               radioGroupId="0"/>
   <TEXTBUTTON name="new button" id="8480ec4bdf0d0b9e" memberName="viewShiftLeft"
-              virtualName="" explicitFocusOrder="0" pos="77.635%r 0 2.142% 24"
+              virtualName="" explicitFocusOrder="0" pos="77.615%r 0 2.154% 24"
               bgColOff="c71b1b1b" buttonText="&lt;" connectedEdges="2" needsCallback="1"
               radioGroupId="0"/>
 </JUCER_COMPONENT>
@@ -303,3 +303,4 @@ END_JUCER_METADATA
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
+

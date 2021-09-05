@@ -19,8 +19,6 @@
 #include "ScaleChangeBroadcaster.h"
 #include "Components/TransitionCurve.h"
 
-#include "Tests/MIDIEnviromentTests/MIDIEnviromentTestManager.h"
-
 struct ProcessorData {
     ProcessorData(AudioProcessor &processorForApvts);
 
@@ -36,11 +34,9 @@ struct ProcessorData {
 
     AnaMark::Scale scale;
     ScaleChangeBroadcaster scaleChangeBroadcaster;
-    
+
     AnaMark::MTSESPClient *mtsESPClient = nullptr;
     ChangeBroadcaster scaleChangedBroadcaster;
-
-    MIDIEnviromentTestManager midiEnviromentTestManager;
 
     std::unique_ptr<FileLogger> logger;
 };

@@ -511,10 +511,10 @@ BEGIN_JUCER_METADATA
   </METHODS>
   <BACKGROUND backgroundColour="494848"/>
   <JUCERCOMP name="" id="d4b4c1a2077d41bb" memberName="noteAndFreqOverlay"
-             virtualName="" explicitFocusOrder="0" pos="0 0Rr 100% 60.035%"
-             posRelativeX="9a893a36dc7e0c36" posRelativeY="9a893a36dc7e0c36"
-             posRelativeW="9a893a36dc7e0c36" posRelativeH="9a893a36dc7e0c36"
-             sourceFile="NoteAndFrequencyOverlay.cpp" constructorParams="this-&gt;data, this"/>
+             virtualName="" explicitFocusOrder="0" pos="0 0Rr 100% 60%" posRelativeX="9a893a36dc7e0c36"
+             posRelativeY="9a893a36dc7e0c36" posRelativeW="9a893a36dc7e0c36"
+             posRelativeH="9a893a36dc7e0c36" sourceFile="NoteAndFrequencyOverlay.cpp"
+             constructorParams="this-&gt;data, this"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

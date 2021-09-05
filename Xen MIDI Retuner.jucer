@@ -61,14 +61,6 @@
               file="Source/Components/TransitionCurveGUI.cpp"/>
         <FILE id="yAbwkk" name="TransitionCurveGUI.h" compile="0" resource="0"
               file="Source/Components/TransitionCurveGUI.h"/>
-        <FILE id="LBD6K5" name="MIDIChannelStatusAndToggle.cpp" compile="1"
-              resource="0" file="Source/Components/MIDIChannelStatusAndToggle.cpp"/>
-        <FILE id="StrH3G" name="MIDIChannelStatusAndToggle.h" compile="0" resource="0"
-              file="Source/Components/MIDIChannelStatusAndToggle.h"/>
-        <FILE id="dBFJIW" name="MIDIChannelStatusAndToggleSingle.cpp" compile="1"
-              resource="0" file="Source/Components/MIDIChannelStatusAndToggleSingle.cpp"/>
-        <FILE id="ktlfaF" name="MIDIChannelStatusAndToggleSingle.h" compile="0"
-              resource="0" file="Source/Components/MIDIChannelStatusAndToggleSingle.h"/>
       </GROUP>
       <GROUP id="{6E9FE505-8222-C370-9837-85B2A5A04EF8}" name="EditorModules">
         <GROUP id="{6883A78E-D49B-F566-8130-7901541BF11B}" name="KeyboardVisual">
@@ -93,23 +85,11 @@
           <FILE id="ND8DV4" name="ScaleFrequenciesOverlay.h" compile="0" resource="0"
                 file="Source/EditorModules/KeyboardVisual/ScaleFrequenciesOverlay.h"/>
         </GROUP>
-        <GROUP id="{B08742E1-9497-3229-F517-8F1F59EDA2B5}" name="TestingView">
-          <FILE id="fefIx2" name="ActionButtonAndStatus.cpp" compile="1" resource="0"
-                file="Source/EditorModules/TestingView/ActionButtonAndStatus.cpp"/>
-          <FILE id="XW9zSt" name="ActionButtonAndStatus.h" compile="0" resource="0"
-                file="Source/EditorModules/TestingView/ActionButtonAndStatus.h"/>
-          <FILE id="Hp66RG" name="CapabilitiesTestGUI.cpp" compile="1" resource="0"
-                file="Source/EditorModules/TestingView/CapabilitiesTestGUI.cpp"/>
-          <FILE id="IantEU" name="CapabilitiesTestGUI.h" compile="0" resource="0"
-                file="Source/EditorModules/TestingView/CapabilitiesTestGUI.h"/>
-          <FILE id="UiDMAU" name="MIDIChannelToolbar.cpp" compile="1" resource="0"
-                file="Source/EditorModules/TestingView/MIDIChannelToolbar.cpp"/>
-          <FILE id="HFL8Kx" name="MIDIChannelToolbar.h" compile="0" resource="0"
-                file="Source/EditorModules/TestingView/MIDIChannelToolbar.h"/>
-          <FILE id="RBXnhr" name="TestList.cpp" compile="1" resource="0" file="Source/EditorModules/TestingView/TestList.cpp"/>
-          <FILE id="XPWyXH" name="TestList.h" compile="0" resource="0" file="Source/EditorModules/TestingView/TestList.h"/>
-        </GROUP>
         <GROUP id="{91D6FA0C-01C8-AB40-5BBC-7183FFF77A04}" name="ProcessingView">
+          <FILE id="fqQaFG" name="ProcessingView.cpp" compile="1" resource="0"
+                file="Source/EditorModules/ProcessingView.cpp"/>
+          <FILE id="hXYbbE" name="ProcessingView.h" compile="0" resource="0"
+                file="Source/EditorModules/ProcessingView.h"/>
           <FILE id="oxd94Y" name="InputModule.cpp" compile="1" resource="0" file="Source/EditorModules/ProcessingView/InputModule.cpp"/>
           <FILE id="Za8Hui" name="InputModule.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/InputModule.h"/>
           <FILE id="xuOZcY" name="ScaleEditor.cpp" compile="1" resource="0" file="Source/EditorModules/ProcessingView/ScaleEditor.cpp"/>
@@ -127,31 +107,6 @@
           <FILE id="ZLMlVB" name="OutputModule.cpp" compile="1" resource="0"
                 file="Source/EditorModules/ProcessingView/OutputModule.cpp"/>
           <FILE id="ONR1ek" name="OutputModule.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/OutputModule.h"/>
-        </GROUP>
-        <FILE id="fqQaFG" name="ProcessingView.cpp" compile="1" resource="0"
-              file="Source/EditorModules/ProcessingView.cpp"/>
-        <FILE id="hXYbbE" name="ProcessingView.h" compile="0" resource="0"
-              file="Source/EditorModules/ProcessingView.h"/>
-        <FILE id="Ii74Vf" name="TestingView.cpp" compile="1" resource="0" file="Source/EditorModules/TestingView.cpp"/>
-        <FILE id="gYdJqO" name="TestingView.h" compile="0" resource="0" file="Source/EditorModules/TestingView.h"/>
-        <FILE id="qjbUif" name="SettingsView.cpp" compile="1" resource="0"
-              file="Source/EditorModules/SettingsView.cpp"/>
-        <FILE id="TBDceV" name="SettingsView.h" compile="0" resource="0" file="Source/EditorModules/SettingsView.h"/>
-      </GROUP>
-      <GROUP id="{CBB1951D-3F94-A4BB-11EA-1C67963ACB4F}" name="Tests">
-        <GROUP id="{2E983108-9D3D-41C4-C7FB-D4F8C56587ED}" name="MIDIEnviromentTests">
-          <FILE id="SVhwbQ" name="MIDIEnviromentTest.cpp" compile="1" resource="0"
-                file="Source/Tests/MIDIEnviromentTests/MIDIEnviromentTest.cpp"/>
-          <FILE id="Y1sQDz" name="MIDIEnviromentTest.h" compile="0" resource="0"
-                file="Source/Tests/MIDIEnviromentTests/MIDIEnviromentTest.h"/>
-          <FILE id="HNTJG2" name="MIDIEnviromentTestManager.cpp" compile="1"
-                resource="0" file="Source/Tests/MIDIEnviromentTests/MIDIEnviromentTestManager.cpp"/>
-          <FILE id="QNFtJu" name="MIDIEnviromentTestManager.h" compile="0" resource="0"
-                file="Source/Tests/MIDIEnviromentTests/MIDIEnviromentTestManager.h"/>
-          <FILE id="NPuRbM" name="NoteAndVelocityTest.cpp" compile="1" resource="0"
-                file="Source/Tests/MIDIEnviromentTests/NoteAndVelocityTest.cpp"/>
-          <FILE id="U8RbwJ" name="NoteAndVelocityTest.h" compile="0" resource="0"
-                file="Source/Tests/MIDIEnviromentTests/NoteAndVelocityTest.h"/>
         </GROUP>
       </GROUP>
       <FILE id="mIZWSD" name="ComponentWithReferenceToData.cpp" compile="1"

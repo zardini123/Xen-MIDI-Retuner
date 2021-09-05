@@ -252,116 +252,111 @@ void XenMidiRetunerAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mid
 
     ProcessorData *data = &processorData;
 
-    if (data->midiEnviromentTestManager.isThereTestsAvaliable())
+    // For loop runs only if there is MIDI events to parse
+    for (const MidiMessageMetadata metadata : midiMessages)
     {
-        data->midiEnviromentTestManager.updateLoop(midiMessages, buffer.getNumSamples(), 44100);
-    } else { // Lmao
-        // For loop runs only if there is MIDI events to parse
-        for (const MidiMessageMetadata metadata : midiMessages)
+        m = metadata.getMessage();
+        time = metadata.samplePosition;
+
+        // STACK CREATION
+        // Pack all information into a InputChannel array with Note vectors for ease of interpretation later
+        //      (especially for single channel note prioirtization)
+        int channel = m.getChannel() - 1;
+        InputChannel &inputChannel = data->input[channel];
+        OutputChannel &outputChannel = data->output[channel];
+        if (m.isPitchWheel())
         {
-            m = metadata.getMessage();
-            time = metadata.samplePosition;
+            // Input of pitchwheel does not change any values of the Note stack, and therefore does NOT adjust note prioritzation.
+            // But, it does affect the notes percieved frequency,
+            //      and therefore may TODO: require note updates if perceived frequency is greater than output pitch range
+            inputChannel.pitchwheel = m.getPitchWheelValue();
 
-            // STACK CREATION
-            // Pack all information into a InputChannel array with Note vectors for ease of interpretation later
-            //      (especially for single channel note prioirtization)
-            int channel = m.getChannel() - 1;
-            InputChannel &inputChannel = data->input[channel];
-            OutputChannel &outputChannel = data->output[channel];
-            if (m.isPitchWheel())
+        } else if (m.isNoteOn())
+        {
             {
-                // Input of pitchwheel does not change any values of the Note stack, and therefore does NOT adjust note prioritzation.
-                // But, it does affect the notes percieved frequency,
-                //      and therefore may TODO: require note updates if perceived frequency is greater than output pitch range
-                inputChannel.pitchwheel = m.getPitchWheelValue();
+                // Lock the input channel array
+                const ScopedLock myScopedLock (data->inputLock);
 
-            } else if (m.isNoteOn())
-            {
-                {
-                    // Lock the input channel array
-                    const ScopedLock myScopedLock (data->inputLock);
+                // Add the new, played midi note.
+                // First remove midi note if the note already exists (which is important for time-based prioritization)...
+                removeFirstNoteAtNoteNumber(m.getNoteNumber(), inputChannel.notes);
 
-                    // Add the new, played midi note.
-                    // First remove midi note if the note already exists (which is important for time-based prioritization)...
-                    removeFirstNoteAtNoteNumber(m.getNoteNumber(), inputChannel.notes);
-
-                    // Then, Add the newest note to the end of the stack (append to vector)
-                    Note newNote = Note {
-                        m.getNoteNumber(),
-                        m.getVelocity()
-                    };
-                    inputChannel.notes.push_back(newNote);
-                }
-
-                // This condition of note on updates prioritization
-                inputChannel.priorityNote = determinePriorityNote(inputChannel.notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel_modifier"));
-
-            } else if (m.isNoteOff())
-            {
-                {
-                    // Lock the input channel array
-                    const ScopedLock myScopedLock (data->inputLock);
-
-                    // Remove the note that was called to be off from the stack
-                    removeFirstNoteAtNoteNumber(m.getNoteNumber(), inputChannel.notes);
-                }
-
-                // This condition of note off updates prioritization
-                // Prioirty Note should be set to nullptr if there are no input notes
-                inputChannel.priorityNote = determinePriorityNote(inputChannel.notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel_modifier"));
-
-                // If all input is empty, therefore nothing should be playing.  Ensure all notes on output are set to off.
-                // Priority Note will be nullptr as well, either because there is no notes to choose from, due to a prioirty function not being implemented, or having edge cases.
-                // Its best to use empty() instead of if == nullptr because of those last two reasons.
-                if (inputChannel.notes.empty())
-                {
-                    // Iterate through all notes and find all the notes ready for turn off
-                    for (std::vector<Note>::iterator it = outputChannel.notes.begin(); it != outputChannel.notes.end(); ++it) {
-                        processedMidi.addEvent(MidiMessage::noteOff(m.getChannel(), it->midiNote), time);
-                    }
-
-                    outputChannel.notes.clear();
-                }
-            } else {
-                // Passthrough of non-conversion related MIDI messages
-                processedMidi.addEvent(m, time);
+                // Then, Add the newest note to the end of the stack (append to vector)
+                Note newNote = Note {
+                    m.getNoteNumber(),
+                    m.getVelocity()
+                };
+                inputChannel.notes.push_back(newNote);
             }
 
-            // Priority note required to determine how to adjust notes/pitchbend for the channel
-            if (inputChannel.priorityNote != nullptr)
+            // This condition of note on updates prioritization
+            inputChannel.priorityNote = determinePriorityNote(inputChannel.notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel_modifier"));
+
+        } else if (m.isNoteOff())
+        {
             {
-                bool isNoteMessage = m.isNoteOn() || m.isNoteOff();
+                // Lock the input channel array
+                const ScopedLock myScopedLock (data->inputLock);
 
-                // Note messages and pitchwheel changes input frequencies, therefore has an effect on interpretation and scale interploation
-                if (isNoteMessage || m.isPitchWheel()) {
-                  // Interpretate and convert played notes of the current channel into the tuned value
-                  // Will not run if there are no more notes in the stack
-
-                  // The input priority note scale converted rounded to closest midi note is only updated on midi note messages
-                  updateBlock(processedMidi, channel, isNoteMessage, time);
-                }
+                // Remove the note that was called to be off from the stack
+                removeFirstNoteAtNoteNumber(m.getNoteNumber(), inputChannel.notes);
             }
+
+            // This condition of note off updates prioritization
+            // Prioirty Note should be set to nullptr if there are no input notes
+            inputChannel.priorityNote = determinePriorityNote(inputChannel.notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel_modifier"));
+
+            // If all input is empty, therefore nothing should be playing.  Ensure all notes on output are set to off.
+            // Priority Note will be nullptr as well, either because there is no notes to choose from, due to a prioirty function not being implemented, or having edge cases.
+            // Its best to use empty() instead of if == nullptr because of those last two reasons.
+            if (inputChannel.notes.empty())
+            {
+                // Iterate through all notes and find all the notes ready for turn off
+                for (std::vector<Note>::iterator it = outputChannel.notes.begin(); it != outputChannel.notes.end(); ++it) {
+                    processedMidi.addEvent(MidiMessage::noteOff(m.getChannel(), it->midiNote), time);
+                }
+
+                outputChannel.notes.clear();
+            }
+        } else {
+            // Passthrough of non-conversion related MIDI messages
+            processedMidi.addEvent(m, time);
         }
 
-        if (updatePitch || updatePriority)
+        // Priority note required to determine how to adjust notes/pitchbend for the channel
+        if (inputChannel.priorityNote != nullptr)
         {
-            for (int i = 0; i < MAX_MIDI_CHANNELS; i++)
-            {
-                if (updatePriority)
-                {
-                    data->input[i].priorityNote = determinePriorityNote(data->input[i].notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel_modifier"));
-                }
+            bool isNoteMessage = m.isNoteOn() || m.isNoteOff();
 
-                if (data->input[i].priorityNote != nullptr)
-                    updateBlock(processedMidi, i, updatePriority, time);
+            // Note messages and pitchwheel changes input frequencies, therefore has an effect on interpretation and scale interploation
+            if (isNoteMessage || m.isPitchWheel()) {
+              // Interpretate and convert played notes of the current channel into the tuned value
+              // Will not run if there are no more notes in the stack
+
+              // The input priority note scale converted rounded to closest midi note is only updated on midi note messages
+              updateBlock(processedMidi, channel, isNoteMessage, time);
             }
-
-            updatePitch = false;
-            updatePriority = false;
         }
-
-        midiMessages.swapWith(processedMidi);
     }
+
+    if (updatePitch || updatePriority)
+    {
+        for (int i = 0; i < MAX_MIDI_CHANNELS; i++)
+        {
+            if (updatePriority)
+            {
+                data->input[i].priorityNote = determinePriorityNote(data->input[i].notes, (SingleChannelNotePrioritzation)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel"), (SingleChannelNotePrioritzationModifier)(int)*data->apvts.getRawParameterValue("tuned_note_per_keyboard_channel_modifier"));
+            }
+
+            if (data->input[i].priorityNote != nullptr)
+                updateBlock(processedMidi, i, updatePriority, time);
+        }
+
+        updatePitch = false;
+        updatePriority = false;
+    }
+
+    midiMessages.swapWith(processedMidi);
 }
 
 // One channel to one channel

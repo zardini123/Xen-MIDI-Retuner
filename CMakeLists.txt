@@ -51,18 +51,12 @@ function(my_add_custom_plugin_target target_name is_synth is_midi_effect)
   juce_generate_juce_header("${target_name}")
 
   # Sources found using bash command:  find ./Source -name \*.cpp -print
-  # Exclude AnaMark-Tuning-Library
   target_sources("${target_name}" PRIVATE
     ./lib/AnaMark-Tuning-Library/lib/MTS-ESP/Master/libMTSMaster.cpp
     ./lib/AnaMark-Tuning-Library/lib/MTS-ESP/Client/libMTSClient.cpp
-    ./Source/Tests/MIDIEnviromentTests/MIDIEnviromentTest.cpp
-    ./Source/Tests/MIDIEnviromentTests/NoteAndVelocityTest.cpp
-    ./Source/Tests/MIDIEnviromentTests/MIDIEnviromentTestManager.cpp
     ./Source/Utilities.cpp
     ./Source/Components/TransitionCurveGUI.cpp
-    ./Source/Components/MIDIChannelStatusAndToggle.cpp
     ./Source/Components/TransitionCurve.cpp
-    ./Source/Components/MIDIChannelStatusAndToggleSingle.cpp
     ./Source/EditorModules/ProcessingView/ConversionModule/TransitionCurveEvaluationGraphic.cpp
     ./Source/EditorModules/ProcessingView/OutputModule.cpp
     ./Source/EditorModules/ProcessingView/ScaleEditor.cpp
@@ -74,12 +68,7 @@ function(my_add_custom_plugin_target target_name is_synth is_midi_effect)
     ./Source/EditorModules/KeyboardVisual/NoteAndFrequencyOverlay.cpp
     ./Source/EditorModules/KeyboardVisual/ScaleFrequenciesOverlay.cpp
     ./Source/EditorModules/ProcessingView.cpp
-    ./Source/EditorModules/TestingView.cpp
-    ./Source/EditorModules/SettingsView.cpp
     ./Source/EditorModules/TestingView/CapabilitiesTestGUI.cpp
-    ./Source/EditorModules/TestingView/ActionButtonAndStatus.cpp
-    ./Source/EditorModules/TestingView/TestList.cpp
-    ./Source/EditorModules/TestingView/MIDIChannelToolbar.cpp
     ./Source/PluginProcessor.cpp
     ./Source/PluginGUI.cpp
     ./Source/PluginEditor.cpp
