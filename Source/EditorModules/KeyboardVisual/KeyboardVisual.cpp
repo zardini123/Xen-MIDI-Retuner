@@ -177,7 +177,7 @@ void KeyboardVisual::resized()
     setKeyboardDimensions(proportionOfWidth(1.0f), proportionOfHeight(1.0f));
     //[/UserPreResize]
 
-    noteAndFreqOverlay->setBounds (0, getHeight() - proportionOfHeight (0.6003f), proportionOfWidth (1.0000f), proportionOfHeight (0.6003f));
+    noteAndFreqOverlay->setBounds (0, getHeight() - proportionOfHeight (0.6000f), proportionOfWidth (1.0000f), proportionOfHeight (0.6000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -443,30 +443,28 @@ double KeyboardVisual::ConvertPercentWidthToContinuousMidiNote(double percentWid
    return continuousMidiNote;
 }
 
-void drawMarker(double centerPixelPosition, int width, int borderWidth, juce::Colour baseColor, juce::Graphics& graphics) {
-    int height = 100;
-
+void KeyboardVisual::drawMarker(double centerPixelPosition, int width, int height, int borderWidth, juce::Colour baseColor, juce::Graphics& graphics) {
     // First pass: darker outline
     Colour contrastingBaseColor = baseColor.darker(0.4f);
     graphics.setColour (contrastingBaseColor);
     //          x, y, width, height
-    graphics.fillRect (centerPixelPosition - borderWidth, 0, width + (2 * borderWidth), height);
+    graphics.fillRect ((centerPixelPosition - borderWidth) - (width * 0.5), 0, width + (2 * borderWidth), height);
 
     // Second pass: base color center line
     graphics.setColour (baseColor);
-    graphics.fillRect (centerPixelPosition, 0, width, height - 1);
+    graphics.fillRect (centerPixelPosition - (width * 0.5), 0, width, height - 1);
 }
 
 void KeyboardVisual::drawMarkerAtDiscreteMidiNote(int midiNote, juce::Colour baseColor, juce::Graphics& graphics) {
     double centerPixelPosition = this->ConvertDiscreteMidiNoteToPercentWidth(midiNote) * proportionOfWidth(1.0f);
 
-    drawMarker(centerPixelPosition, 1, 1, baseColor, graphics);
+    drawMarker(centerPixelPosition, 1, 100, 1, baseColor, graphics);
 }
 
 void KeyboardVisual::drawMarkerAtContinuousMidiNote(double continousMidiNote, juce::Colour baseColor, juce::Graphics& graphics) {
     double centerPixelPosition = this->ConvertContinuousMidiNoteToPercentWidth(continousMidiNote) * proportionOfWidth(1.0f);
 
-    drawMarker(centerPixelPosition, 1, 1, baseColor, graphics);
+    drawMarker(centerPixelPosition, 1, 100, 1, baseColor, graphics);
 }
 
 void KeyboardVisual::drawMarkerAtFrequencyHz(double frequencyHz, juce::Colour baseColor, juce::Graphics& graphics) {
@@ -476,13 +474,13 @@ void KeyboardVisual::drawMarkerAtFrequencyHz(double frequencyHz, juce::Colour ba
 void KeyboardVisual::drawLargerMarkerAtDiscreteMidiNote(int midiNote, juce::Colour baseColor, juce::Graphics& graphics) {
     double centerPixelPosition = this->ConvertDiscreteMidiNoteToPercentWidth(midiNote) * proportionOfWidth(1.0f);
 
-    drawMarker(centerPixelPosition, 3, 2, baseColor, graphics);
+    drawMarker(centerPixelPosition, 3, 100, 2, baseColor, graphics);
 }
 
 void KeyboardVisual::drawLargerMarkerAtContinuousMidiNote(double continousMidiNote, juce::Colour baseColor, juce::Graphics& graphics) {
     double centerPixelPosition = this->ConvertContinuousMidiNoteToPercentWidth(continousMidiNote) * proportionOfWidth(1.0f);
 
-    drawMarker(centerPixelPosition, 3, 2, baseColor, graphics);
+    drawMarker(centerPixelPosition, 3, 100, 2, baseColor, graphics);
 }
 
 //[/MiscUserCode]

@@ -62,13 +62,35 @@ ScaleFrequenciesOverlay::~ScaleFrequenciesOverlay()
 void ScaleFrequenciesOverlay::paint (juce::Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
-    Colour baseColour = Colour (0x4fe82950);
-    if (data->apvts.getParameterAsValue("keyboard_visuals-enable_scale").getValue()) {
-        // @TODO: Create a iterator for scale to iterate over midi note, scale note (non-mapped), and frequency order
-        for (auto i = AnaMark::Scale::firstTunableScaleNote; i < AnaMark::Scale::afterLastTunableScaleNote; ++i) {
-            double frequency = data->scale.FrequencyForMIDINote(i);
-            keyboard->drawMarkerAtFrequencyHz(frequency, baseColour, g);
-        }
+    juce::Colour strokeColour = juce::Colour (0x9942EC1E);
+    juce::Colour scaleColour = juce::Colour (0x9982BB43);
+    int connectionYPos = 35;
+
+    for (int midiNote = 0; midiNote < data->midiNoteToScaleNoteMapping.size(); ++midiNote) {
+      // Connector
+      if (data->midiNoteToScaleNoteMapping[midiNote] != -1) {
+        int midiNoteXPos = keyboard->ConvertDiscreteMidiNoteToPercentWidth(midiNote) * getWidth();
+
+        double frequency = data->scale.FrequencyForMIDINote(data->midiNoteToScaleNoteMapping[midiNote]);
+        int frequencyXPos = keyboard->ConvertContinuousMidiNoteToPercentWidth(freqHZToContinuousMidiNote(frequency)) * getWidth();
+        // if ((midiNoteXPos >= 0 && midiNoteXPos < getWidth()) || (frequencyXPos >= 0 && frequencyXPos < getWidth())) {
+
+        juce::Path internalPath1;
+
+        internalPath1.startNewSubPath (frequencyXPos, connectionYPos);
+        internalPath1.lineTo (midiNoteXPos, this->getHeight());
+
+        g.setColour (strokeColour);
+        g.strokePath (internalPath1, juce::PathStrokeType (3.0f), juce::AffineTransform::translation(0, 0));
+      }
+    }
+
+    // @TODO: Create a iterator for scale to iterate over midi note, scale note (non-mapped), and frequency order
+    for (auto i = AnaMark::Scale::firstTunableScaleNote; i < AnaMark::Scale::afterLastTunableScaleNote; ++i) {
+        // Frequency
+        double frequency = data->scale.FrequencyForMIDINote(i);
+        double centerPixelPosition = keyboard->ConvertContinuousMidiNoteToPercentWidth(freqHZToContinuousMidiNote(frequency)) * getWidth();
+        keyboard->drawMarker(centerPixelPosition, 3, connectionYPos, 1, scaleColour, g);
     }
     //[/UserPrePaint]
 

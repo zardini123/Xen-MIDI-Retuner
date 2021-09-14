@@ -14,6 +14,8 @@
 
 float pitchwheelPosToSemitones(const uint16 pitchwheelPos, const float pitchbendRange);
 
+// @FIXME: Why is return value a float, whereas some arguments are double?  All should be
+// double for maximum resolution.
 float noteAndSemitonesToFreqHz(int noteNum, float semitones);
 float continuousNoteToFreqHz(float continuousNote);
 void freqHZToNoteAndSemitones(double frequency, int &noteNum, double &semitones);

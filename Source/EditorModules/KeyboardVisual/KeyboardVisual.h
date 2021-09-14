@@ -66,6 +66,8 @@ public:
     double ConvertPixelsToContinuousMidiNote(int xPositionInPixels);
     double ConvertPercentWidthToContinuousMidiNote(double percentWidth);
 
+    void drawMarker(double centerPixelPosition, int width, int height, int borderWidth, juce::Colour baseColor, juce::Graphics& graphics);
+
     // Painting methods for keyboard-related drawing
     void drawMarkerAtDiscreteMidiNote(int midiNote, juce::Colour baseColor, juce::Graphics& graphics);
     void drawMarkerAtContinuousMidiNote(double continousMidiNote, juce::Colour baseColor, juce::Graphics& graphics);

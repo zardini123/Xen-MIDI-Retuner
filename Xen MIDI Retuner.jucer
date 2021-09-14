@@ -109,8 +109,6 @@
           <FILE id="ONR1ek" name="OutputModule.h" compile="0" resource="0" file="Source/EditorModules/ProcessingView/OutputModule.h"/>
         </GROUP>
       </GROUP>
-      <FILE id="mIZWSD" name="ComponentWithReferenceToData.cpp" compile="1"
-            resource="0" file="Source/ComponentWithReferenceToData.cpp"/>
       <FILE id="xFDo5m" name="ComponentWithReferenceToData.h" compile="0"
             resource="0" file="Source/ComponentWithReferenceToData.h"/>
       <FILE id="XvZ76Y" name="PluginGUI.cpp" compile="1" resource="0" file="Source/PluginGUI.cpp"/>

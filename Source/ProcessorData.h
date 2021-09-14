@@ -11,32 +11,64 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include <array>
 
 #include "../lib/AnaMark-Tuning-Library/src/DynamicScaleFormats/MTS-ESP-Client.hpp"
 #include "../lib/AnaMark-Tuning-Library/src/Scale.hpp"
 
+#include "Components/TransitionCurve.h"
 #include "ProcessorStructures.h"
 #include "ScaleChangeBroadcaster.h"
-#include "Components/TransitionCurve.h"
+
+const int MAX_MIDI_CHANNELS = 16;
+const int CENTER_PITCHWHEEL = 8192;
+
+struct Note {
+  int midiNote;
+  uint8 velocity;
+
+  bool turnOffFlag = false;
+};
 
 struct ProcessorData {
-    ProcessorData(AudioProcessor &processorForApvts);
+  struct InputChannel {
+    uint16 pitchwheel = CENTER_PITCHWHEEL; // Default to pitchbend wheel at center
+    const Note *priorityNote = nullptr;
 
-    AudioProcessorValueTreeState apvts;
-    UndoManager undoManager;
+    float continuousTunedNote;
+    std::vector<Note> notes;
+  };
 
-    TransitionCurve transitionCurve;
+  struct OutputChannel {
+    int centerOfOutputPitchbendRangeStatic;
+    int noteToTuneToContinuousTunedNoteDifference;
 
-    InputChannel input[MAX_MIDI_CHANNELS];
-    CriticalSection inputLock;
+    int offsetOutputPitchbendRange;
+    int outputMidiNoteForTunedNote;
 
-    OutputChannel output[MAX_MIDI_CHANNELS];
+    std::vector<Note> notes;
+  };
 
-    AnaMark::Scale scale;
-    ScaleChangeBroadcaster scaleChangeBroadcaster;
+  ProcessorData(AudioProcessor &processorForApvts);
 
-    AnaMark::MTSESPClient *mtsESPClient = nullptr;
-    ChangeBroadcaster scaleChangedBroadcaster;
+  AudioProcessorValueTreeState apvts;
+  UndoManager undoManager;
 
-    std::unique_ptr<FileLogger> logger;
+  TransitionCurve transitionCurve;
+
+  InputChannel input[MAX_MIDI_CHANNELS];
+  CriticalSection inputLock;
+
+  OutputChannel output[MAX_MIDI_CHANNELS];
+
+  AnaMark::Scale scale;
+  ScaleChangeBroadcaster scaleChangeBroadcaster;
+
+  // Map midi note to scale note
+  std::array<int, AnaMark::Scale::tunableRangeSize> midiNoteToScaleNoteMapping;
+
+  AnaMark::MTSESPClient *mtsESPClient = nullptr;
+  ChangeBroadcaster scaleChangedBroadcaster;
+
+  std::unique_ptr<FileLogger> logger;
 };

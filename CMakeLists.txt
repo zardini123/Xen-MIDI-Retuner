@@ -50,10 +50,8 @@ function(my_add_custom_plugin_target target_name is_synth is_midi_effect)
 
   juce_generate_juce_header("${target_name}")
 
-  # Sources found using bash command:  find ./Source -name \*.cpp -print
+  # Sources found using bash command:  find ./Source ./lib/AnaMark-Tuning-Library/lib -name \*.cpp -print
   target_sources("${target_name}" PRIVATE
-    ./lib/AnaMark-Tuning-Library/lib/MTS-ESP/Master/libMTSMaster.cpp
-    ./lib/AnaMark-Tuning-Library/lib/MTS-ESP/Client/libMTSClient.cpp
     ./Source/Utilities.cpp
     ./Source/Components/TransitionCurveGUI.cpp
     ./Source/Components/TransitionCurve.cpp
@@ -68,12 +66,12 @@ function(my_add_custom_plugin_target target_name is_synth is_midi_effect)
     ./Source/EditorModules/KeyboardVisual/NoteAndFrequencyOverlay.cpp
     ./Source/EditorModules/KeyboardVisual/ScaleFrequenciesOverlay.cpp
     ./Source/EditorModules/ProcessingView.cpp
-    ./Source/EditorModules/TestingView/CapabilitiesTestGUI.cpp
     ./Source/PluginProcessor.cpp
     ./Source/PluginGUI.cpp
     ./Source/PluginEditor.cpp
     ./Source/ProcessorData.cpp
-    ./Source/ComponentWithReferenceToData.cpp
+    ./lib/AnaMark-Tuning-Library/lib/MTS-ESP/Master/libMTSMaster.cpp
+    ./lib/AnaMark-Tuning-Library/lib/MTS-ESP/Client/libMTSClient.cpp
     )
 
   target_compile_definitions("${target_name}" PUBLIC

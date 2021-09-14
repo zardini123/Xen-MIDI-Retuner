@@ -10,12 +10,13 @@
 
 #pragma once
 
-#include "../lib/AnaMark-Tuning-Library/src/AttacherProvider.hpp"
 #include <JuceHeader.h>
+
+#include "../lib/AnaMark-Tuning-Library/src/AttacherProvider.hpp"
 
 class ScaleChangeBroadcaster : public AnaMark::ChangeAttacher,
                                public juce::ChangeBroadcaster {
-
+public:
   void RecieveChangeFromProvider(const AnaMark::ChangeProvider *const changeOrigin,
                                  const AnaMark::ChangeProvider *const notifier,
                                  int scaleNote, double newFrequency) {

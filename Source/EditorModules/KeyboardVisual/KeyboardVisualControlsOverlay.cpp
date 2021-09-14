@@ -135,12 +135,12 @@ void KeyboardVisualControlsOverlay::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    viewStartingMidiNote->setBounds (proportionOfWidth (0.9143f) - proportionOfWidth (0.0720f), 0, proportionOfWidth (0.0720f), 23);
-    viewEndingMidiNote->setBounds (proportionOfWidth (0.9931f) - proportionOfWidth (0.0720f), 0, proportionOfWidth (0.0720f), 23);
-    viewZoomIn->setBounds (proportionOfWidth (0.8158f) - proportionOfWidth (0.0214f), 0, proportionOfWidth (0.0214f), 24);
-    viewZoomOut->setBounds (proportionOfWidth (0.8355f) - proportionOfWidth (0.0214f), 0, proportionOfWidth (0.0214f), 24);
-    viewShiftRight->setBounds (proportionOfWidth (0.7961f) - proportionOfWidth (0.0214f), 0, proportionOfWidth (0.0214f), 24);
-    viewShiftLeft->setBounds (proportionOfWidth (0.7764f) - proportionOfWidth (0.0214f), 0, proportionOfWidth (0.0214f), 24);
+    viewStartingMidiNote->setBounds (proportionOfWidth (0.9146f) - proportionOfWidth (0.0723f), 0, proportionOfWidth (0.0723f), 23);
+    viewEndingMidiNote->setBounds (proportionOfWidth (0.9931f) - proportionOfWidth (0.0723f), 0, proportionOfWidth (0.0723f), 23);
+    viewZoomIn->setBounds (proportionOfWidth (0.8161f) - proportionOfWidth (0.0215f), 0, proportionOfWidth (0.0215f), 24);
+    viewZoomOut->setBounds (proportionOfWidth (0.8354f) - proportionOfWidth (0.0215f), 0, proportionOfWidth (0.0215f), 24);
+    viewShiftRight->setBounds (proportionOfWidth (0.7961f) - proportionOfWidth (0.0215f), 0, proportionOfWidth (0.0215f), 24);
+    viewShiftLeft->setBounds (proportionOfWidth (0.7761f) - proportionOfWidth (0.0215f), 0, proportionOfWidth (0.0215f), 24);
     //[UserResized] Add your own custom resize handling here..
 
     // juce::Component *visualOptionsComponent = visualOptionsViewport->getViewedComponent();

@@ -115,33 +115,29 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
 
                 Note *currentNote = &(*it);
 
-                if (data->apvts.getParameterAsValue("keyboard_visuals-enable_input_MIDI_notes").getValue()) {
-                    // Draw Continous Note
-                    // Yellow
-                    keyboard->drawMarkerAtContinuousMidiNote(continuousMidiNote, Colour (0xffedfa00), g);
-                    // Colour fillColour = Colour (0xffd1e40b);
-                    // g.setColour (fillColour);
-                    // g.fillRect (x, y, width, height);
+                // Draw Continous Note
+                // Yellow
+                keyboard->drawMarkerAtContinuousMidiNote(continuousMidiNote, Colour (0xffedfa00), g);
+                // Colour fillColour = Colour (0xffd1e40b);
+                // g.setColour (fillColour);
+                // g.fillRect (x, y, width, height);
 
-                    // Draw Note
-                    // Yellow (transparent)
-                    keyboard->drawMarkerAtDiscreteMidiNote(it->midiNote, Colour (0x5dedfa00), g);
-                    // fillColour = Colour (0x5dd1e40b);
-                    // g.setColour (fillColour);
-                    // g.fillRect (midiNoteX, y, width, height);
-                }
+                // Draw Note
+                // Yellow (transparent)
+                keyboard->drawMarkerAtDiscreteMidiNote(it->midiNote, Colour (0x5dedfa00), g);
+                // fillColour = Colour (0x5dd1e40b);
+                // g.setColour (fillColour);
+                // g.fillRect (midiNoteX, y, width, height);
 
                 if (currentNote == processorData->input[i].priorityNote) {
-                    if (data->apvts.getParameterAsValue("keyboard_visuals-enable_input_pitchbend_range").getValue()) {
-                        // In pitchbend visualzation under priority note
-                        // Blue-green (transparent)
-                        Colour fillColour = Colour (0x3f00ffb2);
-                        int x1 = keyboard->ConvertContinuousMidiNoteToPercentWidth((float)it->midiNote - keyboard_pitch_bend_range) * widthOfComponent;
-                        int x2 = keyboard->ConvertContinuousMidiNoteToPercentWidth((float)it->midiNote + keyboard_pitch_bend_range) * widthOfComponent;
+                    // In pitchbend visualzation under priority note
+                    // Blue-green (transparent)
+                    Colour fillColour = Colour (0x3f00ffb2);
+                    int x1 = keyboard->ConvertContinuousMidiNoteToPercentWidth((float)it->midiNote - keyboard_pitch_bend_range) * widthOfComponent;
+                    int x2 = keyboard->ConvertContinuousMidiNoteToPercentWidth((float)it->midiNote + keyboard_pitch_bend_range) * widthOfComponent;
 
-                        g.setColour (fillColour);
-                        g.fillRect (x1, y, x2 - x1, height);
-                    }
+                    g.setColour (fillColour);
+                    g.fillRect (x1, y, x2 - x1, height);
 
                     /*
                     // Show the resolution of MIDI 1's 14 bit pitchwheel parameter
@@ -153,31 +149,27 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
                     }
                      */
 
-                    if (data->apvts.getParameterAsValue("keyboard_visuals-enable_channel_priority_note").getValue()) {
-                        // Draw prioirty note
-                        // Light Green (transparent)
-                        keyboard->drawLargerMarkerAtDiscreteMidiNote(it->midiNote, Colour (0x5d00ffb2), g);
-                        // fillColour = Colour (0xff00ffb2);
-                        // g.setColour (fillColour);
-                        // g.fillRect (midiNoteX - 1, y, width + 3, height);
+                    // Draw prioirty note
+                    // Light Green (transparent)
+                    keyboard->drawLargerMarkerAtDiscreteMidiNote(it->midiNote, Colour (0x5d00ffb2), g);
+                    // fillColour = Colour (0xff00ffb2);
+                    // g.setColour (fillColour);
+                    // g.fillRect (midiNoteX - 1, y, width + 3, height);
 
-                        // Draw continuous priority note
-                        // Light Green
-                        keyboard->drawLargerMarkerAtContinuousMidiNote(continuousMidiNote, Colour (0xff00ffb2), g);
-                        // fillColour = Colour (0xff00ffb2);
-                        // g.setColour (fillColour);
-                        // g.fillRect (x - 1, y, width + 3, height);
-                    }
+                    // Draw continuous priority note
+                    // Light Green
+                    keyboard->drawLargerMarkerAtContinuousMidiNote(continuousMidiNote, Colour (0xff00ffb2), g);
+                    // fillColour = Colour (0xff00ffb2);
+                    // g.setColour (fillColour);
+                    // g.fillRect (x - 1, y, width + 3, height);
 
-                    if (data->apvts.getParameterAsValue("keyboard_visuals-enable_priority_note_snapped_to_scale").getValue()) {
-                        // Converted Note
-                        // Pink
-                        keyboard->drawLargerMarkerAtContinuousMidiNote(processorData->input[i].scaleConvertedPriorityNote, Colour (0xfffb00ff), g);
-                        // double xConverted = keyboard->ConvertContinuousMidiNoteToPercentWidth(processorData->input[i].scaleConvertedPriorityNote) * widthOfComponent;
-                        // fillColour = Colour (0xfffb00ff);
-                        // g.setColour (fillColour);
-                        // g.fillRect (xConverted - 1, y, width + 3, height);
-                    }
+                    // Converted Note
+                    // Pink
+                    keyboard->drawLargerMarkerAtContinuousMidiNote(processorData->input[i].continuousTunedNote, Colour (0xfffb00ff), g);
+                    // double xConverted = keyboard->ConvertContinuousMidiNoteToPercentWidth(processorData->input[i].continuousTunedNote) * widthOfComponent;
+                    // fillColour = Colour (0xfffb00ff);
+                    // g.setColour (fillColour);
+                    // g.fillRect (xConverted - 1, y, width + 3, height);
                 }
             }
 
@@ -185,35 +177,33 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
             {
                 // Converted Note Closest Note
                 // Pink
-                // keyboard->drawLargerMarkerAtDiscreteMidiNote(processorData->output[i].centerOfPitchbendRange, Colour (0xfffb00ff), g);
-                // double xConverted = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].centerOfPitchbendRange) * widthOfComponent;
-                // Colour fillColour = Colour (0x4dfb00ff);
+                {
+                  keyboard->drawLargerMarkerAtDiscreteMidiNote(processorData->output[i].centerOfOutputPitchbendRangeStatic, Colour (0xfffb00ff), g);
+                  double xConverted = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].centerOfOutputPitchbendRangeStatic) * widthOfComponent;
+                  Colour fillColour = Colour (0x4dfb00ff);
+                  g.setColour (fillColour);
+                  g.fillRect (xConverted - 1, y, width + 3, height);
+                }
+
+                // Out pitchbend
+                // Orange (transparent)
+                // Colour fillColour = Colour (0x3f00a2ff);
+                Colour fillColour = Colour (0x3fffae00);
+                // int x3 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].centerOfOutputPitchbendRangeStatic - synth_pitch_bend_range) * widthOfComponent;
+                // int x4 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].centerOfOutputPitchbendRangeStatic + synth_pitch_bend_range) * widthOfComponent;
+                int x3 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].outputMidiNoteForTunedNote - synth_pitch_bend_range) * widthOfComponent;
+                int x4 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].outputMidiNoteForTunedNote + synth_pitch_bend_range) * widthOfComponent;
+
+                g.setColour (fillColour);
+                g.fillRect (x3, y, x4 - x3, height);
+
+                // Output Midi Note
+                // Orange
+                keyboard->drawLargerMarkerAtDiscreteMidiNote(processorData->output[i].outputMidiNoteForTunedNote, Colour (0xffffae00), g);
+                // xConverted = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].outputMidiNoteForTunedNote) * widthOfComponent;
+                // fillColour = Colour (0xffffae00);
                 // g.setColour (fillColour);
                 // g.fillRect (xConverted - 1, y, width + 3, height);
-
-                if (data->apvts.getParameterAsValue("keyboard_visuals-enable_output_pitchbend_range").getValue()) {
-                    // Out pitchbend
-                    // Blue (transparent)
-                    // Colour fillColour = Colour (0x3f00a2ff);
-                    Colour fillColour = Colour (0x3fffae00);
-                    // int x3 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].centerOfPitchbendRange - synth_pitch_bend_range) * widthOfComponent;
-                    // int x4 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].centerOfPitchbendRange + synth_pitch_bend_range) * widthOfComponent;
-                    int x3 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].currentMidiNoteNumber - synth_pitch_bend_range) * widthOfComponent;
-                    int x4 = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].currentMidiNoteNumber + synth_pitch_bend_range) * widthOfComponent;
-
-                    g.setColour (fillColour);
-                    g.fillRect (x3, y, x4 - x3, height);
-                }
-
-                if (data->apvts.getParameterAsValue("keyboard_visuals-enable_output_MIDI_priority_note").getValue()) {
-                    // Output Midi Note
-                    // Orange
-                    keyboard->drawLargerMarkerAtDiscreteMidiNote(processorData->output[i].currentMidiNoteNumber, Colour (0xffffae00), g);
-                    // xConverted = keyboard->ConvertDiscreteMidiNoteToPercentWidth(processorData->output[i].currentMidiNoteNumber) * widthOfComponent;
-                    // fillColour = Colour (0xffffae00);
-                    // g.setColour (fillColour);
-                    // g.fillRect (xConverted - 1, y, width + 3, height);
-                }
             }
         }
     }
@@ -268,4 +258,3 @@ END_JUCER_METADATA
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-

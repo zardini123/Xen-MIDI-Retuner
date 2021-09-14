@@ -10,9 +10,6 @@
 
 #pragma once
 
-const int MAX_MIDI_CHANNELS = 16;
-const int CENTER_PITCHWHEEL = 8192;
-
 enum MIDIEnviromentTestType
 {
     NULL_TEST = 0,
@@ -93,32 +90,4 @@ enum InterpolationDimension
 {
     CENTS = 0,
     FREQUENCY
-};
-
-struct Note
-{
-    int midiNote;
-    uint8 velocity;
-
-    bool turnOffFlag = false;
-};
-
-struct InputChannel
-{
-    uint16 pitchwheel = CENTER_PITCHWHEEL; // Default to pitchbend wheel at center
-    const Note *priorityNote = nullptr;
-
-    float scaleConvertedPriorityNote;
-    std::vector<Note> notes;
-};
-
-struct OutputChannel
-{
-    int centerOfPitchbendRange;
-    int tunedNoteToCenterOfPitchbendRangeDifference;
-
-    int noteOffset;
-    int currentMidiNoteNumber;
-
-    std::vector<Note> notes;
 };

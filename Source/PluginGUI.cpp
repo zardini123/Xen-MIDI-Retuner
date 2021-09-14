@@ -94,7 +94,7 @@ void PluginGUI::resized()
     //[/UserPreResize]
 
     keyboardVisual->setBounds (0, getHeight() - proportionOfHeight (0.2000f), proportionOfWidth (1.0000f), proportionOfHeight (0.2000f));
-    scaleFrequenciesOverlay->setBounds (0 + 0, proportionOfHeight (0.7000f), juce::roundToInt (proportionOfWidth (1.0000f) * 1.0000f), juce::roundToInt (proportionOfHeight (0.2000f) * 0.6000f));
+    scaleFrequenciesOverlay->setBounds (0 + 0, proportionOfHeight (0.7000f), juce::roundToInt (proportionOfWidth (1.0000f) * 1.0000f), juce::roundToInt (proportionOfHeight (0.2000f) * 0.7667f));
     processingView->setBounds (0, 0, proportionOfWidth (1.0000f), proportionOfHeight (0.7000f));
     controlsOverlay->setBounds (0, getHeight() - 106 - proportionOfHeight (0.0644f), proportionOfWidth (1.0000f), proportionOfHeight (0.0644f));
     //[UserResized] Add your own custom resize handling here..
@@ -126,9 +126,9 @@ BEGIN_JUCER_METADATA
              explicitFocusOrder="0" pos="0 0Rr 100% 20%" sourceFile="EditorModules/KeyboardVisual/KeyboardVisual.cpp"
              constructorParams="data"/>
   <JUCERCOMP name="" id="31178f5ce0e8830f" memberName="scaleFrequenciesOverlay"
-             virtualName="" explicitFocusOrder="0" pos="0 70% 100% 60%" posRelativeX="9a893a36dc7e0c36"
-             posRelativeW="9a893a36dc7e0c36" posRelativeH="9a893a36dc7e0c36"
-             sourceFile="EditorModules/KeyboardVisual/ScaleFrequenciesOverlay.cpp"
+             virtualName="" explicitFocusOrder="0" pos="0 70% 100% 76.667%"
+             posRelativeX="9a893a36dc7e0c36" posRelativeW="9a893a36dc7e0c36"
+             posRelativeH="9a893a36dc7e0c36" sourceFile="EditorModules/KeyboardVisual/ScaleFrequenciesOverlay.cpp"
              constructorParams="this-&gt;data, keyboardVisual.get()"/>
   <JUCERCOMP name="" id="28aad21504a460c5" memberName="processingView" virtualName=""
              explicitFocusOrder="0" pos="0 0 100% 70%" sourceFile="EditorModules/ProcessingView.cpp"
