@@ -471,89 +471,59 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
   // lower/upper)
   //    Use discrete note (noteToTune) as frequency
 
-  if (data.midiNoteToScaleNoteMapping[inChannel.priorityNote->midiNote] == -1) {
-  }
+  // Query the note first as it will trigger a ScaleChange event if there is a change in
+  // frequency. That will in turn update the mapping.
+  // @TODO: Is this the best way to update the mapping (and update the scale)?
+  data.scale.FrequencyForMIDINote(inChannel.priorityNote->midiNote);
 
-  float noteToTuneSemitones = pitchwheelPosToSemitones(
-      inChannel.pitchwheel,
-      *data.apvts.getRawParameterValue("keyboard_pitch_bend_range"));
-  // @FIXME:  Created Segmentation Fault very low note is played
-  float noteToTuneFreq =
-      noteAndSemitonesToFreqHz(inChannel.priorityNote->midiNote, noteToTuneSemitones);
+  bool playNotes = false;
+  int noteMapping = data.midiNoteToScaleNoteMapping[inChannel.priorityNote->midiNote];
+  if (data.midiNoteToScaleNoteMapping[inChannel.priorityNote->midiNote] != -1) {
+    // continuousTunedNote is the continuous midi note that the selected priority
+    // note needs to reach
+    inChannel.continuousTunedNote =
+        freqHZToContinuousMidiNote(data.scale.FrequencyForMIDINote(noteMapping));
 
-  double lowerScaleNoteFreq = 0.0;
-  double higherScaleNoteFreq = 0.0;
+    // https://github.com/zardini123/AnaMark-Tuning-Library/issues/2#issuecomment-658591163
 
-  // Find closest two notes in the scale to that of noteToTuneFreq
-  // @FIXME: Finding the nearest two scale note frequencies assumes the scale increases in
-  // a sorted order.  Some scales may not follow this paradigm!
-  // @TODO: Create iterator system for scale
-  for (auto i = AnaMark::Scale::firstTunableScaleNote;
-       i < AnaMark::Scale::afterLastTunableScaleNote;
-       ++i) {
-    auto nextNote = i + 1;
+    float noteToTuneSemitones = pitchwheelPosToSemitones(
+        inChannel.pitchwheel,
+        *data.apvts.getRawParameterValue("keyboard_pitch_bend_range"));
 
-    // @FIXME: Playing note below firstTunableScaleNote and above last tunable scale note
-    // results in odd stuff
-    double scaleNoteFreq = data.scale.FrequencyForMIDINote(i);
-    double nextScaleNoteFreq = data.scale.FrequencyForMIDINote(nextNote);
+    // Updated only when note to tune has changed
+    //    (midi note on/off messages are inputted, or choice for note to tune has changed)
+    if (noteToTuneHasChanged) {
+      // Displayed by NoteAndFrequencyOverlay as center of output pitchbend range (blue
+      // strip).
+      outChannel.centerOfOutputPitchbendRangeStatic =
+          std::round(inChannel.continuousTunedNote);
 
-    if (noteToTuneFreq >= scaleNoteFreq && noteToTuneFreq < nextScaleNoteFreq) {
-      lowerScaleNoteFreq = scaleNoteFreq;
-      higherScaleNoteFreq = nextScaleNoteFreq;
-      break;
+      // ∆ = Destination - source
+      outChannel.noteToTuneToContinuousTunedNoteDifference =
+          outChannel.centerOfOutputPitchbendRangeStatic -
+          inChannel.priorityNote->midiNote;
     }
+
+    float outPitchBendRange = *data.apvts.getRawParameterValue("synth_pitch_bend_range");
+
+    outChannel.offsetOutputPitchbendRange =
+        std::round((inChannel.continuousTunedNote -
+                    outChannel.centerOfOutputPitchbendRangeStatic) /
+                   (outPitchBendRange * 2)) *
+        (outPitchBendRange * 2);
+
+    // Following code is to manage the output of note on and off messages
+    // If, for example, holding a chord and pitchbending upwards results in a voice having
+    // same midi note as previously held midi note, do not send a off message (sustain the
+    // note longer).
+
+    // The currently outputed midi note corresponding to the priority note on this channel
+    // Shown via NoteAndFrequencyOverlay as yellow strip.
+    outChannel.outputMidiNoteForTunedNote = outChannel.offsetOutputPitchbendRange +
+                                            outChannel.centerOfOutputPitchbendRangeStatic;
+
+    playNotes = true;
   }
-
-  // @TODO: Have different interpolation dimensions (i.e. frequency or midi note (cents)).
-  // Interpolation dimension currently is cents.
-  float priorityContMidiNote = inChannel.priorityNote->midiNote + noteToTuneSemitones;
-  float lowerContMidiNote = 0.0f;
-  float higherContMidiNote = 0.0f;
-
-  lowerContMidiNote = freqHZToContinuousMidiNote(lowerScaleNoteFreq);
-  higherContMidiNote = freqHZToContinuousMidiNote(higherScaleNoteFreq);
-
-  float percentBetween =
-      jmap(priorityContMidiNote, lowerContMidiNote, higherContMidiNote, 0.0f, 1.0f);
-  float interpolatedBetween = data.transitionCurve.evaluate(percentBetween);
-  float mappedBackToContinuousMidiNote =
-      jmap(interpolatedBetween, 0.0f, 1.0f, lowerContMidiNote, higherContMidiNote);
-
-  // continuousTunedNote is the continuous midi note that the selected priority
-  // note needs to reach
-  inChannel.continuousTunedNote = mappedBackToContinuousMidiNote;
-
-  // Updated only when note to tune has changed
-  //    (midi note on/off messages are inputted, or choice for note to tune has changed)
-  if (noteToTuneHasChanged) {
-    // Displayed by NoteAndFrequencyOverlay as center of output pitchbend range (blue
-    // strip).
-    outChannel.centerOfOutputPitchbendRangeStatic =
-        std::round(inChannel.continuousTunedNote);
-
-    // ∆ = Destination - source
-    outChannel.noteToTuneToContinuousTunedNoteDifference =
-        outChannel.centerOfOutputPitchbendRangeStatic - inChannel.priorityNote->midiNote;
-  }
-
-  float outPitchBendRange = *data.apvts.getRawParameterValue("synth_pitch_bend_range");
-
-  outChannel.offsetOutputPitchbendRange =
-      std::round((inChannel.continuousTunedNote -
-                  outChannel.centerOfOutputPitchbendRangeStatic) /
-                 (outPitchBendRange * 2)) *
-      (outPitchBendRange * 2);
-
-  // Following code is to manage the output of note on and off messages
-  // If, for example, holding a chord and pitchbending upwards results in a voice having
-  // same midi note as previously held midi note, do not send a off message (sustain the
-  // note longer).
-
-  // The currently outputed midi note corresponding to the priority note on this channel
-  // Shown via NoteAndFrequencyOverlay as yellow strip.
-  outChannel.outputMidiNoteForTunedNote = outChannel.offsetOutputPitchbendRange +
-                                          outChannel.centerOfOutputPitchbendRangeStatic;
 
   // Set all notes for removal.  The next for-loop block will re-set notes to stay on if
   // input midi calls for it
@@ -565,46 +535,49 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
   // Used for outputNotes element erasing workaround later
   int numNotesMarkedForShutoff = static_cast<int>(outChannel.notes.size());
 
-  // Translate all input notes by translation values for tiling midi notes.
-  // If the translated input notes does NOT equal any output note currently stored in
-  // output[channelIndex].notes,
-  //      add the note to output[channelIndex].notes and send out a NoteOn message.
-  // The output notes not paired with any translated input notes will have its turnOffFlag
-  // still set to true. The next loop will go through all output notes and if its
-  // turnOffFlag is true, the note will be removed and a NoteOff will be sent out.
-  for (std::vector<Note>::iterator it = inChannel.notes.begin();
-       it != inChannel.notes.end();
-       ++it) {
-    // When it->midiNote is noteToTune, the result of inputMidiNoteAdjusted is equal to
-    //    outChannel.outputMidiNoteForTunedNote
-    int inputMidiNoteAdjusted = it->midiNote +
-                                outChannel.noteToTuneToContinuousTunedNoteDifference +
-                                outChannel.offsetOutputPitchbendRange;
+  if (playNotes) {
+    // Translate all input notes by translation values for tiling midi notes.
+    // If the translated input notes does NOT equal any output note currently stored in
+    // output[channelIndex].notes,
+    //      add the note to output[channelIndex].notes and send out a NoteOn message.
+    // The output notes not paired with any translated input notes will have its
+    // turnOffFlag still set to true. The next loop will go through all output notes and
+    // if its turnOffFlag is true, the note will be removed and a NoteOff will be sent
+    // out.
+    for (std::vector<Note>::iterator it = inChannel.notes.begin();
+         it != inChannel.notes.end();
+         ++it) {
+      // When it->midiNote is noteToTune, the result of inputMidiNoteAdjusted is equal to
+      //    outChannel.outputMidiNoteForTunedNote
+      int inputMidiNoteAdjusted = it->midiNote +
+                                  outChannel.noteToTuneToContinuousTunedNoteDifference +
+                                  outChannel.offsetOutputPitchbendRange;
 
-    bool noteAlreadyExists = false;
-    for (std::vector<Note>::iterator it2 = outChannel.notes.begin();
-         it2 != outChannel.notes.end();
-         ++it2) {
-      if (it2->midiNote == inputMidiNoteAdjusted) {
-        // A translated input note has been found to equal a output[channelIndex].notes
-        // note.  Don't add any notes or send out any NoteOn messages and exit early.
-        it2->turnOffFlag = false;
-        numNotesMarkedForShutoff--;
-        noteAlreadyExists = true;
-        break;
+      bool noteAlreadyExists = false;
+      for (std::vector<Note>::iterator it2 = outChannel.notes.begin();
+           it2 != outChannel.notes.end();
+           ++it2) {
+        if (it2->midiNote == inputMidiNoteAdjusted) {
+          // A translated input note has been found to equal a output[channelIndex].notes
+          // note.  Don't add any notes or send out any NoteOn messages and exit early.
+          it2->turnOffFlag = false;
+          numNotesMarkedForShutoff--;
+          noteAlreadyExists = true;
+          break;
+        }
       }
-    }
 
-    if (!noteAlreadyExists) {
-      // Copy all note data (velocity) but change note number
-      Note currentConvertedNote = *it;
-      currentConvertedNote.midiNote = inputMidiNoteAdjusted;
+      if (!noteAlreadyExists) {
+        // Copy all note data (velocity) but change note number
+        Note currentConvertedNote = *it;
+        currentConvertedNote.midiNote = inputMidiNoteAdjusted;
 
-      outChannel.notes.push_back(currentConvertedNote);
+        outChannel.notes.push_back(currentConvertedNote);
 
-      processedMidi.addEvent(
-          MidiMessage::noteOn(channelIndex + 1, inputMidiNoteAdjusted, it->velocity),
-          time);
+        processedMidi.addEvent(
+            MidiMessage::noteOn(channelIndex + 1, inputMidiNoteAdjusted, it->velocity),
+            time);
+      }
     }
   }
 
