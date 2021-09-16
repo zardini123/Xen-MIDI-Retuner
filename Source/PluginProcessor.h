@@ -85,7 +85,7 @@ private:
   std::mt19937 engine = std::mt19937(seed());
 
   const Note *
-  determinePriorityNote(const std::vector<Note> &noteStack,
+  determineNoteToTune(const std::vector<Note> &noteStack,
                         SingleChannelNotePrioritzation priority,
                         SingleChannelNotePrioritzationModifier priorityModifier);
   void updateBlock(MidiBuffer &processedMidi, int channelIndex, bool updateInitialNotes,

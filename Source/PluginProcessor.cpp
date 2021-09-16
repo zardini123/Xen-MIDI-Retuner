@@ -36,7 +36,7 @@ XenMidiRetunerAudioProcessor::XenMidiRetunerAudioProcessor()
 }
 
 XenMidiRetunerAudioProcessor::~XenMidiRetunerAudioProcessor() {
-  if (data.scale.IsAttachedToAChangeProvider()) {
+  if (data.scale.IsAttachedToAStateProvider()) {
     data.scale.DetachFromStateProvider();
   }
   delete data.mtsESPClient;
@@ -97,6 +97,18 @@ void XenMidiRetunerAudioProcessor::changeProgramName(int index, const String &ne
 void XenMidiRetunerAudioProcessor::prepareToPlay(double sampleRate, int samplesPerBlock) {
   // Use this method as the place to do any pre-playback
   // initialisation that you need..
+
+  // Cannot access parameter values in getStateInformation, data constructor, or plugin
+  // constructor as apvts is not ready yet.  This is the only function I know of that is
+  // best for that timing.
+  int mtsEspState = (int)*data.apvts.getRawParameterValue("enable_mts_esp");
+  // data.logger->logMessage("enable_mts_esp: " + std::to_string(mtsEspState));
+  if (mtsEspState == 1) {
+    if (data.mtsESPClient == nullptr && !data.scale.IsAttachedToAStateProvider()) {
+      data.mtsESPClient = new AnaMark::MTSESPClient();
+      data.scale.AttachToStateProvider(&data.mtsESPClient->SingleChannel());
+    }
+  }
 }
 
 void XenMidiRetunerAudioProcessor::releaseResources() {
@@ -212,7 +224,7 @@ void XenMidiRetunerAudioProcessor::RecieveChangeFromProvider(
 
 //==============================================================================
 
-const Note *XenMidiRetunerAudioProcessor::determinePriorityNote(
+const Note *XenMidiRetunerAudioProcessor::determineNoteToTune(
     const std::vector<Note> &noteStack, SingleChannelNotePrioritzation priority,
     SingleChannelNotePrioritzationModifier priorityModifier) {
   // Don't bother deciding a prioirty note if there is no notes to choose from in the
@@ -354,7 +366,7 @@ void XenMidiRetunerAudioProcessor::processBlock(AudioBuffer<float> &buffer,
       }
 
       // This condition of note on updates prioritization
-      inputChannel.priorityNote = determinePriorityNote(
+      inputChannel.noteToTune = determineNoteToTune(
           inputChannel.notes,
           (SingleChannelNotePrioritzation)(int)*data.apvts.getRawParameterValue(
               "tuned_note_per_keyboard_channel"),
@@ -372,7 +384,7 @@ void XenMidiRetunerAudioProcessor::processBlock(AudioBuffer<float> &buffer,
 
       // This condition of note off updates prioritization
       // Prioirty Note should be set to nullptr if there are no input notes
-      inputChannel.priorityNote = determinePriorityNote(
+      inputChannel.noteToTune = determineNoteToTune(
           inputChannel.notes,
           (SingleChannelNotePrioritzation)(int)*data.apvts.getRawParameterValue(
               "tuned_note_per_keyboard_channel"),
@@ -401,7 +413,7 @@ void XenMidiRetunerAudioProcessor::processBlock(AudioBuffer<float> &buffer,
     }
 
     // Priority note required to determine how to adjust notes/pitchbend for the channel
-    if (inputChannel.priorityNote != nullptr) {
+    if (inputChannel.noteToTune != nullptr) {
       bool isNoteMessage = m.isNoteOn() || m.isNoteOff();
 
       // Note messages and pitchwheel changes input frequencies, therefore has an effect
@@ -420,7 +432,7 @@ void XenMidiRetunerAudioProcessor::processBlock(AudioBuffer<float> &buffer,
   if (updatePitch || updatePriority) {
     for (int i = 0; i < MAX_MIDI_CHANNELS; i++) {
       if (updatePriority) {
-        data.input[i].priorityNote = determinePriorityNote(
+        data.input[i].noteToTune = determineNoteToTune(
             data.input[i].notes,
             (SingleChannelNotePrioritzation)(int)*data.apvts.getRawParameterValue(
                 "tuned_note_per_keyboard_channel"),
@@ -428,7 +440,7 @@ void XenMidiRetunerAudioProcessor::processBlock(AudioBuffer<float> &buffer,
                 "tuned_note_per_keyboard_channel_modifier"));
       }
 
-      if (data.input[i].priorityNote != nullptr) {
+      if (data.input[i].noteToTune != nullptr) {
         updateBlock(processedMidi, i, updatePriority, time);
       }
     }
@@ -474,11 +486,11 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
   // Query the note first as it will trigger a ScaleChange event if there is a change in
   // frequency. That will in turn update the mapping.
   // @TODO: Is this the best way to update the mapping (and update the scale)?
-  data.scale.FrequencyForMIDINote(inChannel.priorityNote->midiNote);
+  data.scale.FrequencyForMIDINote(inChannel.noteToTune->midiNote);
 
   bool playNotes = false;
-  int noteMapping = data.midiNoteToScaleNoteMapping[inChannel.priorityNote->midiNote];
-  if (data.midiNoteToScaleNoteMapping[inChannel.priorityNote->midiNote] != -1) {
+  int noteMapping = data.midiNoteToScaleNoteMapping[inChannel.noteToTune->midiNote];
+  if (noteMapping != -1) {
     // continuousTunedNote is the continuous midi note that the selected priority
     // note needs to reach
     inChannel.continuousTunedNote =
@@ -500,8 +512,7 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
 
       // ∆ = Destination - source
       outChannel.noteToTuneToContinuousTunedNoteDifference =
-          outChannel.centerOfOutputPitchbendRangeStatic -
-          inChannel.priorityNote->midiNote;
+          outChannel.centerOfOutputPitchbendRangeStatic - inChannel.noteToTune->midiNote;
     }
 
     float outPitchBendRange = *data.apvts.getRawParameterValue("synth_pitch_bend_range");
@@ -544,6 +555,8 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
     // turnOffFlag still set to true. The next loop will go through all output notes and
     // if its turnOffFlag is true, the note will be removed and a NoteOff will be sent
     // out.
+    bool sendOutUntunedNotes =
+        data.apvts.getParameterAsValue("send_out_untuned_notes").getValue();
     for (std::vector<Note>::iterator it = inChannel.notes.begin();
          it != inChannel.notes.end();
          ++it) {
@@ -553,7 +566,15 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
                                   outChannel.noteToTuneToContinuousTunedNoteDifference +
                                   outChannel.offsetOutputPitchbendRange;
 
+      if (!sendOutUntunedNotes &&
+          inputMidiNoteAdjusted != inChannel.noteToTune->midiNote) {
+        // Won't be played and will turn off as previously the note was marked for off.
+        continue;
+      }
+
       bool noteAlreadyExists = false;
+      // @FIXME: Entire array is traversed just to find if note exists in array.  Use a
+      // unordered_map instead to get a O(1) mapping.
       for (std::vector<Note>::iterator it2 = outChannel.notes.begin();
            it2 != outChannel.notes.end();
            ++it2) {
@@ -631,10 +652,10 @@ void XenMidiRetunerAudioProcessor::getStateInformation(MemoryBlock &destData) {
 
   xml->setAttribute("save_version", "0.0.1");
 
-  //    std::ostringstream stream;
-  //    data.scale.Write(stream);
-  //    std::string str = stream.str();
-  //    xml->setAttribute("scale_file", str);
+  // std::ostringstream stream;
+  // data.scale.Write(stream);
+  // std::string str = stream.str();
+  // xml->setAttribute("scale_file", str);
 
   copyXmlToBinary(*xml, destData);
 }

@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 project(XEN_MIDI_RETUNER VERSION 0.0.3)
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_BUILD_TYPE Debug)
 
 # For JSON Compilation Database Format Specification used by clang-tidy
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)

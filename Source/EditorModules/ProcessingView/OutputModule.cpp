@@ -33,16 +33,16 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
 
-    synth_pitch_bend_range.reset (new juce::Slider ("new slider"));
-    addAndMakeVisible (synth_pitch_bend_range.get());
-    synth_pitch_bend_range->setTooltip (TRANS("Output Pitch Bend should be set to the Input Pitch Bend Range of your instrument that you are sending the MIDI to.\n"
+    synthPitchBendRange.reset (new juce::Slider ("new slider"));
+    addAndMakeVisible (synthPitchBendRange.get());
+    synthPitchBendRange->setTooltip (TRANS("Output Pitch Bend should be set to the Input Pitch Bend Range of your instrument that you are sending the MIDI to.\n"
     "\n"
-    "Output should be equal to or greater than this plugin\'s Input pitch bend if note retrigger is unwanted."));
-    synth_pitch_bend_range->setRange (1, 96, 1);
-    synth_pitch_bend_range->setSliderStyle (juce::Slider::IncDecButtons);
-    synth_pitch_bend_range->setTextBoxStyle (juce::Slider::TextBoxLeft, false, 80, 20);
+    "Should be equal to or greater than this plugin\'s Input pitch bend if note retrigger is unwanted."));
+    synthPitchBendRange->setRange (1, 96, 1);
+    synthPitchBendRange->setSliderStyle (juce::Slider::IncDecButtons);
+    synthPitchBendRange->setTextBoxStyle (juce::Slider::TextBoxLeft, false, 80, 20);
 
-    synth_pitch_bend_range->setBounds (8, 70, 150, 24);
+    synthPitchBendRange->setBounds (8, 70, 150, 24);
 
     label.reset (new juce::Label ("new label",
                                   TRANS("Synth Pitch Bend (semitones)\n")));
@@ -85,12 +85,12 @@ OutputModule::OutputModule (ProcessorData *dataReference)
 
     label2->setBounds (168, 94, 150, 24);
 
-    juce__toggleButton3.reset (new juce::ToggleButton ("new toggle button"));
-    addAndMakeVisible (juce__toggleButton3.get());
-    juce__toggleButton3->setButtonText (TRANS("Send out un-tuned notes"));
-    juce__toggleButton3->addListener (this);
+    sendOutUntunedNotes.reset (new juce::ToggleButton ("new toggle button"));
+    addAndMakeVisible (sendOutUntunedNotes.get());
+    sendOutUntunedNotes->setButtonText (TRANS("Send out un-tuned notes"));
+    sendOutUntunedNotes->addListener (this);
 
-    juce__toggleButton3->setBounds (168, 168, 216, 24);
+    sendOutUntunedNotes->setBounds (168, 168, 216, 24);
 
     juce__label.reset (new juce::Label ("new label",
                                         TRANS("Synth uses:")));
@@ -126,7 +126,7 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     tunedNotePerKeyboardChannel->setBounds (8, 198, 144, 24);
 
     label3.reset (new juce::Label ("new label",
-                                   TRANS("Note to Tune Per Keyboard Channel")));
+                                   TRANS("Note to Tune Per Synth Channel")));
     addAndMakeVisible (label3.get());
     label3->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     label3->setJustificationType (juce::Justification::centredTop);
@@ -165,7 +165,7 @@ OutputModule::OutputModule (ProcessorData *dataReference)
 
 
     //[Constructor] You can add your own custom stuff here..
-    outputPitchbendAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(data->apvts, "synth_pitch_bend_range", *synth_pitch_bend_range.get()));
+    outputPitchbendAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(data->apvts, "synth_pitch_bend_range", *synthPitchBendRange.get()));
 
     tunedNotePerKeyboardChannel->addItemList(data->apvts.getParameter("tuned_note_per_keyboard_channel")->getAllValueStrings(), 1);
     tunedNotePerKeyboardChannelModifier->addItemList(data->apvts.getParameter("tuned_note_per_keyboard_channel_modifier")->getAllValueStrings(), 1);
@@ -173,6 +173,7 @@ OutputModule::OutputModule (ProcessorData *dataReference)
     tunedNotePerKeyboardChannelAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(data->apvts, "tuned_note_per_keyboard_channel", *tunedNotePerKeyboardChannel.get()));
     tunedNotePerKeyboardChannelModifierAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(data->apvts, "tuned_note_per_keyboard_channel_modifier", *tunedNotePerKeyboardChannelModifier.get()));
 
+    sendOutUntunedNotesAttachment.reset(new AudioProcessorValueTreeState::ButtonAttachment(data->apvts, "send_out_untuned_notes", *sendOutUntunedNotes.get()));
 
     data->apvts.addParameterListener("tuned_note_per_keyboard_channel", this);
     //[/Constructor]
@@ -183,12 +184,12 @@ OutputModule::~OutputModule()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    synth_pitch_bend_range = nullptr;
+    synthPitchBendRange = nullptr;
     label = nullptr;
     section_title = nullptr;
     synth_channel = nullptr;
     label2 = nullptr;
-    juce__toggleButton3 = nullptr;
+    sendOutUntunedNotes = nullptr;
     juce__label = nullptr;
     label4 = nullptr;
     tunedNotePerKeyboardChannel = nullptr;
@@ -266,10 +267,10 @@ void OutputModule::buttonClicked (juce::Button* buttonThatWasClicked)
     //[UserbuttonClicked_Pre]
     //[/UserbuttonClicked_Pre]
 
-    if (buttonThatWasClicked == juce__toggleButton3.get())
+    if (buttonThatWasClicked == sendOutUntunedNotes.get())
     {
-        //[UserButtonCode_juce__toggleButton3] -- add your button handler code here..
-        //[/UserButtonCode_juce__toggleButton3]
+        //[UserButtonCode_sendOutUntunedNotes] -- add your button handler code here..
+        //[/UserButtonCode_sendOutUntunedNotes]
     }
 
     //[UserbuttonClicked_Post]
@@ -307,8 +308,8 @@ BEGIN_JUCER_METADATA
   <BACKGROUND backgroundColour="323e44">
     <RECT pos="0Cc 24 108 2" fill="solid: ffffae00" hasStroke="0"/>
   </BACKGROUND>
-  <SLIDER name="new slider" id="e3a72a963cc8c6fa" memberName="synth_pitch_bend_range"
-          virtualName="" explicitFocusOrder="0" pos="8 70 150 24" tooltip="Output Pitch Bend should be set to the Input Pitch Bend Range of your instrument that you are sending the MIDI to.&#10;&#10;Output should be equal to or greater than this plugin's Input pitch bend if note retrigger is unwanted."
+  <SLIDER name="new slider" id="e3a72a963cc8c6fa" memberName="synthPitchBendRange"
+          virtualName="" explicitFocusOrder="0" pos="8 70 150 24" tooltip="Output Pitch Bend should be set to the Input Pitch Bend Range of your instrument that you are sending the MIDI to.&#10;&#10;Should be equal to or greater than this plugin's Input pitch bend if note retrigger is unwanted."
           min="1.0" max="96.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1.0"
           needsCallback="0"/>
@@ -331,7 +332,7 @@ BEGIN_JUCER_METADATA
          edBkgCol="0" labelText="Synth Channel" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
-  <TOGGLEBUTTON name="new toggle button" id="313f41e3b63cb912" memberName="juce__toggleButton3"
+  <TOGGLEBUTTON name="new toggle button" id="313f41e3b63cb912" memberName="sendOutUntunedNotes"
                 virtualName="" explicitFocusOrder="0" pos="168 168 216 24" buttonText="Send out un-tuned notes"
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
   <LABEL name="new label" id="ad39ec0fd97d0a34" memberName="juce__label"
@@ -349,7 +350,7 @@ BEGIN_JUCER_METADATA
             editable="0" layout="33" items="" textWhenNonSelected="" textWhenNoItems=""/>
   <LABEL name="new label" id="1112cb5e9cdc4f37" memberName="label3" virtualName=""
          explicitFocusOrder="0" pos="8 166 144 32" edTextCol="ff000000"
-         edBkgCol="0" labelText="Note to Tune Per Keyboard Channel" editableSingleClick="0"
+         edBkgCol="0" labelText="Note to Tune Per Synth Channel" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="12"/>
   <COMBOBOX name="new combo box" id="2ebd7ab8a0c8a16" memberName="tunedNotePerKeyboardChannelModifier"

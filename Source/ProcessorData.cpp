@@ -13,17 +13,11 @@
 AudioProcessorValueTreeState::ParameterLayout createParameterLayout() {
   AudioProcessorValueTreeState::ParameterLayout layout;
 
+  ////////////////////////////////
+  // From Keyboard
+
   layout.add(std::make_unique<AudioParameterInt>(
       "keyboard_pitch_bend_range", "Input Pitch Bend Range", 1, 96, 2));
-  layout.add(std::make_unique<AudioParameterInt>(
-      "synth_pitch_bend_range", "Output Pitch Bend Range", 1, 96, 2));
-
-  StringArray midiTypes = StringArray("One Channel", "Multi Channel", "MPE");
-
-  layout.add(std::make_unique<AudioParameterChoice>(
-      "keyboard_midi_type", "Keyboard MIDI Type", midiTypes, 1));
-  layout.add(std::make_unique<AudioParameterChoice>(
-      "synth_midi_type", "Synth MIDI Type", midiTypes, 0));
 
   StringArray midiChannels;
   for (int i = 1; i <= 16; i++) {
@@ -32,11 +26,31 @@ AudioProcessorValueTreeState::ParameterLayout createParameterLayout() {
 
   layout.add(std::make_unique<AudioParameterChoice>(
       "keyboard_channel", "Keyboard Channel", midiChannels, 0));
+
+  StringArray midiTypes = StringArray("One Channel", "Multi Channel", "MPE");
+
+  layout.add(std::make_unique<AudioParameterChoice>(
+      "keyboard_midi_type", "Keyboard MIDI Type", midiTypes, 1));
+
+  ////////////////////////////////
+  // Scale
+
+  layout.add(std::make_unique<AudioParameterChoice>(
+      "enable_mts_esp", "Enable MTS-ESP", StringArray("Off", "On"), 0));
+
+  ////////////////////////////////
+  // To Synth
+
+  layout.add(std::make_unique<AudioParameterInt>(
+      "synth_pitch_bend_range", "Output Pitch Bend Range", 1, 96, 2));
+
+  layout.add(std::make_unique<AudioParameterChoice>(
+      "synth_midi_type", "Synth MIDI Type", midiTypes, 0));
   layout.add(std::make_unique<AudioParameterChoice>(
       "synth_channel", "Synth Channel", midiChannels, 0));
 
   layout.add(std::make_unique<AudioParameterBool>(
-      "synth_send_untuned_notes", "Send Out Un-tuned Notes", false));
+      "send_out_untuned_notes", "Send Out Un-tuned Notes", false));
 
   layout.add(std::make_unique<AudioParameterChoice>(
       "tuned_note_per_keyboard_channel",
@@ -49,14 +63,8 @@ AudioProcessorValueTreeState::ParameterLayout createParameterLayout() {
                                              StringArray("Highest", "Lowest"),
                                              0));
 
-  layout.add(std::make_unique<AudioParameterFloat>("transition_curve_midpoint",
-                                                   "Transition Curve Midpoint",
-                                                   NormalisableRange<float>(0.0f, 1.0f),
-                                                   0.5f));
-  layout.add(std::make_unique<AudioParameterFloat>("transition_curve_transition",
-                                                   "Transition Curve Transition",
-                                                   NormalisableRange<float>(0.0f, 1.0f),
-                                                   0.0f));
+  ////////////////////////////////
+  // Keyboard Visuals
 
   auto grp = std::make_unique<AudioProcessorParameterGroup>(
       "keyboard_visuals", "Keyboard Visuals", " - ");
@@ -117,5 +125,5 @@ ProcessorData::ProcessorData(AudioProcessor &processorForApvts)
       "", "xen_midi_retuner.log", "Xen MIDI Retuner Debug Log"));
 
   midiNoteToScaleNoteMapping.fill(-1);
-  scaleChangeBroadcaster.AttachToChangeProvider(&this->scale);
+  scaleChangeBroadcaster.AttachToChangeProvider(&scale);
 };

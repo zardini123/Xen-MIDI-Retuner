@@ -129,7 +129,7 @@ void NoteAndFrequencyOverlay::paint (juce::Graphics& g)
                 // g.setColour (fillColour);
                 // g.fillRect (midiNoteX, y, width, height);
 
-                if (currentNote == processorData->input[i].priorityNote) {
+                if (currentNote == processorData->input[i].noteToTune) {
                     // In pitchbend visualzation under priority note
                     // Blue-green (transparent)
                     Colour fillColour = Colour (0x3f00ffb2);
@@ -258,3 +258,4 @@ END_JUCER_METADATA
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
+

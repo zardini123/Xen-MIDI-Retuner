@@ -60,18 +60,20 @@ public:
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> outputPitchbendAttachment;
+
     std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> tunedNotePerKeyboardChannelAttachment;
     std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> tunedNotePerKeyboardChannelModifierAttachment;
-    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> updateNotePriorityNoteOff;
+
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> sendOutUntunedNotesAttachment;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::Slider> synth_pitch_bend_range;
+    std::unique_ptr<juce::Slider> synthPitchBendRange;
     std::unique_ptr<juce::Label> label;
     std::unique_ptr<juce::Label> section_title;
     std::unique_ptr<juce::ComboBox> synth_channel;
     std::unique_ptr<juce::Label> label2;
-    std::unique_ptr<juce::ToggleButton> juce__toggleButton3;
+    std::unique_ptr<juce::ToggleButton> sendOutUntunedNotes;
     std::unique_ptr<juce::Label> juce__label;
     std::unique_ptr<juce::Label> label4;
     std::unique_ptr<juce::ComboBox> tunedNotePerKeyboardChannel;

@@ -32,21 +32,22 @@ struct Note {
 
 struct ProcessorData {
   struct InputChannel {
+    std::vector<Note> notes;
+
     uint16 pitchwheel = CENTER_PITCHWHEEL; // Default to pitchbend wheel at center
-    const Note *priorityNote = nullptr;
+    const Note *noteToTune = nullptr;
 
     float continuousTunedNote;
-    std::vector<Note> notes;
   };
 
   struct OutputChannel {
+    std::vector<Note> notes;
+
     int centerOfOutputPitchbendRangeStatic;
     int noteToTuneToContinuousTunedNoteDifference;
 
     int offsetOutputPitchbendRange;
     int outputMidiNoteForTunedNote;
-
-    std::vector<Note> notes;
   };
 
   ProcessorData(AudioProcessor &processorForApvts);
