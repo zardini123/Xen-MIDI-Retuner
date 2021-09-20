@@ -125,5 +125,7 @@ ProcessorData::ProcessorData(AudioProcessor &processorForApvts)
       "", "xen_midi_retuner.log", "Xen MIDI Retuner Debug Log"));
 
   midiNoteToScaleNoteMapping.fill(-1);
+  secondaryMapping.fill(-1);
+
   scaleChangeBroadcaster.AttachToChangeProvider(&scale);
 };

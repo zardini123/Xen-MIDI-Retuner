@@ -22,124 +22,136 @@
 
 #include "ScaleEditor.h"
 
+
 //[MiscUserDefs] You can add your own user definitions and misc code here...
 //[/MiscUserDefs]
 
 //==============================================================================
-ScaleEditor::ScaleEditor(ProcessorData *dataReference)
-    : ComponentWithReferenceToData(dataReference) {
-  //[Constructor_pre] You can add your own custom stuff here..
-  //[/Constructor_pre]
+ScaleEditor::ScaleEditor (ProcessorData *dataReference)
+    : ComponentWithReferenceToData (dataReference)
+{
+    //[Constructor_pre] You can add your own custom stuff here..
+    //[/Constructor_pre]
 
-  heading.reset(new juce::Label("new label", TRANS("Scale\n")));
-  addAndMakeVisible(heading.get());
-  heading->setFont(juce::Font(22.00f, juce::Font::plain).withTypefaceStyle("Bold"));
-  heading->setJustificationType(juce::Justification::centred);
-  heading->setEditable(false, false, false);
-  heading->setColour(juce::TextEditor::textColourId, juce::Colours::black);
-  heading->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
+    heading.reset (new juce::Label ("new label",
+                                    TRANS("Scale\n")));
+    addAndMakeVisible (heading.get());
+    heading->setFont (juce::Font (22.00f, juce::Font::plain).withTypefaceStyle ("Bold"));
+    heading->setJustificationType (juce::Justification::centred);
+    heading->setEditable (false, false, false);
+    heading->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    heading->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-  mtsESPClientLabel.reset(new juce::Label("new label", TRANS("Enable MTS-ESP tuning\n")));
-  addAndMakeVisible(mtsESPClientLabel.get());
-  mtsESPClientLabel->setFont(
-      juce::Font(15.00f, juce::Font::plain).withTypefaceStyle("Regular"));
-  mtsESPClientLabel->setJustificationType(juce::Justification::centred);
-  mtsESPClientLabel->setEditable(false, false, false);
-  mtsESPClientLabel->setColour(juce::TextEditor::textColourId, juce::Colours::black);
-  mtsESPClientLabel->setColour(juce::TextEditor::backgroundColourId,
-                               juce::Colour(0x00000000));
+    mtsESPComboBoxLabel.reset (new juce::Label ("new label",
+                                                TRANS("Enable MTS-ESP tuning\n")));
+    addAndMakeVisible (mtsESPComboBoxLabel.get());
+    mtsESPComboBoxLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    mtsESPComboBoxLabel->setJustificationType (juce::Justification::centred);
+    mtsESPComboBoxLabel->setEditable (false, false, false);
+    mtsESPComboBoxLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    mtsESPComboBoxLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-  mtsESPClientStatus.reset(new juce::Label("new label", TRANS("Status: Off")));
-  addAndMakeVisible(mtsESPClientStatus.get());
-  mtsESPClientStatus->setFont(juce::Font(15.00f, juce::Font::italic));
-  mtsESPClientStatus->setJustificationType(juce::Justification::centred);
-  mtsESPClientStatus->setEditable(false, false, false);
-  mtsESPClientStatus->setColour(juce::TextEditor::textColourId, juce::Colours::black);
-  mtsESPClientStatus->setColour(juce::TextEditor::backgroundColourId,
-                                juce::Colour(0x00000000));
+    mtsESPStatusLabel.reset (new juce::Label ("new label",
+                                              TRANS("Status: Off")));
+    addAndMakeVisible (mtsESPStatusLabel.get());
+    mtsESPStatusLabel->setFont (juce::Font (15.00f, juce::Font::italic));
+    mtsESPStatusLabel->setJustificationType (juce::Justification::centred);
+    mtsESPStatusLabel->setEditable (false, false, false);
+    mtsESPStatusLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    mtsESPStatusLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-  enableMtsEsp.reset(new juce::ComboBox("new combo box"));
-  addAndMakeVisible(enableMtsEsp.get());
-  enableMtsEsp->setEditableText(false);
-  enableMtsEsp->setJustificationType(juce::Justification::centredLeft);
-  enableMtsEsp->setTextWhenNothingSelected(juce::String());
-  enableMtsEsp->setTextWhenNoChoicesAvailable(TRANS("(no choices)"));
-  enableMtsEsp->addListener(this);
+    enableMtsEsp.reset (new juce::ComboBox ("new combo box"));
+    addAndMakeVisible (enableMtsEsp.get());
+    enableMtsEsp->setEditableText (false);
+    enableMtsEsp->setJustificationType (juce::Justification::centredLeft);
+    enableMtsEsp->setTextWhenNothingSelected (juce::String());
+    enableMtsEsp->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
+    enableMtsEsp->addListener (this);
 
-  enableMtsEsp->setBounds(8, 48, 150, 24);
+    enableMtsEsp->setBounds (8, 48, 150, 24);
 
-  //[UserPreSize]
-  //[/UserPreSize]
 
-  setSize(600, 400);
+    //[UserPreSize]
+    //[/UserPreSize]
 
-  //[Constructor] You can add your own custom stuff here..
-  enableMtsEsp->addItemList(
-      data->apvts.getParameter("enable_mts_esp")->getAllValueStrings(), 1);
-  enableMtsEspAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(
-      data->apvts, "enable_mts_esp", *enableMtsEsp.get()));
+    setSize (600, 400);
 
-  data->scaleChangedBroadcaster.addChangeListener(this);
-  data->apvts.addParameterListener("enable_mts_esp", this);
-  //[/Constructor]
+
+    //[Constructor] You can add your own custom stuff here..
+    enableMtsEsp->addItemList(data->apvts.getParameter("enable_mts_esp")->getAllValueStrings(), 1);
+    enableMtsEspAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(data->apvts, "enable_mts_esp", *enableMtsEsp.get()));
+
+    data->scaleChangedBroadcaster.addChangeListener(this);
+    data->apvts.addParameterListener("enable_mts_esp", this);
+
+    startTimerHz(5);
+    //[/Constructor]
 }
 
-ScaleEditor::~ScaleEditor() {
-  //[Destructor_pre]. You can add your own custom destruction code here..
-  //[/Destructor_pre]
+ScaleEditor::~ScaleEditor()
+{
+    //[Destructor_pre]. You can add your own custom destruction code here..
+    //[/Destructor_pre]
 
-  heading = nullptr;
-  mtsESPClientLabel = nullptr;
-  mtsESPClientStatus = nullptr;
-  enableMtsEsp = nullptr;
+    heading = nullptr;
+    mtsESPComboBoxLabel = nullptr;
+    mtsESPStatusLabel = nullptr;
+    enableMtsEsp = nullptr;
 
-  //[Destructor]. You can add your own custom destruction code here..
-  //[/Destructor]
+
+    //[Destructor]. You can add your own custom destruction code here..
+    //[/Destructor]
 }
 
 //==============================================================================
-void ScaleEditor::paint(juce::Graphics &g) {
-  //[UserPrePaint] Add your own custom painting code here..
-  //[/UserPrePaint]
+void ScaleEditor::paint (juce::Graphics& g)
+{
+    //[UserPrePaint] Add your own custom painting code here..
+    //[/UserPrePaint]
 
-  {
-    int x = (getWidth() / 2) - (108 / 2), y = 24, width = 108, height = 2;
-    juce::Colour fillColour = juce::Colour(0xffe82950);
-    //[UserPaintCustomArguments] Customize the painting arguments here..
-    //[/UserPaintCustomArguments]
-    g.setColour(fillColour);
-    g.fillRect(x, y, width, height);
-  }
+    {
+        int x = (getWidth() / 2) - (108 / 2), y = 24, width = 108, height = 2;
+        juce::Colour fillColour = juce::Colour (0xffe82950);
+        //[UserPaintCustomArguments] Customize the painting arguments here..
+        //[/UserPaintCustomArguments]
+        g.setColour (fillColour);
+        g.fillRect (x, y, width, height);
+    }
 
-  //[UserPaint] Add your own custom painting code here..
-  //[/UserPaint]
+    //[UserPaint] Add your own custom painting code here..
+    //[/UserPaint]
 }
 
-void ScaleEditor::resized() {
-  //[UserPreResize] Add your own custom resize code here..
-  //[/UserPreResize]
+void ScaleEditor::resized()
+{
+    //[UserPreResize] Add your own custom resize code here..
+    //[/UserPreResize]
 
-  heading->setBounds(0, 0, proportionOfWidth(1.0000f), 24);
-  mtsESPClientLabel->setBounds(proportionOfWidth(0.0000f), 24, 168, 24);
-  mtsESPClientStatus->setBounds(proportionOfWidth(0.0000f), 80, 150, 24);
-  //[UserResized] Add your own custom resize handling here..
-  //[/UserResized]
+    heading->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
+    mtsESPComboBoxLabel->setBounds (proportionOfWidth (0.0000f), 24, 168, 24);
+    mtsESPStatusLabel->setBounds (proportionOfWidth (0.0000f), 80, 150, 24);
+    //[UserResized] Add your own custom resize handling here..
+    //[/UserResized]
 }
 
-void ScaleEditor::comboBoxChanged(juce::ComboBox *comboBoxThatHasChanged) {
-  //[UsercomboBoxChanged_Pre]
-  //[/UsercomboBoxChanged_Pre]
+void ScaleEditor::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
+{
+    //[UsercomboBoxChanged_Pre]
+    //[/UsercomboBoxChanged_Pre]
 
-  if (comboBoxThatHasChanged == enableMtsEsp.get()) {
-    //[UserComboBoxCode_enableMtsEsp] -- add your combo box handling code here..
-    //[/UserComboBoxCode_enableMtsEsp]
-  }
+    if (comboBoxThatHasChanged == enableMtsEsp.get())
+    {
+        //[UserComboBoxCode_enableMtsEsp] -- add your combo box handling code here..
+        //[/UserComboBoxCode_enableMtsEsp]
+    }
 
-  //[UsercomboBoxChanged_Post]
-  //[/UsercomboBoxChanged_Post]
+    //[UsercomboBoxChanged_Post]
+    //[/UsercomboBoxChanged_Post]
 }
 
-//[MiscUserCode] You can add your own definitions of your custom methods or any other code
+
+
+//[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 // here...
 void ScaleEditor::changeListenerCallback(ChangeBroadcaster *source) {}
 
@@ -167,7 +179,24 @@ void ScaleEditor::parameterChanged(const String &parameterID, float newValue) {
     }
   }
 }
+
+void ScaleEditor::timerCallback() {
+  std::string status = "Status: ";
+
+  if (data->mtsESPClient == nullptr) {
+    status += "Off";
+  } else {
+    if (data->mtsESPClient->ConnectedToAMTSESPMaster()) {
+      status += "Connected";
+    } else {
+      status += "Not Connected";
+    }
+  }
+
+  mtsESPStatusLabel->setText(status, dontSendNotification);
+}
 //[/MiscUserCode]
+
 
 //==============================================================================
 #if 0
@@ -179,7 +208,7 @@ void ScaleEditor::parameterChanged(const String &parameterID, float newValue) {
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ScaleEditor" componentName=""
-                 parentClasses="public ComponentWithReferenceToData, public ChangeListener, public juce::AudioProcessorValueTreeState::Listener"
+                 parentClasses="public ComponentWithReferenceToData, public ChangeListener, public juce::AudioProcessorValueTreeState::Listener, public juce::Timer"
                  constructorParams="ProcessorData *dataReference" variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
@@ -191,12 +220,12 @@ BEGIN_JUCER_METADATA
          edBkgCol="0" labelText="Scale&#10;" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="22.0"
          kerning="0.0" bold="1" italic="0" justification="36" typefaceStyle="Bold"/>
-  <LABEL name="new label" id="2cc7f93d9d946829" memberName="mtsESPClientLabel"
+  <LABEL name="new label" id="2cc7f93d9d946829" memberName="mtsESPComboBoxLabel"
          virtualName="" explicitFocusOrder="0" pos="0% 24 168 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Enable MTS-ESP tuning&#10;" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="36"/>
-  <LABEL name="new label" id="28b3506bf05ebba8" memberName="mtsESPClientStatus"
+  <LABEL name="new label" id="28b3506bf05ebba8" memberName="mtsESPStatusLabel"
          virtualName="" explicitFocusOrder="0" pos="0% 80 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Status: Off" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
@@ -211,5 +240,7 @@ END_JUCER_METADATA
 */
 #endif
 
+
 //[EndFile] You can add extra defines here...
 //[/EndFile]
+

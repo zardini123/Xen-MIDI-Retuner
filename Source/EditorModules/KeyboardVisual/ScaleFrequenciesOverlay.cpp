@@ -64,24 +64,41 @@ void ScaleFrequenciesOverlay::paint (juce::Graphics& g)
     //[UserPrePaint] Add your own custom painting code here..
     juce::Colour strokeColour = juce::Colour (0x9942EC1E);
     juce::Colour scaleColour = juce::Colour (0x9982BB43);
+
+    juce::Colour secondaryStrokeColour = juce::Colour (0x99C626C6);
+    juce::Colour secondaryScaleColour = juce::Colour (0x99E663AA);
     int connectionYPos = 35;
 
-    for (int midiNote = 0; midiNote < data->midiNoteToScaleNoteMapping.size(); ++midiNote) {
-      // Connector
-      if (data->midiNoteToScaleNoteMapping[midiNote] != -1) {
-        int midiNoteXPos = keyboard->ConvertDiscreteMidiNoteToPercentWidth(midiNote) * getWidth();
+    for (int midiNote = 0; midiNote < data->secondaryMapping.size(); ++midiNote) {
+      if (data->secondaryMapping[midiNote] != -1) {
+        // Frequency
+        double frequency = data->scale.FrequencyForMIDINote(data->secondaryMapping[midiNote]);
+        double centerPixelPosition = keyboard->ConvertContinuousMidiNoteToPercentWidth(freqHZToContinuousMidiNote(frequency)) * getWidth();
+        keyboard->drawMarker(centerPixelPosition, 3, connectionYPos, 1, secondaryScaleColour, g);
+      }
+    }
 
-        double frequency = data->scale.FrequencyForMIDINote(data->midiNoteToScaleNoteMapping[midiNote]);
-        int frequencyXPos = keyboard->ConvertContinuousMidiNoteToPercentWidth(freqHZToContinuousMidiNote(frequency)) * getWidth();
-        // if ((midiNoteXPos >= 0 && midiNoteXPos < getWidth()) || (frequencyXPos >= 0 && frequencyXPos < getWidth())) {
+    for (auto midiNote = AnaMark::Scale::firstTunableScaleNote; midiNote < AnaMark::Scale::afterLastTunableScaleNote; ++midiNote) {
+      if (data->midiNoteToScaleNoteMapping[midiNote] != -1 || data->secondaryMapping[midiNote] != -1) {
+        // Connector
+        bool isSecondary = data->secondaryMapping[midiNote] != -1;
+        int mapping = isSecondary? data->secondaryMapping[midiNote] : data->midiNoteToScaleNoteMapping[midiNote];
+        if (mapping != -1) {
 
-        juce::Path internalPath1;
+          double frequency = data->scale.FrequencyForMIDINote(mapping);
+          int frequencyXPos = keyboard->ConvertContinuousMidiNoteToPercentWidth(freqHZToContinuousMidiNote(frequency)) * getWidth();
+          // if ((midiNoteXPos >= 0 && midiNoteXPos < getWidth()) || (frequencyXPos >= 0 && frequencyXPos < getWidth())) {
 
-        internalPath1.startNewSubPath (frequencyXPos, connectionYPos);
-        internalPath1.lineTo (midiNoteXPos, this->getHeight());
+          int midiNoteXPos = keyboard->ConvertDiscreteMidiNoteToPercentWidth(midiNote) * getWidth();
 
-        g.setColour (strokeColour);
-        g.strokePath (internalPath1, juce::PathStrokeType (3.0f), juce::AffineTransform::translation(0, 0));
+          juce::Path internalPath1;
+
+          internalPath1.startNewSubPath (frequencyXPos, connectionYPos);
+          internalPath1.lineTo (midiNoteXPos, this->getHeight());
+
+          g.setColour (isSecondary? secondaryStrokeColour : strokeColour);
+          g.strokePath (internalPath1, juce::PathStrokeType (3.0f), juce::AffineTransform::translation(0, 0));
+        }
       }
     }
 
@@ -141,4 +158,3 @@ END_JUCER_METADATA
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-

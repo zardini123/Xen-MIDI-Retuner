@@ -143,6 +143,7 @@ bool XenMidiRetunerAudioProcessor::isBusesLayoutSupported(
 void XenMidiRetunerAudioProcessor::updateMidiNoteMapping() {
 
   data.midiNoteToScaleNoteMapping.fill(-1);
+  data.secondaryMapping.fill(-1);
 
   for (auto scaleNote = AnaMark::Scale::firstTunableScaleNote;
        scaleNote < AnaMark::Scale::afterLastTunableScaleNote;
@@ -187,6 +188,47 @@ void XenMidiRetunerAudioProcessor::updateMidiNoteMapping() {
         data.midiNoteToScaleNoteMapping[closestMidiNote] = scaleNote;
       }
       // Else keep the scale note that was previously mapped
+    }
+  }
+
+  // Secondary mapping
+  for (auto midiNote = AnaMark::Scale::firstTunableScaleNote;
+       midiNote < AnaMark::Scale::afterLastTunableScaleNote;
+       ++midiNote) {
+    if (data.midiNoteToScaleNoteMapping[midiNote] == -1) {
+      // Scan left and right for the first and closest scale frequency
+      int left = midiNote;
+      int right = midiNote;
+      int midiNoteResult = -1;
+      while (left >= 0 && right < 128) {
+        int leftMapping = data.midiNoteToScaleNoteMapping[left];
+        int rightMapping = data.midiNoteToScaleNoteMapping[right];
+        if (leftMapping != -1 && rightMapping != -1) {
+          double leftCont =
+              freqHZToContinuousMidiNote(data.scale.FrequencyForMIDINote(leftMapping));
+          double rightCont =
+              freqHZToContinuousMidiNote(data.scale.FrequencyForMIDINote(rightMapping));
+
+          if (midiNote - leftCont < rightCont - midiNote) {
+            midiNoteResult = left;
+          } else {
+            midiNoteResult = right;
+          }
+          break;
+        } else if (leftMapping != -1) {
+          midiNoteResult = left;
+          break;
+        } else if (rightMapping != -1) {
+          midiNoteResult = right;
+          break;
+        }
+
+        --left;
+        ++right;
+      }
+
+      data.logger->logMessage("mapping: at " + std::to_string(midiNote) + ", " + std::to_string(midiNoteResult) + "-> " + std::to_string(data.secondaryMapping[midiNoteResult]));
+      data.secondaryMapping[midiNote] = (midiNoteResult >= 0 && midiNoteResult < 128) ? data.midiNoteToScaleNoteMapping[midiNoteResult] : -1;
     }
   }
 }
@@ -489,7 +531,14 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
   data.scale.FrequencyForMIDINote(inChannel.noteToTune->midiNote);
 
   bool playNotes = false;
-  int noteMapping = data.midiNoteToScaleNoteMapping[inChannel.noteToTune->midiNote];
+  int noteMapping = -1;
+  if (data.midiNoteToScaleNoteMapping[inChannel.noteToTune->midiNote] != -1) {
+    noteMapping = data.midiNoteToScaleNoteMapping[inChannel.noteToTune->midiNote];
+  } else {
+    if (data.secondaryMapping[inChannel.noteToTune->midiNote] != -1) {
+      noteMapping = data.secondaryMapping[inChannel.noteToTune->midiNote];
+    }
+  }
   if (noteMapping != -1) {
     // continuousTunedNote is the continuous midi note that the selected priority
     // note needs to reach
@@ -567,7 +616,7 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
                                   outChannel.offsetOutputPitchbendRange;
 
       if (!sendOutUntunedNotes &&
-          inputMidiNoteAdjusted != inChannel.noteToTune->midiNote) {
+          it->midiNote != inChannel.noteToTune->midiNote) {
         // Won't be played and will turn off as previously the note was marked for off.
         continue;
       }

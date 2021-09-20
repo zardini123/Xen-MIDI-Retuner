@@ -97,9 +97,9 @@ void ProcessingView::resized()
     //[UserPreResize] Add your own custom resize code here..
     //[/UserPreResize]
 
-    component->setBounds (0, 0, proportionOfWidth (0.2503f), proportionOfHeight (1.0000f));
-    component2->setBounds (proportionOfWidth (0.2503f), 0, proportionOfWidth (0.4003f), proportionOfHeight (1.0000f));
-    component3->setBounds (proportionOfWidth (0.6506f), 0, proportionOfWidth (0.3494f), proportionOfHeight (1.0000f));
+    component->setBounds (0, 0, proportionOfWidth (0.2500f), proportionOfHeight (1.0000f));
+    component2->setBounds (proportionOfWidth (0.2500f), 0, proportionOfWidth (0.4000f), proportionOfHeight (1.0000f));
+    component3->setBounds (proportionOfWidth (0.6508f), 0, proportionOfWidth (0.3492f), proportionOfHeight (1.0000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -135,7 +135,7 @@ BEGIN_JUCER_METADATA
              explicitFocusOrder="0" pos="25% 0 40% 100%" sourceFile="ProcessingView/ScaleEditor.cpp"
              constructorParams="data"/>
   <JUCERCOMP name="" id="da4dccb613aa70d0" memberName="component3" virtualName=""
-             explicitFocusOrder="0" pos="65.077% 0 34.923% 100%" sourceFile="ProcessingView/OutputModule.cpp"
+             explicitFocusOrder="0" pos="65.087% 0 34.913% 100%" sourceFile="ProcessingView/OutputModule.cpp"
              constructorParams="data"/>
 </JUCER_COMPONENT>
 

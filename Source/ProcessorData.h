@@ -67,6 +67,7 @@ struct ProcessorData {
 
   // Map midi note to scale note
   std::array<int, AnaMark::Scale::tunableRangeSize> midiNoteToScaleNoteMapping;
+  std::array<int, AnaMark::Scale::tunableRangeSize> secondaryMapping;
 
   AnaMark::MTSESPClient *mtsESPClient = nullptr;
   ChangeBroadcaster scaleChangedBroadcaster;

@@ -38,6 +38,7 @@
 class ScaleEditor  : public ComponentWithReferenceToData,
                      public ChangeListener,
                      public juce::AudioProcessorValueTreeState::Listener,
+                     public juce::Timer,
                      public juce::ComboBox::Listener
 {
 public:
@@ -49,6 +50,7 @@ public:
     //[UserMethods]     -- You can add your own custom methods in this section.
     void changeListenerCallback (ChangeBroadcaster *source) override;
     void parameterChanged (const String &parameterID, float newValue) override;
+    void timerCallback() override;
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -64,8 +66,8 @@ private:
 
     //==============================================================================
     std::unique_ptr<juce::Label> heading;
-    std::unique_ptr<juce::Label> mtsESPClientLabel;
-    std::unique_ptr<juce::Label> mtsESPClientStatus;
+    std::unique_ptr<juce::Label> mtsESPComboBoxLabel;
+    std::unique_ptr<juce::Label> mtsESPStatusLabel;
     std::unique_ptr<juce::ComboBox> enableMtsEsp;
 
 
