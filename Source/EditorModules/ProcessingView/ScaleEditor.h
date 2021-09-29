@@ -39,7 +39,8 @@ class ScaleEditor  : public ComponentWithReferenceToData,
                      public ChangeListener,
                      public juce::AudioProcessorValueTreeState::Listener,
                      public juce::Timer,
-                     public juce::ComboBox::Listener
+                     public juce::ComboBox::Listener,
+                     public juce::Button::Listener
 {
 public:
     //==============================================================================
@@ -56,12 +57,15 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
     void comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged) override;
+    void buttonClicked (juce::Button* buttonThatWasClicked) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> enableMtsEspAttachment;
+
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> legacyMappingAttachment;
     //[/UserVariables]
 
     //==============================================================================
@@ -69,6 +73,7 @@ private:
     std::unique_ptr<juce::Label> mtsESPComboBoxLabel;
     std::unique_ptr<juce::Label> mtsESPStatusLabel;
     std::unique_ptr<juce::ComboBox> enableMtsEsp;
+    std::unique_ptr<juce::ToggleButton> legacyMapping;
 
 
     //==============================================================================

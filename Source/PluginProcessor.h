@@ -23,18 +23,9 @@
 /**
  */
 class XenMidiRetunerAudioProcessor : public AudioProcessor,
-                                     public juce::AudioProcessorValueTreeState::Listener,
-                                     public AnaMark::ChangeAttacher {
+                                     public juce::AudioProcessorValueTreeState::Listener {
 public:
   void parameterChanged(const String &parameterID, float newValue) override;
-
-  void RecieveChangeFromProvider(const AnaMark::ChangeProvider *const changeOrigin,
-                                 const AnaMark::ChangeProvider *const notifier,
-                                 int scaleNote, double newFrequency) override;
-  void RecieveChangeFromProvider(const AnaMark::ChangeProvider *const changeOrigin,
-                                 const AnaMark::ChangeProvider *const notifier,
-                                 std::vector<int> &scaleNotes,
-                                 std::vector<double> &newFrequencies) override;
 
   ProcessorData *getDataReference() {
     return &data;
@@ -90,8 +81,6 @@ private:
                         SingleChannelNotePrioritzationModifier priorityModifier);
   void updateBlock(MidiBuffer &processedMidi, int channelIndex, bool updateInitialNotes,
                    int time);
-
-  void updateMidiNoteMapping();
 
   bool updatePitch = false;
   bool updatePriority = false;

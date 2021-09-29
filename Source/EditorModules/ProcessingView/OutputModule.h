@@ -65,6 +65,7 @@ private:
     std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> tunedNotePerKeyboardChannelModifierAttachment;
 
     std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> sendOutUntunedNotesAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> synthIsAlreadyTunedAttachment;
     //[/UserVariables]
 
     //==============================================================================
@@ -80,6 +81,8 @@ private:
     std::unique_ptr<juce::Label> label3;
     std::unique_ptr<juce::ComboBox> tunedNotePerKeyboardChannelModifier;
     std::unique_ptr<juce::ComboBox> synth_midi_type;
+    std::unique_ptr<juce::ToggleButton> synthIsAlreadyTuned;
+    std::unique_ptr<juce::Label> juce__label2;
 
 
     //==============================================================================

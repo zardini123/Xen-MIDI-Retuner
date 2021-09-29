@@ -32,7 +32,7 @@ XenMidiRetunerAudioProcessor::XenMidiRetunerAudioProcessor()
   data.apvts.addParameterListener("tuned_note_per_keyboard_channel", this);
   data.apvts.addParameterListener("tuned_note_per_keyboard_channel_modifier", this);
 
-  this->AttachToChangeProvider(&data.scale);
+  data.apvts.addParameterListener("legacy_mapping", &data.scaleNoteMapping);
 }
 
 XenMidiRetunerAudioProcessor::~XenMidiRetunerAudioProcessor() {
@@ -140,99 +140,6 @@ bool XenMidiRetunerAudioProcessor::isBusesLayoutSupported(
 }
 #endif
 
-void XenMidiRetunerAudioProcessor::updateMidiNoteMapping() {
-
-  data.midiNoteToScaleNoteMapping.fill(-1);
-  data.secondaryMapping.fill(-1);
-
-  for (auto scaleNote = AnaMark::Scale::firstTunableScaleNote;
-       scaleNote < AnaMark::Scale::afterLastTunableScaleNote;
-       ++scaleNote) {
-    // data.logger->logMessage(std::to_string(scaleNote));
-
-    double scaleFrequency = data.scale.FrequencyForMIDINote(scaleNote);
-    double continuousMidiNote = freqHZToContinuousMidiNote(scaleFrequency);
-
-    // Round to the closest midi note
-    // @TODO: Provide user ability to round either up or down if half-way inbetween two
-    // midi notes (to some tolerance)
-    int closestMidiNote = static_cast<int>(std::round(continuousMidiNote));
-
-    // @TODO: Handle frequencies that snap to notes outside inbound range.
-    // This can only be done once out-of-bound support is provided by AnaMark.
-    if (closestMidiNote < AnaMark::Scale::firstTunableScaleNote ||
-        closestMidiNote >= AnaMark::Scale::afterLastTunableScaleNote) {
-      continue;
-    }
-
-    double distance = std::abs(continuousMidiNote - closestMidiNote);
-
-    // Check if the mapping for midi note to scale note is already taken
-    if (data.midiNoteToScaleNoteMapping[closestMidiNote] == -1) {
-      // data.logger->logMessage("Set: " + std::to_string(closestMidiNote));
-      data.midiNoteToScaleNoteMapping[closestMidiNote] = scaleNote;
-    } else {
-      // If it is, check old "distance" from frequency to midi note to see if this new
-      // mapping would result in a shorter distance
-
-      // data.logger->logMessage("Conflict " + std::to_string(closestMidiNote));
-
-      int mappedScaleNote = data.midiNoteToScaleNoteMapping[closestMidiNote];
-      double mappedScaleNoteFreq = data.scale.FrequencyForMIDINote(mappedScaleNote);
-      double mappedContinuousMidiNote = freqHZToContinuousMidiNote(mappedScaleNoteFreq);
-
-      double mappedDistance = std::abs(mappedContinuousMidiNote - closestMidiNote);
-
-      if (distance < mappedDistance) {
-        // data.logger->logMessage("Conflict set " + std::to_string(closestMidiNote));
-        data.midiNoteToScaleNoteMapping[closestMidiNote] = scaleNote;
-      }
-      // Else keep the scale note that was previously mapped
-    }
-  }
-
-  // Secondary mapping
-  for (auto midiNote = AnaMark::Scale::firstTunableScaleNote;
-       midiNote < AnaMark::Scale::afterLastTunableScaleNote;
-       ++midiNote) {
-    if (data.midiNoteToScaleNoteMapping[midiNote] == -1) {
-      // Scan left and right for the first and closest scale frequency
-      int left = midiNote;
-      int right = midiNote;
-      int midiNoteResult = -1;
-      while (left >= 0 && right < 128) {
-        int leftMapping = data.midiNoteToScaleNoteMapping[left];
-        int rightMapping = data.midiNoteToScaleNoteMapping[right];
-        if (leftMapping != -1 && rightMapping != -1) {
-          double leftCont =
-              freqHZToContinuousMidiNote(data.scale.FrequencyForMIDINote(leftMapping));
-          double rightCont =
-              freqHZToContinuousMidiNote(data.scale.FrequencyForMIDINote(rightMapping));
-
-          if (midiNote - leftCont < rightCont - midiNote) {
-            midiNoteResult = left;
-          } else {
-            midiNoteResult = right;
-          }
-          break;
-        } else if (leftMapping != -1) {
-          midiNoteResult = left;
-          break;
-        } else if (rightMapping != -1) {
-          midiNoteResult = right;
-          break;
-        }
-
-        --left;
-        ++right;
-      }
-
-      data.logger->logMessage("mapping: at " + std::to_string(midiNote) + ", " + std::to_string(midiNoteResult) + "-> " + std::to_string(data.secondaryMapping[midiNoteResult]));
-      data.secondaryMapping[midiNote] = (midiNoteResult >= 0 && midiNoteResult < 128) ? data.midiNoteToScaleNoteMapping[midiNoteResult] : -1;
-    }
-  }
-}
-
 //==============================================================================
 // Change Listening
 
@@ -247,21 +154,6 @@ void XenMidiRetunerAudioProcessor::parameterChanged(const String &parameterID,
       parameterID == "tuned_note_per_keyboard_channel_modifier") {
     updatePriority = true;
   }
-}
-
-void XenMidiRetunerAudioProcessor::RecieveChangeFromProvider(
-    const AnaMark::ChangeProvider *const changeOrigin,
-    const AnaMark::ChangeProvider *const notifier, int scaleNote, double newFrequency) {
-
-  updateMidiNoteMapping();
-}
-
-void XenMidiRetunerAudioProcessor::RecieveChangeFromProvider(
-    const AnaMark::ChangeProvider *const changeOrigin,
-    const AnaMark::ChangeProvider *const notifier, std::vector<int> &scaleNotes,
-    std::vector<double> &newFrequencies) {
-
-  updateMidiNoteMapping();
 }
 
 //==============================================================================
@@ -525,25 +417,23 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
   // lower/upper)
   //    Use discrete note (noteToTune) as frequency
 
-  // Query the note first as it will trigger a ScaleChange event if there is a change in
-  // frequency. That will in turn update the mapping.
-  // @TODO: Is this the best way to update the mapping (and update the scale)?
+  // @HACK: Query the note first as it will trigger a ScaleChange event if there is a
+  // change in frequency. That will in turn update the mapping.
   data.scale.FrequencyForMIDINote(inChannel.noteToTune->midiNote);
 
-  bool playNotes = false;
-  int noteMapping = -1;
-  if (data.midiNoteToScaleNoteMapping[inChannel.noteToTune->midiNote] != -1) {
-    noteMapping = data.midiNoteToScaleNoteMapping[inChannel.noteToTune->midiNote];
-  } else {
-    if (data.secondaryMapping[inChannel.noteToTune->midiNote] != -1) {
-      noteMapping = data.secondaryMapping[inChannel.noteToTune->midiNote];
-    }
-  }
-  if (noteMapping != -1) {
+  bool synthIsAlreadyTuned =
+      (bool)*data.apvts.getRawParameterValue("synth_is_already_tuned");
+
+  int scaleNote;
+  ScaleNoteMapping::NoteMappingType mappingType =
+      data.scaleNoteMapping.getMidiNoteMapping(inChannel.noteToTune->midiNote, scaleNote);
+  bool isTunedNoteMapped = mappingType != ScaleNoteMapping::NO_MAPPING;
+  if (!synthIsAlreadyTuned && isTunedNoteMapped) {
     // continuousTunedNote is the continuous midi note that the selected priority
     // note needs to reach
+
     inChannel.continuousTunedNote =
-        freqHZToContinuousMidiNote(data.scale.FrequencyForMIDINote(noteMapping));
+        freqHZToContinuousMidiNote(data.scale.FrequencyForMIDINote(scaleNote));
 
     // https://github.com/zardini123/AnaMark-Tuning-Library/issues/2#issuecomment-658591163
 
@@ -581,8 +471,6 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
     // Shown via NoteAndFrequencyOverlay as yellow strip.
     outChannel.outputMidiNoteForTunedNote = outChannel.offsetOutputPitchbendRange +
                                             outChannel.centerOfOutputPitchbendRangeStatic;
-
-    playNotes = true;
   }
 
   // Set all notes for removal.  The next for-loop block will re-set notes to stay on if
@@ -595,7 +483,8 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
   // Used for outputNotes element erasing workaround later
   int numNotesMarkedForShutoff = static_cast<int>(outChannel.notes.size());
 
-  if (playNotes) {
+  // Only play notes if there is a mapping
+  if (isTunedNoteMapped) {
     // Translate all input notes by translation values for tiling midi notes.
     // If the translated input notes does NOT equal any output note currently stored in
     // output[channelIndex].notes,
@@ -609,16 +498,28 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
     for (std::vector<Note>::iterator it = inChannel.notes.begin();
          it != inChannel.notes.end();
          ++it) {
-      // When it->midiNote is noteToTune, the result of inputMidiNoteAdjusted is equal to
-      //    outChannel.outputMidiNoteForTunedNote
-      int inputMidiNoteAdjusted = it->midiNote +
-                                  outChannel.noteToTuneToContinuousTunedNoteDifference +
-                                  outChannel.offsetOutputPitchbendRange;
-
-      if (!sendOutUntunedNotes &&
+      // Skip playing a note if its not the tuned note
+      if (!synthIsAlreadyTuned && !sendOutUntunedNotes &&
           it->midiNote != inChannel.noteToTune->midiNote) {
         // Won't be played and will turn off as previously the note was marked for off.
         continue;
+      }
+
+      // When it->midiNote is noteToTune, the result of inputMidiNoteAdjusted is equal to
+      //    outChannel.outputMidiNoteForTunedNote (when !synthIsAlreadyTuned)
+      int inputMidiNoteAdjusted = 0;
+      if (synthIsAlreadyTuned) {
+        int scaleNote;
+        ScaleNoteMapping::NoteMappingType ret =
+            data.scaleNoteMapping.getMidiNoteMapping(it->midiNote, inputMidiNoteAdjusted);
+        // Dont play if no mapping
+        if (ret == ScaleNoteMapping::NO_MAPPING) {
+          continue;
+        }
+      } else {
+        inputMidiNoteAdjusted = it->midiNote +
+                                outChannel.noteToTuneToContinuousTunedNoteDifference +
+                                outChannel.offsetOutputPitchbendRange;
       }
 
       bool noteAlreadyExists = false;

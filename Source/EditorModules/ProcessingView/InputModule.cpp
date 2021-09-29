@@ -70,7 +70,7 @@ InputModule::InputModule (ProcessorData *dataReference)
     keyboardChannel->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
     keyboardChannel->addListener (this);
 
-    keyboardChannel->setBounds (168, 126, 150, 24);
+    keyboardChannel->setBounds (752, 126, 150, 24);
 
     keyboardChannelLabel.reset (new juce::Label ("new label",
                                                  TRANS("Keyboard Channel")));
@@ -81,7 +81,7 @@ InputModule::InputModule (ProcessorData *dataReference)
     keyboardChannelLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     keyboardChannelLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    keyboardChannelLabel->setBounds (168, 102, 150, 24);
+    keyboardChannelLabel->setBounds (752, 102, 150, 24);
 
     keyboardMidiTypeLabel.reset (new juce::Label ("new label",
                                                   TRANS("Keyboard sends out:")));
@@ -92,7 +92,7 @@ InputModule::InputModule (ProcessorData *dataReference)
     keyboardMidiTypeLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     keyboardMidiTypeLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    keyboardMidiTypeLabel->setBounds (8, 102, 150, 24);
+    keyboardMidiTypeLabel->setBounds (592, 102, 150, 24);
 
     keyboardMidiType.reset (new juce::ComboBox ("new combo box"));
     addAndMakeVisible (keyboardMidiType.get());
@@ -102,7 +102,18 @@ InputModule::InputModule (ProcessorData *dataReference)
     keyboardMidiType->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
     keyboardMidiType->addListener (this);
 
-    keyboardMidiType->setBounds (8, 126, 150, 24);
+    keyboardMidiType->setBounds (592, 126, 150, 24);
+
+    juce__label2.reset (new juce::Label ("new label",
+                                         TRANS("To be finished in a future release:")));
+    addAndMakeVisible (juce__label2.get());
+    juce__label2->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    juce__label2->setJustificationType (juce::Justification::centredLeft);
+    juce__label2->setEditable (false, false, false);
+    juce__label2->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    juce__label2->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+
+    juce__label2->setBounds (592, 80, 280, 16);
 
 
     //[UserPreSize]
@@ -140,6 +151,7 @@ InputModule::~InputModule()
     keyboardChannelLabel = nullptr;
     keyboardMidiTypeLabel = nullptr;
     keyboardMidiType = nullptr;
+    juce__label2 = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -250,21 +262,27 @@ BEGIN_JUCER_METADATA
          fontname="Default font" fontsize="22.0" kerning="0.0" bold="1"
          italic="0" justification="12" typefaceStyle="Bold"/>
   <COMBOBOX name="new combo box" id="961218bc77cb0156" memberName="keyboardChannel"
-            virtualName="" explicitFocusOrder="0" pos="168 126 150 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="752 126 150 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
   <LABEL name="new label" id="3d96623b8260204" memberName="keyboardChannelLabel"
-         virtualName="" explicitFocusOrder="0" pos="168 102 150 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="752 102 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Keyboard Channel" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="aed837dbad1d3c0" memberName="keyboardMidiTypeLabel"
-         virtualName="" explicitFocusOrder="0" pos="8 102 150 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="592 102 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Keyboard sends out:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <COMBOBOX name="new combo box" id="f2e57f2dcc3ce93e" memberName="keyboardMidiType"
-            virtualName="" explicitFocusOrder="0" pos="8 126 150 24" editable="0"
+            virtualName="" explicitFocusOrder="0" pos="592 126 150 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
+  <LABEL name="new label" id="baf8283d48e73c0f" memberName="juce__label2"
+         virtualName="" explicitFocusOrder="0" pos="592 80 280 16" edTextCol="ff000000"
+         edBkgCol="0" labelText="To be finished in a future release:"
+         editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
+         fontname="Default font" fontsize="15.0" kerning="0.0" bold="0"
+         italic="0" justification="33"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

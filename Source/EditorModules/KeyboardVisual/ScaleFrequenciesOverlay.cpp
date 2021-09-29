@@ -44,6 +44,7 @@ ScaleFrequenciesOverlay::ScaleFrequenciesOverlay (ProcessorData *dataReference, 
 
     //[Constructor] You can add your own custom stuff here..
     this->data->scaleChangeBroadcaster.addChangeListener(this);
+    this->data->scaleNoteMapping.addChangeListener(this);
     //[/Constructor]
 }
 
@@ -69,36 +70,35 @@ void ScaleFrequenciesOverlay::paint (juce::Graphics& g)
     juce::Colour secondaryScaleColour = juce::Colour (0x99E663AA);
     int connectionYPos = 35;
 
-    for (int midiNote = 0; midiNote < data->secondaryMapping.size(); ++midiNote) {
-      if (data->secondaryMapping[midiNote] != -1) {
+    for (auto midiNote = AnaMark::Scale::firstTunableScaleNote; midiNote < AnaMark::Scale::afterLastTunableScaleNote; ++midiNote) {
+      int scaleNote;
+      ScaleNoteMapping::NoteMappingType ret = data->scaleNoteMapping.getMidiNoteMapping(midiNote, scaleNote);
+      if (ret == ScaleNoteMapping::SECONDARY_MAPPING) {
         // Frequency
-        double frequency = data->scale.FrequencyForMIDINote(data->secondaryMapping[midiNote]);
+        double frequency = data->scale.FrequencyForMIDINote(scaleNote);
         double centerPixelPosition = keyboard->ConvertContinuousMidiNoteToPercentWidth(freqHZToContinuousMidiNote(frequency)) * getWidth();
         keyboard->drawMarker(centerPixelPosition, 3, connectionYPos, 1, secondaryScaleColour, g);
       }
     }
 
     for (auto midiNote = AnaMark::Scale::firstTunableScaleNote; midiNote < AnaMark::Scale::afterLastTunableScaleNote; ++midiNote) {
-      if (data->midiNoteToScaleNoteMapping[midiNote] != -1 || data->secondaryMapping[midiNote] != -1) {
+      int scaleNote;
+      ScaleNoteMapping::NoteMappingType ret = data->scaleNoteMapping.getMidiNoteMapping(midiNote, scaleNote);
+      if (ret != ScaleNoteMapping::NO_MAPPING) {
         // Connector
-        bool isSecondary = data->secondaryMapping[midiNote] != -1;
-        int mapping = isSecondary? data->secondaryMapping[midiNote] : data->midiNoteToScaleNoteMapping[midiNote];
-        if (mapping != -1) {
+        double frequency = data->scale.FrequencyForMIDINote(scaleNote);
+        int frequencyXPos = keyboard->ConvertContinuousMidiNoteToPercentWidth(freqHZToContinuousMidiNote(frequency)) * getWidth();
+        // if ((midiNoteXPos >= 0 && midiNoteXPos < getWidth()) || (frequencyXPos >= 0 && frequencyXPos < getWidth())) {
 
-          double frequency = data->scale.FrequencyForMIDINote(mapping);
-          int frequencyXPos = keyboard->ConvertContinuousMidiNoteToPercentWidth(freqHZToContinuousMidiNote(frequency)) * getWidth();
-          // if ((midiNoteXPos >= 0 && midiNoteXPos < getWidth()) || (frequencyXPos >= 0 && frequencyXPos < getWidth())) {
+        int midiNoteXPos = keyboard->ConvertDiscreteMidiNoteToPercentWidth(midiNote) * getWidth();
 
-          int midiNoteXPos = keyboard->ConvertDiscreteMidiNoteToPercentWidth(midiNote) * getWidth();
+        juce::Path internalPath1;
 
-          juce::Path internalPath1;
+        internalPath1.startNewSubPath (frequencyXPos, connectionYPos);
+        internalPath1.lineTo (midiNoteXPos, this->getHeight());
 
-          internalPath1.startNewSubPath (frequencyXPos, connectionYPos);
-          internalPath1.lineTo (midiNoteXPos, this->getHeight());
-
-          g.setColour (isSecondary? secondaryStrokeColour : strokeColour);
-          g.strokePath (internalPath1, juce::PathStrokeType (3.0f), juce::AffineTransform::translation(0, 0));
-        }
+        g.setColour ((ret == ScaleNoteMapping::SECONDARY_MAPPING)? secondaryStrokeColour : strokeColour);
+        g.strokePath (internalPath1, juce::PathStrokeType (3.0f), juce::AffineTransform::translation(0, 0));
       }
     }
 

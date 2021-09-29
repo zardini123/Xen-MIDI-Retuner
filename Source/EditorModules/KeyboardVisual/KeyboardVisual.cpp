@@ -99,6 +99,7 @@ void KeyboardVisual::paint (juce::Graphics& g)
 
     // Pass 0: White keys
     // Pass 1: Black keys
+    //    Results in Black keys being drawn on top
     for (int pass = 0; pass < 2; pass++)
     {
         for (int midiNote = std::floor(this->startingMidiNote); midiNote <= std::ceil(this->endingMidiNote); midiNote++)
@@ -522,4 +523,3 @@ END_JUCER_METADATA
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-

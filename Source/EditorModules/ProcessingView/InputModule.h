@@ -71,6 +71,7 @@ private:
     std::unique_ptr<juce::Label> keyboardChannelLabel;
     std::unique_ptr<juce::Label> keyboardMidiTypeLabel;
     std::unique_ptr<juce::ComboBox> keyboardMidiType;
+    std::unique_ptr<juce::Label> juce__label2;
 
 
     //==============================================================================

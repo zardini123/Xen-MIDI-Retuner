@@ -9,6 +9,7 @@
 */
 
 #include "ProcessorData.h"
+#include "Utilities.h"
 
 AudioProcessorValueTreeState::ParameterLayout createParameterLayout() {
   AudioProcessorValueTreeState::ParameterLayout layout;
@@ -38,6 +39,9 @@ AudioProcessorValueTreeState::ParameterLayout createParameterLayout() {
   layout.add(std::make_unique<AudioParameterChoice>(
       "enable_mts_esp", "Enable MTS-ESP", StringArray("Off", "On"), 0));
 
+  layout.add(std::make_unique<AudioParameterBool>(
+      "legacy_mapping", "Map MIDI Notes Directly To Scale Notes", false));
+
   ////////////////////////////////
   // To Synth
 
@@ -51,6 +55,8 @@ AudioProcessorValueTreeState::ParameterLayout createParameterLayout() {
 
   layout.add(std::make_unique<AudioParameterBool>(
       "send_out_untuned_notes", "Send Out Un-tuned Notes", false));
+  layout.add(std::make_unique<AudioParameterBool>(
+      "synth_is_already_tuned", "Synth is Already Tuned", false));
 
   layout.add(std::make_unique<AudioParameterChoice>(
       "tuned_note_per_keyboard_channel",
@@ -120,12 +126,10 @@ AudioProcessorValueTreeState::ParameterLayout createParameterLayout() {
 
 ProcessorData::ProcessorData(AudioProcessor &processorForApvts)
     : apvts(processorForApvts, &undoManager, "PARAMETERS", createParameterLayout()),
-      undoManager() {
+      undoManager(), scaleNoteMapping(scale) {
   logger.reset(FileLogger::createDefaultAppLogger(
       "", "xen_midi_retuner.log", "Xen MIDI Retuner Debug Log"));
 
-  midiNoteToScaleNoteMapping.fill(-1);
-  secondaryMapping.fill(-1);
-
   scaleChangeBroadcaster.AttachToChangeProvider(&scale);
+  scaleNoteMapping.AttachToChangeProvider(&scale);
 };

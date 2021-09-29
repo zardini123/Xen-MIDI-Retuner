@@ -70,6 +70,13 @@ ScaleEditor::ScaleEditor (ProcessorData *dataReference)
 
     enableMtsEsp->setBounds (8, 48, 150, 24);
 
+    legacyMapping.reset (new juce::ToggleButton ("new toggle button"));
+    addAndMakeVisible (legacyMapping.get());
+    legacyMapping->setButtonText (TRANS("Map MIDI Notes Directly To Scale Notes"));
+    legacyMapping->addListener (this);
+
+    legacyMapping->setBounds (192, 48, 216, 24);
+
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -80,6 +87,8 @@ ScaleEditor::ScaleEditor (ProcessorData *dataReference)
     //[Constructor] You can add your own custom stuff here..
     enableMtsEsp->addItemList(data->apvts.getParameter("enable_mts_esp")->getAllValueStrings(), 1);
     enableMtsEspAttachment.reset(new AudioProcessorValueTreeState::ComboBoxAttachment(data->apvts, "enable_mts_esp", *enableMtsEsp.get()));
+
+    legacyMappingAttachment.reset(new AudioProcessorValueTreeState::ButtonAttachment(data->apvts, "legacy_mapping", *legacyMapping.get()));
 
     data->scaleChangedBroadcaster.addChangeListener(this);
     data->apvts.addParameterListener("enable_mts_esp", this);
@@ -97,6 +106,7 @@ ScaleEditor::~ScaleEditor()
     mtsESPComboBoxLabel = nullptr;
     mtsESPStatusLabel = nullptr;
     enableMtsEsp = nullptr;
+    legacyMapping = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -147,6 +157,22 @@ void ScaleEditor::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
 
     //[UsercomboBoxChanged_Post]
     //[/UsercomboBoxChanged_Post]
+}
+
+void ScaleEditor::buttonClicked (juce::Button* buttonThatWasClicked)
+{
+    //[UserbuttonClicked_Pre]
+    //[/UserbuttonClicked_Pre]
+
+    if (buttonThatWasClicked == legacyMapping.get())
+    {
+        //[UserButtonCode_legacyMapping] -- add your button handler code here..
+        // data->updateMidiNoteMapping();
+        //[/UserButtonCode_legacyMapping]
+    }
+
+    //[UserbuttonClicked_Post]
+    //[/UserbuttonClicked_Post]
 }
 
 
@@ -234,6 +260,9 @@ BEGIN_JUCER_METADATA
   <COMBOBOX name="new combo box" id="7ad45a71932a9cc1" memberName="enableMtsEsp"
             virtualName="" explicitFocusOrder="0" pos="8 48 150 24" editable="0"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
+  <TOGGLEBUTTON name="new toggle button" id="e003d17db4cb3ace" memberName="legacyMapping"
+                virtualName="" explicitFocusOrder="0" pos="192 48 216 24" buttonText="Map MIDI Notes Directly To Scale Notes"
+                connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
