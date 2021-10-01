@@ -44,6 +44,8 @@ Xen MIDI Retuner removes this barrier of entry by mapping the closest scale freq
 
 ### Download
 
+#### Recommended Download Version
+
 Find your DAW in the list below and take note of the **Recommended Download Version**.
 
 If your DAW is not listed, continue onward in the guide.
@@ -55,7 +57,9 @@ If your DAW is not listed, continue onward in the guide.
 
 <sup>+</sup> _Instrument (a.k.a. Synth) plugins are defined as a plugin with MIDI input and Audio output. Some DAWs support being able to route the MIDI output from Instrument plugins._
 
-Head to GitHub's Releases tab to be presented with options of downloading Xen MIDI Retuner ([click here to head to Releases](https://github.com/zardini123/Xen-MIDI-Retuner/releases)). Navigate slightly downward to find an Assets tab filled with hyperlinks. Each hyperlink is a different download version of Xen MIDI Retuner.
+#### Download your recommended version
+
+Head to GitHub's Releases tab to be presented with options of downloading Xen MIDI Retuner. Navigate slightly downward to find an Assets tab filled with hyperlinks. Each hyperlink is a different download version of Xen MIDI Retuner. ([Open Releases in a new tab and continue reading.](https://github.com/zardini123/Xen-MIDI-Retuner/releases)).
 
 First locate the downloads made for your operating system (macOS, Windows).
 
@@ -65,8 +69,8 @@ Second, If your DAW was listed in the earlier step, find the download that has y
 
 Plugin installation is unfortunately manual currently. Installation, for us, is simply moving the plugin to a system-specific directory. For each operating system, here is the file path to place the plugin:
 
-- **macOS**: Using Finder, navigate in the toolbar to "Go" > "Go to Folder..."" and paste `/Library/Audio/Plug-Ins`. Copy the VST2 version into the `VST` folder, and the AU version into `Components`.
-- **Windows**: Using File Explorer, navigate to any of the following folders. It's recommended to see where your DAW looks for plugins before trying randomly one from the list. Copy the plugin into the one you figure out.
+- _**macOS**_: Using Finder, navigate in the toolbar to "Go" > "Go to Folder..."" and paste `/Library/Audio/Plug-Ins`. If your **Recommended Download Version** was VST2. copy the VST2 version into the `VST` folder. If it was AU, copy the AU version into `Components`.
+- _**Windows**_: Using File Explorer, navigate to any of the following folders. It's recommended to see where your DAW looks for plugins before trying randomly one from the list. Copy the plugin into the one you figure out.
   - `C:\Program Files\VSTPlugins`
   - `C:\Program Files\Steinberg\VSTPlugins`
   - `C:\Program Files\Common Files\VST2`
@@ -122,13 +126,38 @@ Xen MIDI Retuner's original code is licensed under GNU General Public License v3
 
 ## Contribution
 
+### Repository and Branches
+
+Clone the repository as so:
+
+```bash
+git clone https://github.com/zardini123/Xen-MIDI-Retuner.git
+```
+
+Move your current directory to the newly instantiated repository.
+
+Majority of development is done in the `develop` branch, as recommended by [this popular article](https://nvie.com/posts/a-successful-git-branching-model/). `master` branch is only ever merged into when a release is ready. Therefore, checkout the `develop` branch immediately.
+
+```bash
+git fetch
+git branch -va
+git checkout branch
+```
+
 ### Compiling
 
 This plugin uses [JUCE](https://juce.com/get-juce/download) and the `api_redesign` branch of [AnaMark Tuning Library](https://github.com/zardini123/AnaMark-Tuning-Library/tree/api_redesign). JUCE and AnaMark Tuning Library are included as git submodules in the `lib/` directory.
 
 Initialize the submodules using this in the project's root directory:
 
-`git submodule update --init --recursive`
+```bash
+git submodule update --init --recursive
+```
+
+CMake is used to compile Xen MIDI Retuner. Download CMake for your system. Its recommended to use a package manager to do so.
+
+- _**macOS**_: [Homebrew](https://brew.sh) `brew install cmake`
+- _**Windows**_: [Chocolatey](https://chocolatey.org) `choco install cmake`
 
 As of currently, VST.2x is used over VST.3x as I have not had enough time to research the effort required to make the conversion. VST.3x specifications for MIDI CC and Pitch-bend output is much, _much_ different than VST.2x (see this: [Add support for sending Midi CCs out of VST3 plugins](https://forum.juce.com/t/add-support-for-sending-midi-ccs-out-of-vst3-plugins/35781)). Eventually the plugin will be written for exclusive VST.3x support only.
 
@@ -138,7 +167,9 @@ CMake needs to know of the location of your VST.2x SDK, so we need to set a glob
 
 Prepare the build by running this command in the root folder of this project:
 
-`cmake -B build -D JUCE_GLOBAL_VST2_SDK_PATH=<path to VST3_SDK folder>`
+```bash
+cmake -B build -D JUCE_GLOBAL_VST2_SDK_PATH=<path to VST3_SDK folder>
+```
 
 CMake uses the instance of JUCE in the `lib/` directory. If the submodule was not initialized, the plugin will fail to compile.
 
@@ -146,7 +177,9 @@ CMake uses the instance of JUCE in the `lib/` directory. If the submodule was no
 
 After preparing the build, run this command:
 
-`cmake --build build --config Release -j 8`
+```bash
+cmake --build build --config Release -j 8
+```
 
 **Notice:** Option `-j` sets number of threads to use for compiling. Usually set this number to the number of cores your computer has.
 
@@ -162,13 +195,18 @@ Projucer is primarily used for quick and easy prototyping of the user interface 
 - Deleting files
 - Modifying GUI of Projcer-created components
 
-Projucer is not used for compiling in this project.
+**Notice:** Projucer (and the build files it produces) are not used for compiling in this project.
 
 As Projucer makes automated changes to components using the GUI editor, any additions to those components must be done in dedicated areas of the Projucer files. Any removals must be done through the GUI editor. If not, your changes will be lost when someone updates some layout in a GUI component.
 
-Projucer is not provided pre-compiled in the JUCE repository found in `lib/`. You can either download Projucer via the JUCE website, or preferably you can compile it using your included submodule. Navigate to `/lib/JUCE/` and run the following:
+Projucer is not provided pre-compiled in the JUCE repository found in `lib/`. To acquire Projucer, you have two options:
 
-```
+1.  [Download Projucer via the JUCE website](https://juce.com/discover/projucer). Select the free version of JUCE.
+2.  Compile Projucer from the JUCE submodule.
+
+To compile Projucer, navigate to `/lib/JUCE/` and run the following:
+
+```bash
 cmake . -B cmake-build -DJUCE_BUILD_EXAMPLES=OFF -DJUCE_BUILD_EXTRAS=ON
 cmake --build cmake-build --target Projucer
 ```
