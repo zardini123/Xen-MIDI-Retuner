@@ -65,7 +65,7 @@ Second, If your DAW was listed in the earlier step, find the download that has y
 
 Plugin installation is unfortunately manual currently. Installation, for us, is simply moving the plugin to a system-specific directory. For each operating system, here is the file path to place the plugin:
 
-- **macOS**: Using Finder, navigate in the toolbar to "Go" > "Go to Folder..."" and paste `/Library/Audio/Plug-Ins/VST`. Copy the plugin into the `VST` folder, not in `VST3`.
+- **macOS**: Using Finder, navigate in the toolbar to "Go" > "Go to Folder..."" and paste `/Library/Audio/Plug-Ins`. Copy the VST2 version into the `VST` folder, and the AU version into `Components`.
 - **Windows**: Using File Explorer, navigate to any of the following folders. It's recommended to see where your DAW looks for plugins before trying randomly one from the list. Copy the plugin into the one you figure out.
   - `C:\Program Files\VSTPlugins`
   - `C:\Program Files\Steinberg\VSTPlugins`

@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.4] - 2021-10-01
+
+### Changed
+
+- The entire plugin functionality.
+  - Entire concept of the interpolation/transition function has been replaced with closest scale note mapping.
+- Keyboard visualization works with continuous midi notes instead of discrete midi notes.
+- Renamed input and output pitchbend to "Keyboard" and "Synth" pitchbend.
+
+### Added
+
+- Keyboard visualization has zoom and drag of the view.
+- "_Synth is already tuned_" for playing synthesizers that have tuning functionality, yielding polyphonic tuning over one MIDI channel.
+  - Requires both Xen MIDI Retuner and the synth to be tuned to the same scale.
+- "_Send out untuned notes_" allowing interesting tuning potential with the byproduct of playing the notes not subjected to tuning by pitchbend per channel.
+
+### Known Issues
+
+- "_Pitch Bend Wheel (semitones)_" does not do anything as scale-oriented pitchbend has to be implemented.
+
 ## [0.0.3] - 2021-01-06
 
 ### Known Issues
