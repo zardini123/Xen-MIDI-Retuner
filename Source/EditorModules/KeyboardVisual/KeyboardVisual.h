@@ -31,7 +31,6 @@ class KeyboardVisualControlsOverlay;
 #include "../../ComponentWithReferenceToData.h"
 //[/Headers]
 
-#include "NoteAndFrequencyOverlay.h"
 
 
 //==============================================================================
@@ -43,7 +42,8 @@ class KeyboardVisualControlsOverlay;
                                                                     //[/Comments]
 */
 class KeyboardVisual  : public ComponentWithReferenceToData,
-                        public juce::ChangeBroadcaster
+                        public juce::ChangeBroadcaster,
+                        private Timer
 {
 public:
     //==============================================================================
@@ -90,6 +90,7 @@ public:
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     void setToClassicKeyboardSpacing();
+    void timerCallback() override;
 
     // Keyboard settings
     int entireWidth;
@@ -110,7 +111,6 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<NoteAndFrequencyOverlay> noteAndFreqOverlay;
 
 
     //==============================================================================
@@ -119,4 +119,3 @@ private:
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-

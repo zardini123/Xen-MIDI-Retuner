@@ -26,6 +26,13 @@
 const int MAX_MIDI_CHANNELS = 16;
 const int CENTER_PITCHWHEEL = 8192;
 
+struct Note {
+  int midiNote;
+  uint8 velocity;
+
+  bool turnOffFlag = false;
+};
+
 class ScaleNoteMapping : public AnaMark::ChangeAttacher,
                          public juce::ChangeBroadcaster,
                          public juce::AudioProcessorValueTreeState::Listener {
@@ -207,13 +214,6 @@ private:
   std::array<int, AnaMark::Scale::tunableRangeSize> secondaryMapping;
 };
 
-struct Note {
-  int midiNote;
-  uint8 velocity;
-
-  bool turnOffFlag = false;
-};
-
 class ProcessorData {
 public:
   struct InputChannel {
@@ -227,6 +227,8 @@ public:
 
   struct OutputChannel {
     std::vector<Note> notes;
+
+    int scaleNote;
 
     int centerOfOutputPitchbendRangeStatic;
     int noteToTuneToContinuousTunedNoteDifference;
@@ -243,7 +245,8 @@ public:
   TransitionCurve transitionCurve;
 
   InputChannel input[MAX_MIDI_CHANNELS];
-  CriticalSection inputLock;
+  std::unordered_set<int> playingMidiNotes;
+  ReadWriteLock inputLock;
 
   OutputChannel output[MAX_MIDI_CHANNELS];
 

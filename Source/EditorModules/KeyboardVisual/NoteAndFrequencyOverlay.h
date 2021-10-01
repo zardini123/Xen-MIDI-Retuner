@@ -57,11 +57,7 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    const int UPDATE_RATE = 60;
-
     KeyboardVisual *keyboard;
-
-    double time;
 
     void timerCallback() override;
     //[/UserVariables]
@@ -75,4 +71,3 @@ private:
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-

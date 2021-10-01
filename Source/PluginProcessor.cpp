@@ -287,7 +287,7 @@ void XenMidiRetunerAudioProcessor::processBlock(AudioBuffer<float> &buffer,
     } else if (m.isNoteOn()) {
       {
         // Lock the input channel array
-        const ScopedLock myScopedLock(data.inputLock);
+        const ScopedWriteLock myScopedLock(data.inputLock);
 
         // Add the new, played midi note.
         // First remove midi note if the note already exists (which is important for
@@ -297,6 +297,9 @@ void XenMidiRetunerAudioProcessor::processBlock(AudioBuffer<float> &buffer,
         // Then, Add the newest note to the end of the stack (append to vector)
         Note newNote = Note{m.getNoteNumber(), m.getVelocity()};
         inputChannel.notes.push_back(newNote);
+
+        // Keep track of on notes for keyboard visual
+        data.playingMidiNotes.insert(m.getNoteNumber());
       }
 
       // This condition of note on updates prioritization
@@ -310,10 +313,13 @@ void XenMidiRetunerAudioProcessor::processBlock(AudioBuffer<float> &buffer,
     } else if (m.isNoteOff()) {
       {
         // Lock the input channel array
-        const ScopedLock myScopedLock(data.inputLock);
+        const ScopedWriteLock myScopedLock(data.inputLock);
 
         // Remove the note that was called to be off from the stack
         removeFirstNoteAtNoteNumber(m.getNoteNumber(), inputChannel.notes);
+
+        // Keep track of on notes for keyboard visual
+        data.playingMidiNotes.erase(m.getNoteNumber());
       }
 
       // This condition of note off updates prioritization
@@ -424,16 +430,16 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
   bool synthIsAlreadyTuned =
       (bool)*data.apvts.getRawParameterValue("synth_is_already_tuned");
 
-  int scaleNote;
   ScaleNoteMapping::NoteMappingType mappingType =
-      data.scaleNoteMapping.getMidiNoteMapping(inChannel.noteToTune->midiNote, scaleNote);
+      data.scaleNoteMapping.getMidiNoteMapping(inChannel.noteToTune->midiNote, outChannel.scaleNote);
+
   bool isTunedNoteMapped = mappingType != ScaleNoteMapping::NO_MAPPING;
   if (!synthIsAlreadyTuned && isTunedNoteMapped) {
     // continuousTunedNote is the continuous midi note that the selected priority
     // note needs to reach
 
     inChannel.continuousTunedNote =
-        freqHZToContinuousMidiNote(data.scale.FrequencyForMIDINote(scaleNote));
+        freqHZToContinuousMidiNote(data.scale.FrequencyForMIDINote(outChannel.scaleNote));
 
     // https://github.com/zardini123/AnaMark-Tuning-Library/issues/2#issuecomment-658591163
 
@@ -509,10 +515,9 @@ void XenMidiRetunerAudioProcessor::updateBlock(MidiBuffer &processedMidi,
       //    outChannel.outputMidiNoteForTunedNote (when !synthIsAlreadyTuned)
       int inputMidiNoteAdjusted = 0;
       if (synthIsAlreadyTuned) {
-        int scaleNote;
         ScaleNoteMapping::NoteMappingType ret =
             data.scaleNoteMapping.getMidiNoteMapping(it->midiNote, inputMidiNoteAdjusted);
-        // Dont play if no mapping
+        // Dont play the note if there is no mapping
         if (ret == ScaleNoteMapping::NO_MAPPING) {
           continue;
         }

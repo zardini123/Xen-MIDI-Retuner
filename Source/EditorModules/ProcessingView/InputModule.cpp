@@ -164,15 +164,6 @@ void InputModule::paint (juce::Graphics& g)
     //[UserPrePaint] Add your own custom painting code here..
     //[/UserPrePaint]
 
-    {
-        int x = (getWidth() / 2) + 3 - (108 / 2), y = 24, width = 108, height = 2;
-        juce::Colour fillColour = juce::Colour (0xffedfa00);
-        //[UserPaintCustomArguments] Customize the painting arguments here..
-        //[/UserPaintCustomArguments]
-        g.setColour (fillColour);
-        g.fillRect (x, y, width, height);
-    }
-
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
 }
@@ -242,9 +233,7 @@ BEGIN_JUCER_METADATA
                  constructorParams="ProcessorData *dataReference" variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
-  <BACKGROUND backgroundColour="323e44">
-    <RECT pos="3Cc 24 108 2" fill="solid: ffedfa00" hasStroke="0"/>
-  </BACKGROUND>
+  <BACKGROUND backgroundColour="323e44"/>
   <SLIDER name="new slider" id="b64c5755e8e89a8b" memberName="keyboardPitchBendRange"
           virtualName="" explicitFocusOrder="0" pos="8 70 150 24" min="1.0"
           max="96.0" int="1.0" style="IncDecButtons" textBoxPos="TextBoxLeft"

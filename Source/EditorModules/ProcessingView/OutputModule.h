@@ -83,6 +83,7 @@ private:
     std::unique_ptr<juce::ComboBox> synth_midi_type;
     std::unique_ptr<juce::ToggleButton> synthIsAlreadyTuned;
     std::unique_ptr<juce::Label> juce__label2;
+    juce::Path internalPath1;
 
 
     //==============================================================================

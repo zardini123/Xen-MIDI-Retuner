@@ -45,6 +45,8 @@ ScaleFrequenciesOverlay::ScaleFrequenciesOverlay (ProcessorData *dataReference, 
     //[Constructor] You can add your own custom stuff here..
     this->data->scaleChangeBroadcaster.addChangeListener(this);
     this->data->scaleNoteMapping.addChangeListener(this);
+
+    startTimerHz (60);
     //[/Constructor]
 }
 
@@ -64,12 +66,19 @@ void ScaleFrequenciesOverlay::paint (juce::Graphics& g)
 {
     //[UserPrePaint] Add your own custom painting code here..
     juce::Colour strokeColour = juce::Colour (0x9942EC1E);
+    juce::Colour playingStrokeColour = juce::Colour (0xff42EC1E);
+
     juce::Colour scaleColour = juce::Colour (0x9982BB43);
+    juce::Colour playingScaleColour = juce::Colour (0xffFF0059);
 
     juce::Colour secondaryStrokeColour = juce::Colour (0x99C626C6);
+    juce::Colour playingSecondaryStrokeColour = juce::Colour (0xffC626C6);
+
     juce::Colour secondaryScaleColour = juce::Colour (0x99E663AA);
     int connectionYPos = 35;
 
+    // Secondary mapping scale note line
+    // @TODO: Create a iterator for scale to iterate over midi note, scale note (non-mapped), and frequency order
     for (auto midiNote = AnaMark::Scale::firstTunableScaleNote; midiNote < AnaMark::Scale::afterLastTunableScaleNote; ++midiNote) {
       int scaleNote;
       ScaleNoteMapping::NoteMappingType ret = data->scaleNoteMapping.getMidiNoteMapping(midiNote, scaleNote);
@@ -77,10 +86,21 @@ void ScaleFrequenciesOverlay::paint (juce::Graphics& g)
         // Frequency
         double frequency = data->scale.FrequencyForMIDINote(scaleNote);
         double centerPixelPosition = keyboard->ConvertContinuousMidiNoteToPercentWidth(freqHZToContinuousMidiNote(frequency)) * getWidth();
-        keyboard->drawMarker(centerPixelPosition, 3, connectionYPos, 1, secondaryScaleColour, g);
+
+        bool scaleNotePlaying = false;
+        for (const auto &outChannel : data->output) {
+          if (!outChannel.notes.empty() && outChannel.scaleNote == scaleNote) {
+            scaleNotePlaying = true;
+            break;
+          }
+        }
+
+        int markerWidth = (scaleNotePlaying)? 5 : 3;
+        keyboard->drawMarker(centerPixelPosition, markerWidth, connectionYPos, 1, secondaryScaleColour, g);
       }
     }
 
+    // Primary and secondary scale note connector
     for (auto midiNote = AnaMark::Scale::firstTunableScaleNote; midiNote < AnaMark::Scale::afterLastTunableScaleNote; ++midiNote) {
       int scaleNote;
       ScaleNoteMapping::NoteMappingType ret = data->scaleNoteMapping.getMidiNoteMapping(midiNote, scaleNote);
@@ -97,17 +117,49 @@ void ScaleFrequenciesOverlay::paint (juce::Graphics& g)
         internalPath1.startNewSubPath (frequencyXPos, connectionYPos);
         internalPath1.lineTo (midiNoteXPos, this->getHeight());
 
-        g.setColour ((ret == ScaleNoteMapping::SECONDARY_MAPPING)? secondaryStrokeColour : strokeColour);
-        g.strokePath (internalPath1, juce::PathStrokeType (3.0f), juce::AffineTransform::translation(0, 0));
+        bool scaleNotePlaying = false;
+        for (const auto &outChannel : data->output) {
+          if (!outChannel.notes.empty() && outChannel.scaleNote == scaleNote) {
+            scaleNotePlaying = true;
+            break;
+          }
+        }
+
+        if (ret == ScaleNoteMapping::SECONDARY_MAPPING) {
+          if (scaleNotePlaying) {
+            g.setColour (playingSecondaryStrokeColour);
+          } else {
+            g.setColour (secondaryStrokeColour);
+          }
+        } else {
+          if (scaleNotePlaying) {
+            g.setColour(playingScaleColour);
+          } else {
+            g.setColour(strokeColour);
+          }
+        }
+
+        float strokeWidth = (data->playingMidiNotes.count(midiNote) == 1)? 5.0f : 3.0f;
+        g.strokePath (internalPath1, juce::PathStrokeType (strokeWidth), juce::AffineTransform::translation(0, 0));
       }
     }
 
-    // @TODO: Create a iterator for scale to iterate over midi note, scale note (non-mapped), and frequency order
+    // Primary mapping scale note line
     for (auto i = AnaMark::Scale::firstTunableScaleNote; i < AnaMark::Scale::afterLastTunableScaleNote; ++i) {
         // Frequency
         double frequency = data->scale.FrequencyForMIDINote(i);
         double centerPixelPosition = keyboard->ConvertContinuousMidiNoteToPercentWidth(freqHZToContinuousMidiNote(frequency)) * getWidth();
-        keyboard->drawMarker(centerPixelPosition, 3, connectionYPos, 1, scaleColour, g);
+
+        bool scaleNotePlaying = false;
+        for (const auto &outChannel : data->output) {
+          if (!outChannel.notes.empty() && outChannel.scaleNote == i) {
+            scaleNotePlaying = true;
+            break;
+          }
+        }
+        int markerWidth = (scaleNotePlaying)? 5 : 3;
+
+        keyboard->drawMarker(centerPixelPosition, markerWidth, connectionYPos, 1, scaleNotePlaying? playingScaleColour : scaleColour, g);
     }
     //[/UserPrePaint]
 
@@ -128,7 +180,12 @@ void ScaleFrequenciesOverlay::resized()
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 void ScaleFrequenciesOverlay::changeListenerCallback (ChangeBroadcaster *source) {
-    this->repaint();
+    repaint();
+}
+
+void ScaleFrequenciesOverlay::timerCallback()
+{
+    repaint();
 }
 //[/MiscUserCode]
 
@@ -143,7 +200,7 @@ void ScaleFrequenciesOverlay::changeListenerCallback (ChangeBroadcaster *source)
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="ScaleFrequenciesOverlay"
-                 componentName="" parentClasses="public ComponentWithReferenceToData, public juce::ChangeListener"
+                 componentName="" parentClasses="public ComponentWithReferenceToData, public juce::ChangeListener, private Timer"
                  constructorParams="ProcessorData *dataReference, KeyboardVisual *keyboardVis"
                  variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
@@ -158,3 +215,4 @@ END_JUCER_METADATA
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
+

@@ -121,7 +121,7 @@ void ScaleEditor::paint (juce::Graphics& g)
 
     {
         int x = (getWidth() / 2) - (108 / 2), y = 24, width = 108, height = 2;
-        juce::Colour fillColour = juce::Colour (0xffe82950);
+        juce::Colour fillColour = juce::Colour (0xff82bb43);
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
         g.setColour (fillColour);
@@ -239,7 +239,7 @@ BEGIN_JUCER_METADATA
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44">
-    <RECT pos="0Cc 24 108 2" fill="solid: ffe82950" hasStroke="0"/>
+    <RECT pos="0Cc 24 108 2" fill="solid: ff82bb43" hasStroke="0"/>
   </BACKGROUND>
   <LABEL name="new label" id="235c5745dedfe1ad" memberName="heading" virtualName=""
          explicitFocusOrder="0" pos="0 0 100% 24" edTextCol="ff000000"

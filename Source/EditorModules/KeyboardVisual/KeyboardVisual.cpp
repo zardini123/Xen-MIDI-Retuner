@@ -57,15 +57,13 @@ KeyboardVisual::KeyboardVisual (ProcessorData *dataReference)
     setToClassicKeyboardSpacing();
     //[/Constructor_pre]
 
-    noteAndFreqOverlay.reset (new NoteAndFrequencyOverlay (this->data, this));
-    addAndMakeVisible (noteAndFreqOverlay.get());
 
     //[UserPreSize]
     // Can't set KeyboardVisual to opaque at the moment, as the keys are somewhat transparent.
     // setOpaque(true);
 
     // Force the overlays and their children to not accept mouse events, and therefore let KeyboardVisual deal with the events
-    noteAndFreqOverlay->setInterceptsMouseClicks(false, false);
+    // noteAndFreqOverlay->setInterceptsMouseClicks(false, false);
 
     //[/UserPreSize]
 
@@ -73,6 +71,7 @@ KeyboardVisual::KeyboardVisual (ProcessorData *dataReference)
 
 
     //[Constructor] You can add your own custom stuff here..
+    startTimerHz (60);
     //[/Constructor]
 }
 
@@ -81,7 +80,6 @@ KeyboardVisual::~KeyboardVisual()
     //[Destructor_pre]. You can add your own custom destruction code here..
     //[/Destructor_pre]
 
-    noteAndFreqOverlay = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -117,7 +115,6 @@ void KeyboardVisual::paint (juce::Graphics& g)
             double centerXPos = percentWidth * entireWidth;
 
             bool inRange = (midiNote < 128) && (midiNote >= 0);
-            // bool inRange = true;
 
             int y = isBlackKey? -30 : 0;
 
@@ -144,6 +141,22 @@ void KeyboardVisual::paint (juce::Graphics& g)
               }
             }
             g.fillRect (intX, y, intWidth, entireHeight);
+
+            // Fill for when key is being played
+
+            if (inRange) {
+              if (data->playingMidiNotes.count(midiNote) == 1) {
+                if (isBlackKey) {
+                  // Black key
+                  g.setColour (Colour (0x77f8f8f8));
+                } else {
+                  // White key
+                  g.setColour (Colour (0x772d2d2d));
+                }
+
+                g.fillRect (intX, y, intWidth, entireHeight);
+              }
+            }
 
             // Draw Outline on top
 
@@ -178,7 +191,6 @@ void KeyboardVisual::resized()
     setKeyboardDimensions(proportionOfWidth(1.0f), proportionOfHeight(1.0f));
     //[/UserPreResize]
 
-    noteAndFreqOverlay->setBounds (0, getHeight() - proportionOfHeight (0.6000f), proportionOfWidth (1.0000f), proportionOfHeight (0.6000f));
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -484,6 +496,11 @@ void KeyboardVisual::drawLargerMarkerAtContinuousMidiNote(double continousMidiNo
     drawMarker(centerPixelPosition, 3, 100, 2, baseColor, graphics);
 }
 
+void KeyboardVisual::timerCallback()
+{
+    // Have repaint every 60hz simply for notes being played visual
+    repaint();
+}
 //[/MiscUserCode]
 
 
@@ -497,7 +514,7 @@ void KeyboardVisual::drawLargerMarkerAtContinuousMidiNote(double continousMidiNo
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="KeyboardVisual" componentName=""
-                 parentClasses="public ComponentWithReferenceToData, public juce::ChangeBroadcaster"
+                 parentClasses="public ComponentWithReferenceToData, public juce::ChangeBroadcaster, private Timer"
                  constructorParams="ProcessorData *dataReference" variableInitialisers="ComponentWithReferenceToData (dataReference)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="1000" initialHeight="50">
@@ -509,11 +526,6 @@ BEGIN_JUCER_METADATA
     <METHOD name="mouseUp (const juce::MouseEvent&amp; e)"/>
   </METHODS>
   <BACKGROUND backgroundColour="494848"/>
-  <JUCERCOMP name="" id="d4b4c1a2077d41bb" memberName="noteAndFreqOverlay"
-             virtualName="" explicitFocusOrder="0" pos="0 0Rr 100% 60%" posRelativeX="9a893a36dc7e0c36"
-             posRelativeY="9a893a36dc7e0c36" posRelativeW="9a893a36dc7e0c36"
-             posRelativeH="9a893a36dc7e0c36" sourceFile="NoteAndFrequencyOverlay.cpp"
-             constructorParams="this-&gt;data, this"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

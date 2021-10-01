@@ -39,7 +39,8 @@ class KeyboardVisual;
                                                                     //[/Comments]
 */
 class ScaleFrequenciesOverlay  : public ComponentWithReferenceToData,
-                                 public juce::ChangeListener
+                                 public juce::ChangeListener,
+                                 private Timer
 {
 public:
     //==============================================================================
@@ -59,6 +60,8 @@ public:
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     KeyboardVisual *keyboard;
+
+    void timerCallback() override;
     //[/UserVariables]
 
     //==============================================================================

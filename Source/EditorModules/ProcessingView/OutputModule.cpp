@@ -175,6 +175,12 @@ OutputModule::OutputModule (ProcessorData *dataReference)
 
     juce__label2->setBounds (552, 72, 280, 16);
 
+    internalPath1.startNewSubPath (0.0f, 136.0f);
+    internalPath1.lineTo (160.0f, 136.0f);
+    internalPath1.lineTo (160.0f, 256.0f);
+    internalPath1.lineTo (0.0f, 256.0f);
+    internalPath1.closeSubPath();
+
 
     //[UserPreSize]
     //[/UserPreSize]
@@ -231,12 +237,15 @@ void OutputModule::paint (juce::Graphics& g)
     //[/UserPrePaint]
 
     {
-        int x = (getWidth() / 2) - (108 / 2), y = 24, width = 108, height = 2;
-        juce::Colour fillColour = juce::Colour (0xffffae00);
+        float x = 0, y = 0;
+        juce::Colour fillColour = juce::Colour (0x23ff0059);
+        juce::Colour strokeColour = juce::Colour (0x39ff0059);
         //[UserPaintCustomArguments] Customize the painting arguments here..
         //[/UserPaintCustomArguments]
         g.setColour (fillColour);
-        g.fillRect (x, y, width, height);
+        g.fillPath (internalPath1, juce::AffineTransform::translation(x, y));
+        g.setColour (strokeColour);
+        g.strokePath (internalPath1, juce::PathStrokeType (2.600f), juce::AffineTransform::translation(x, y));
     }
 
     //[UserPaint] Add your own custom painting code here..
@@ -332,7 +341,8 @@ BEGIN_JUCER_METADATA
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="600" initialHeight="400">
   <BACKGROUND backgroundColour="323e44">
-    <RECT pos="0Cc 24 108 2" fill="solid: ffffae00" hasStroke="0"/>
+    <PATH pos="0 0 100 100" fill="solid: 23ff0059" hasStroke="1" stroke="2.6, mitered, butt"
+          strokeColour="solid: 39ff0059" nonZeroWinding="1">s 0 136 l 160 136 l 160 256 l 0 256 x</PATH>
   </BACKGROUND>
   <SLIDER name="new slider" id="e3a72a963cc8c6fa" memberName="synthPitchBendRange"
           virtualName="" explicitFocusOrder="0" pos="8 70 150 24" tooltip="Output Pitch Bend should be set to the Input Pitch Bend Range of your instrument that you are sending the MIDI to.&#10;&#10;Should be equal to or greater than this plugin's Input pitch bend if note retrigger is unwanted."
