@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -38,7 +38,9 @@ class KeyboardVisual;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class ScaleFrequenciesOverlay  : public ComponentWithReferenceToData
+class ScaleFrequenciesOverlay  : public ComponentWithReferenceToData,
+                                 public juce::ChangeListener,
+                                 private Timer
 {
 public:
     //==============================================================================
@@ -47,6 +49,7 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+    virtual void changeListenerCallback (ChangeBroadcaster *source) override;
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -57,6 +60,8 @@ public:
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     KeyboardVisual *keyboard;
+
+    void timerCallback() override;
     //[/UserVariables]
 
     //==============================================================================

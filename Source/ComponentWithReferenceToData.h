@@ -10,14 +10,14 @@
 
 #pragma once
 
-#include <JuceHeader.h>
 #include "ProcessorData.h"
 
-class ComponentWithReferenceToData : public Component
-{
+#include <JuceHeader.h>
+
+class ComponentWithReferenceToData : public Component {
 public:
-    ComponentWithReferenceToData(ProcessorData *dataReference);
-    
+  ComponentWithReferenceToData(ProcessorData *dataReference) : data{dataReference} {}
+
 protected:
-    ProcessorData *data;
+  ProcessorData *data;
 };

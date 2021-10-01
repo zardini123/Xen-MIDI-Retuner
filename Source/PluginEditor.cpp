@@ -16,8 +16,8 @@ XenMidiRetunerAudioProcessorEditor::XenMidiRetunerAudioProcessorEditor (XenMidiR
 {
     // Make sure that before the constructor has finished, you've set the
     // editor's size to whatever you need it to be.
-    PluginGUI *comp = new PluginGUI(&p.processorData);
-    
+    PluginGUI *comp = new PluginGUI(p.getDataReference());
+
     addAndMakeVisible(comp);
     setSize (comp->getWidth(), comp->getHeight());
 }

@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -37,6 +37,9 @@
 */
 class ScaleEditor  : public ComponentWithReferenceToData,
                      public ChangeListener,
+                     public juce::AudioProcessorValueTreeState::Listener,
+                     public juce::Timer,
+                     public juce::ComboBox::Listener,
                      public juce::Button::Listener
 {
 public:
@@ -47,26 +50,30 @@ public:
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
     void changeListenerCallback (ChangeBroadcaster *source) override;
-    void setScaleLabel();
+    void parameterChanged (const String &parameterID, float newValue) override;
+    void timerCallback() override;
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
+    void comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged) override;
     void buttonClicked (juce::Button* buttonThatWasClicked) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> enableMtsEspAttachment;
+
+    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> legacyMappingAttachment;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::Label> label;
-    std::unique_ptr<juce::TextButton> importTunFile;
-    std::unique_ptr<juce::TextButton> resetScaleButton;
-    std::unique_ptr<juce::HyperlinkButton> hyperlinkButton;
-    std::unique_ptr<juce::Label> scale_name_label;
-    std::unique_ptr<juce::Label> juce__label;
+    std::unique_ptr<juce::Label> heading;
+    std::unique_ptr<juce::Label> mtsESPComboBoxLabel;
+    std::unique_ptr<juce::Label> mtsESPStatusLabel;
+    std::unique_ptr<juce::ComboBox> enableMtsEsp;
+    std::unique_ptr<juce::ToggleButton> legacyMapping;
 
 
     //==============================================================================

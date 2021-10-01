@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -149,10 +149,10 @@ void ConversionModule::resized()
 
     sectionTitle->setBounds (0, 0, proportionOfWidth (1.0000f), 24);
     transitionCurveGUI->setBounds (proportionOfWidth (0.0000f), (0 + 24) + 16, proportionOfWidth (1.0000f), getHeight() - 160);
-    transitionSlider->setBounds (0, getHeight() - 96, proportionOfWidth (0.4987f), 96);
-    transitionLabel->setBounds (0 + 0, (getHeight() - 96) + 0 - 16, proportionOfWidth (0.4987f), 16);
-    midpointSlider->setBounds (proportionOfWidth (0.4987f), getHeight() - 96, proportionOfWidth (0.4987f), 96);
-    midpointLabel->setBounds (proportionOfWidth (0.4987f) + juce::roundToInt (proportionOfWidth (0.4987f) * 0.0000f), (getHeight() - 96) + 0 - 16, juce::roundToInt (proportionOfWidth (0.4987f) * 1.0000f), 16);
+    transitionSlider->setBounds (0, getHeight() - 96, proportionOfWidth (0.5000f), 96);
+    transitionLabel->setBounds (0 + 0, (getHeight() - 96) + 0 - 16, proportionOfWidth (0.5000f), 16);
+    midpointSlider->setBounds (proportionOfWidth (0.5000f), getHeight() - 96, proportionOfWidth (0.5000f), 96);
+    midpointLabel->setBounds (proportionOfWidth (0.5000f) + juce::roundToInt (proportionOfWidth (0.5000f) * 0.0000f), (getHeight() - 96) + 0 - 16, juce::roundToInt (proportionOfWidth (0.5000f) * 1.0000f), 16);
     snappingCurveLabel->setBounds ((getWidth() / 2) - (224 / 2), 0 + 24, 224, 16);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
@@ -204,18 +204,18 @@ BEGIN_JUCER_METADATA
              virtualName="" explicitFocusOrder="0" pos="0% 0R 100% 160M" posRelativeY="de0e609ae3dc6772"
              sourceFile="../../Components/TransitionCurveGUI.cpp" constructorParams="&amp;(data-&gt;transitionCurve)"/>
   <SLIDER name="new slider" id="9f561ed4f957bf22" memberName="transitionSlider"
-          virtualName="" explicitFocusOrder="0" pos="0 0Rr 49.846% 96"
+          virtualName="" explicitFocusOrder="0" pos="0 0Rr 50.043% 96"
           min="0.0" max="1.0" int="0.0" style="RotaryHorizontalVerticalDrag"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1.0" needsCallback="0"/>
   <LABEL name="new label" id="ce42b31741efd25e" memberName="transitionLabel"
-         virtualName="" explicitFocusOrder="0" pos="0 0r 49.846% 16" posRelativeX="9f561ed4f957bf22"
+         virtualName="" explicitFocusOrder="0" pos="0 0r 50.043% 16" posRelativeX="9f561ed4f957bf22"
          posRelativeY="9f561ed4f957bf22" edTextCol="ff000000" edBkgCol="0"
          labelText="Transition" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="36"/>
   <SLIDER name="new slider" id="b39d181ab4de0d6d" memberName="midpointSlider"
-          virtualName="" explicitFocusOrder="0" pos="49.846% 0Rr 49.846% 96"
+          virtualName="" explicitFocusOrder="0" pos="50.043% 0Rr 50.043% 96"
           min="0.0" max="1.0" int="0.0" style="RotaryHorizontalVerticalDrag"
           textBoxPos="TextBoxBelow" textBoxEditable="1" textBoxWidth="80"
           textBoxHeight="20" skewFactor="1.0" needsCallback="0"/>

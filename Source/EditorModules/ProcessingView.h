@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -27,7 +27,6 @@
 
 #include "ProcessingView/InputModule.h"
 #include "ProcessingView/ScaleEditor.h"
-#include "ProcessingView/ConversionModule.h"
 #include "ProcessingView/OutputModule.h"
 
 
@@ -62,7 +61,6 @@ private:
     //==============================================================================
     std::unique_ptr<InputModule> component;
     std::unique_ptr<ScaleEditor> component2;
-    std::unique_ptr<ConversionModule> conversionModule;
     std::unique_ptr<OutputModule> component3;
 
 

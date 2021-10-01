@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -69,8 +69,6 @@ private:
     //==============================================================================
     std::unique_ptr<juce::Slider> viewStartingMidiNote;
     std::unique_ptr<juce::Slider> viewEndingMidiNote;
-    std::unique_ptr<juce::Viewport> visualOptionsViewport;
-    std::unique_ptr<juce::ToggleButton> showVisualOptionsToggle;
     std::unique_ptr<juce::TextButton> viewZoomIn;
     std::unique_ptr<juce::TextButton> viewZoomOut;
     std::unique_ptr<juce::TextButton> viewShiftRight;

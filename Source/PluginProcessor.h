@@ -11,66 +11,79 @@
 #pragma once
 
 #include <JuceHeader.h>
+
+#include "../lib/AnaMark-Tuning-Library/src/AttacherProvider.hpp"
+#include "../lib/AnaMark-Tuning-Library/src/Scale.hpp"
+
 #include "ProcessorData.h"
+
 #include <random>
 
 //==============================================================================
 /**
-*/
-class XenMidiRetunerAudioProcessor  : public AudioProcessor,
-                                      public juce::AudioProcessorValueTreeState::Listener
-{
-private:
-    std::random_device seed;
-    std::mt19937 engine = std::mt19937(seed());
-    
-    const Note* getPriorityNote(const std::vector<Note>& noteStack, SingleChannelNotePrioritzation priority, SingleChannelNotePrioritzationModifier priorityModifier);
-    void updateBlock(MidiBuffer& processedMidi, int channelIndex, bool updateInitialNotes, int time);
+ */
+class XenMidiRetunerAudioProcessor : public AudioProcessor,
+                                     public juce::AudioProcessorValueTreeState::Listener {
 public:
-    
-    void parameterChanged (const String &parameterID, float newValue) override;
-    bool updatePitch = false;
-    bool updatePriority = false;
-    
-    ProcessorData processorData;
-    
-    //==============================================================================
-    XenMidiRetunerAudioProcessor();
-    ~XenMidiRetunerAudioProcessor();
+  void parameterChanged(const String &parameterID, float newValue) override;
 
-    //==============================================================================
-    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
-    void releaseResources() override;
+  ProcessorData *getDataReference() {
+    return &data;
+  }
 
-   #ifndef JucePlugin_PreferredChannelConfigurations
-    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
-   #endif
+  //==============================================================================
+  XenMidiRetunerAudioProcessor();
+  ~XenMidiRetunerAudioProcessor();
 
-    void processBlock (AudioBuffer<float>&, MidiBuffer&) override;
+  //==============================================================================
+  void prepareToPlay(double sampleRate, int samplesPerBlock) override;
+  void releaseResources() override;
 
-    //==============================================================================
-    AudioProcessorEditor* createEditor() override;
-    bool hasEditor() const override;
+#ifndef JucePlugin_PreferredChannelConfigurations
+  bool isBusesLayoutSupported(const BusesLayout &layouts) const override;
+#endif
 
-    //==============================================================================
-    const String getName() const override;
+  void processBlock(AudioBuffer<float> &, MidiBuffer &) override;
 
-    bool acceptsMidi() const override;
-    bool producesMidi() const override;
-    bool isMidiEffect() const override;
-    double getTailLengthSeconds() const override;
+  //==============================================================================
+  AudioProcessorEditor *createEditor() override;
+  bool hasEditor() const override;
 
-    //==============================================================================
-    int getNumPrograms() override;
-    int getCurrentProgram() override;
-    void setCurrentProgram (int index) override;
-    const String getProgramName (int index) override;
-    void changeProgramName (int index, const String& newName) override;
+  //==============================================================================
+  const String getName() const override;
 
-    //==============================================================================
-    void getStateInformation (MemoryBlock& destData) override;
-    void setStateInformation (const void* data, int sizeInBytes) override;
-    
-    //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (XenMidiRetunerAudioProcessor)
+  bool acceptsMidi() const override;
+  bool producesMidi() const override;
+  bool isMidiEffect() const override;
+  double getTailLengthSeconds() const override;
+
+  //==============================================================================
+  int getNumPrograms() override;
+  int getCurrentProgram() override;
+  void setCurrentProgram(int index) override;
+  const String getProgramName(int index) override;
+  void changeProgramName(int index, const String &newName) override;
+
+  //==============================================================================
+  void getStateInformation(MemoryBlock &destData) override;
+  void setStateInformation(const void *binaryData, int sizeInBytes) override;
+
+  //==============================================================================
+  JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(XenMidiRetunerAudioProcessor)
+
+private:
+  std::random_device seed;
+  std::mt19937 engine = std::mt19937(seed());
+
+  const Note *
+  determineNoteToTune(const std::vector<Note> &noteStack,
+                        SingleChannelNotePrioritzation priority,
+                        SingleChannelNotePrioritzationModifier priorityModifier);
+  void updateBlock(MidiBuffer &processedMidi, int channelIndex, bool updateInitialNotes,
+                   int time);
+
+  bool updatePitch = false;
+  bool updatePriority = false;
+
+  ProcessorData data;
 };

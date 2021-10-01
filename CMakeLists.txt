@@ -3,22 +3,18 @@ cmake_minimum_required(VERSION 3.15)
 project(XEN_MIDI_RETUNER VERSION 0.0.3)
 
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_BUILD_TYPE Debug)
 
 # For JSON Compilation Database Format Specification used by clang-tidy
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Set during first cmake command line using -D JUCE_PATH=/path/to/JUCE
-if(JUCE_PATH)
-  add_subdirectory("${JUCE_PATH}" juce_build)
-else()
-  message( FATAL_ERROR "JUCE_PATH not set.  This plugin is unable to compile without knowing where JUCE is.  Exiting..." )
-endif()
+add_subdirectory(lib/JUCE)
 
 # VST2 SDK path
 # Set during first cmake command line using -D JUCE_GLOBAL_VST2_SDK_PATH=/path/to/sdk
-if(JUCE_GLOBAL_VST2_SDK_PATH)
-    juce_set_vst2_sdk_path("${JUCE_GLOBAL_VST2_SDK_PATH}")
-endif()
+# if(JUCE_GLOBAL_VST2_SDK_PATH)
+#     juce_set_vst2_sdk_path("${JUCE_GLOBAL_VST2_SDK_PATH}")
+# endif()
 
 function(my_add_custom_plugin_target target_name is_synth is_midi_effect)
   if(is_synth)
@@ -55,20 +51,11 @@ function(my_add_custom_plugin_target target_name is_synth is_midi_effect)
 
   juce_generate_juce_header("${target_name}")
 
-  # Sources found using bash command:  find ./Source -name \*.cpp -print
+  # Sources found using bash command:  find ./Source ./lib/AnaMark-Tuning-Library/lib -name \*.cpp -print
   target_sources("${target_name}" PRIVATE
-    ./Source/Tests/MIDIEnviromentTests/MIDIEnviromentTest.cpp
-    ./Source/Tests/MIDIEnviromentTests/NoteAndVelocityTest.cpp
-    ./Source/Tests/MIDIEnviromentTests/MIDIEnviromentTestManager.cpp
-    ./Source/AnaMark-Tuning-Library/TUN_EmbedHTML.cpp
-    ./Source/AnaMark-Tuning-Library/TUN_Scale.cpp
-    ./Source/AnaMark-Tuning-Library/SCL_Import.cpp
-    ./Source/AnaMark-Tuning-Library/TUN_StringTools.cpp
     ./Source/Utilities.cpp
     ./Source/Components/TransitionCurveGUI.cpp
-    ./Source/Components/MIDIChannelStatusAndToggle.cpp
     ./Source/Components/TransitionCurve.cpp
-    ./Source/Components/MIDIChannelStatusAndToggleSingle.cpp
     ./Source/EditorModules/ProcessingView/ConversionModule/TransitionCurveEvaluationGraphic.cpp
     ./Source/EditorModules/ProcessingView/OutputModule.cpp
     ./Source/EditorModules/ProcessingView/ScaleEditor.cpp
@@ -80,17 +67,12 @@ function(my_add_custom_plugin_target target_name is_synth is_midi_effect)
     ./Source/EditorModules/KeyboardVisual/NoteAndFrequencyOverlay.cpp
     ./Source/EditorModules/KeyboardVisual/ScaleFrequenciesOverlay.cpp
     ./Source/EditorModules/ProcessingView.cpp
-    ./Source/EditorModules/TestingView.cpp
-    ./Source/EditorModules/SettingsView.cpp
-    ./Source/EditorModules/TestingView/CapabilitiesTestGUI.cpp
-    ./Source/EditorModules/TestingView/ActionButtonAndStatus.cpp
-    ./Source/EditorModules/TestingView/TestList.cpp
-    ./Source/EditorModules/TestingView/MIDIChannelToolbar.cpp
     ./Source/PluginProcessor.cpp
     ./Source/PluginGUI.cpp
     ./Source/PluginEditor.cpp
     ./Source/ProcessorData.cpp
-    ./Source/ComponentWithReferenceToData.cpp
+    ./lib/AnaMark-Tuning-Library/lib/MTS-ESP/Master/libMTSMaster.cpp
+    ./lib/AnaMark-Tuning-Library/lib/MTS-ESP/Client/libMTSClient.cpp
     )
 
   target_compile_definitions("${target_name}" PUBLIC

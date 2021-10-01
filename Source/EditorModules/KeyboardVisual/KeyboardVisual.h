@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -31,9 +31,6 @@ class KeyboardVisualControlsOverlay;
 #include "../../ComponentWithReferenceToData.h"
 //[/Headers]
 
-#include "ScaleFrequenciesOverlay.h"
-#include "NoteAndFrequencyOverlay.h"
-#include "KeyboardVisualControlsOverlay.h"
 
 
 //==============================================================================
@@ -44,7 +41,9 @@ class KeyboardVisualControlsOverlay;
     Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class KeyboardVisual  : public ComponentWithReferenceToData
+class KeyboardVisual  : public ComponentWithReferenceToData,
+                        public juce::ChangeBroadcaster,
+                        private Timer
 {
 public:
     //==============================================================================
@@ -53,11 +52,11 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    void setKeyboardSettings(int firstMidiNote, int lastMidiNote);
+    void setKeyboardSettings(double startingMidiNoteIn, double endingMidiNoteIn);
     void setKeyboardDimensions(int width, int height);
 
-    int getFirstMidiNote();
-    int getLastMidiNote();
+    double getStartingMidiNote();
+    double getEndingMidiNote();
 
     double ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNote);
     double ConvertDiscreteMidiNoteToPercentWidth(int discreteMidiNote, int& keyDistanceIndex);
@@ -67,6 +66,8 @@ public:
     double ConvertPixelsToContinuousMidiNote(int xPositionInPixels);
     double ConvertPercentWidthToContinuousMidiNote(double percentWidth);
 
+    void drawMarker(double centerPixelPosition, int width, int height, int borderWidth, juce::Colour baseColor, juce::Graphics& graphics);
+
     // Painting methods for keyboard-related drawing
     void drawMarkerAtDiscreteMidiNote(int midiNote, juce::Colour baseColor, juce::Graphics& graphics);
     void drawMarkerAtContinuousMidiNote(double continousMidiNote, juce::Colour baseColor, juce::Graphics& graphics);
@@ -74,41 +75,42 @@ public:
 
     void drawLargerMarkerAtDiscreteMidiNote(int midiNote, juce::Colour baseColor, juce::Graphics& graphics);
     void drawLargerMarkerAtContinuousMidiNote(double continousMidiNote, juce::Colour baseColor, juce::Graphics& graphics);
-
-    static const Colour inRangeWhiteKeyColour;
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
     void mouseMove (const juce::MouseEvent& e) override;
+    void mouseDown (const juce::MouseEvent& e) override;
     void mouseDrag (const juce::MouseEvent& e) override;
+    void mouseUp (const juce::MouseEvent& e) override;
     void mouseWheelMove (const juce::MouseEvent& e, const juce::MouseWheelDetails& wheel) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    void setEqualSpacingValues();
+    void setToClassicKeyboardSpacing();
+    void timerCallback() override;
 
     // Keyboard settings
     int entireWidth;
     int entireHeight;
 
-    int firstMidiNote;
-    int lastMidiNote;
+    double startingMidiNote;
+    double endingMidiNote;
 
     // Keyboard cached values
     double keyDistances[13];
 
-    int firstMidiNoteAsKeyInTwelveKeyRange;
-    int startOctave;
-    double entireDistance;
+    int startingNoteOctave;
+    double totalOctavesShown;
+    double leftOffscreenKeyDistance;
+
+    bool dragingView = false;
+    int lastDragPosition;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<ScaleFrequenciesOverlay> scaleFrequenciesOverlay;
-    std::unique_ptr<NoteAndFrequencyOverlay> noteAndFreqOverlay;
-    std::unique_ptr<KeyboardVisualControlsOverlay> controlsOverlay;
 
 
     //==============================================================================
@@ -117,4 +119,3 @@ private:
 
 //[EndFile] You can add extra defines here...
 //[/EndFile]
-

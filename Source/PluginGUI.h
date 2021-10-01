@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -26,6 +26,9 @@
 //[/Headers]
 
 #include "EditorModules/KeyboardVisual/KeyboardVisual.h"
+#include "EditorModules/KeyboardVisual/ScaleFrequenciesOverlay.h"
+#include "EditorModules/ProcessingView.h"
+#include "EditorModules/KeyboardVisual/KeyboardVisualControlsOverlay.h"
 
 
 //==============================================================================
@@ -59,7 +62,9 @@ private:
 
     //==============================================================================
     std::unique_ptr<KeyboardVisual> keyboardVisual;
-    std::unique_ptr<juce::TabbedComponent> tabbedComponent;
+    std::unique_ptr<ScaleFrequenciesOverlay> scaleFrequenciesOverlay;
+    std::unique_ptr<ProcessingView> processingView;
+    std::unique_ptr<KeyboardVisualControlsOverlay> controlsOverlay;
 
 
     //==============================================================================

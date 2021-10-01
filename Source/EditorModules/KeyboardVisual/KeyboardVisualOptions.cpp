@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -322,13 +322,13 @@ BEGIN_JUCER_METADATA
                 virtualName="" explicitFocusOrder="0" pos="0 32 10M 24" buttonText="Input MIDI Notes"
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
   <LABEL name="new label" id="cb1dc1d013918258" memberName="midiChannelLabel"
-         virtualName="" explicitFocusOrder="0" pos="0 0 50% 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="0 0 50.043% 24" edTextCol="ff000000"
          edBkgCol="0" labelText="Midi Channel:" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <COMBOBOX name="new combo box" id="8ead2bc88fb3e993" memberName="midiChannel"
-            virtualName="" explicitFocusOrder="0" pos="50% 0 48% 24" editable="0"
-            layout="33" items="" textWhenNonSelected="All" textWhenNoItems="(no choices)"/>
+            virtualName="" explicitFocusOrder="0" pos="50.043% 0 47.986% 24"
+            editable="0" layout="33" items="" textWhenNonSelected="All" textWhenNoItems="(no choices)"/>
   <TOGGLEBUTTON name="new toggle button" id="8f2c3fd526adfa65" memberName="enableChannelPriorityNote"
                 virtualName="" explicitFocusOrder="0" pos="0 56 10M 24" buttonText="Channel Priority Note"
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>

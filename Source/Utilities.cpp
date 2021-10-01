@@ -28,23 +28,20 @@ float continuousNoteToFreqHz(float continuousNote)
 
 void freqHZToNoteAndSemitones(double frequency, int &noteNum, double &semitones)
 {
-    // Convert frequency to the midi note number with decimal result kept
-    double exactNoteNum = 12 * std::log2(frequency / 440) + 69;
+    double continuousMidiNote = freqHZToContinuousMidiNote(frequency);
 
     // Get nearest integer midi note number
-    int closestNoteNum = std::round(exactNoteNum);
+    int closestMidiNote = std::round(continuousMidiNote);
 
-    noteNum = closestNoteNum;
-    semitones = exactNoteNum - closestNoteNum;
+    // Output
+    noteNum = closestMidiNote;
+    semitones = continuousMidiNote - closestMidiNote;
 }
 
 float freqHZToContinuousMidiNote(double frequency)
 {
-    int noteNum;
-    double semitones;
-    freqHZToNoteAndSemitones(frequency, noteNum, semitones);
-    
-    return noteNum + semitones;
+    // Convert frequency to the midi note number with decimal result kept
+    return 12 * std::log2(frequency / 440) + 69;
 }
 
 int random(int min, int max) //range : [min, max)

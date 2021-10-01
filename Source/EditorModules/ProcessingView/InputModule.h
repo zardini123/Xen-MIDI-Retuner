@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 6.0.5
+  Created with Projucer version: 6.0.8
 
   ------------------------------------------------------------------------------
 
@@ -37,8 +37,7 @@
 */
 class InputModule  : public ComponentWithReferenceToData,
                      public juce::AudioProcessorValueTreeState::Listener,
-                     public juce::ComboBox::Listener,
-                     public juce::Button::Listener
+                     public juce::ComboBox::Listener
 {
 public:
     //==============================================================================
@@ -47,33 +46,32 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    void parameterChanged (const String &parameterID, float newValue) override;
+    void parameterChanged(const String &parameterID, float newValue) override;
+    void setKeyboardChannelSelectEnabled();
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
     void comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged) override;
-    void buttonClicked (juce::Button* buttonThatWasClicked) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> inputPitchbendAttachment;
-    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> singleChannelNotePriorityAttachment;
-    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> singleChannelPriorityModifierAttachment;
-    std::unique_ptr<AudioProcessorValueTreeState::ButtonAttachment> updateNotePriorityNoteOff;
+    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> keyboardMidiTypeAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::ComboBoxAttachment> keyboardChannelAttachment;
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::Label> label4;
-    std::unique_ptr<juce::Slider> in_pitch_bend_range;
+    std::unique_ptr<juce::Slider> keyboardPitchBendRange;
     std::unique_ptr<juce::Label> label3;
     std::unique_ptr<juce::Label> section_title;
-    std::unique_ptr<juce::ComboBox> singleChannelPriorityMode;
-    std::unique_ptr<juce::Label> label2;
-    std::unique_ptr<juce::ComboBox> singleChannelPriorityModifier;
-    std::unique_ptr<juce::ToggleButton> updatePriorityNoteOff;
+    std::unique_ptr<juce::ComboBox> keyboardChannel;
+    std::unique_ptr<juce::Label> keyboardChannelLabel;
+    std::unique_ptr<juce::Label> keyboardMidiTypeLabel;
+    std::unique_ptr<juce::ComboBox> keyboardMidiType;
+    std::unique_ptr<juce::Label> juce__label2;
 
 
     //==============================================================================
