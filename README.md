@@ -15,6 +15,8 @@ Currently tuning information is loaded into Xen MIDI Retuner using ODDSound's MT
   - [Motivation](#motivation)
   - [Setup Process](#setup-process)
     - [Download](#download)
+      - [Recommended Download Variation](#recommended-download-variation)
+      - [Download from Releases](#download-from-releases)
     - [Install](#install)
     - [Setup](#setup)
   - [How To Use](#how-to-use)
@@ -24,6 +26,7 @@ Currently tuning information is loaded into Xen MIDI Retuner using ODDSound's MT
       - ["Synth is already tuned"](#-synth-is-already-tuned-)
   - [License](#license)
   - [Contribution](#contribution)
+    - [Repository and Branches](#repository-and-branches)
     - [Compiling](#compiling)
     - [Projucer Dependency](#projucer-dependency)
     - [Contribution Conclusion](#contribution-conclusion)
@@ -44,32 +47,32 @@ Xen MIDI Retuner removes this barrier of entry by mapping the closest scale freq
 
 ### Download
 
-#### Recommended Download Version
+#### Recommended Download Variation
 
-Find your DAW in the list below and take note of the **Recommended Download Version**.
+Find your DAW in the list below and take note of the **Recommended Download Variation**.
 
 If your DAW is not listed, continue onward in the guide.
 
-| DAW     | VST2 |    VST2 MIDI Effect     | AU (macOS Only) |         AU MIDI Effect          | Route MIDI input to Instrument<sup>+</sup> plugin | Route MIDI output from Instrument plugin | Recommended Download Version |
-| ------- | :--: | :---------------------: | :-------------: | :-----------------------------: | :-----------------------------------------------: | :--------------------------------------: | :--------------------------: |
-| Ableton |  ✓   | ✓ (Loads as Instrument) |        ✓        | Plugin does not show in browser |                         ✓                         |                    ✓                     |       VST2 Instrument        |
-| Logic   |      |                         |        ✓        |                ✓                |                         ✓                         |                                          |        AU MIDI Effect        |
+| DAW     | VST2 |    VST2 MIDI Effect     | AU (macOS Only) |         AU MIDI Effect          | Route MIDI input to Instrument<sup>+</sup> plugin | Route MIDI output from Instrument plugin | Recommended Download Variation |
+| ------- | :--: | :---------------------: | :-------------: | :-----------------------------: | :-----------------------------------------------: | :--------------------------------------: | :----------------------------: |
+| Ableton |  ✓   | ✓ (Loads as Instrument) |        ✓        | Plugin does not show in browser |                         ✓                         |                    ✓                     |        VST2 Instrument         |
+| Logic   |      |                         |        ✓        |                ✓                |                         ✓                         |                                          |         AU MIDI Effect         |
 
 <sup>+</sup> _Instrument (a.k.a. Synth) plugins are defined as a plugin with MIDI input and Audio output. Some DAWs support being able to route the MIDI output from Instrument plugins._
 
-#### Download your recommended version
+#### Download from Releases
 
 Head to GitHub's Releases tab to be presented with options of downloading Xen MIDI Retuner. Navigate slightly downward to find an Assets tab filled with hyperlinks. Each hyperlink is a different download version of Xen MIDI Retuner. ([Open Releases in a new tab and continue reading.](https://github.com/zardini123/Xen-MIDI-Retuner/releases)).
 
 First locate the downloads made for your operating system (macOS, Windows).
 
-Second, If your DAW was listed in the earlier step, find the download that has your **Recommended Download Version** in its name. Download that version for your operating system. If your DAW was not listed, download _every variant for your operating system and install each._ This is critical for Setup.
+Second, If your DAW was listed in the earlier step, find the download that has your **Recommended Download Variation** in its name. Download that version for your operating system. If your DAW was not listed, download _every variant for your operating system and install each._ This is critical for Setup.
 
 ### Install
 
 Plugin installation is unfortunately manual currently. Installation, for us, is simply moving the plugin to a system-specific directory. For each operating system, here is the file path to place the plugin:
 
-- _**macOS**_: Using Finder, navigate in the toolbar to "Go" > "Go to Folder..."" and paste `/Library/Audio/Plug-Ins`. If your **Recommended Download Version** was VST2. copy the VST2 version into the `VST` folder. If it was AU, copy the AU version into `Components`.
+- _**macOS**_: Using Finder, navigate in the toolbar to "Go" > "Go to Folder..."" and paste `/Library/Audio/Plug-Ins`. If your **Recommended Download Variation** was VST2. copy the VST2 version into the `VST` folder. If it was AU, copy the AU version into `Components`.
 - _**Windows**_: Using File Explorer, navigate to any of the following folders. It's recommended to see where your DAW looks for plugins before trying randomly one from the list. Copy the plugin into the one you figure out.
   - `C:\Program Files\VSTPlugins`
   - `C:\Program Files\Steinberg\VSTPlugins`
