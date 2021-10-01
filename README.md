@@ -1,4 +1,4 @@
-# Xen MIDI Retuner
+available# Xen MIDI Retuner
 
 Xen MIDI Retuner is a novel way for musicians to begin easily experimenting with the complex intervals of microtonal and xenharmonic music.
 
@@ -131,10 +131,12 @@ Xen MIDI Retuner's original code is licensed under GNU General Public License v3
 
 ### Repository and Branches
 
-Clone the repository as so:
+To be able to make contributions, you have to make a _fork_ of the repository and create a _pull request_ whenever you have a change you'd like avaliable in the main Xen MIDI Retuner repository. Once your _pull request_ is accepted, your contributions will be available for all future users.
+
+Clone your fork using the following command (make sure to modify command for you):
 
 ```bash
-git clone https://github.com/zardini123/Xen-MIDI-Retuner.git
+git clone https://github.com/<your user name>/Xen-MIDI-Retuner.git
 ```
 
 Move your current directory to the newly instantiated repository.
@@ -164,7 +166,7 @@ CMake is used to compile Xen MIDI Retuner. Download CMake for your system. Its r
 
 As of currently, VST.2x is used over VST.3x as I have not had enough time to research the effort required to make the conversion. VST.3x specifications for MIDI CC and Pitch-bend output is much, _much_ different than VST.2x (see this: [Add support for sending Midi CCs out of VST3 plugins](https://forum.juce.com/t/add-support-for-sending-midi-ccs-out-of-vst3-plugins/35781)). Eventually the plugin will be written for exclusive VST.3x support only.
 
-To compile the plugin now, the VST.2x SDK is required. VST.2x SDK is not included in JUCE anymore. The last JUCE commit that had the VST.2x SDK embedded in it can be found [here](https://github.com/juce-framework/JUCE/tree/8317738112ccceb2c58deac3e4bb167c62682916/modules/juce_audio_processors/format_types/VST3_SDK). Download the entire commit ([direct download](https://github.com/juce-framework/JUCE/archive/8317738112ccceb2c58deac3e4bb167c62682916.zip)), extract folder VST3*SDK (located at `modules/juce_audio_processors/format_types/VST3_SDK`) out of the archive, and move the VST3_SDK folder to somewhere you can locate later. \_Note* it says VST3, but it contains the VST.2x SDK code.
+To compile the plugin now, the VST.2x SDK is required. VST.2x SDK is not included in JUCE anymore. The last JUCE commit that had the VST.2x SDK embedded in it can be found [here](https://github.com/juce-framework/JUCE/tree/8317738112ccceb2c58deac3e4bb167c62682916/modules/juce_audio_processors/format_types/VST3_SDK). Download the entire commit ([direct download](https://github.com/juce-framework/JUCE/archive/8317738112ccceb2c58deac3e4bb167c62682916.zip)), extract folder "VST3_SDK" (located at `modules/juce_audio_processors/format_types/VST3_SDK`) out of the archive, and move the "VST3_SDK" folder to somewhere you can locate later. **Note** it says VST3, but it contains the VST.2x SDK code.
 
 CMake needs to know of the location of your VST.2x SDK, so we need to set a global (i.e. absolute) path to it. This is done when preparing the build next.
 
